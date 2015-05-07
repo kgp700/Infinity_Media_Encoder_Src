@@ -102,30 +102,76 @@ Public Class Main
 
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        If InputCBOX.Text = "" Then
+            OpenFileDialog1.FileName = ""
+        Else
+            Dim filenameinfo As System.IO.FileInfo
+            filenameinfo = My.Computer.FileSystem.GetFileInfo(InputCBOX.Text)
+            OpenFileDialog1.FileName = filenameinfo.Name
+        End If
+
+
         OpenFileDialog1.Filter = "All Files (*.*)|*.*|Video Files |*.mkv;*.mp4;*.ts;*.avi;*.mov;*.3gp;*.wmv;*.m2ts;*.flv;*.mpeg;*.webm;*.mpg|MP4 |*.mp4"
         OpenFileDialog1.FilterIndex = 1
 
-        If Not OpenFileDialog1.ShowDialog = Windows.Forms.DialogResult.Cancel Then
 
-            If Not OpenFileDialog1.FileName = "OpenFileDialog1" Then
-                strFileNameOpen = OpenFileDialog1.FileName
+        If OpenFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            strFileNameOpen = OpenFileDialog1.FileName
 
 
-                InputCBOX.Text = strFileNameOpen
-            End If
+            InputCBOX.Text = strFileNameOpen
         End If
+
         prepareOpen()
+
+    End Sub
+    Private Sub BTAUDINPUNT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTAUDINPUNT.Click
+        If BOXAUDIOPATH.Text = "" Then
+            OpenFileDialog2.FileName = ""
+        Else
+            Dim filenameinfo2 As System.IO.FileInfo
+            filenameinfo2 = My.Computer.FileSystem.GetFileInfo(BOXAUDIOPATH.Text)
+            OpenFileDialog2.FileName = filenameinfo2.Name
+        End If
+
+
+        OpenFileDialog2.Filter = "All Files (*.*)|*.*|Audio Files |*.mp3;*.aac;*.m4a;*.wma;*.mp2"
+        OpenFileDialog2.FilterIndex = 1
+
+        Dim strAudFileNameOpen As String
+
+        If OpenFileDialog2.ShowDialog = Windows.Forms.DialogResult.OK Then
+            strAudFileNameOpen = OpenFileDialog2.FileName
+
+
+            BOXAUDIOPATH.Text = strAudFileNameOpen
+        End If
+
 
     End Sub
 
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        If OutputCBox.Text = "" Then
+        Else
+            Dim filenameinfo3 As System.IO.FileInfo
+            filenameinfo3 = My.Computer.FileSystem.GetFileInfo(OutputCBox.Text)
+            SaveFileDialog1.FileName = filenameinfo3.Name
+        End If
+
+
         SaveFileDialog1.Filter = "All Files (*.*)|*.*|MP4 Files |*.mp4 |Video Files |*.mkv;*.mp4;*.ts;*.avi;*.mov;*.3gp;*.wmv;*.m2ts;*.flv;*.mpeg;*.webm;*.mpg"
         SaveFileDialog1.FilterIndex = 1
-        SaveFileDialog1.ShowDialog()
-        strFileNameSave = SaveFileDialog1.FileName
-        OutputCBox.Text = strFileNameSave
-        OUTPUTFILENAME = OutputCBox.Text
+
+        If SaveFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            strFileNameSave = SaveFileDialog1.FileName
+            OutputCBox.Text = strFileNameSave
+            OUTPUTFILENAME = OutputCBox.Text
+        End If
+
+
     End Sub
+
+
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
@@ -391,18 +437,7 @@ Public Class Main
 
 
     End Sub
-    Private Sub BTAUDINPUNT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTAUDINPUNT.Click
 
-        OpenFileDialog2.Filter = "All Files (*.*)|*.*|Audio Files |*.mp3;*.aac;*.m4a;*.wma;*.mp2"
-        OpenFileDialog2.FilterIndex = 1
-        If Not OpenFileDialog2.ShowDialog = Windows.Forms.DialogResult.Cancel Then
-            strFileNameOpen = OpenFileDialog2.FileName
-
-            BOXAUDIOPATH.Text = strFileNameOpen
-        End If
-
-
-    End Sub
 
     Private Sub Button4_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNADV.Click
         If BOXCODEC.Text = "libx264" Then
@@ -996,17 +1031,17 @@ Public Class Main
         End If
 
         If BOXCODEC.Text = "libx264" Then
-            X264OPTVAL = " -x264opts colorprim=bt709" + CUSTOMCODECOPT
+            X264OPTVAL = " -x264opts fullrange=off:colorprim=bt709" + CUSTOMCODECOPT
             If CHKFAST1ST.Checked = True Then
                 X264FAST1STFLAG = " -fastfirstpass 1 "
             End If
         End If
 
         If BOXCODEC.Text = "libx264" And CHECKADV.Checked Then
-            X264OPT = ":colorprim=bt709:weightp=2:weightb=1:b-adapt=2:rc-lookahead=40:b-pyramid=2:b-bias=3" + CUSTOMCODECOPT
+            X264OPT = ":fullrange=off:colorprim=bt709:weightp=2:weightb=1:b-adapt=2:rc-lookahead=40:b-pyramid=2:b-bias=3" + CUSTOMCODECOPT
 
         ElseIf BOXCODEC.Text = "libx265" Then
-            X264OPT = " -x265-params colorprim=bt709:open-gop=0" + CUSTOMCODECOPT
+            X264OPT = " -x265-params fullrange=off:colorprim=bt709:open-gop=0" + CUSTOMCODECOPT
             If CHKFAST1ST.Checked = False Then
                 FAST1STFLAG = ":slow-firstpass=1"
             End If
@@ -1176,7 +1211,7 @@ Public Class Main
             VIDEOFILTERH = ""
             VIDEOFILTER = ""
         Else
-            VIDEOFILTERH = " -vf null" + CUSTOMVIDEOFILTER
+            VIDEOFILTERH = " -filter_complex null" + CUSTOMVIDEOFILTER
             VIDEOFILTER = VIDEOFILTERH + RSVAL + FPSVAL + DEINTVAL + SPPVAL
         End If
 
@@ -1197,7 +1232,7 @@ Public Class Main
 
         If CHKQA.Checked Then
             HLSOPTIONFLAG = " -force_key_frames expr:gte(t,n_forced*" + BOXCUSTOMT.Text + ") -keyint_min " + BOXCUSTOMT.Text + " -hls_list_size 0 -hls_time " + BOXCUSTOMT.Text + " "
-            SHELLCMD = FFMPEGEXE + " -thread_queue_size 512 " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + " " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
         ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
@@ -1209,13 +1244,13 @@ Public Class Main
             End If
 
             If Not BOXCODEC.Text = "No Video" And Not BOXACODEC.Text = "No Audio" Then
-                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -thread_queue_size 512 -y -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
-                "& youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -thread_queue_size 512 -y -i " + """" + "temp_" + TEMPYTFILENAME + """" + INPUTAUDFILENAME + " -i - " + TRIMTOVAL + " -vcodec copy -vsync 0 " + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + YTMAP + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """" +
+                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
+                "& youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y -i " + """" + "temp_" + TEMPYTFILENAME + """" + INPUTAUDFILENAME + " -i - " + TRIMTOVAL + " -vcodec copy -vsync 0 " + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + YTMAP + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """" +
                 "& del " + """" + "temp_" + TEMPYTFILENAME + """"
             ElseIf Not BOXCODEC.Text = "No Video" And BOXACODEC.Text = "No Audio" Then
-                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -thread_queue_size 512 -y -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + TRIMTOVAL + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
+                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + TRIMTOVAL + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
             Else
-                SHELLCMD = "youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -thread_queue_size 512 -y -i - " + TRIMTOVAL + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
+                SHELLCMD = "youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y -i - " + TRIMTOVAL + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
             End If
 
 
@@ -1226,16 +1261,16 @@ Public Class Main
             End If
 
             SHELLCMD = ".\livestreamer\livestreamer " + """" + INPUTVIDNAME + """" + " best -o - | " +
-                  FFMPEGEXE + " -thread_queue_size 512 -y -i " + "- " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
+                  FFMPEGEXE + " -y -i " + "- " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
         ElseIf BOXBITRATEMODE.Text = "2pass-ABR" Then
 
-            SHELLCMD = FFMPEGEXE + " -thread_queue_size 512 " + " -y " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + ":pass=1" + FAST1STFLAG + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + X264FAST1STFLAG +
+            SHELLCMD = FFMPEGEXE + " -y " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + ":pass=1" + FAST1STFLAG + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + X264FAST1STFLAG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + "-f mp4 NUL " + " & " +
-            FFMPEGEXE + " -thread_queue_size 512 " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + ":pass=2" + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            FFMPEGEXE + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + ":pass=2" + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
         Else
-            SHELLCMD = FFMPEGEXE + " -thread_queue_size 512 " + CUSTOMFFMPEGOPTF + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
 
         End If
@@ -1636,7 +1671,7 @@ Public Class Main
 
             OUTPUTFILENAME = "-"
             FORCEEXTENSION = " -f mpegts "
-            SHELLCMD = FFMPEGEXE + " -thread_queue_size 512 " + CUSTOMFFMPEGOPTF + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
             Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " | ffplay -i - &  comp.bat", vbNormalFocus)
             If CHKDEBUG.Checked Then
@@ -1644,6 +1679,19 @@ Public Class Main
             End If
 
             initialValue()
+        End If
+    End Sub
+
+    Private Sub BOXAUDIOPATH_DragDrop(sender As Object, e As System.Windows.Forms.DragEventArgs) Handles BOXAUDIOPATH.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        For Each path In files
+            BOXAUDIOPATH.Text = path
+        Next
+    End Sub
+
+    Private Sub BOXAUDIOPATH_DragEnter(sender As Object, e As System.Windows.Forms.DragEventArgs) Handles BOXAUDIOPATH.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
         End If
     End Sub
 End Class

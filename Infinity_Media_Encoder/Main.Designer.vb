@@ -213,7 +213,6 @@ Partial Class Main
         '
         Me.InputCBOX.AllowDrop = True
         Me.InputCBOX.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.InputCBOX.FormattingEnabled = True
         Me.InputCBOX.Location = New System.Drawing.Point(13, 537)
         Me.InputCBOX.Name = "InputCBOX"
         Me.InputCBOX.Size = New System.Drawing.Size(526, 21)
@@ -911,7 +910,6 @@ Partial Class Main
         '
         Me.BOXAUDIOPATH.AllowDrop = True
         Me.BOXAUDIOPATH.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BOXAUDIOPATH.FormattingEnabled = True
         Me.BOXAUDIOPATH.Location = New System.Drawing.Point(14, 577)
         Me.BOXAUDIOPATH.Name = "BOXAUDIOPATH"
         Me.BOXAUDIOPATH.Size = New System.Drawing.Size(526, 21)
@@ -1466,7 +1464,7 @@ Partial Class Main
         Me.CHKAUTONAME.Text = "Auto Generate Output File Name"
         Me.CHKAUTONAME.UseVisualStyleBackColor = True
         '
-        'Form2
+        'Main
         '
         Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
@@ -1499,7 +1497,7 @@ Partial Class Main
         Me.Controls.Add(Me.Button1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
-        Me.Name = "Form2"
+        Me.Name = "Main"
         Me.Text = "Infinity Media Encoder Alpha 3"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
