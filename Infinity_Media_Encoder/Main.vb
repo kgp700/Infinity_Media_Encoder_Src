@@ -1137,7 +1137,7 @@ Public Class Main
 
 
         If BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "libx264" Then
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + " -maxrate " + BITBOX.Text + "k "
+            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
         ElseIf BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "mpeg4" Then
             CBRVAL = " -bufsize " + BITBOX.Text + "k " + " -maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
         ElseIf BOXBITRATEMODE.Text = "CRF" Then
@@ -1208,6 +1208,9 @@ Public Class Main
         End If
 
         If BOXCODEC.Text = "copy" Then
+            VIDEOFILTERH = ""
+            VIDEOFILTER = ""
+        ElseIf CUSTOMVIDEOFILTER = "" And RSVAL = "" And FPSVAL = "" And DEINTVAL = "" And SPPVAL = "" Then
             VIDEOFILTERH = ""
             VIDEOFILTER = ""
         Else
