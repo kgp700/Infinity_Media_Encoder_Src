@@ -106,6 +106,7 @@ Partial Class Main
         Me.TAB = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.CHKPTSDTS = New System.Windows.Forms.CheckBox()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.BOXDEBUG = New System.Windows.Forms.TextBox()
         Me.CHKDEBUG = New System.Windows.Forms.CheckBox()
@@ -798,7 +799,7 @@ Partial Class Main
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(296, 23)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(33, 13)
+        Me.Label8.Size = New System.Drawing.Size(32, 13)
         Me.Label8.TabIndex = 47
         Me.Label8.Text = "Kbps"
         '
@@ -1020,6 +1021,7 @@ Partial Class Main
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.CHKPTSDTS)
         Me.TabPage2.Controls.Add(Me.Button13)
         Me.TabPage2.Controls.Add(Me.BOXDEBUG)
         Me.TabPage2.Controls.Add(Me.CHKDEBUG)
@@ -1040,9 +1042,21 @@ Partial Class Main
         Me.TabPage2.Text = "Advanced"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'CHKPTSDTS
+        '
+        Me.CHKPTSDTS.AutoSize = True
+        Me.CHKPTSDTS.Checked = True
+        Me.CHKPTSDTS.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CHKPTSDTS.Location = New System.Drawing.Point(12, 153)
+        Me.CHKPTSDTS.Name = "CHKPTSDTS"
+        Me.CHKPTSDTS.Size = New System.Drawing.Size(137, 17)
+        Me.CHKPTSDTS.TabIndex = 70
+        Me.CHKPTSDTS.Text = "Gen PTS / Ignore DTS"
+        Me.CHKPTSDTS.UseVisualStyleBackColor = True
+        '
         'Button13
         '
-        Me.Button13.Location = New System.Drawing.Point(339, 174)
+        Me.Button13.Location = New System.Drawing.Point(339, 187)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(151, 23)
         Me.Button13.TabIndex = 69
@@ -1052,9 +1066,9 @@ Partial Class Main
         'BOXDEBUG
         '
         Me.BOXDEBUG.Enabled = False
-        Me.BOXDEBUG.Location = New System.Drawing.Point(155, 127)
+        Me.BOXDEBUG.Location = New System.Drawing.Point(150, 126)
         Me.BOXDEBUG.Name = "BOXDEBUG"
-        Me.BOXDEBUG.Size = New System.Drawing.Size(248, 22)
+        Me.BOXDEBUG.Size = New System.Drawing.Size(469, 22)
         Me.BOXDEBUG.TabIndex = 68
         '
         'CHKDEBUG
@@ -1070,7 +1084,7 @@ Partial Class Main
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(156, 174)
+        Me.Button4.Location = New System.Drawing.Point(156, 187)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(177, 23)
         Me.Button4.TabIndex = 66
@@ -1103,7 +1117,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(12, 101)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1129,7 +1143,7 @@ Partial Class Main
         '
         'Button6
         '
-        Me.Button6.Location = New System.Drawing.Point(9, 174)
+        Me.Button6.Location = New System.Drawing.Point(9, 187)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(141, 23)
         Me.Button6.TabIndex = 59
@@ -1237,7 +1251,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(294, 13)
+        Me.Label28.Size = New System.Drawing.Size(293, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1644,4 +1658,5 @@ Partial Class Main
     Friend WithEvents Label30 As System.Windows.Forms.Label
     Friend WithEvents BOXCONTAINER As System.Windows.Forms.ComboBox
     Friend WithEvents Button13 As System.Windows.Forms.Button
+    Friend WithEvents CHKPTSDTS As System.Windows.Forms.CheckBox
 End Class
