@@ -75,6 +75,7 @@ Public Class Main
     Public BITSTREAMFILTER As String
     Public FORCEEXTENSION As String
     Public VDELAYINFO As String
+    Public INFOFRAMEMODE As String
 
     Dim DURHOURS As Integer
     Dim DURMIN As Integer
@@ -1062,6 +1063,13 @@ Public Class Main
 
 
 
+        If BOXDELAYINFO.Text = "" And Not BOXDELAY.Text = "Auto" Then
+
+        ElseIf Not BOXDELAYINFO.Text = "" And BOXDELAY.Text = "Auto" Then
+            VDELAYINFO = BOXDELAYINFO.Text
+        Else
+            VDELAYINFO = BOXDELAY.Text
+        End If
 
         If BOXACODEC.Text = "No Audio" Then
 
@@ -1085,12 +1093,7 @@ Public Class Main
             AUDIOCHANNELVAL = " -ac " + BOXCHANNEL.Text
         End If
 
-        If Not BOXDELAYINFO.Text = "" Then
-            Dim VDELAYINFO1 As String = BOXDELAYINFO.Text * (1 / 1000)
-            VDELAYINFO = Replace(VDELAYINFO1, "-", "")
 
-            BOXDELAYINFO.Text = VDELAYINFO
-        End If
 
         If Not BOXDELAY.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
             AUDIODELAYVAL = " -itsoffset " + VDELAYINFO + " "
@@ -1292,9 +1295,10 @@ Public Class Main
         BOXCODECINFO.Text = MI.Get_(StreamKind.Visual, 0, "Codec")
         BOXFPSINFO.Text = MI.Get_(StreamKind.Visual, 0, "FrameRate")
         BOXDELAYINFO.Text = MI.Get_(StreamKind.Audio, 0, "Video_Delay")
+        INFOFRAMEMODE = MI.Get_(StreamKind.Visual, 0, "FrameRate_Mode")
         If Not BOXDELAYINFO.Text = "" Then
-            Dim VDELAYINFO1 As String = BOXDELAYINFO.Text * (1 / 1000)
-            VDELAYINFO = Replace(VDELAYINFO1, "-", "")
+            Dim VDELAYINFO1 As String = (BOXDELAYINFO.Text * (1 / 1000)).ToString
+            VDELAYINFO = VDELAYINFO1
 
             BOXDELAYINFO.Text = VDELAYINFO
         End If

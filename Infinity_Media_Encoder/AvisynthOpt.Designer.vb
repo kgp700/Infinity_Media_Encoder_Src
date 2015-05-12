@@ -51,6 +51,7 @@ Partial Class AvisynthOpt
         'CHKDGNOISEFILTER
         '
         Me.CHKDGNOISEFILTER.AutoSize = True
+        Me.CHKDGNOISEFILTER.Enabled = False
         Me.CHKDGNOISEFILTER.Location = New System.Drawing.Point(12, 50)
         Me.CHKDGNOISEFILTER.Name = "CHKDGNOISEFILTER"
         Me.CHKDGNOISEFILTER.Size = New System.Drawing.Size(88, 16)
@@ -82,6 +83,7 @@ Partial Class AvisynthOpt
         '
         'BOXDGNOISEFILTER
         '
+        Me.BOXDGNOISEFILTER.Enabled = False
         Me.BOXDGNOISEFILTER.FormattingEnabled = True
         Me.BOXDGNOISEFILTER.Location = New System.Drawing.Point(106, 46)
         Me.BOXDGNOISEFILTER.Name = "BOXDGNOISEFILTER"
@@ -93,6 +95,7 @@ Partial Class AvisynthOpt
         Me.BOXAVSSCRIPT.Location = New System.Drawing.Point(9, 96)
         Me.BOXAVSSCRIPT.Multiline = True
         Me.BOXAVSSCRIPT.Name = "BOXAVSSCRIPT"
+        Me.BOXAVSSCRIPT.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.BOXAVSSCRIPT.Size = New System.Drawing.Size(499, 261)
         Me.BOXAVSSCRIPT.TabIndex = 6
         Me.BOXAVSSCRIPT.Text = resources.GetString("BOXAVSSCRIPT.Text")
@@ -112,7 +115,6 @@ Partial Class AvisynthOpt
         'RDBFFMS2
         '
         Me.RDBFFMS2.AutoSize = True
-        Me.RDBFFMS2.Enabled = False
         Me.RDBFFMS2.Location = New System.Drawing.Point(90, 5)
         Me.RDBFFMS2.Name = "RDBFFMS2"
         Me.RDBFFMS2.Size = New System.Drawing.Size(93, 16)
@@ -139,7 +141,7 @@ Partial Class AvisynthOpt
         Me.Button2.Text = "Save Script Only"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'Form7
+        'AvisynthOpt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -155,7 +157,7 @@ Partial Class AvisynthOpt
         Me.Controls.Add(Me.CHKDGNOISEFILTER)
         Me.Controls.Add(Me.CHKDGDEBLOCK)
         Me.MaximizeBox = False
-        Me.Name = "Form7"
+        Me.Name = "AvisynthOpt"
         Me.Text = "Avisynth Options"
         Me.ResumeLayout(False)
         Me.PerformLayout()
