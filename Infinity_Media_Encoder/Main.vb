@@ -886,7 +886,8 @@ Public Class Main
     End Sub
 
     Public Function prepareEncoding() As String()
-        FFMPEGEXE = "ffmpeghyb"
+
+        FFMPEGEXE = BOXFFMPEGEXE.Text
 
 
 
@@ -1170,9 +1171,9 @@ Public Class Main
         End If
 
         If CHK4K.Checked Then
-            YOUTUBEQ = "138/266/264/137/best "
+            YOUTUBEQ = "138/266/264/299/137/best "
         Else
-            YOUTUBEQ = "137/best "
+            YOUTUBEQ = "299/137/best "
         End If
 
 
@@ -1255,11 +1256,11 @@ Public Class Main
             End If
 
             If Not BOXCODEC.Text = "No Video" And Not BOXACODEC.Text = "No Audio" Then
-                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
-                "& youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + " -i " + """" + "temp_" + TEMPYTFILENAME + """" + INPUTAUDFILENAME + " -i - " + TRIMTOVAL + " -vcodec copy -vsync 0 " + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + YTMAP + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """" +
+                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
+                "& youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + " -i " + """" + "temp_" + TEMPYTFILENAME + """" + INPUTAUDFILENAME + " -i - " + TRIMTOVAL + " -vcodec copy " + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + YTMAP + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """" +
                 "& del " + """" + "temp_" + TEMPYTFILENAME + """"
             ElseIf Not BOXCODEC.Text = "No Video" And BOXACODEC.Text = "No Audio" Then
-                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + TRIMTOVAL + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
+                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
             Else
                 SHELLCMD = "youtube-dl -f 141 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + TRIMTOVAL + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
             End If
@@ -1705,5 +1706,9 @@ Public Class Main
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             e.Effect = DragDropEffects.Copy
         End If
+    End Sub
+
+    Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
+
     End Sub
 End Class

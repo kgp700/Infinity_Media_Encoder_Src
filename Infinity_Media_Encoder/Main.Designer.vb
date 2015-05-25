@@ -147,6 +147,9 @@ Partial Class Main
         Me.BTPRSAVE = New System.Windows.Forms.Button()
         Me.BTPRLOAD = New System.Windows.Forms.Button()
         Me.CHKAUTONAME = New System.Windows.Forms.CheckBox()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.BOXFFMPEGEXE = New System.Windows.Forms.ComboBox()
+        Me.Label31 = New System.Windows.Forms.Label()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -157,6 +160,7 @@ Partial Class Main
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.TabPage5.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
         Me.SuspendLayout()
         '
         'Button2
@@ -1001,6 +1005,7 @@ Partial Class Main
         Me.TAB.Controls.Add(Me.TabPage3)
         Me.TAB.Controls.Add(Me.TabPage4)
         Me.TAB.Controls.Add(Me.TabPage5)
+        Me.TAB.Controls.Add(Me.TabPage6)
         Me.TAB.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TAB.Location = New System.Drawing.Point(0, 59)
         Me.TAB.Name = "TAB"
@@ -1478,6 +1483,37 @@ Partial Class Main
         Me.CHKAUTONAME.Text = "Auto Generate Output File Name"
         Me.CHKAUTONAME.UseVisualStyleBackColor = True
         '
+        'TabPage6
+        '
+        Me.TabPage6.Controls.Add(Me.Label31)
+        Me.TabPage6.Controls.Add(Me.BOXFFMPEGEXE)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(636, 216)
+        Me.TabPage6.TabIndex = 5
+        Me.TabPage6.Text = "Settings"
+        Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'BOXFFMPEGEXE
+        '
+        Me.BOXFFMPEGEXE.AllowDrop = True
+        Me.BOXFFMPEGEXE.FormattingEnabled = True
+        Me.BOXFFMPEGEXE.Items.AddRange(New Object() {"ffmpeghyb32.exe"})
+        Me.BOXFFMPEGEXE.Location = New System.Drawing.Point(89, 14)
+        Me.BOXFFMPEGEXE.Name = "BOXFFMPEGEXE"
+        Me.BOXFFMPEGEXE.Size = New System.Drawing.Size(536, 21)
+        Me.BOXFFMPEGEXE.TabIndex = 70
+        Me.BOXFFMPEGEXE.Text = "ffmpeghyb.exe"
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(7, 17)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(73, 13)
+        Me.Label31.TabIndex = 71
+        Me.Label31.Text = "FFmpeg Path"
+        '
         'Main
         '
         Me.AllowDrop = True
@@ -1530,6 +1566,8 @@ Partial Class Main
         Me.TabPage4.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
+        Me.TabPage6.ResumeLayout(False)
+        Me.TabPage6.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1659,4 +1697,7 @@ Partial Class Main
     Friend WithEvents BOXCONTAINER As System.Windows.Forms.ComboBox
     Friend WithEvents Button13 As System.Windows.Forms.Button
     Friend WithEvents CHKPTSDTS As System.Windows.Forms.CheckBox
+    Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
+    Friend WithEvents BOXFFMPEGEXE As System.Windows.Forms.ComboBox
+    Friend WithEvents Label31 As System.Windows.Forms.Label
 End Class
