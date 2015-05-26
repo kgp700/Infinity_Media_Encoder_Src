@@ -106,7 +106,6 @@ Partial Class Main
         Me.TAB = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.CHKPTSDTS = New System.Windows.Forms.CheckBox()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.BOXDEBUG = New System.Windows.Forms.TextBox()
         Me.CHKDEBUG = New System.Windows.Forms.CheckBox()
@@ -139,6 +138,11 @@ Partial Class Main
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.CHKVSYNC0 = New System.Windows.Forms.CheckBox()
+        Me.CHKPTSDTS = New System.Windows.Forms.CheckBox()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.BOXFFMPEGEXE = New System.Windows.Forms.ComboBox()
         Me.BTADDENCLIST = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.CHKLOG = New System.Windows.Forms.CheckBox()
@@ -147,9 +151,6 @@ Partial Class Main
         Me.BTPRSAVE = New System.Windows.Forms.Button()
         Me.BTPRLOAD = New System.Windows.Forms.Button()
         Me.CHKAUTONAME = New System.Windows.Forms.CheckBox()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.BOXFFMPEGEXE = New System.Windows.Forms.ComboBox()
-        Me.Label31 = New System.Windows.Forms.Label()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -803,7 +804,7 @@ Partial Class Main
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(296, 23)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(32, 13)
+        Me.Label8.Size = New System.Drawing.Size(33, 13)
         Me.Label8.TabIndex = 47
         Me.Label8.Text = "Kbps"
         '
@@ -1026,7 +1027,6 @@ Partial Class Main
         '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.CHKPTSDTS)
         Me.TabPage2.Controls.Add(Me.Button13)
         Me.TabPage2.Controls.Add(Me.BOXDEBUG)
         Me.TabPage2.Controls.Add(Me.CHKDEBUG)
@@ -1046,18 +1046,6 @@ Partial Class Main
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Advanced"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'CHKPTSDTS
-        '
-        Me.CHKPTSDTS.AutoSize = True
-        Me.CHKPTSDTS.Checked = True
-        Me.CHKPTSDTS.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CHKPTSDTS.Location = New System.Drawing.Point(12, 153)
-        Me.CHKPTSDTS.Name = "CHKPTSDTS"
-        Me.CHKPTSDTS.Size = New System.Drawing.Size(137, 17)
-        Me.CHKPTSDTS.TabIndex = 70
-        Me.CHKPTSDTS.Text = "Gen PTS / Ignore DTS"
-        Me.CHKPTSDTS.UseVisualStyleBackColor = True
         '
         'Button13
         '
@@ -1122,7 +1110,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(12, 101)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1256,7 +1244,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(293, 13)
+        Me.Label28.Size = New System.Drawing.Size(294, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1398,6 +1386,59 @@ Partial Class Main
         Me.ComboBox1.TabIndex = 34
         Me.ComboBox1.Text = "FFsource"
         '
+        'TabPage6
+        '
+        Me.TabPage6.Controls.Add(Me.CHKVSYNC0)
+        Me.TabPage6.Controls.Add(Me.CHKPTSDTS)
+        Me.TabPage6.Controls.Add(Me.Label31)
+        Me.TabPage6.Controls.Add(Me.BOXFFMPEGEXE)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(636, 216)
+        Me.TabPage6.TabIndex = 5
+        Me.TabPage6.Text = "Settings"
+        Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'CHKVSYNC0
+        '
+        Me.CHKVSYNC0.AutoSize = True
+        Me.CHKVSYNC0.Location = New System.Drawing.Point(168, 186)
+        Me.CHKVSYNC0.Name = "CHKVSYNC0"
+        Me.CHKVSYNC0.Size = New System.Drawing.Size(120, 17)
+        Me.CHKVSYNC0.TabIndex = 73
+        Me.CHKVSYNC0.Text = "Vsync Passthrough"
+        Me.CHKVSYNC0.UseVisualStyleBackColor = True
+        '
+        'CHKPTSDTS
+        '
+        Me.CHKPTSDTS.AutoSize = True
+        Me.CHKPTSDTS.Location = New System.Drawing.Point(11, 186)
+        Me.CHKPTSDTS.Name = "CHKPTSDTS"
+        Me.CHKPTSDTS.Size = New System.Drawing.Size(137, 17)
+        Me.CHKPTSDTS.TabIndex = 72
+        Me.CHKPTSDTS.Text = "Gen PTS / Ignore DTS"
+        Me.CHKPTSDTS.UseVisualStyleBackColor = True
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(7, 17)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(73, 13)
+        Me.Label31.TabIndex = 71
+        Me.Label31.Text = "FFmpeg Path"
+        '
+        'BOXFFMPEGEXE
+        '
+        Me.BOXFFMPEGEXE.AllowDrop = True
+        Me.BOXFFMPEGEXE.FormattingEnabled = True
+        Me.BOXFFMPEGEXE.Items.AddRange(New Object() {"64bit FFmpeg", "32bit FFmpeg"})
+        Me.BOXFFMPEGEXE.Location = New System.Drawing.Point(89, 14)
+        Me.BOXFFMPEGEXE.Name = "BOXFFMPEGEXE"
+        Me.BOXFFMPEGEXE.Size = New System.Drawing.Size(536, 21)
+        Me.BOXFFMPEGEXE.TabIndex = 70
+        Me.BOXFFMPEGEXE.Text = "64bit FFmpeg"
+        '
         'BTADDENCLIST
         '
         Me.BTADDENCLIST.FlatStyle = System.Windows.Forms.FlatStyle.Popup
@@ -1482,37 +1523,6 @@ Partial Class Main
         Me.CHKAUTONAME.TabIndex = 71
         Me.CHKAUTONAME.Text = "Auto Generate Output File Name"
         Me.CHKAUTONAME.UseVisualStyleBackColor = True
-        '
-        'TabPage6
-        '
-        Me.TabPage6.Controls.Add(Me.Label31)
-        Me.TabPage6.Controls.Add(Me.BOXFFMPEGEXE)
-        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(636, 216)
-        Me.TabPage6.TabIndex = 5
-        Me.TabPage6.Text = "Settings"
-        Me.TabPage6.UseVisualStyleBackColor = True
-        '
-        'BOXFFMPEGEXE
-        '
-        Me.BOXFFMPEGEXE.AllowDrop = True
-        Me.BOXFFMPEGEXE.FormattingEnabled = True
-        Me.BOXFFMPEGEXE.Items.AddRange(New Object() {"ffmpeghyb32.exe"})
-        Me.BOXFFMPEGEXE.Location = New System.Drawing.Point(89, 14)
-        Me.BOXFFMPEGEXE.Name = "BOXFFMPEGEXE"
-        Me.BOXFFMPEGEXE.Size = New System.Drawing.Size(536, 21)
-        Me.BOXFFMPEGEXE.TabIndex = 70
-        Me.BOXFFMPEGEXE.Text = "ffmpeghyb.exe"
-        '
-        'Label31
-        '
-        Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(7, 17)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(73, 13)
-        Me.Label31.TabIndex = 71
-        Me.Label31.Text = "FFmpeg Path"
         '
         'Main
         '
@@ -1696,8 +1706,9 @@ Partial Class Main
     Friend WithEvents Label30 As System.Windows.Forms.Label
     Friend WithEvents BOXCONTAINER As System.Windows.Forms.ComboBox
     Friend WithEvents Button13 As System.Windows.Forms.Button
-    Friend WithEvents CHKPTSDTS As System.Windows.Forms.CheckBox
     Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
     Friend WithEvents BOXFFMPEGEXE As System.Windows.Forms.ComboBox
     Friend WithEvents Label31 As System.Windows.Forms.Label
+    Friend WithEvents CHKVSYNC0 As System.Windows.Forms.CheckBox
+    Friend WithEvents CHKPTSDTS As System.Windows.Forms.CheckBox
 End Class

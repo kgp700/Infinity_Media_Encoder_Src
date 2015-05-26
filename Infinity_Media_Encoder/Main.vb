@@ -772,6 +772,15 @@ Public Class Main
 
 
     Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+
+        If Environment.Is64BitOperatingSystem = True Then
+            BOXFFMPEGEXE.Text = "64bit FFmpeg"
+        ElseIf Environment.Is64BitOperatingSystem = False Then
+            BOXFFMPEGEXE.Text = "32bit FFmpeg"
+        End If
+
+
         Dim PRESETFOLDER As String = ".\Preset\"
 
         For Each PRESETFILE As String In My.Computer.FileSystem.GetFiles _
@@ -784,6 +793,8 @@ Public Class Main
         BOXBITRATEMODE.Items.Add("ABR")
         BOXBITRATEMODE.Items.Add("File Size")
         BOXBITRATEMODE.Items.Add("2pass-ABR")
+
+
 
     End Sub
 
@@ -887,8 +898,13 @@ Public Class Main
 
     Public Function prepareEncoding() As String()
 
-        FFMPEGEXE = BOXFFMPEGEXE.Text
-
+        If BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+            FFMPEGEXE = "ffmpeghyb.exe"
+        ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        Else
+            FFMPEGEXE = BOXFFMPEGEXE.Text
+        End If
 
 
         If Not BOXCODEC.Text = "No Video" Then
