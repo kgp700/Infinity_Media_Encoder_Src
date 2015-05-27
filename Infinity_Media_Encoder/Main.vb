@@ -451,6 +451,7 @@ Public Class Main
     End Sub
 
     Private Sub Button7_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
+        prepareOpen()
         If My.Computer.FileSystem.FileExists(InputCBOX.Text + ".avs") Then
             MsgBox("AVS File found.")
             Dim fileReader As String
@@ -898,7 +899,14 @@ Public Class Main
 
     Public Function prepareEncoding() As String()
 
-        If BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+        If BOXCODECINFO.Text = "" Then
+            prepareOpen()
+        End If
+
+
+        If CHKAVISYNTH.Checked = True Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
             FFMPEGEXE = "ffmpeghyb.exe"
         ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
