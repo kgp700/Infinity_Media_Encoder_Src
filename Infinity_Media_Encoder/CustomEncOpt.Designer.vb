@@ -142,6 +142,7 @@ Partial Class FRMCUSTOMENC
         Me.Controls.Add(Me.BOXCUSTOMVFILTEROPT)
         Me.Controls.Add(Me.BOXCUSTOMCODECOPT)
         Me.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "FRMCUSTOMENC"
         Me.Text = "Custom Encoding Parameters"
         Me.ResumeLayout(False)

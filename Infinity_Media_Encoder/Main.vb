@@ -76,6 +76,7 @@ Public Class Main
     Public FORCEEXTENSION As String
     Public VDELAYINFO As String
     Public INFOFRAMEMODE As String
+    Public EXTRAFFPRAM As String
 
     Dim DURHOURS As Integer
     Dim DURMIN As Integer
@@ -441,16 +442,6 @@ Public Class Main
 
     End Sub
 
-
-    Private Sub Button4_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNADV.Click
-        If BOXCODEC.Text = "libx264" Then
-            AdvancedFRM.ShowDialog()
-        Else
-            MsgBox("Advanced Options only support on libx264 Codec", MsgBoxStyle.Information)
-        End If
-
-    End Sub
-
     Private Sub Button7_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         prepareOpen()
         If My.Computer.FileSystem.FileExists(InputCBOX.Text + ".avs") Then
@@ -460,6 +451,11 @@ Public Class Main
             AvisynthOpt.BOXAVSSCRIPT.Text = fileReader
         Else
             MsgBox("AVS File not found.")
+        End If
+        If BOXCODECINFO.Text = "MPEG-2V" Then
+            AvisynthOpt.RDBDGINDEX.Checked = True
+        Else
+            AvisynthOpt.RDBFFMS2.Checked = True
         End If
 
 
@@ -1234,7 +1230,7 @@ Public Class Main
             SUBTITLEPATH = " -i " + """" + BOXSUBPATH.Text + """" + " "
             If BOXFORMATINFO.Text = "MPEG-4" Then
                 SUBTITLECHKVAL = " -scodec mov_text "
-            ElseIf BOXFORMATINFO.Text = "Matroska" Then
+            ElseIf BOXCODECINFO.Text = "Matroska" Then
                 SUBTITLECHKVAL = " -scodec srt "
             ElseIf BOXFORMATINFO.Text = "MPEG-TS" Then
                 SUBTITLECHKVAL = " -scodec copy "
@@ -1261,11 +1257,23 @@ Public Class Main
 
 
         YTMAP = " -map 0:v:0 -map 1:a:0 "
+        Dim VSYNCVAL As String
+        Dim CHKASYNCVAL As String
+        If CHKVSYNC0.Checked = True Then
+            VSYNCVAL = " -vsync 0 "
+        End If
+        If CHKASYNC.Checked = True Then
+            CHKASYNCVAL = " -async 1 "
+        End If
+        EXTRAFFPRAM = VSYNCVAL + CHKASYNCVAL
+
+        VSYNCVAL = ""
+        CHKASYNCVAL = ""
     End Function
 
     Public Function prepareEncoding2() As String()
 
-        If BOXCODEC.Text = "copy" And BOXCODECINFO.Text = "AVC" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
+        If BOXCODEC.Text = "copy" And BOXCODECINFO.Text = "AVC" Or BOXCODECINFO.Text = "HEVC" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:a aac_adtstoasc "
         ElseIf BOXCODEC.Text = "copy" And BOXCODECINFO.Text = "AVC" And BOXFORMATINFO.Text = "MPEG-4" And BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:v h264_mp4toannexb "
@@ -1306,12 +1314,12 @@ Public Class Main
 
         ElseIf BOXBITRATEMODE.Text = "2pass-ABR" Then
 
-            SHELLCMD = FFMPEGEXE + " -y " + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + ":pass=1" + FAST1STFLAG + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + X264FAST1STFLAG +
+            SHELLCMD = FFMPEGEXE + " -y " + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + ":pass=1" + FAST1STFLAG + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + X264FAST1STFLAG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + "-f mp4 NUL " + " & " +
-            FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + ":pass=2" + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + ":pass=2" + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
         Else
-            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
 
         End If
@@ -1363,6 +1371,10 @@ Public Class Main
                 OUTPUTFILENAME = OutputCBox.Text
             End If
         End If
+
+        LBINPUTINFO.Text = "Video Codec : " + BOXCODECINFO.Text + "   Format : " + BOXFORMATINFO.Text + "   Framerate : " + BOXFPSINFO.Text + "   Aspect Ratio : " + BOXASPECT.Text + "   Delay : " +
+        BOXDELAYINFO.Text + " Sec" & vbCrLf & "Duration : " + BOXDURATION.Text + "   Profile : " + BOXPFINFO.Text + "   Ref Frames : " + BOXREFINFO.Text + "   Audio Codec : " + BOXACODECINFO.Text
+
     End Function
     Public Function initialValue() As String()
         FPSVAL = ""
@@ -1422,6 +1434,7 @@ Public Class Main
         FORCEEXTENSION = ""
         VDELAYINFO = ""
         GPTSIDTS = ""
+        EXTRAFFPRAM = ""
     End Function
 
 
@@ -1450,7 +1463,10 @@ Public Class Main
             listIndex = listIndex + 1
 
         Next
-        MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        If CHKDEBUG.Checked = True Then
+            MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        End If
+
         Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         CMD1 = ""
         CMD = ""
@@ -1470,7 +1486,10 @@ Public Class Main
             listIndex = listIndex + 1
 
         Next
-        MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        If CHKDEBUG.Checked = True Then
+            MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        End If
+
         Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         CMD1 = ""
         CMD = ""
@@ -1654,7 +1673,9 @@ Public Class Main
     End Sub
     Public Function SwitchContainer() As String()
 
-        If Not OutputCBox.Text = "" Then
+        If OutputCBox.Text = "" Then
+
+        Else
             Dim originalFile As String = OutputCBox.Text
             Dim newName As String = Path.ChangeExtension(originalFile, BOXCONTAINER.Text)
             OutputCBox.Text = newName
@@ -1714,7 +1735,7 @@ Public Class Main
 
             OUTPUTFILENAME = "-"
             FORCEEXTENSION = " -f mpegts "
-            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
             Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " | ffplay -i - &  comp.bat", vbNormalFocus)
             If CHKDEBUG.Checked Then
@@ -1738,19 +1759,48 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
+    Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     End Sub
 
     Private Sub Button14_Click(sender As System.Object, e As System.EventArgs) Handles Button14.Click
-        prepareEncoding()
+        If BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+            FFMPEGEXE = "ffmpeghyb.exe"
+        ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        Else
+            FFMPEGEXE = BOXFFMPEGEXE.Text
+        End If
+
+        INPUTVIDNAME = InputCBOX.Text
+
+        Dim testFile As System.IO.FileInfo
+        testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
+        Dim folderPath As String = testFile.DirectoryName + "\"
+
         Dim SHELLCMD2 As String
 
-        SHELLCMD = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + " -c copy -an " + """" + OUTPUTFILENAME + """" + ".mkv"
-        SHELLCMD2 = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + ".mkv" + " -f rawvideo " + """" + OUTPUTFILENAME + """" + ".yuv"
-        Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat & " + SHELLCMD2, vbNormalFocus)
 
+        Dim infileName As String = IO.Path.GetFileNameWithoutExtension(INPUTVIDNAME)
 
+        SHELLCMD = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + " -c copy -an " + """" + folderPath + infileName + ".mkv" + """"
+        SHELLCMD2 = FFMPEGEXE + " -y -i " + """" + folderPath + infileName + ".mkv" + """" + " -f rawvideo " + """" + folderPath + infileName + ".yuv" + """" + " & del " + """" + folderPath + infileName + ".mkv" + """"
+        Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & " + SHELLCMD2 + " & comp.bat", vbNormalFocus)
+
+        If CHKDEBUG.Checked Then
+            BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " & " + SHELLCMD2 + " & comp.bat"
+        End If
+
+        initialValue()
+
+    End Sub
+
+    Private Sub BTNADV_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNADV.Click
+        If BOXCODEC.Text = "libx264" Then
+            AdvancedFRM.ShowDialog()
+        Else
+            MsgBox("Advanced Options only support on libx264 Codec", MsgBoxStyle.Information)
+        End If
 
     End Sub
 End Class
