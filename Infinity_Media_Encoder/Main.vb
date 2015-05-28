@@ -178,6 +178,7 @@ Public Class Main
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
+            prepareEncoding2()
 
 
             Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
@@ -492,6 +493,7 @@ Public Class Main
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTADDENCLIST.Click
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
+            prepareEncoding2()
             Dim ACMD As String = SHELLCMD
             LISTCHKENC2.Items.Add(ACMD)
             CreateObject("WScript.Shell").Popup("Added to list - List Item count is " + LISTCHKENC2.Items.Count.ToString, 1, "Infinity Media Encoder")
@@ -1072,7 +1074,7 @@ Public Class Main
             X264OPT = ":fullrange=off:colorprim=bt709:weightp=2:weightb=1:b-adapt=2:rc-lookahead=40:b-pyramid=2:b-bias=3" + CUSTOMCODECOPT
 
         ElseIf BOXCODEC.Text = "libx265" Then
-            X264OPT = " -x265-params fullrange=off:colorprim=bt709:open-gop=0" + CUSTOMCODECOPT
+            X264OPT = " -x265-params colorprim=bt709:open-gop=0" + CUSTOMCODECOPT
             If CHKFAST1ST.Checked = False Then
                 FAST1STFLAG = ":slow-firstpass=1"
             End If
@@ -1259,6 +1261,9 @@ Public Class Main
 
 
         YTMAP = " -map 0:v:0 -map 1:a:0 "
+    End Function
+
+    Public Function prepareEncoding2() As String()
 
         If BOXCODEC.Text = "copy" And BOXCODECINFO.Text = "AVC" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:a aac_adtstoasc "
@@ -1705,6 +1710,7 @@ Public Class Main
     Private Sub Button13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button13.Click
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
+            prepareEncoding2()
 
             OUTPUTFILENAME = "-"
             FORCEEXTENSION = " -f mpegts "
@@ -1733,6 +1739,18 @@ Public Class Main
     End Sub
 
     Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
+
+    End Sub
+
+    Private Sub Button14_Click(sender As System.Object, e As System.EventArgs) Handles Button14.Click
+        prepareEncoding()
+        Dim SHELLCMD2 As String
+
+        SHELLCMD = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + " -c copy -an " + """" + OUTPUTFILENAME + """" + ".mkv"
+        SHELLCMD2 = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + ".mkv" + " -f rawvideo " + """" + OUTPUTFILENAME + """" + ".yuv"
+        Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat & " + SHELLCMD2, vbNormalFocus)
+
+
 
     End Sub
 End Class

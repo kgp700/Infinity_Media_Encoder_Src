@@ -151,6 +151,7 @@ Partial Class Main
         Me.BTPRSAVE = New System.Windows.Forms.Button()
         Me.BTPRLOAD = New System.Windows.Forms.Button()
         Me.CHKAUTONAME = New System.Windows.Forms.CheckBox()
+        Me.Button14 = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1027,6 +1028,7 @@ Partial Class Main
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Button14)
         Me.TabPage2.Controls.Add(Me.Button13)
         Me.TabPage2.Controls.Add(Me.BOXDEBUG)
         Me.TabPage2.Controls.Add(Me.CHKDEBUG)
@@ -1524,6 +1526,15 @@ Partial Class Main
         Me.CHKAUTONAME.Text = "Auto Generate Output File Name"
         Me.CHKAUTONAME.UseVisualStyleBackColor = True
         '
+        'Button14
+        '
+        Me.Button14.Location = New System.Drawing.Point(10, 158)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(140, 23)
+        Me.Button14.TabIndex = 70
+        Me.Button14.Text = "YUV Extractor"
+        Me.Button14.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AllowDrop = True
@@ -1711,4 +1722,5 @@ Partial Class Main
     Friend WithEvents Label31 As System.Windows.Forms.Label
     Friend WithEvents CHKVSYNC0 As System.Windows.Forms.CheckBox
     Friend WithEvents CHKPTSDTS As System.Windows.Forms.CheckBox
+    Friend WithEvents Button14 As System.Windows.Forms.Button
 End Class
