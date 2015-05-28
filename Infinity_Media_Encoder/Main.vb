@@ -1230,7 +1230,7 @@ Public Class Main
             SUBTITLEPATH = " -i " + """" + BOXSUBPATH.Text + """" + " "
             If BOXFORMATINFO.Text = "MPEG-4" Then
                 SUBTITLECHKVAL = " -scodec mov_text "
-            ElseIf BOXCODECINFO.Text = "Matroska" Then
+            ElseIf BOXFORMATINFO.Text = "Matroska" Then
                 SUBTITLECHKVAL = " -scodec srt "
             ElseIf BOXFORMATINFO.Text = "MPEG-TS" Then
                 SUBTITLECHKVAL = " -scodec copy "
