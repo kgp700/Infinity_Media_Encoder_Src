@@ -43,6 +43,12 @@ Partial Class Main
         Me.Label4 = New System.Windows.Forms.Label()
         Me.CHKCQM = New System.Windows.Forms.CheckBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.BOXDURATION2 = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.BOXCUSTOMT = New System.Windows.Forms.ComboBox()
+        Me.CHKQA = New System.Windows.Forms.CheckBox()
+        Me.CHECKADV = New System.Windows.Forms.CheckBox()
+        Me.BTNADV = New System.Windows.Forms.Button()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.BOXCONTAINER = New System.Windows.Forms.ComboBox()
         Me.CHKFAST1ST = New System.Windows.Forms.CheckBox()
@@ -94,10 +100,11 @@ Partial Class Main
         Me.Button8 = New System.Windows.Forms.Button()
         Me.TAB = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.LBINPUTINFO = New System.Windows.Forms.Label()
         Me.BOXFORMATINFO = New System.Windows.Forms.TextBox()
-        Me.BOXCODECINFO = New System.Windows.Forms.TextBox()
-        Me.BOXFPSINFO = New System.Windows.Forms.TextBox()
         Me.BOXASPECT = New System.Windows.Forms.TextBox()
+        Me.BOXFPSINFO = New System.Windows.Forms.TextBox()
+        Me.BOXCODECINFO = New System.Windows.Forms.TextBox()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.BOXUNSHARP = New System.Windows.Forms.ComboBox()
@@ -134,6 +141,7 @@ Partial Class Main
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.CHKASYNC = New System.Windows.Forms.CheckBox()
         Me.CHKVSYNC0 = New System.Windows.Forms.CheckBox()
         Me.CHKPTSDTS = New System.Windows.Forms.CheckBox()
         Me.Label31 = New System.Windows.Forms.Label()
@@ -149,14 +157,6 @@ Partial Class Main
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.LBINPUTINFO = New System.Windows.Forms.Label()
-        Me.CHECKADV = New System.Windows.Forms.CheckBox()
-        Me.BTNADV = New System.Windows.Forms.Button()
-        Me.BOXDURATION2 = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.BOXCUSTOMT = New System.Windows.Forms.ComboBox()
-        Me.CHKQA = New System.Windows.Forms.CheckBox()
-        Me.CHKASYNC = New System.Windows.Forms.CheckBox()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -416,6 +416,62 @@ Partial Class Main
         Me.GroupBox2.TabIndex = 54
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Video"
+        '
+        'BOXDURATION2
+        '
+        Me.BOXDURATION2.Enabled = False
+        Me.BOXDURATION2.Location = New System.Drawing.Point(174, 174)
+        Me.BOXDURATION2.Name = "BOXDURATION2"
+        Me.BOXDURATION2.Size = New System.Drawing.Size(59, 23)
+        Me.BOXDURATION2.TabIndex = 80
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(13, 177)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(82, 15)
+        Me.Label12.TabIndex = 82
+        Me.Label12.Text = "Split Duration"
+        '
+        'BOXCUSTOMT
+        '
+        Me.BOXCUSTOMT.AllowDrop = True
+        Me.BOXCUSTOMT.FormattingEnabled = True
+        Me.BOXCUSTOMT.Location = New System.Drawing.Point(107, 174)
+        Me.BOXCUSTOMT.Name = "BOXCUSTOMT"
+        Me.BOXCUSTOMT.Size = New System.Drawing.Size(61, 21)
+        Me.BOXCUSTOMT.TabIndex = 81
+        Me.BOXCUSTOMT.Text = "10"
+        '
+        'CHKQA
+        '
+        Me.CHKQA.AutoSize = True
+        Me.CHKQA.Location = New System.Drawing.Point(7, 152)
+        Me.CHKQA.Name = "CHKQA"
+        Me.CHKQA.Size = New System.Drawing.Size(189, 19)
+        Me.CHKQA.TabIndex = 79
+        Me.CHKQA.Text = "HLS Contents Encoding Mode"
+        Me.CHKQA.UseVisualStyleBackColor = True
+        '
+        'CHECKADV
+        '
+        Me.CHECKADV.AutoSize = True
+        Me.CHECKADV.Location = New System.Drawing.Point(274, 176)
+        Me.CHECKADV.Name = "CHECKADV"
+        Me.CHECKADV.Size = New System.Drawing.Size(202, 19)
+        Me.CHECKADV.TabIndex = 78
+        Me.CHECKADV.Text = "Use Advanced Encoding Options"
+        Me.CHECKADV.UseVisualStyleBackColor = True
+        '
+        'BTNADV
+        '
+        Me.BTNADV.Location = New System.Drawing.Point(486, 172)
+        Me.BTNADV.Name = "BTNADV"
+        Me.BTNADV.Size = New System.Drawing.Size(135, 23)
+        Me.BTNADV.TabIndex = 77
+        Me.BTNADV.Text = "Advanced"
+        Me.BTNADV.UseVisualStyleBackColor = True
         '
         'Label30
         '
@@ -960,6 +1016,15 @@ Partial Class Main
         Me.TabPage1.Text = "Encoding Options"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'LBINPUTINFO
+        '
+        Me.LBINPUTINFO.AutoSize = True
+        Me.LBINPUTINFO.Location = New System.Drawing.Point(9, 241)
+        Me.LBINPUTINFO.Name = "LBINPUTINFO"
+        Me.LBINPUTINFO.Size = New System.Drawing.Size(121, 13)
+        Me.LBINPUTINFO.TabIndex = 78
+        Me.LBINPUTINFO.Text = "No Media Information"
+        '
         'BOXFORMATINFO
         '
         Me.BOXFORMATINFO.Enabled = False
@@ -969,14 +1034,14 @@ Partial Class Main
         Me.BOXFORMATINFO.TabIndex = 58
         Me.BOXFORMATINFO.Visible = False
         '
-        'BOXCODECINFO
+        'BOXASPECT
         '
-        Me.BOXCODECINFO.Enabled = False
-        Me.BOXCODECINFO.Location = New System.Drawing.Point(21, 241)
-        Me.BOXCODECINFO.Name = "BOXCODECINFO"
-        Me.BOXCODECINFO.Size = New System.Drawing.Size(106, 22)
-        Me.BOXCODECINFO.TabIndex = 50
-        Me.BOXCODECINFO.Visible = False
+        Me.BOXASPECT.Enabled = False
+        Me.BOXASPECT.Location = New System.Drawing.Point(257, 241)
+        Me.BOXASPECT.Name = "BOXASPECT"
+        Me.BOXASPECT.Size = New System.Drawing.Size(42, 22)
+        Me.BOXASPECT.TabIndex = 54
+        Me.BOXASPECT.Visible = False
         '
         'BOXFPSINFO
         '
@@ -987,14 +1052,14 @@ Partial Class Main
         Me.BOXFPSINFO.TabIndex = 51
         Me.BOXFPSINFO.Visible = False
         '
-        'BOXASPECT
+        'BOXCODECINFO
         '
-        Me.BOXASPECT.Enabled = False
-        Me.BOXASPECT.Location = New System.Drawing.Point(257, 241)
-        Me.BOXASPECT.Name = "BOXASPECT"
-        Me.BOXASPECT.Size = New System.Drawing.Size(42, 22)
-        Me.BOXASPECT.TabIndex = 54
-        Me.BOXASPECT.Visible = False
+        Me.BOXCODECINFO.Enabled = False
+        Me.BOXCODECINFO.Location = New System.Drawing.Point(21, 241)
+        Me.BOXCODECINFO.Name = "BOXCODECINFO"
+        Me.BOXCODECINFO.Size = New System.Drawing.Size(106, 22)
+        Me.BOXCODECINFO.TabIndex = 50
+        Me.BOXCODECINFO.Visible = False
         '
         'TabPage7
         '
@@ -1120,7 +1185,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1235,7 +1300,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(293, 13)
+        Me.Label28.Size = New System.Drawing.Size(294, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1391,6 +1456,18 @@ Partial Class Main
         Me.TabPage6.Text = "Settings"
         Me.TabPage6.UseVisualStyleBackColor = True
         '
+        'CHKASYNC
+        '
+        Me.CHKASYNC.AutoSize = True
+        Me.CHKASYNC.Checked = True
+        Me.CHKASYNC.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CHKASYNC.Location = New System.Drawing.Point(311, 41)
+        Me.CHKASYNC.Name = "CHKASYNC"
+        Me.CHKASYNC.Size = New System.Drawing.Size(68, 17)
+        Me.CHKASYNC.TabIndex = 74
+        Me.CHKASYNC.Text = "Async=1"
+        Me.CHKASYNC.UseVisualStyleBackColor = True
+        '
         'CHKVSYNC0
         '
         Me.CHKVSYNC0.AutoSize = True
@@ -1532,83 +1609,6 @@ Partial Class Main
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(123, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
-        '
-        'LBINPUTINFO
-        '
-        Me.LBINPUTINFO.AutoSize = True
-        Me.LBINPUTINFO.Location = New System.Drawing.Point(9, 241)
-        Me.LBINPUTINFO.Name = "LBINPUTINFO"
-        Me.LBINPUTINFO.Size = New System.Drawing.Size(121, 13)
-        Me.LBINPUTINFO.TabIndex = 78
-        Me.LBINPUTINFO.Text = "No Media Information"
-        '
-        'CHECKADV
-        '
-        Me.CHECKADV.AutoSize = True
-        Me.CHECKADV.Location = New System.Drawing.Point(274, 176)
-        Me.CHECKADV.Name = "CHECKADV"
-        Me.CHECKADV.Size = New System.Drawing.Size(202, 19)
-        Me.CHECKADV.TabIndex = 78
-        Me.CHECKADV.Text = "Use Advanced Encoding Options"
-        Me.CHECKADV.UseVisualStyleBackColor = True
-        '
-        'BTNADV
-        '
-        Me.BTNADV.Location = New System.Drawing.Point(486, 172)
-        Me.BTNADV.Name = "BTNADV"
-        Me.BTNADV.Size = New System.Drawing.Size(135, 23)
-        Me.BTNADV.TabIndex = 77
-        Me.BTNADV.Text = "Advanced"
-        Me.BTNADV.UseVisualStyleBackColor = True
-        '
-        'BOXDURATION2
-        '
-        Me.BOXDURATION2.Enabled = False
-        Me.BOXDURATION2.Location = New System.Drawing.Point(174, 174)
-        Me.BOXDURATION2.Name = "BOXDURATION2"
-        Me.BOXDURATION2.Size = New System.Drawing.Size(59, 23)
-        Me.BOXDURATION2.TabIndex = 80
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(13, 177)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(82, 15)
-        Me.Label12.TabIndex = 82
-        Me.Label12.Text = "Split Duration"
-        '
-        'BOXCUSTOMT
-        '
-        Me.BOXCUSTOMT.AllowDrop = True
-        Me.BOXCUSTOMT.FormattingEnabled = True
-        Me.BOXCUSTOMT.Location = New System.Drawing.Point(107, 174)
-        Me.BOXCUSTOMT.Name = "BOXCUSTOMT"
-        Me.BOXCUSTOMT.Size = New System.Drawing.Size(61, 21)
-        Me.BOXCUSTOMT.TabIndex = 81
-        Me.BOXCUSTOMT.Text = "10"
-        '
-        'CHKQA
-        '
-        Me.CHKQA.AutoSize = True
-        Me.CHKQA.Location = New System.Drawing.Point(7, 152)
-        Me.CHKQA.Name = "CHKQA"
-        Me.CHKQA.Size = New System.Drawing.Size(189, 19)
-        Me.CHKQA.TabIndex = 79
-        Me.CHKQA.Text = "HLS Contents Encoding Mode"
-        Me.CHKQA.UseVisualStyleBackColor = True
-        '
-        'CHKASYNC
-        '
-        Me.CHKASYNC.AutoSize = True
-        Me.CHKASYNC.Checked = True
-        Me.CHKASYNC.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CHKASYNC.Location = New System.Drawing.Point(311, 41)
-        Me.CHKASYNC.Name = "CHKASYNC"
-        Me.CHKASYNC.Size = New System.Drawing.Size(68, 17)
-        Me.CHKASYNC.TabIndex = 74
-        Me.CHKASYNC.Text = "Async=1"
-        Me.CHKASYNC.UseVisualStyleBackColor = True
         '
         'Main
         '

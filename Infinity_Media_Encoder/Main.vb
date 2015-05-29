@@ -197,6 +197,18 @@ Public Class Main
     End Sub
 
     Private Sub BOXCODEC_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXCODEC.TextChanged
+        ChangeItems()
+
+        If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
+            InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
+            InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
+            CHKMULTITR.Enabled = False
+            CHKQA.Enabled = False
+        End If
+
+
+    End Sub
+    Public Function ChangeItems() As String()
         If BOXCODEC.Text = "libx265" Then
             LVBOX.Text = ""
             PFBOX.Text = ""
@@ -431,16 +443,7 @@ Public Class Main
 
 
         End If
-
-        If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
-            InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
-            InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
-            CHKMULTITR.Enabled = False
-            CHKQA.Enabled = False
-        End If
-
-
-    End Sub
+    End Function
 
     Private Sub Button7_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         prepareOpen()
@@ -1273,9 +1276,9 @@ Public Class Main
 
     Public Function prepareEncoding2() As String()
 
-        If BOXCODEC.Text = "copy" And BOXCODECINFO.Text = "AVC" Or BOXCODECINFO.Text = "HEVC" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
+        If BOXCODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:a aac_adtstoasc "
-        ElseIf BOXCODEC.Text = "copy" And BOXCODECINFO.Text = "AVC" And BOXFORMATINFO.Text = "MPEG-4" And BOXCONTAINER.Text = "ts" Then
+        ElseIf BOXCODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-4" And BOXCONTAINER.Text = "ts" Or BOXCONTAINER.Text = "m3u8" Then
             BITSTREAMFILTER = " -bsf:v h264_mp4toannexb "
         End If
 
@@ -1374,6 +1377,21 @@ Public Class Main
 
         LBINPUTINFO.Text = "Video Codec : " + BOXCODECINFO.Text + "   Format : " + BOXFORMATINFO.Text + "   Framerate : " + BOXFPSINFO.Text + "   Aspect Ratio : " + BOXASPECT.Text + "   Delay : " +
         BOXDELAYINFO.Text + " Sec" & vbCrLf & "Duration : " + BOXDURATION.Text + "   Profile : " + BOXPFINFO.Text + "   Ref Frames : " + BOXREFINFO.Text + "   Audio Codec : " + BOXACODECINFO.Text
+
+        If CHKQA.Checked = True And Not InputCBOX.Text = "" Then
+            BOXCONTAINER.Items.Clear()
+            BOXCONTAINER.Items.Add("m3u8")
+            BOXCONTAINER.Text = "m3u8"
+            INPUTVIDNAME = InputCBOX.Text
+            Dim testFile As System.IO.FileInfo
+            testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
+            Dim folderPath As String = testFile.DirectoryName
+            Dim infileName As String = testFile.Name
+            OutputCBox.Text = folderPath + "\HLS_Output\playlist.m3u8"
+        ElseIf CHKQA.Checked = False Then
+            ChangeItems()
+        End If
+        SwitchContainer()
 
     End Function
     Public Function initialValue() As String()
@@ -1717,14 +1735,15 @@ Public Class Main
         SwitchContainer()
     End Sub
 
-    Private Sub OutputCBox_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles OutputCBox.TextChanged
-
-    End Sub
-
     Private Sub OutputCBox_TextUpdate(ByVal sender As Object, ByVal e As System.EventArgs) Handles OutputCBox.TextUpdate
+        If Not OutputCBox.Text = "" Then
+            Dim ext As String = System.IO.Path.GetExtension(OutputCBox.Text)
+            Dim ext2 As String = ext.Replace(".", "")
+            BOXCONTAINER.Text = ext2
+        Else
 
-        Dim ext As String = System.IO.Path.GetExtension(OutputCBox.Text)
-        BOXCONTAINER.Text = ext
+        End If
+
     End Sub
 
 
@@ -1801,6 +1820,28 @@ Public Class Main
         Else
             MsgBox("Advanced Options only support on libx264 Codec", MsgBoxStyle.Information)
         End If
+
+    End Sub
+
+    Private Sub CHKQA_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CHKQA.CheckedChanged
+        If CHKQA.Checked = True And Not InputCBOX.Text = "" Then
+            BOXCONTAINER.Items.Clear()
+            BOXCONTAINER.Items.Add("m3u8")
+            BOXCONTAINER.Text = "m3u8"
+            INPUTVIDNAME = InputCBOX.Text
+            Dim testFile As System.IO.FileInfo
+            testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
+            Dim folderPath As String = testFile.DirectoryName
+            Dim infileName As String = testFile.Name
+            OutputCBox.Text = folderPath + "\HLS_Output\playlist.m3u8"
+        ElseIf CHKQA.Checked = False Then
+            ChangeItems()
+        End If
+        SwitchContainer()
+
+    End Sub
+
+    Private Sub OutputCBox_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles OutputCBox.SelectedIndexChanged
 
     End Sub
 End Class
