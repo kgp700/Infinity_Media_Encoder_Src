@@ -198,6 +198,10 @@ Public Class Main
 
     Private Sub BOXCODEC_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXCODEC.TextChanged
         ChangeItems()
+        If Not BOXCODEC.Text = "libx264" And Not BOXCODEC.Text = "libx265" Then
+            BOXBITRATEMODE.Text = "ABR"
+
+        End If
 
         If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
             InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
@@ -234,8 +238,9 @@ Public Class Main
             BOXCONTAINER.Items.Add("ts")
 
             BOXBITRATEMODE.Items.Clear()
-            BOXBITRATEMODE.Text = "ABR"
+            BOXBITRATEMODE.Text = "CRF"
             BOXBITRATEMODE.Items.Add("CRF")
+            BOXBITRATEMODE.Items.Add("CRF-MaxBitrate")
             BOXBITRATEMODE.Items.Add("ABR")
             BOXBITRATEMODE.Items.Add("File Size")
 
@@ -269,8 +274,9 @@ Public Class Main
             BOXCONTAINER.Items.Add("3g2")
 
             BOXBITRATEMODE.Items.Clear()
-            BOXBITRATEMODE.Text = "CBR"
+            BOXBITRATEMODE.Text = "CRF"
             BOXBITRATEMODE.Items.Add("CRF")
+            BOXBITRATEMODE.Items.Add("CRF-MaxBitrate")
             BOXBITRATEMODE.Items.Add("CBR")
             BOXBITRATEMODE.Items.Add("ABR")
             BOXBITRATEMODE.Items.Add("File Size")
@@ -446,7 +452,10 @@ Public Class Main
     End Function
 
     Private Sub Button7_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
-        prepareOpen()
+        If BOXFPSINFO.Text = "" Then
+            prepareOpen()
+        End If
+
         If My.Computer.FileSystem.FileExists(InputCBOX.Text + ".avs") Then
             MsgBox("AVS File found.")
             Dim fileReader As String
@@ -789,12 +798,7 @@ Public Class Main
                                                     (PRESETFOLDER, FileIO.SearchOption.SearchTopLevelOnly, "*.xml")
             BOXPRESETFILENAME.Items.Add(IO.Path.GetFileNameWithoutExtension(PRESETFILE))
         Next
-        BOXBITRATEMODE.Items.Clear()
-        BOXBITRATEMODE.Items.Add("CRF")
-        BOXBITRATEMODE.Items.Add("CBR")
-        BOXBITRATEMODE.Items.Add("ABR")
-        BOXBITRATEMODE.Items.Add("File Size")
-        BOXBITRATEMODE.Items.Add("2pass-ABR")
+        ChangeItems()
 
 
 
@@ -956,8 +960,18 @@ Public Class Main
 
         If BOXBITRATEMODE.Text = "CRF" Then
             BITVAL = " -crf " + BITBOX.Text
+
+        ElseIf BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "libx264" Then
+            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
+        ElseIf BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "mpeg4" Then
+            CBRVAL = " -bufsize " + BITBOX.Text + "k " + " -maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
         ElseIf BOXBITRATEMODE.Text = "CBR" Or BOXBITRATEMODE.Text = "ABR" Or BOXBITRATEMODE.Text = "2pass-ABR" Then
             BITVAL = " -b:v " + BITBOX.Text + "k"
+
+
+        ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
+            BITVAL = " -crf " + BITBOX.Text
+            CBRVAL = " -bufsize " + BITBOX2.Text + "k " + "-maxrate " + BITBOX2.Text + "k "
         ElseIf BOXBITRATEMODE.Text = "File Size" Then
             If CHKTRIM.Checked Then
                 sDate = BOXTRIMSS.Text
@@ -990,8 +1004,15 @@ Public Class Main
 
                 BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize " + VIDEOBITRATESIZE.ToString + "k"
             End If
+        Else
+            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
         End If
 
+
+        If BITBOX.Text = "Auto" Then
+            BITVAL = ""
+            CBRVAL = ""
+        End If
 
 
         If BOXCODEC.Text = "libx264" Then
@@ -1170,21 +1191,7 @@ Public Class Main
         End If
 
 
-        If BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "libx264" Then
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
-        ElseIf BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "mpeg4" Then
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + " -maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
-        ElseIf BOXBITRATEMODE.Text = "CRF" Then
 
-        Else
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
-
-
-        End If
-        If BITBOX.Text = "Auto" Then
-            BITVAL = ""
-            CBRVAL = ""
-        End If
 
 
         If Not BOXAUDIOPATH.Text = "" Then
@@ -1332,6 +1339,7 @@ Public Class Main
         INPUTFILENAME = InputCBOX.Text
         CHKAVISYNTH.Checked = False
         INPUTFILENAME2 = InputCBOX.Text
+
         MI.Open(InputCBOX.Text)
         BOXCODECINFO.Text = MI.Get_(StreamKind.Visual, 0, "Codec")
         BOXFPSINFO.Text = MI.Get_(StreamKind.Visual, 0, "FrameRate")
@@ -1391,7 +1399,10 @@ Public Class Main
         ElseIf CHKQA.Checked = False Then
             ChangeItems()
         End If
+
         SwitchContainer()
+
+
 
     End Function
     Public Function initialValue() As String()
@@ -1556,17 +1567,9 @@ Public Class Main
     End Sub
 
     Private Sub BOXBITRATEMODE_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BOXBITRATEMODE.SelectedIndexChanged
-        If BOXBITRATEMODE.Text = "CRF" Then
-            LBBPS.Text = ""
-            LBBITRATE.Text = "CRF"
-        ElseIf BOXBITRATEMODE.Text = "File Size" Then
-            LBBPS.Text = "MB"
-            LBBITRATE.Text = "File Size"
-        Else
-            LBBPS.Text = "Kbps"
-            LBBITRATE.Text = "Bitrate"
-        End If
+
     End Sub
+
 
     Private Sub BOXACODEC_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BOXACODEC.SelectedIndexChanged
         If BOXACODEC.Text = "copy" Then
@@ -1843,5 +1846,109 @@ Public Class Main
 
     Private Sub OutputCBox_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles OutputCBox.SelectedIndexChanged
 
+    End Sub
+
+    Private Sub CHKAVISYNTH_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CHKAVISYNTH.CheckedChanged
+
+    End Sub
+    Public Function SWBitratemode() As String()
+        If BOXBITRATEMODE.Text = "CRF" Then
+            LBBPS.Text = ""
+            LBBITRATE.Text = "CRF"
+            LBBPS2.Text = ""
+            BITBOX2.Enabled = False
+            BITBOX2.Visible = False
+
+            BITBOX.Items.Clear()
+            BITBOX.Items.Add("Auto")
+            BITBOX.Items.Add("24")
+            BITBOX.Items.Add("25")
+            BITBOX.Items.Add("26")
+            BITBOX.Items.Add("26.5")
+            BITBOX.Items.Add("27")
+            BITBOX.Items.Add("28")
+            BITBOX.Text = "Auto"
+
+        ElseIf BOXBITRATEMODE.Text = "File Size" Then
+            LBBPS.Text = "MB"
+            LBBITRATE.Text = "File Size"
+            LBBPS2.Text = ""
+            BITBOX2.Enabled = False
+            BITBOX2.Visible = False
+
+            BITBOX.Items.Clear()
+            BITBOX.Items.Add("100")
+            BITBOX.Items.Add("200")
+            BITBOX.Items.Add("300")
+            BITBOX.Items.Add("400")
+            BITBOX.Items.Add("500")
+            BITBOX.Text = "200"
+        ElseIf BOXBITRATEMODE.Text = "ABR" Then
+            LBBPS.Text = "Kbps"
+            LBBITRATE.Text = "Bitrate"
+            LBBPS2.Text = ""
+            BITBOX2.Enabled = False
+            BITBOX2.Visible = False
+
+            BITBOX.Items.Clear()
+            BITBOX.Items.Add("Auto")
+            BITBOX.Items.Add("500")
+            BITBOX.Items.Add("1000")
+            BITBOX.Items.Add("1500")
+            BITBOX.Items.Add("2000")
+            BITBOX.Items.Add("2500")
+            BITBOX.Items.Add("3000")
+            BITBOX.Items.Add("6000")
+            BITBOX.Items.Add("8000")
+            BITBOX.Items.Add("11000")
+            BITBOX.Items.Add("12000")
+            BITBOX.Text = "8000"
+
+        ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
+            LBBPS.Text = "Max"
+            LBBITRATE.Text = "CRF"
+            LBBPS2.Text = "Kbps"
+            BITBOX2.Enabled = True
+            BITBOX2.Visible = True
+
+            BITBOX.Items.Clear()
+            BITBOX.Items.Add("Auto")
+            BITBOX.Items.Add("24")
+            BITBOX.Items.Add("25")
+            BITBOX.Items.Add("26")
+            BITBOX.Items.Add("26.5")
+            BITBOX.Items.Add("27")
+            BITBOX.Items.Add("28")
+            BITBOX.Text = "Auto"
+        Else
+            LBBPS.Text = "Kbps"
+            LBBITRATE.Text = "Bitrate"
+            LBBPS2.Text = ""
+            BITBOX2.Enabled = False
+            BITBOX2.Visible = False
+            BITBOX.Items.Clear()
+            BITBOX.Items.Add("Auto")
+            BITBOX.Items.Add("500")
+            BITBOX.Items.Add("1000")
+            BITBOX.Items.Add("1500")
+            BITBOX.Items.Add("2000")
+            BITBOX.Items.Add("2500")
+            BITBOX.Items.Add("3000")
+            BITBOX.Items.Add("6000")
+            BITBOX.Items.Add("8000")
+            BITBOX.Items.Add("11000")
+            BITBOX.Items.Add("12000")
+            BITBOX.Text = "8000"
+        End If
+    End Function
+
+    Private Sub BOXBITRATEMODE_TextChanged(sender As Object, e As System.EventArgs) Handles BOXBITRATEMODE.TextChanged
+        SWBitratemode()
+
+
+    End Sub
+
+    Private Sub BOXBITRATEMODE_TextUpdate(sender As Object, e As System.EventArgs) Handles BOXBITRATEMODE.TextUpdate
+        SWBitratemode()
     End Sub
 End Class

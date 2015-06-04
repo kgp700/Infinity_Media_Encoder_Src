@@ -157,6 +157,8 @@ Partial Class Main
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.BITBOX2 = New System.Windows.Forms.ComboBox()
+        Me.LBBPS2 = New System.Windows.Forms.Label()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -302,7 +304,7 @@ Partial Class Main
         Me.BITBOX.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BITBOX.FormattingEnabled = True
         Me.BITBOX.Items.AddRange(New Object() {"Auto", "1000", "1500", "2000", "3000", "5000", "8000", "10000", "12000"})
-        Me.BITBOX.Location = New System.Drawing.Point(60, 75)
+        Me.BITBOX.Location = New System.Drawing.Point(159, 78)
         Me.BITBOX.Name = "BITBOX"
         Me.BITBOX.Size = New System.Drawing.Size(65, 21)
         Me.BITBOX.TabIndex = 24
@@ -311,7 +313,7 @@ Partial Class Main
         'LBBPS
         '
         Me.LBBPS.AutoSize = True
-        Me.LBBPS.Location = New System.Drawing.Point(131, 78)
+        Me.LBBPS.Location = New System.Drawing.Point(229, 81)
         Me.LBBPS.Name = "LBBPS"
         Me.LBBPS.Size = New System.Drawing.Size(33, 15)
         Me.LBBPS.TabIndex = 26
@@ -377,6 +379,8 @@ Partial Class Main
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.LBBPS2)
+        Me.GroupBox2.Controls.Add(Me.BITBOX2)
         Me.GroupBox2.Controls.Add(Me.BOXDURATION2)
         Me.GroupBox2.Controls.Add(Me.Label12)
         Me.GroupBox2.Controls.Add(Me.BOXCUSTOMT)
@@ -555,11 +559,12 @@ Partial Class Main
         'LBBITRATE
         '
         Me.LBBITRATE.AutoSize = True
-        Me.LBBITRATE.Location = New System.Drawing.Point(3, 78)
+        Me.LBBITRATE.Location = New System.Drawing.Point(115, 81)
         Me.LBBITRATE.Name = "LBBITRATE"
         Me.LBBITRATE.Size = New System.Drawing.Size(41, 15)
         Me.LBBITRATE.TabIndex = 68
         Me.LBBITRATE.Text = "Bitrate"
+        Me.LBBITRATE.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'Label18
         '
@@ -614,9 +619,9 @@ Partial Class Main
         Me.BOXBITRATEMODE.AutoCompleteCustomSource.AddRange(New String() {"CRF", "ABR"})
         Me.BOXBITRATEMODE.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXBITRATEMODE.FormattingEnabled = True
-        Me.BOXBITRATEMODE.Location = New System.Drawing.Point(170, 75)
+        Me.BOXBITRATEMODE.Location = New System.Drawing.Point(6, 78)
         Me.BOXBITRATEMODE.Name = "BOXBITRATEMODE"
-        Me.BOXBITRATEMODE.Size = New System.Drawing.Size(82, 21)
+        Me.BOXBITRATEMODE.Size = New System.Drawing.Size(102, 21)
         Me.BOXBITRATEMODE.TabIndex = 55
         Me.BOXBITRATEMODE.Text = "CBR"
         '
@@ -1610,6 +1615,27 @@ Partial Class Main
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(123, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
+        'BITBOX2
+        '
+        Me.BITBOX2.AllowDrop = True
+        Me.BITBOX2.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
+        Me.BITBOX2.FormattingEnabled = True
+        Me.BITBOX2.Items.AddRange(New Object() {"Auto", "1000", "1500", "2000", "3000", "5000", "8000", "10000", "12000"})
+        Me.BITBOX2.Location = New System.Drawing.Point(265, 78)
+        Me.BITBOX2.Name = "BITBOX2"
+        Me.BITBOX2.Size = New System.Drawing.Size(78, 21)
+        Me.BITBOX2.TabIndex = 83
+        Me.BITBOX2.Text = "Auto"
+        '
+        'LBBPS2
+        '
+        Me.LBBPS2.AutoSize = True
+        Me.LBBPS2.Location = New System.Drawing.Point(349, 81)
+        Me.LBBPS2.Name = "LBBPS2"
+        Me.LBBPS2.Size = New System.Drawing.Size(33, 15)
+        Me.LBBPS2.TabIndex = 84
+        Me.LBBPS2.Text = "Kbps"
+        '
         'Main
         '
         Me.AllowDrop = True
@@ -1801,4 +1827,6 @@ Partial Class Main
     Friend WithEvents CHECKADV As System.Windows.Forms.CheckBox
     Friend WithEvents BTNADV As System.Windows.Forms.Button
     Friend WithEvents CHKASYNC As System.Windows.Forms.CheckBox
+    Friend WithEvents LBBPS2 As System.Windows.Forms.Label
+    Friend WithEvents BITBOX2 As System.Windows.Forms.ComboBox
 End Class
