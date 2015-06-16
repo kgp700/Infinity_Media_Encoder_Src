@@ -43,6 +43,8 @@ Partial Class Main
         Me.Label4 = New System.Windows.Forms.Label()
         Me.CHKCQM = New System.Windows.Forms.CheckBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.LBBPS2 = New System.Windows.Forms.Label()
+        Me.BITBOX2 = New System.Windows.Forms.ComboBox()
         Me.BOXDURATION2 = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.BOXCUSTOMT = New System.Windows.Forms.ComboBox()
@@ -157,8 +159,6 @@ Partial Class Main
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.BITBOX2 = New System.Windows.Forms.ComboBox()
-        Me.LBBPS2 = New System.Windows.Forms.Label()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -420,6 +420,27 @@ Partial Class Main
         Me.GroupBox2.TabIndex = 54
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Video"
+        '
+        'LBBPS2
+        '
+        Me.LBBPS2.AutoSize = True
+        Me.LBBPS2.Location = New System.Drawing.Point(349, 81)
+        Me.LBBPS2.Name = "LBBPS2"
+        Me.LBBPS2.Size = New System.Drawing.Size(33, 15)
+        Me.LBBPS2.TabIndex = 84
+        Me.LBBPS2.Text = "Kbps"
+        '
+        'BITBOX2
+        '
+        Me.BITBOX2.AllowDrop = True
+        Me.BITBOX2.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
+        Me.BITBOX2.FormattingEnabled = True
+        Me.BITBOX2.Items.AddRange(New Object() {"Auto", "1000", "1500", "2000", "3000", "5000", "8000", "10000", "12000"})
+        Me.BITBOX2.Location = New System.Drawing.Point(265, 78)
+        Me.BITBOX2.Name = "BITBOX2"
+        Me.BITBOX2.Size = New System.Drawing.Size(78, 21)
+        Me.BITBOX2.TabIndex = 83
+        Me.BITBOX2.Text = "Auto"
         '
         'BOXDURATION2
         '
@@ -1091,9 +1112,8 @@ Partial Class Main
         'BOXUNSHARP
         '
         Me.BOXUNSHARP.AllowDrop = True
-        Me.BOXUNSHARP.Enabled = False
         Me.BOXUNSHARP.FormattingEnabled = True
-        Me.BOXUNSHARP.Items.AddRange(New Object() {"3:3:0.1", "5:5:0.1", "5:5:0.3", "5:5:0.5"})
+        Me.BOXUNSHARP.Items.AddRange(New Object() {"3:3:0.1", "5:5:0.1", "5:5:0.3", "5:5:0.5", "5:5:1", "5:5:1.5", "5:5:2", "5:5:3"})
         Me.BOXUNSHARP.Location = New System.Drawing.Point(212, 52)
         Me.BOXUNSHARP.Name = "BOXUNSHARP"
         Me.BOXUNSHARP.Size = New System.Drawing.Size(78, 21)
@@ -1190,7 +1210,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1305,7 +1325,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(294, 13)
+        Me.Label28.Size = New System.Drawing.Size(293, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1614,27 +1634,6 @@ Partial Class Main
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(123, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
-        '
-        'BITBOX2
-        '
-        Me.BITBOX2.AllowDrop = True
-        Me.BITBOX2.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
-        Me.BITBOX2.FormattingEnabled = True
-        Me.BITBOX2.Items.AddRange(New Object() {"Auto", "1000", "1500", "2000", "3000", "5000", "8000", "10000", "12000"})
-        Me.BITBOX2.Location = New System.Drawing.Point(265, 78)
-        Me.BITBOX2.Name = "BITBOX2"
-        Me.BITBOX2.Size = New System.Drawing.Size(78, 21)
-        Me.BITBOX2.TabIndex = 83
-        Me.BITBOX2.Text = "Auto"
-        '
-        'LBBPS2
-        '
-        Me.LBBPS2.AutoSize = True
-        Me.LBBPS2.Location = New System.Drawing.Point(349, 81)
-        Me.LBBPS2.Name = "LBBPS2"
-        Me.LBBPS2.Size = New System.Drawing.Size(33, 15)
-        Me.LBBPS2.TabIndex = 84
-        Me.LBBPS2.Text = "Kbps"
         '
         'Main
         '

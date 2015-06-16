@@ -52,7 +52,7 @@ Public Class Main
     Public ENABLELOG As String
     Public YOUTUBEQ As String
     Public SPPVAL As String
-    Public VIDEOFILTERH As String
+    Public USHARPFILTER As String
     Public MULTITRACK As String
     Public METADATA As String
     Public TEMPYTFILENAME As String
@@ -226,6 +226,7 @@ Public Class Main
             BOXFPS.Enabled = True
             BOXKEYINT.Enabled = True
             BOXSPP.Enabled = True
+            BOXUNSHARP.Enabled = True
             BOXCODECPRESET.Enabled = True
             CHKMULTITR.Enabled = True
             CHKQA.Enabled = True
@@ -257,6 +258,7 @@ Public Class Main
             BOXFPS.Enabled = True
             BOXKEYINT.Enabled = True
             BOXSPP.Enabled = True
+            BOXUNSHARP.Enabled = True
             BOXCODECPRESET.Enabled = True
             CHKMULTITR.Enabled = True
             CHKQA.Enabled = True
@@ -300,6 +302,7 @@ Public Class Main
             BOXFPS.Enabled = False
             BOXKEYINT.Enabled = False
             BOXSPP.Enabled = False
+            BOXUNSHARP.Enabled = False
             BOXCODECPRESET.Enabled = False
             CHKMULTITR.Enabled = True
             CHKQA.Enabled = True
@@ -341,6 +344,7 @@ Public Class Main
             BOXFPS.Enabled = False
             BOXKEYINT.Enabled = False
             BOXSPP.Enabled = False
+            BOXUNSHARP.Enabled = False
             BOXCODECPRESET.Enabled = False
             CHKMULTITR.Enabled = False
             CHKQA.Enabled = False
@@ -413,6 +417,7 @@ Public Class Main
             BOXFPS.Enabled = True
             BOXKEYINT.Enabled = True
             BOXSPP.Enabled = True
+            BOXUNSHARP.Enabled = True
             BOXCODECPRESET.Enabled = True
             CHKMULTITR.Enabled = True
             CHKQA.Enabled = True
@@ -1248,15 +1253,19 @@ Public Class Main
 
         End If
 
+        If BOXUNSHARP.Text = "Disabled" Or BOXUNSHARP.Enabled = False Then
+            USHARPFILTER = ""
+        Else
+            USHARPFILTER = ",unsharp=" + BOXUNSHARP.Text + " "
+        End If
+
         If BOXCODEC.Text = "copy" Then
-            VIDEOFILTERH = ""
             VIDEOFILTER = ""
         ElseIf CUSTOMVIDEOFILTER = "" And RSVAL = "" And FPSVAL = "" And DEINTVAL = "" And SPPVAL = "" Then
-            VIDEOFILTERH = ""
             VIDEOFILTER = ""
         Else
-            VIDEOFILTERH = " -filter_complex null" + CUSTOMVIDEOFILTER
-            VIDEOFILTER = VIDEOFILTERH + RSVAL + FPSVAL + DEINTVAL + SPPVAL
+            VIDEOFILTER = " -filter_complex null" + DEINTVAL + RSVAL + FPSVAL + SPPVAL + USHARPFILTER + CUSTOMVIDEOFILTER
+
         End If
 
         If BOXCODEC.Text = "No Video" Or BOXCODEC.Text = "h264_qsv" Then
@@ -1283,7 +1292,7 @@ Public Class Main
 
     Public Function prepareEncoding2() As String()
 
-        If BOXCODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
+        If BOXACODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:a aac_adtstoasc "
         ElseIf BOXCODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-4" And BOXCONTAINER.Text = "ts" Or BOXCONTAINER.Text = "m3u8" Then
             BITSTREAMFILTER = " -bsf:v h264_mp4toannexb "
@@ -1445,7 +1454,7 @@ Public Class Main
         INPUTVIDNAME = ""
         YOUTUBEQ = ""
         SPPVAL = ""
-        VIDEOFILTERH = ""
+        USHARPFILTER = ""
         MULTITRACK = ""
         TEMPYTFILENAME = ""
         RUNCMD = ""
