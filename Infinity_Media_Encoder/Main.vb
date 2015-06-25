@@ -925,22 +925,7 @@ Public Class Main
         End If
 
 
-        If Not BOXCODEC.Text = "No Video" Then
-            VIDEOVAL = " -an "
-            AUDIOCHKVAL = ""
-        Else
-            VIDEOVAL = ""
-        End If
-        If Not BOXACODEC.Text = "No Audio" Then
-            AUDIOVAL = " -vn "
-        Else
-            AUDIOVAL = ""
-        End If
 
-        If Not BOXCODEC.Text = "No Video" And Not BOXACODEC.Text = "No Audio" Then
-            VIDEOVAL = ""
-            AUDIOVAL = ""
-        End If
 
 
         If Not BOXFPS.Text = "" And Not BOXCODEC.Text = "copy" And Not BOXFPS.Text = "Original" Then
@@ -1190,10 +1175,7 @@ Public Class Main
             CFRVAL = ":force-cfr=1"
         End If
 
-        If BOXCODEC.Text = "No Video" Then
-        Else
-            CODEC = " -vcodec " + BOXCODEC.Text
-        End If
+
 
 
 
@@ -1288,6 +1270,42 @@ Public Class Main
 
         VSYNCVAL = ""
         CHKASYNCVAL = ""
+
+        If Not BOXCODEC.Text = "No Video" Then
+            VIDEOVAL = " -an "
+            AUDIOCHKVAL = ""
+
+        Else
+            VIDEOVAL = ""
+        End If
+        If Not BOXACODEC.Text = "No Audio" Then
+            AUDIOVAL = " -vn "
+        Else
+            AUDIOVAL = ""
+        End If
+
+        If Not BOXCODEC.Text = "No Video" And Not BOXACODEC.Text = "No Audio" Then
+            VIDEOVAL = ""
+            AUDIOVAL = ""
+        End If
+
+        If BOXCONTAINER.Text = "mp3" Or BOXCONTAINER.Text = "m4a" Or BOXCONTAINER.Text = "aac" Or BOXCONTAINER.Text = "ac3" Or BOXCONTAINER.Text = "flac" Or
+            BOXCONTAINER.Text = "ogg" Or BOXCONTAINER.Text = "opus" Or BOXCONTAINER.Text = "dts" Or BOXCONTAINER.Text = "wav" Or BOXCONTAINER.Text = "wma" Then
+            VIDEOFILTER = ""
+            RSVAL = ""
+            CODEC = ""
+            BITVAL = ""
+            EXTRAFFPRAM = ""
+        ElseIf BOXCODEC.Text = "No Video" Then
+            VIDEOFILTER = ""
+            RSVAL = ""
+            CODEC = ""
+            BITVAL = ""
+            EXTRAFFPRAM = ""
+        Else
+            CODEC = " -vcodec " + BOXCODEC.Text
+        End If
+
     End Function
 
     Public Function prepareEncoding2() As String()

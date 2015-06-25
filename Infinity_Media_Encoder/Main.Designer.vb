@@ -445,7 +445,7 @@ Partial Class Main
         'BOXDURATION2
         '
         Me.BOXDURATION2.Enabled = False
-        Me.BOXDURATION2.Location = New System.Drawing.Point(174, 174)
+        Me.BOXDURATION2.Location = New System.Drawing.Point(173, 198)
         Me.BOXDURATION2.Name = "BOXDURATION2"
         Me.BOXDURATION2.Size = New System.Drawing.Size(59, 23)
         Me.BOXDURATION2.TabIndex = 80
@@ -453,7 +453,7 @@ Partial Class Main
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(13, 177)
+        Me.Label12.Location = New System.Drawing.Point(12, 201)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(82, 15)
         Me.Label12.TabIndex = 82
@@ -463,7 +463,7 @@ Partial Class Main
         '
         Me.BOXCUSTOMT.AllowDrop = True
         Me.BOXCUSTOMT.FormattingEnabled = True
-        Me.BOXCUSTOMT.Location = New System.Drawing.Point(107, 174)
+        Me.BOXCUSTOMT.Location = New System.Drawing.Point(106, 198)
         Me.BOXCUSTOMT.Name = "BOXCUSTOMT"
         Me.BOXCUSTOMT.Size = New System.Drawing.Size(61, 21)
         Me.BOXCUSTOMT.TabIndex = 81
@@ -472,7 +472,7 @@ Partial Class Main
         'CHKQA
         '
         Me.CHKQA.AutoSize = True
-        Me.CHKQA.Location = New System.Drawing.Point(7, 152)
+        Me.CHKQA.Location = New System.Drawing.Point(6, 176)
         Me.CHKQA.Name = "CHKQA"
         Me.CHKQA.Size = New System.Drawing.Size(189, 19)
         Me.CHKQA.TabIndex = 79
@@ -501,7 +501,7 @@ Partial Class Main
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(4, 204)
+        Me.Label30.Location = New System.Drawing.Point(4, 152)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(101, 15)
         Me.Label30.TabIndex = 76
@@ -511,7 +511,7 @@ Partial Class Main
         '
         Me.BOXCONTAINER.AllowDrop = True
         Me.BOXCONTAINER.FormattingEnabled = True
-        Me.BOXCONTAINER.Location = New System.Drawing.Point(107, 201)
+        Me.BOXCONTAINER.Location = New System.Drawing.Point(107, 149)
         Me.BOXCONTAINER.Name = "BOXCONTAINER"
         Me.BOXCONTAINER.Size = New System.Drawing.Size(75, 21)
         Me.BOXCONTAINER.TabIndex = 75
@@ -1210,7 +1210,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1325,7 +1325,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(293, 13)
+        Me.Label28.Size = New System.Drawing.Size(294, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
