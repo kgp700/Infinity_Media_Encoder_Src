@@ -77,6 +77,7 @@ Public Class Main
     Public VDELAYINFO As String
     Public INFOFRAMEMODE As String
     Public EXTRAFFPRAM As String
+    Public p As New Process
 
     Dim DURHOURS As Integer
     Dim DURMIN As Integer
@@ -177,12 +178,22 @@ Public Class Main
 
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        FRMProgress.Close()
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
             prepareEncoding2()
 
 
-            Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
+
+            If CHKMULTIENC.Checked Or InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
+            InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
+            InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
+                Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
+            Else
+                FRMProgress.Show()
+            End If
+
+
             If CHKDEBUG.Checked Then
                 BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat"
             End If
@@ -203,7 +214,7 @@ Public Class Main
 
         End If
 
-        If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
+        If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
             InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
             InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
             CHKMULTITR.Enabled = False
@@ -329,6 +340,7 @@ Public Class Main
             BOXCONTAINER.Items.Add("wav")
             BOXCONTAINER.Items.Add("wma")
             SwitchContainer()
+
 
 
         ElseIf BOXCODEC.Text = "No Video" Then
@@ -521,10 +533,13 @@ Public Class Main
 
     Private Sub InputCBOX_TextUpdate(ByVal sender As Object, ByVal e As System.EventArgs) Handles InputCBOX.TextChanged
         INPUTVIDNAME = InputCBOX.Text
-        If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
+        If InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
             BOXTRIMSS.Enabled = False
             CHKMULTITR.Enabled = False
             CHKQA.Enabled = False
+            BOXCODEC.Text = "copy"
+            BOXACODEC.Text = "copy"
+
 
 
         ElseIf InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
@@ -534,12 +549,15 @@ Public Class Main
             CHKTRIM.Enabled = False
             CHKMULTITR.Enabled = False
             CHKQA.Enabled = False
+            BOXCODEC.Enabled = True
+            BOXACODEC.Enabled = True
         Else
             BOXTRIMSS.Enabled = True
             BOXTRIMTO.Enabled = True
             CHKTRIM.Enabled = True
             CHKMULTITR.Enabled = True
             CHKQA.Enabled = True
+
         End If
     End Sub
 
@@ -812,7 +830,7 @@ Public Class Main
     Private Sub CHKAUTONAME_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CHKAUTONAME.CheckedChanged
         If CHKAUTONAME.Checked Then
             If InputCBOX.Text = "" Then
-            ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
+            ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
                 OutputCBox.Text = ""
                 OUTPUTFILENAME = ""
 
@@ -882,8 +900,14 @@ Public Class Main
 
 
             ElseIf InStr(5, InputCBOX.Text, "//") Then
-                OutputCBox.Text = "[InfinityEncoder]Video.mp4"
-                OUTPUTFILENAME = OutputCBox.Text
+                If OutputCBox.Text = "" Then
+                    OutputCBox.Text = "[InfinityEncoder]Video.mp4"
+                    OUTPUTFILENAME = OutputCBox.Text
+                Else
+
+                End If
+               
+
             ElseIf CHKQA.Checked = True Then
                 INPUTVIDNAME = InputCBOX.Text
                 Dim testFile As System.IO.FileInfo
@@ -1271,17 +1295,18 @@ Public Class Main
         VSYNCVAL = ""
         CHKASYNCVAL = ""
 
-        If Not BOXCODEC.Text = "No Video" Then
-            VIDEOVAL = " -an "
+        If BOXACODEC.Text = "No Audio" Then
+            AUDIOVAL = " -an "
             AUDIOCHKVAL = ""
-
-        Else
-            VIDEOVAL = ""
-        End If
-        If Not BOXACODEC.Text = "No Audio" Then
-            AUDIOVAL = " -vn "
         Else
             AUDIOVAL = ""
+        End If
+
+
+        If BOXCODEC.Text = "No Video" Then
+            VIDEOVAL = " -vn "
+        Else
+            VIDEOVAL = ""
         End If
 
         If Not BOXCODEC.Text = "No Video" And Not BOXACODEC.Text = "No Audio" Then
@@ -1321,7 +1346,7 @@ Public Class Main
             SHELLCMD = FFMPEGEXE + " " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
-        ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
+        ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
             CHKQA.Enabled = False
             CHKMULTITR.Enabled = False
 
@@ -1396,9 +1421,12 @@ Public Class Main
             If InputCBOX.Text = "" Then
 
             ElseIf InStr(5, InputCBOX.Text, "//") Then
-                OutputCBox.Text = "[InfinityEncoder]Video.mp4"
-                OUTPUTFILENAME = OutputCBox.Text
+                If OutputCBox.Text = "" Then
+                    OutputCBox.Text = "[InfinityEncoder]Video.mp4"
+                    OUTPUTFILENAME = OutputCBox.Text
+                Else
 
+                End If
             Else
                 INPUTVIDNAME = InputCBOX.Text
                 Dim testFile As System.IO.FileInfo
@@ -1522,8 +1550,9 @@ Public Class Main
         If CHKDEBUG.Checked = True Then
             MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
-
-        Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        SHELLCMD = CMD1 + CMD
+        FRMProgress.Show()
+        'Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         CMD1 = ""
         CMD = ""
     End Sub
@@ -1977,5 +2006,89 @@ Public Class Main
 
     Private Sub BOXBITRATEMODE_TextUpdate(sender As Object, e As System.EventArgs) Handles BOXBITRATEMODE.TextUpdate
         SWBitratemode()
+    End Sub
+    Public Function RunProcess() As String()
+        Dim OneLine As String
+        Dim p As New Process
+
+        ' Enable the ability to stop ffmpeg
+        BackgroundWorker1.WorkerSupportsCancellation = True
+        ' Lets you get ffmpeg output info
+        BackgroundWorker1.WorkerReportsProgress = True
+        ' Start the background worker. This method prevents your form from locking
+        BackgroundWorker1.RunWorkerAsync()
+
+    End Function
+
+    Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        'Dim p As New Process
+        Dim results As String = ""
+        With p.StartInfo
+            .Arguments = " /c title Infinity Media Encoder & " + SHELLCMD
+            .FileName = "cmd"
+            .UseShellExecute = False
+            .RedirectStandardInput = True
+            .RedirectStandardError = True
+            .RedirectStandardOutput = True
+            .CreateNoWindow = False
+            .WindowStyle = ProcessWindowStyle.Hidden
+        End With
+        p.Start()
+        Dim outputReader As StreamReader = p.StandardError
+        Dim output As String
+
+
+        While p.StandardError.EndOfStream = False
+
+            output = outputReader.ReadLine()
+            BackgroundWorker1.ReportProgress(0, output)
+
+        End While
+
+        If p.StandardError.EndOfStream = False Then
+            MsgBox("Processing Done!")
+
+        End If
+
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        ' Show the output in a RichTextbox
+        Dim output As String = e.UserState.ToString
+        FRMProgress.RichTextBox1.Text &= output & Environment.NewLine
+        FRMProgress.RichTextBox1.SelectionStart = FRMProgress.RichTextBox1.Text.Length
+
+        Dim outputReader As StreamReader = p.StandardError
+        Dim Duration As String = e.UserState.ToString
+        If Duration.Contains("Duration:") Then
+            Dim split1 As String() = Duration.Split(New [Char]() {" ", ","})
+            Dim String1 As String = split1(3)
+            Dim String2 As String = String1.Replace(":", "")
+            Dim String3 As String = String2.Replace(".", "")
+            FRMProgress.ProgressBar1.Maximum = String3
+            FRMProgress.Label2.Text = String1 & " Completed"
+        End If
+        If Duration.Contains("frame=") Then
+            Dim split2 As String() = Duration.Split(New [Char]() {"="})
+            Dim String4 As String = split2(5)
+            Dim String5 As String = String4.Replace(":", "")
+            Dim String6 As String = String5.Replace(".", "")
+            Dim String7 As String = String6.Replace(" bitrate", "")
+            Dim String8 As String = String4.Replace(" bitrate", "")
+            FRMProgress.ProgressBar1.Value = String7
+            FRMProgress.Label1.Text = String8 & " of "
+        End If
+        If Duration.Contains("muxing overhead:") Then
+            FRMProgress.Label1.Text = "Processing Done"
+            FRMProgress.Label2.Text = ""
+        End If
+        If Duration.Contains("Invalid argument") Then
+            FRMProgress.Label1.Text = "Error Occured"
+            FRMProgress.Label2.Text = ""
+        End If
+        If Duration.Contains("Invalid data found when processing input") Then
+            FRMProgress.Label1.Text = "Error Occured"
+            FRMProgress.Label2.Text = ""
+        End If
     End Sub
 End Class

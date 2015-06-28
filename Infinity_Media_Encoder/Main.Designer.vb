@@ -143,6 +143,7 @@ Partial Class Main
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.CHKMULTIENC = New System.Windows.Forms.CheckBox()
         Me.CHKASYNC = New System.Windows.Forms.CheckBox()
         Me.CHKVSYNC0 = New System.Windows.Forms.CheckBox()
         Me.CHKPTSDTS = New System.Windows.Forms.CheckBox()
@@ -159,6 +160,7 @@ Partial Class Main
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1210,7 +1212,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1325,7 +1327,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(294, 13)
+        Me.Label28.Size = New System.Drawing.Size(293, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1469,6 +1471,7 @@ Partial Class Main
         '
         'TabPage6
         '
+        Me.TabPage6.Controls.Add(Me.CHKMULTIENC)
         Me.TabPage6.Controls.Add(Me.CHKASYNC)
         Me.TabPage6.Controls.Add(Me.CHKVSYNC0)
         Me.TabPage6.Controls.Add(Me.CHKPTSDTS)
@@ -1480,6 +1483,16 @@ Partial Class Main
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Settings"
         Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'CHKMULTIENC
+        '
+        Me.CHKMULTIENC.AutoSize = True
+        Me.CHKMULTIENC.Location = New System.Drawing.Point(11, 64)
+        Me.CHKMULTIENC.Name = "CHKMULTIENC"
+        Me.CHKMULTIENC.Size = New System.Drawing.Size(151, 17)
+        Me.CHKMULTIENC.TabIndex = 75
+        Me.CHKMULTIENC.Text = "Allow Multiple Encoding"
+        Me.CHKMULTIENC.UseVisualStyleBackColor = True
         '
         'CHKASYNC
         '
@@ -1634,6 +1647,9 @@ Partial Class Main
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(123, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
+        '
+        'BackgroundWorker1
+        '
         '
         'Main
         '
@@ -1828,4 +1844,6 @@ Partial Class Main
     Friend WithEvents CHKASYNC As System.Windows.Forms.CheckBox
     Friend WithEvents LBBPS2 As System.Windows.Forms.Label
     Friend WithEvents BITBOX2 As System.Windows.Forms.ComboBox
+    Friend WithEvents CHKMULTIENC As System.Windows.Forms.CheckBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 End Class
