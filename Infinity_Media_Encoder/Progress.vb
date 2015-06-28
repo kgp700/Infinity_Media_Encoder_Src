@@ -1,16 +1,17 @@
-﻿Public Class FRMProgress
+﻿Imports System.Diagnostics
+Imports System.IO
+Imports System.Dynamic
 
+Public Class FRMProgress
+    Private totalHits As Integer = 0
+    Private cpuusage As Integer
 
 
     Private Sub FRMProgress_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        For Each pr As Process In Process.GetProcesses
-            ListBox1.Items.Add(pr.ProcessName.ToString)
+        If Main.p.HasExited = False Then
+            Main.p.Kill()
+        End If
 
-            If String.Compare(pr.ProcessName, "ffmpeghyb", True) = 0 Then
-                pr.Kill()
-            End If
-
-        Next
 
 
 
@@ -22,30 +23,30 @@
 
     Private Sub FRMProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Main.RunProcess()
-        Me.Activate()
+        Timer1.Start()
+
+
     End Sub
 
     Private Sub BTNSTOP_Click(sender As Object, e As EventArgs) Handles BTNSTOP.Click
-        For Each pr As Process In Process.GetProcesses
-            ListBox1.Items.Add(pr.ProcessName.ToString)
-
-            If String.Compare(pr.ProcessName, "ffmpeghyb", True) = 0 Then
-                pr.Kill()
-            End If
-
-        Next
+        If Main.p.HasExited = False Then
+            Main.p.Kill()
+        End If
 
 
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        For Each pr As Process In Process.GetProcesses
-            ListBox1.Items.Add(pr.ProcessName.ToString)
 
-            If String.Compare(pr.ProcessName, "ffmpeghyb", True) = 0 Then
+    End Sub
 
-            End If
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        cpuusage = Main.PerformanceCounter1.NextValue
 
-        Next
+        Label3.Text = cpuusage.ToString + "%"
+
+
+
+
     End Sub
 End Class

@@ -22,6 +22,7 @@ Partial Class Main
     '코드 편집기를 사용하여 수정하지 마십시오.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -133,11 +134,12 @@ Partial Class Main
         Me.BOXSUBPATH = New System.Windows.Forms.ComboBox()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.BTNSTOPSTREAM = New System.Windows.Forms.Button()
         Me.Button16 = New System.Windows.Forms.Button()
         Me.Button15 = New System.Windows.Forms.Button()
         Me.BTNSTOPNGINX = New System.Windows.Forms.Button()
         Me.BTNSTARTNGINX = New System.Windows.Forms.Button()
-        Me.Button10 = New System.Windows.Forms.Button()
+        Me.BTNRUNSTREAM = New System.Windows.Forms.Button()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -161,6 +163,9 @@ Partial Class Main
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -172,6 +177,7 @@ Partial Class Main
         Me.TabPage4.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
+        CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Button2
@@ -1352,11 +1358,13 @@ Partial Class Main
         '
         'TabPage5
         '
+        Me.TabPage5.Controls.Add(Me.CheckBox1)
+        Me.TabPage5.Controls.Add(Me.BTNSTOPSTREAM)
         Me.TabPage5.Controls.Add(Me.Button16)
         Me.TabPage5.Controls.Add(Me.Button15)
         Me.TabPage5.Controls.Add(Me.BTNSTOPNGINX)
         Me.TabPage5.Controls.Add(Me.BTNSTARTNGINX)
-        Me.TabPage5.Controls.Add(Me.Button10)
+        Me.TabPage5.Controls.Add(Me.BTNRUNSTREAM)
         Me.TabPage5.Controls.Add(Me.Label29)
         Me.TabPage5.Controls.Add(Me.ComboBox2)
         Me.TabPage5.Controls.Add(Me.Label19)
@@ -1368,6 +1376,17 @@ Partial Class Main
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Streaming"
         Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'BTNSTOPSTREAM
+        '
+        Me.BTNSTOPSTREAM.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTNSTOPSTREAM.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNSTOPSTREAM.Location = New System.Drawing.Point(493, 198)
+        Me.BTNSTOPSTREAM.Name = "BTNSTOPSTREAM"
+        Me.BTNSTOPSTREAM.Size = New System.Drawing.Size(126, 26)
+        Me.BTNSTOPSTREAM.TabIndex = 77
+        Me.BTNSTOPSTREAM.Text = "Stop Streaming"
+        Me.BTNSTOPSTREAM.UseVisualStyleBackColor = True
         '
         'Button16
         '
@@ -1415,17 +1434,16 @@ Partial Class Main
         Me.BTNSTARTNGINX.Text = "Start NGINX Server"
         Me.BTNSTARTNGINX.UseVisualStyleBackColor = True
         '
-        'Button10
+        'BTNRUNSTREAM
         '
-        Me.Button10.Enabled = False
-        Me.Button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button10.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button10.Location = New System.Drawing.Point(493, 166)
-        Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(126, 26)
-        Me.Button10.TabIndex = 72
-        Me.Button10.Text = "Start Streaming"
-        Me.Button10.UseVisualStyleBackColor = True
+        Me.BTNRUNSTREAM.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTNRUNSTREAM.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNRUNSTREAM.Location = New System.Drawing.Point(493, 166)
+        Me.BTNRUNSTREAM.Name = "BTNRUNSTREAM"
+        Me.BTNRUNSTREAM.Size = New System.Drawing.Size(126, 26)
+        Me.BTNRUNSTREAM.TabIndex = 72
+        Me.BTNRUNSTREAM.Text = "Start Streaming"
+        Me.BTNRUNSTREAM.UseVisualStyleBackColor = True
         '
         'Label29
         '
@@ -1651,6 +1669,22 @@ Partial Class Main
         'BackgroundWorker1
         '
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(16, 79)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(142, 17)
+        Me.CheckBox1.TabIndex = 78
+        Me.CheckBox1.Text = "Input DirectShow Filter"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'PerformanceCounter1
+        '
+        Me.PerformanceCounter1.CategoryName = "Processor"
+        Me.PerformanceCounter1.CounterName = "% Processor Time"
+        Me.PerformanceCounter1.InstanceName = "_Total"
+        '
         'Main
         '
         Me.AllowDrop = True
@@ -1703,6 +1737,7 @@ Partial Class Main
         Me.TabPage5.PerformLayout()
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
+        CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1799,7 +1834,7 @@ Partial Class Main
     Friend WithEvents BOXREFINFO As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents BOXCODECPRESET As System.Windows.Forms.ComboBox
-    Friend WithEvents Button10 As System.Windows.Forms.Button
+    Friend WithEvents BTNRUNSTREAM As System.Windows.Forms.Button
     Friend WithEvents Label29 As System.Windows.Forms.Label
     Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
@@ -1846,4 +1881,8 @@ Partial Class Main
     Friend WithEvents BITBOX2 As System.Windows.Forms.ComboBox
     Friend WithEvents CHKMULTIENC As System.Windows.Forms.CheckBox
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BTNSTOPSTREAM As System.Windows.Forms.Button
+    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
+    Friend WithEvents PerformanceCounter1 As System.Diagnostics.PerformanceCounter
 End Class

@@ -4,6 +4,8 @@ Imports System.IO.Path
 Imports System.Runtime.InteropServices
 Imports System.Threading.Tasks
 Imports System.Text
+Imports System.Threading
+Imports System.Diagnostics
 
 
 Public Class Main
@@ -78,6 +80,8 @@ Public Class Main
     Public INFOFRAMEMODE As String
     Public EXTRAFFPRAM As String
     Public p As New Process
+    Public STREAMINPUT As String
+    Public STREAMOUTPUT As String
 
     Dim DURHOURS As Integer
     Dim DURMIN As Integer
@@ -178,7 +182,10 @@ Public Class Main
 
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        FRMProgress.Close()
+        If CHKMULTIENC.Checked = False Then
+            FRMProgress.Close()
+        End If
+
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
             prepareEncoding2()
@@ -906,7 +913,7 @@ Public Class Main
                 Else
 
                 End If
-               
+
 
             ElseIf CHKQA.Checked = True Then
                 INPUTVIDNAME = InputCBOX.Text
@@ -925,6 +932,8 @@ Public Class Main
                 OUTPUTFILENAME = OutputCBox.Text
             End If
             SwitchContainer()
+
+
         Else
 
         End If
@@ -937,9 +946,12 @@ Public Class Main
             prepareOpen()
         End If
 
-
-        If CHKAVISYNTH.Checked = True Then
+        If CHKMULTIENC.Checked = False Then
+            FFMPEGEXE = ""
+        ElseIf CHKAVISYNTH.Checked = True Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
         ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
             FFMPEGEXE = "ffmpeghyb.exe"
         ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
@@ -1239,13 +1251,19 @@ Public Class Main
             INPUTVIDNAME = InputCBOX.Text
         End If
 
-        Dim testFile As System.IO.FileInfo
-        testFile = My.Computer.FileSystem.GetFileInfo(OUTPUTFILENAME)
-        Dim folderPath As String = testFile.DirectoryName
-        Dim outfileName As String = testFile.Name
+        If InStr(InputCBOX.Text, "-f dshow") Then
+
+        Else
+            Dim testFile As System.IO.FileInfo
+            testFile = My.Computer.FileSystem.GetFileInfo(OUTPUTFILENAME)
+            Dim folderPath As String = testFile.DirectoryName
+            Dim outfileName As String = testFile.Name
+            TEMPYTFILENAME = outfileName
+        End If
 
 
-        TEMPYTFILENAME = outfileName
+
+
 
         If Not BOXSUBPATH.Text = "" Then
             SUBTITLEPATH = " -i " + """" + BOXSUBPATH.Text + """" + " "
@@ -1345,6 +1363,10 @@ Public Class Main
             HLSOPTIONFLAG = " -force_key_frames expr:gte(t,n_forced*" + BOXCUSTOMT.Text + ") -keyint_min " + BOXCUSTOMT.Text + " -hls_list_size 0 -hls_time " + BOXCUSTOMT.Text + " "
             SHELLCMD = FFMPEGEXE + " " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
+
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + INPUTVIDNAME + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+                     MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + " -f flv " + """" + OUTPUTFILENAME + """"
 
         ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
             CHKQA.Enabled = False
@@ -1539,29 +1561,37 @@ Public Class Main
         Dim CMD As String
         Dim CMD1 As String
 
-        CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.Items(0))
-        Dim listIndex As Integer = 1
-        For listCount As Integer = 1 To LISTCHKENC2.Items.Count - 1
+ 
+            CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.Items(0))
 
-            CMD = CMD & " & " & CStr(LISTCHKENC2.Items(listIndex))
-            listIndex = listIndex + 1
 
-        Next
-        If CHKDEBUG.Checked = True Then
-            MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
-        End If
+            Dim listIndex As Integer = 1
+            For listCount As Integer = 1 To LISTCHKENC2.Items.Count - 1
+
+                CMD = CMD & " & " & CStr(LISTCHKENC2.Items(listIndex))
+
+
+                listIndex = listIndex + 1
+
+            Next
+            If CHKDEBUG.Checked = True Then
+                MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+            End If
         SHELLCMD = CMD1 + CMD
-        FRMProgress.Show()
-        'Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
-        CMD1 = ""
-        CMD = ""
+
+        Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+            CMD1 = ""
+            CMD = ""
     End Sub
 
     Private Sub BTENCSELECTED_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTENCSELECTED.Click
         Dim CMD As String
         Dim CMD1 As String
 
+
         CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
+
+
         Dim listIndex As Integer = 1
         For listCount As Integer = 1 To LISTCHKENC2.SelectedItems.Count - 1
 
@@ -1575,9 +1605,12 @@ Public Class Main
             MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
 
-        Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
-        CMD1 = ""
-        CMD = ""
+     
+            Shell("cmd /c title Infinity Media Encoder & " + CMD1 + CMD + " & comp.bat", vbNormalFocus)
+
+
+            CMD1 = ""
+            CMD = ""
 
     End Sub
 
@@ -1750,7 +1783,7 @@ Public Class Main
     End Sub
     Public Function SwitchContainer() As String()
 
-        If OutputCBox.Text = "" Then
+        If OutputCBox.Text = "" Or InStr(InputCBOX.Text, "-f dshow") Then
 
         Else
             Dim originalFile As String = OutputCBox.Text
@@ -1842,7 +1875,13 @@ Public Class Main
     End Sub
 
     Private Sub Button14_Click(sender As System.Object, e As System.EventArgs) Handles Button14.Click
-        If BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+        If CHKMULTIENC.Checked = False Then
+            FFMPEGEXE = ""
+        ElseIf CHKAVISYNTH.Checked = True Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
+        ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
             FFMPEGEXE = "ffmpeghyb.exe"
         ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
@@ -2008,14 +2047,9 @@ Public Class Main
         SWBitratemode()
     End Sub
     Public Function RunProcess() As String()
-        Dim OneLine As String
-        Dim p As New Process
 
-        ' Enable the ability to stop ffmpeg
         BackgroundWorker1.WorkerSupportsCancellation = True
-        ' Lets you get ffmpeg output info
         BackgroundWorker1.WorkerReportsProgress = True
-        ' Start the background worker. This method prevents your form from locking
         BackgroundWorker1.RunWorkerAsync()
 
     End Function
@@ -2024,12 +2058,23 @@ Public Class Main
         'Dim p As New Process
         Dim results As String = ""
         With p.StartInfo
-            .Arguments = " /c title Infinity Media Encoder & " + SHELLCMD
-            .FileName = "cmd"
+            .Arguments = SHELLCMD
+            If CHKMULTIENC.Checked = True Then
+
+            End If
+            If CHKAVISYNTH.Checked = True Then
+                .FileName = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+            ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+                .FileName = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
+            ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+                .FileName = "ffmpeghyb.exe"
+            ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
+                .FileName = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+            Else
+                .FileName = BOXFFMPEGEXE.Text
+            End If
             .UseShellExecute = False
-            .RedirectStandardInput = True
             .RedirectStandardError = True
-            .RedirectStandardOutput = True
             .CreateNoWindow = False
             .WindowStyle = ProcessWindowStyle.Hidden
         End With
@@ -2050,45 +2095,131 @@ Public Class Main
 
         End If
 
+        If CHKMULTIENC.Checked = False Then
+            FFMPEGEXE = ""
+        ElseIf CHKAVISYNTH.Checked = True Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
+        ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+            FFMPEGEXE = "ffmpeghyb.exe"
+        ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
+            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+        Else
+            FFMPEGEXE = BOXFFMPEGEXE.Text
+        End If
     End Sub
 
     Private Sub BackgroundWorker1_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-        ' Show the output in a RichTextbox
         Dim output As String = e.UserState.ToString
         FRMProgress.RichTextBox1.Text &= output & Environment.NewLine
+        'FRMProgress.RichTextBox1.SelectionStart = FRMProgress.RichTextBox1.Text.Length
         FRMProgress.RichTextBox1.SelectionStart = FRMProgress.RichTextBox1.Text.Length
+        FRMProgress.RichTextBox1.ScrollToCaret()
 
-        Dim outputReader As StreamReader = p.StandardError
-        Dim Duration As String = e.UserState.ToString
-        If Duration.Contains("Duration:") Then
-            Dim split1 As String() = Duration.Split(New [Char]() {" ", ","})
-            Dim String1 As String = split1(3)
-            Dim String2 As String = String1.Replace(":", "")
-            Dim String3 As String = String2.Replace(".", "")
-            FRMProgress.ProgressBar1.Maximum = String3
-            FRMProgress.Label2.Text = String1 & " Completed"
+        If InStr(InputCBOX.Text, "-f dshow") Then
+            Dim outputReader As StreamReader = p.StandardError
+            Dim Duration As String = e.UserState.ToString
+
+
+            If Duration.Contains("bitrate=") Then
+                Dim split3 As String() = Duration.Split(New [Char]() {"="})
+                Dim String9 As String = split3(6)
+                Dim String10 As String = String9.Replace(":", "")
+                Dim String11 As String = String10.Replace(".", "")
+                Dim String12 As String = String11.Replace(" bitrate", "")
+                Dim String13 As String = String9.Replace(" bitrate", "")
+                FRMProgress.LBBITRATE.Text = String13
+            End If
+
+            If Duration.Contains("fps=") Then
+                Dim split4 As String() = Duration.Split(New [Char]() {"="})
+                Dim String14 As String = split4(2)
+                Dim String15 As String = String14.Replace(":", "")
+                Dim String16 As String = String15.Replace(".", "")
+                Dim String17 As String = String16.Replace(" fps", "")
+                Dim String18 As String = String14.Replace(" q", "")
+                FRMProgress.LBFPS.Text = String18 + "fps"
+            End If
+
+            If Duration.Contains("frame dropped!") And Duration.Contains("size=") Then
+                FRMProgress.LBWARN.Text = "Frame Dropped!"
+            End If
+        Else
+
+
+            Dim outputReader As StreamReader = p.StandardError
+            Dim Duration As String = e.UserState.ToString
+            If Duration.Contains("Duration:") Then
+                Dim split1 As String() = Duration.Split(New [Char]() {" ", ","})
+                Dim String1 As String = split1(3)
+                Dim String2 As String = String1.Replace(":", "")
+                Dim String3 As String = String2.Replace(".", "")
+                'FRMProgress.ProgressBar1.Maximum = String3
+                FRMProgress.Label2.Text = String1 & " Completed"
+            End If
+            If Duration.Contains("frame=") Then
+                Dim split2 As String() = Duration.Split(New [Char]() {"="})
+                Dim String4 As String = split2(5)
+                Dim String5 As String = String4.Replace(":", "")
+                Dim String6 As String = String5.Replace(".", "")
+                Dim String7 As String = String6.Replace(" bitrate", "")
+                Dim String8 As String = String4.Replace(" bitrate", "")
+                'FRMProgress.ProgressBar1.Value = String7
+                FRMProgress.Label1.Text = String8 & " of "
+            End If
+
+            If Duration.Contains("bitrate=") Then
+                Dim split3 As String() = Duration.Split(New [Char]() {"="})
+                Dim String9 As String = split3(6)
+                Dim String10 As String = String9.Replace(":", "")
+                Dim String11 As String = String10.Replace(".", "")
+                Dim String12 As String = String11.Replace(" bitrate", "")
+                Dim String13 As String = String9.Replace(" bitrate", "")
+                FRMProgress.LBBITRATE.Text = String13
+            End If
+
+            If Duration.Contains("muxing overhead:") Then
+                FRMProgress.Label1.Text = "Processing Done"
+                FRMProgress.Label2.Text = ""
+            End If
+            If Duration.Contains("Invalid argument") Then
+                FRMProgress.Label1.Text = "Error Occured"
+                FRMProgress.Label2.Text = ""
+            End If
+            If Duration.Contains("Invalid data found when processing input") Then
+                FRMProgress.Label1.Text = "Error Occured"
+                FRMProgress.Label2.Text = ""
+            End If
         End If
-        If Duration.Contains("frame=") Then
-            Dim split2 As String() = Duration.Split(New [Char]() {"="})
-            Dim String4 As String = split2(5)
-            Dim String5 As String = String4.Replace(":", "")
-            Dim String6 As String = String5.Replace(".", "")
-            Dim String7 As String = String6.Replace(" bitrate", "")
-            Dim String8 As String = String4.Replace(" bitrate", "")
-            FRMProgress.ProgressBar1.Value = String7
-            FRMProgress.Label1.Text = String8 & " of "
+
+    End Sub
+
+    Private Sub BTNRUNSTREAM_Click(sender As Object, e As EventArgs) Handles BTNRUNSTREAM.Click
+        If CHKMULTIENC.Checked = False Then
+            FRMProgress.Close()
         End If
-        If Duration.Contains("muxing overhead:") Then
-            FRMProgress.Label1.Text = "Processing Done"
-            FRMProgress.Label2.Text = ""
-        End If
-        If Duration.Contains("Invalid argument") Then
-            FRMProgress.Label1.Text = "Error Occured"
-            FRMProgress.Label2.Text = ""
-        End If
-        If Duration.Contains("Invalid data found when processing input") Then
-            FRMProgress.Label1.Text = "Error Occured"
-            FRMProgress.Label2.Text = ""
+        If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
+            prepareEncoding()
+            prepareEncoding2()
+
+
+
+            If CHKMULTIENC.Checked Then
+                Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
+            Else
+                FRMProgress.Show()
+            End If
+
+
+            If CHKDEBUG.Checked Then
+                BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat"
+            End If
+
+            initialValue()
+        Else
+            MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical)
         End If
     End Sub
+
 End Class
