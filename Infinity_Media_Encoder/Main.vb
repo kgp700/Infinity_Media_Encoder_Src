@@ -560,6 +560,8 @@ noencoding:
             CHKQA.Enabled = False
             BOXCODEC.Text = "copy"
             BOXACODEC.Text = "copy"
+            BOXCODEC.Enabled = False
+            BOXACODEC.Enabled = False
 
 
 
@@ -572,12 +574,15 @@ noencoding:
             CHKQA.Enabled = False
             BOXCODEC.Enabled = True
             BOXACODEC.Enabled = True
+
         Else
             BOXTRIMSS.Enabled = True
             BOXTRIMTO.Enabled = True
             CHKTRIM.Enabled = True
             CHKMULTITR.Enabled = True
             CHKQA.Enabled = True
+            BOXCODEC.Enabled = True
+            BOXACODEC.Enabled = True
 
         End If
     End Sub
@@ -825,9 +830,11 @@ noencoding:
     End Function
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If p.HasExited = False Then
+        Try
             FRMProgress.KillProcessAndChildren(p.Id)
-        End If
+        Catch
+        End Try
+
     End Sub
 
 
@@ -1835,9 +1842,6 @@ noencoding:
         End If
     End Sub
 
-    Private Sub InputCBOX_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles InputCBOX.SelectedIndexChanged
-
-    End Sub
 
     Private Sub BTNSTARTNGINX_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNSTARTNGINX.Click
         Shell("cmd /c cd nginx & nginx.exe", vbNormalFocus)
