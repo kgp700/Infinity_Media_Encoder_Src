@@ -946,9 +946,7 @@ Public Class Main
             prepareOpen()
         End If
 
-        If CHKMULTIENC.Checked = False Then
-            FFMPEGEXE = ""
-        ElseIf CHKAVISYNTH.Checked = True Then
+        If CHKAVISYNTH.Checked = True Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
         ElseIf InStr(InputCBOX.Text, "-f dshow") Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
@@ -1560,37 +1558,14 @@ Public Class Main
     Private Sub BTBATCHENC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTBATCHENC.Click
         Dim CMD As String
         Dim CMD1 As String
-
- 
-            CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.Items(0))
-
-
-            Dim listIndex As Integer = 1
-            For listCount As Integer = 1 To LISTCHKENC2.Items.Count - 1
-
-                CMD = CMD & " & " & CStr(LISTCHKENC2.Items(listIndex))
-
-
-                listIndex = listIndex + 1
-
-            Next
-            If CHKDEBUG.Checked = True Then
-                MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
-            End If
-        SHELLCMD = CMD1 + CMD
-
-        Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
-            CMD1 = ""
-            CMD = ""
-    End Sub
-
-    Private Sub BTENCSELECTED_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTENCSELECTED.Click
-        Dim CMD As String
-        Dim CMD1 As String
-
-
-        CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
-
+        If CHKMULTIENC.Checked = False Then
+            FRMProgress.Close()
+        End If
+        If CHKMULTIENC.Checked = False Then
+            CMD1 = CStr(LISTCHKENC2.SelectedItems(0))
+        Else
+            CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
+        End If
 
         Dim listIndex As Integer = 1
         For listCount As Integer = 1 To LISTCHKENC2.SelectedItems.Count - 1
@@ -1604,13 +1579,48 @@ Public Class Main
         If CHKDEBUG.Checked = True Then
             MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
+        If CHKMULTIENC.Checked = False Then
+            FRMProgress.Show()
+        Else
+            'Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        End If
 
-     
-            Shell("cmd /c title Infinity Media Encoder & " + CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        CMD1 = ""
+        CMD = ""
+    End Sub
+
+    Private Sub BTENCSELECTED_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTENCSELECTED.Click
+        Dim CMD As String
+        Dim CMD1 As String
+        If CHKMULTIENC.Checked = False Then
+            FRMProgress.Close()
+        End If
+        If CHKMULTIENC.Checked = False Then
+            CMD1 = CStr(LISTCHKENC2.SelectedItems(0))
+        Else
+            CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
+        End If
+
+        Dim listIndex As Integer = 1
+        For listCount As Integer = 1 To LISTCHKENC2.SelectedItems.Count - 1
+
+            CMD = CMD & " & " & CStr(LISTCHKENC2.SelectedItems(listIndex))
 
 
-            CMD1 = ""
-            CMD = ""
+            listIndex = listIndex + 1
+
+        Next
+        If CHKDEBUG.Checked = True Then
+            MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        End If
+        If CHKMULTIENC.Checked = False Then
+            FRMProgress.Show()
+        Else
+            'Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+        End If
+
+        CMD1 = ""
+        CMD = ""
 
     End Sub
 
@@ -1875,9 +1885,7 @@ Public Class Main
     End Sub
 
     Private Sub Button14_Click(sender As System.Object, e As System.EventArgs) Handles Button14.Click
-        If CHKMULTIENC.Checked = False Then
-            FFMPEGEXE = ""
-        ElseIf CHKAVISYNTH.Checked = True Then
+        If CHKAVISYNTH.Checked = True Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
         ElseIf InStr(InputCBOX.Text, "-f dshow") Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
@@ -2058,21 +2066,9 @@ Public Class Main
         'Dim p As New Process
         Dim results As String = ""
         With p.StartInfo
-            .Arguments = SHELLCMD
-            If CHKMULTIENC.Checked = True Then
+            .Arguments = " /c title Infinity Media Encoder & " + SHELLCMD
+            .FileName = "cmd"
 
-            End If
-            If CHKAVISYNTH.Checked = True Then
-                .FileName = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
-            ElseIf InStr(InputCBOX.Text, "-f dshow") Then
-                .FileName = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
-            ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
-                .FileName = "ffmpeghyb.exe"
-            ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
-                .FileName = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
-            Else
-                .FileName = BOXFFMPEGEXE.Text
-            End If
             .UseShellExecute = False
             .RedirectStandardError = True
             .CreateNoWindow = False
@@ -2095,19 +2091,6 @@ Public Class Main
 
         End If
 
-        If CHKMULTIENC.Checked = False Then
-            FFMPEGEXE = ""
-        ElseIf CHKAVISYNTH.Checked = True Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
-        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
-        ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
-            FFMPEGEXE = "ffmpeghyb.exe"
-        ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
-        Else
-            FFMPEGEXE = BOXFFMPEGEXE.Text
-        End If
     End Sub
 
     Private Sub BackgroundWorker1_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged

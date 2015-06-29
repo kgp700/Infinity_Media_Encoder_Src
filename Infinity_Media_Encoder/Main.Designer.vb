@@ -134,6 +134,7 @@ Partial Class Main
         Me.BOXSUBPATH = New System.Windows.Forms.ComboBox()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.BTNSTOPSTREAM = New System.Windows.Forms.Button()
         Me.Button16 = New System.Windows.Forms.Button()
         Me.Button15 = New System.Windows.Forms.Button()
@@ -163,7 +164,6 @@ Partial Class Main
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
         Me.GroupBox2.SuspendLayout()
@@ -1218,7 +1218,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1333,7 +1333,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(293, 13)
+        Me.Label28.Size = New System.Drawing.Size(294, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1376,6 +1376,16 @@ Partial Class Main
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Streaming"
         Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(16, 79)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(142, 17)
+        Me.CheckBox1.TabIndex = 78
+        Me.CheckBox1.Text = "Input DirectShow Filter"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'BTNSTOPSTREAM
         '
@@ -1668,16 +1678,6 @@ Partial Class Main
         '
         'BackgroundWorker1
         '
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(16, 79)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(142, 17)
-        Me.CheckBox1.TabIndex = 78
-        Me.CheckBox1.Text = "Input DirectShow Filter"
-        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'PerformanceCounter1
         '
