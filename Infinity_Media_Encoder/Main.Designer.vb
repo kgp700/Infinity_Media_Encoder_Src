@@ -135,12 +135,10 @@ Partial Class Main
         Me.Button11 = New System.Windows.Forms.Button()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.BTNSTOPSTREAM = New System.Windows.Forms.Button()
         Me.Button16 = New System.Windows.Forms.Button()
         Me.Button15 = New System.Windows.Forms.Button()
         Me.BTNSTOPNGINX = New System.Windows.Forms.Button()
         Me.BTNSTARTNGINX = New System.Windows.Forms.Button()
-        Me.BTNRUNSTREAM = New System.Windows.Forms.Button()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -166,6 +164,9 @@ Partial Class Main
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.CHKCMDWINDOW = New System.Windows.Forms.CheckBox()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1150,6 +1151,8 @@ Partial Class Main
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.TextBox1)
+        Me.TabPage2.Controls.Add(Me.CheckBox2)
         Me.TabPage2.Controls.Add(Me.Button14)
         Me.TabPage2.Controls.Add(Me.Button13)
         Me.TabPage2.Controls.Add(Me.BOXDEBUG)
@@ -1169,7 +1172,7 @@ Partial Class Main
         '
         'Button14
         '
-        Me.Button14.Location = New System.Drawing.Point(9, 152)
+        Me.Button14.Location = New System.Drawing.Point(9, 172)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(141, 23)
         Me.Button14.TabIndex = 70
@@ -1178,7 +1181,7 @@ Partial Class Main
         '
         'Button13
         '
-        Me.Button13.Location = New System.Drawing.Point(344, 123)
+        Me.Button13.Location = New System.Drawing.Point(344, 143)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(151, 23)
         Me.Button13.TabIndex = 69
@@ -1206,7 +1209,7 @@ Partial Class Main
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(161, 123)
+        Me.Button4.Location = New System.Drawing.Point(161, 143)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(177, 23)
         Me.Button4.TabIndex = 66
@@ -1218,7 +1221,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1244,7 +1247,7 @@ Partial Class Main
         '
         'Button6
         '
-        Me.Button6.Location = New System.Drawing.Point(9, 123)
+        Me.Button6.Location = New System.Drawing.Point(9, 143)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(141, 23)
         Me.Button6.TabIndex = 59
@@ -1333,7 +1336,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(294, 13)
+        Me.Label28.Size = New System.Drawing.Size(293, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1359,12 +1362,10 @@ Partial Class Main
         'TabPage5
         '
         Me.TabPage5.Controls.Add(Me.CheckBox1)
-        Me.TabPage5.Controls.Add(Me.BTNSTOPSTREAM)
         Me.TabPage5.Controls.Add(Me.Button16)
         Me.TabPage5.Controls.Add(Me.Button15)
         Me.TabPage5.Controls.Add(Me.BTNSTOPNGINX)
         Me.TabPage5.Controls.Add(Me.BTNSTARTNGINX)
-        Me.TabPage5.Controls.Add(Me.BTNRUNSTREAM)
         Me.TabPage5.Controls.Add(Me.Label29)
         Me.TabPage5.Controls.Add(Me.ComboBox2)
         Me.TabPage5.Controls.Add(Me.Label19)
@@ -1380,23 +1381,13 @@ Partial Class Main
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Enabled = False
         Me.CheckBox1.Location = New System.Drawing.Point(16, 79)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(142, 17)
         Me.CheckBox1.TabIndex = 78
         Me.CheckBox1.Text = "Input DirectShow Filter"
         Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'BTNSTOPSTREAM
-        '
-        Me.BTNSTOPSTREAM.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTNSTOPSTREAM.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTNSTOPSTREAM.Location = New System.Drawing.Point(493, 198)
-        Me.BTNSTOPSTREAM.Name = "BTNSTOPSTREAM"
-        Me.BTNSTOPSTREAM.Size = New System.Drawing.Size(126, 26)
-        Me.BTNSTOPSTREAM.TabIndex = 77
-        Me.BTNSTOPSTREAM.Text = "Stop Streaming"
-        Me.BTNSTOPSTREAM.UseVisualStyleBackColor = True
         '
         'Button16
         '
@@ -1444,17 +1435,6 @@ Partial Class Main
         Me.BTNSTARTNGINX.Text = "Start NGINX Server"
         Me.BTNSTARTNGINX.UseVisualStyleBackColor = True
         '
-        'BTNRUNSTREAM
-        '
-        Me.BTNRUNSTREAM.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTNRUNSTREAM.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTNRUNSTREAM.Location = New System.Drawing.Point(493, 166)
-        Me.BTNRUNSTREAM.Name = "BTNRUNSTREAM"
-        Me.BTNRUNSTREAM.Size = New System.Drawing.Size(126, 26)
-        Me.BTNRUNSTREAM.TabIndex = 72
-        Me.BTNRUNSTREAM.Text = "Start Streaming"
-        Me.BTNRUNSTREAM.UseVisualStyleBackColor = True
-        '
         'Label29
         '
         Me.Label29.AutoSize = True
@@ -1499,6 +1479,7 @@ Partial Class Main
         '
         'TabPage6
         '
+        Me.TabPage6.Controls.Add(Me.CHKCMDWINDOW)
         Me.TabPage6.Controls.Add(Me.CHKMULTIENC)
         Me.TabPage6.Controls.Add(Me.CHKASYNC)
         Me.TabPage6.Controls.Add(Me.CHKVSYNC0)
@@ -1537,6 +1518,8 @@ Partial Class Main
         'CHKVSYNC0
         '
         Me.CHKVSYNC0.AutoSize = True
+        Me.CHKVSYNC0.Checked = True
+        Me.CHKVSYNC0.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CHKVSYNC0.Location = New System.Drawing.Point(168, 41)
         Me.CHKVSYNC0.Name = "CHKVSYNC0"
         Me.CHKVSYNC0.Size = New System.Drawing.Size(120, 17)
@@ -1684,6 +1667,36 @@ Partial Class Main
         Me.PerformanceCounter1.CategoryName = "Processor"
         Me.PerformanceCounter1.CounterName = "% Processor Time"
         Me.PerformanceCounter1.InstanceName = "_Total"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Enabled = False
+        Me.TextBox1.Location = New System.Drawing.Point(147, 108)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(469, 22)
+        Me.TextBox1.TabIndex = 72
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Enabled = False
+        Me.CheckBox2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CheckBox2.Location = New System.Drawing.Point(9, 110)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(133, 17)
+        Me.CheckBox2.TabIndex = 71
+        Me.CheckBox2.Text = "Custom HLS Address"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'CHKCMDWINDOW
+        '
+        Me.CHKCMDWINDOW.AutoSize = True
+        Me.CHKCMDWINDOW.Location = New System.Drawing.Point(168, 64)
+        Me.CHKCMDWINDOW.Name = "CHKCMDWINDOW"
+        Me.CHKCMDWINDOW.Size = New System.Drawing.Size(192, 17)
+        Me.CHKCMDWINDOW.TabIndex = 76
+        Me.CHKCMDWINDOW.Text = "GUI Progress with CMD Window"
+        Me.CHKCMDWINDOW.UseVisualStyleBackColor = True
         '
         'Main
         '
@@ -1834,7 +1847,6 @@ Partial Class Main
     Friend WithEvents BOXREFINFO As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents BOXCODECPRESET As System.Windows.Forms.ComboBox
-    Friend WithEvents BTNRUNSTREAM As System.Windows.Forms.Button
     Friend WithEvents Label29 As System.Windows.Forms.Label
     Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
@@ -1881,8 +1893,10 @@ Partial Class Main
     Friend WithEvents BITBOX2 As System.Windows.Forms.ComboBox
     Friend WithEvents CHKMULTIENC As System.Windows.Forms.CheckBox
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents BTNSTOPSTREAM As System.Windows.Forms.Button
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents PerformanceCounter1 As System.Diagnostics.PerformanceCounter
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents CheckBox2 As System.Windows.Forms.CheckBox
+    Friend WithEvents CHKCMDWINDOW As System.Windows.Forms.CheckBox
 End Class

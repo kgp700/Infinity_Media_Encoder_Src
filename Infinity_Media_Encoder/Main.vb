@@ -182,6 +182,17 @@ Public Class Main
 
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
+            Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo)
+            If answer = DialogResult.Yes Then
+                GoTo continueencoding
+            ElseIf answer = DialogResult.No Then
+                initialValue()
+                GoTo noencoding
+            End If
+
+        End If
+continueencoding:
         If CHKMULTIENC.Checked = False Then
             FRMProgress.Close()
         End If
@@ -189,6 +200,8 @@ Public Class Main
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
             prepareEncoding2()
+
+
 
 
 
@@ -210,8 +223,8 @@ Public Class Main
             MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical)
         End If
 
-
-
+noencoding:
+        initialValue()
     End Sub
 
     Private Sub BOXCODEC_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXCODEC.TextChanged
@@ -536,6 +549,7 @@ Public Class Main
         Else
             MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical)
         End If
+        LISTCHKENC2.SetSelected(0, True)
     End Sub
 
     Private Sub InputCBOX_TextUpdate(ByVal sender As Object, ByVal e As System.EventArgs) Handles InputCBOX.TextChanged
@@ -810,6 +824,12 @@ Public Class Main
 
     End Function
 
+    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If p.HasExited = False Then
+            FRMProgress.KillProcessAndChildren(p.Id)
+        End If
+    End Sub
+
 
 
     Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -916,12 +936,7 @@ Public Class Main
 
 
             ElseIf CHKQA.Checked = True Then
-                INPUTVIDNAME = InputCBOX.Text
-                Dim testFile As System.IO.FileInfo
-                testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
-                Dim folderPath As String = testFile.DirectoryName
-                Dim infileName As String = testFile.Name
-                OutputCBox.Text = folderPath + "\HLS_Output\playlist.m3u8"
+                OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
             Else
                 INPUTVIDNAME = InputCBOX.Text
                 Dim testFile As System.IO.FileInfo
@@ -1350,6 +1365,13 @@ Public Class Main
     End Function
 
     Public Function prepareEncoding2() As String()
+        Dim testFile As System.IO.FileInfo
+        testFile = My.Computer.FileSystem.GetFileInfo(OutputCBox.Text)
+        Dim folderPath As String = testFile.DirectoryName
+
+        If Not Directory.Exists(folderPath) Then
+            Directory.CreateDirectory(folderPath)
+        End If
 
         If BOXACODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:a aac_adtstoasc "
@@ -1466,11 +1488,7 @@ Public Class Main
             BOXCONTAINER.Items.Add("m3u8")
             BOXCONTAINER.Text = "m3u8"
             INPUTVIDNAME = InputCBOX.Text
-            Dim testFile As System.IO.FileInfo
-            testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
-            Dim folderPath As String = testFile.DirectoryName
-            Dim infileName As String = testFile.Name
-            OutputCBox.Text = folderPath + "\HLS_Output\playlist.m3u8"
+            OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
         ElseIf CHKQA.Checked = False Then
             ChangeItems()
         End If
@@ -1562,7 +1580,7 @@ Public Class Main
             FRMProgress.Close()
         End If
         If CHKMULTIENC.Checked = False Then
-            CMD1 = CStr(LISTCHKENC2.SelectedItems(0))
+            CMD1 = " " + CStr(LISTCHKENC2.SelectedItems(0))
         Else
             CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
         End If
@@ -1596,7 +1614,7 @@ Public Class Main
             FRMProgress.Close()
         End If
         If CHKMULTIENC.Checked = False Then
-            CMD1 = CStr(LISTCHKENC2.SelectedItems(0))
+            CMD1 = " " + CStr(LISTCHKENC2.SelectedItems(0))
         Else
             CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
         End If
@@ -1935,11 +1953,7 @@ Public Class Main
             BOXCONTAINER.Items.Add("m3u8")
             BOXCONTAINER.Text = "m3u8"
             INPUTVIDNAME = InputCBOX.Text
-            Dim testFile As System.IO.FileInfo
-            testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
-            Dim folderPath As String = testFile.DirectoryName
-            Dim infileName As String = testFile.Name
-            OutputCBox.Text = folderPath + "\HLS_Output\playlist.m3u8"
+            OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
         ElseIf CHKQA.Checked = False Then
             ChangeItems()
         End If
@@ -2071,7 +2085,12 @@ Public Class Main
 
             .UseShellExecute = False
             .RedirectStandardError = True
-            .CreateNoWindow = False
+            If CHKCMDWINDOW.Checked = True Then
+                .CreateNoWindow = False
+            Else
+                .CreateNoWindow = True
+            End If
+
             .WindowStyle = ProcessWindowStyle.Hidden
         End With
         p.Start()
@@ -2082,12 +2101,15 @@ Public Class Main
         While p.StandardError.EndOfStream = False
 
             output = outputReader.ReadLine()
+
             BackgroundWorker1.ReportProgress(0, output)
+
+
 
         End While
 
-        If p.StandardError.EndOfStream = False Then
-            MsgBox("Processing Done!")
+        If p.StandardError.EndOfStream = True Then
+            MsgBox("Processing Done!", MsgBoxStyle.Information)
 
         End If
 
@@ -2134,33 +2156,42 @@ Public Class Main
             Dim outputReader As StreamReader = p.StandardError
             Dim Duration As String = e.UserState.ToString
             If Duration.Contains("Duration:") Then
-                Dim split1 As String() = Duration.Split(New [Char]() {" ", ","})
-                Dim String1 As String = split1(3)
-                Dim String2 As String = String1.Replace(":", "")
-                Dim String3 As String = String2.Replace(".", "")
-                'FRMProgress.ProgressBar1.Maximum = String3
-                FRMProgress.Label2.Text = String1 & " Completed"
+                Try
+                    Dim split1 As String() = Duration.Split(New [Char]() {" ", ","})
+                    Dim String1 As String = split1(3)
+                    Dim String2 As String = String1.Replace(":", "")
+                    Dim String3 As String = String2.Replace(".", "")
+                    FRMProgress.ProgressBar1.Maximum = String3
+                    FRMProgress.Label2.Text = String1 & " Completed"
+                Catch
+                End Try
             End If
             If Duration.Contains("frame=") Then
-                Dim split2 As String() = Duration.Split(New [Char]() {"="})
-                Dim String4 As String = split2(5)
-                Dim String5 As String = String4.Replace(":", "")
-                Dim String6 As String = String5.Replace(".", "")
-                Dim String7 As String = String6.Replace(" bitrate", "")
-                Dim String8 As String = String4.Replace(" bitrate", "")
-                'FRMProgress.ProgressBar1.Value = String7
-                FRMProgress.Label1.Text = String8 & " of "
+                Try
+                    Dim split2 As String() = Duration.Split(New [Char]() {"="})
+                    Dim String4 As String = split2(5)
+                    Dim String5 As String = String4.Replace(":", "")
+                    Dim String6 As String = String5.Replace(".", "")
+                    Dim String7 As String = String6.Replace(" bitrate", "")
+                    Dim String8 As String = String4.Replace(" bitrate", "")
+                    FRMProgress.ProgressBar1.Value = String7
+                    FRMProgress.Label1.Text = String8 & " of "
+                Catch
+                End Try
+                Try
+                    If Duration.Contains("bitrate=") Then
+                        Dim split3 As String() = Duration.Split(New [Char]() {"="})
+                        Dim String9 As String = split3(6)
+                        Dim String10 As String = String9.Replace(":", "")
+                        Dim String11 As String = String10.Replace(".", "")
+                        Dim String12 As String = String11.Replace(" bitrate", "")
+                        Dim String13 As String = String9.Replace(" dup", "")
+                        FRMProgress.LBBITRATE.Text = String13
+                    End If
+                Catch
+                End Try
             End If
 
-            If Duration.Contains("bitrate=") Then
-                Dim split3 As String() = Duration.Split(New [Char]() {"="})
-                Dim String9 As String = split3(6)
-                Dim String10 As String = String9.Replace(":", "")
-                Dim String11 As String = String10.Replace(".", "")
-                Dim String12 As String = String11.Replace(" bitrate", "")
-                Dim String13 As String = String9.Replace(" bitrate", "")
-                FRMProgress.LBBITRATE.Text = String13
-            End If
 
             If Duration.Contains("muxing overhead:") Then
                 FRMProgress.Label1.Text = "Processing Done"
@@ -2178,31 +2209,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub BTNRUNSTREAM_Click(sender As Object, e As EventArgs) Handles BTNRUNSTREAM.Click
-        If CHKMULTIENC.Checked = False Then
-            FRMProgress.Close()
-        End If
-        If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
-            prepareEncoding()
-            prepareEncoding2()
+    Private Sub BTNRUNSTREAM_Click(sender As Object, e As EventArgs)
 
-
-
-            If CHKMULTIENC.Checked Then
-                Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
-            Else
-                FRMProgress.Show()
-            End If
-
-
-            If CHKDEBUG.Checked Then
-                BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat"
-            End If
-
-            initialValue()
-        Else
-            MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical)
-        End If
     End Sub
-
 End Class

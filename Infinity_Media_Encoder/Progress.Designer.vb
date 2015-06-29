@@ -28,7 +28,6 @@ Partial Class FRMProgress
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -85,16 +84,6 @@ Partial Class FRMProgress
         Me.Label2.Size = New System.Drawing.Size(0, 12)
         Me.Label2.TabIndex = 4
         '
-        'ListBox1
-        '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 12
-        Me.ListBox1.Location = New System.Drawing.Point(501, 430)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(149, 16)
-        Me.ListBox1.TabIndex = 5
-        Me.ListBox1.Visible = False
-        '
         'Button1
         '
         Me.Button1.Enabled = False
@@ -135,7 +124,7 @@ Partial Class FRMProgress
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(308, 9)
+        Me.Label6.Location = New System.Drawing.Point(312, 9)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(34, 12)
         Me.Label6.TabIndex = 10
@@ -144,7 +133,7 @@ Partial Class FRMProgress
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(413, 9)
+        Me.Label7.Location = New System.Drawing.Point(417, 9)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(103, 12)
         Me.Label7.TabIndex = 11
@@ -166,7 +155,7 @@ Partial Class FRMProgress
         'LBFPS
         '
         Me.LBFPS.AutoSize = True
-        Me.LBFPS.Location = New System.Drawing.Point(340, 9)
+        Me.LBFPS.Location = New System.Drawing.Point(344, 9)
         Me.LBFPS.Name = "LBFPS"
         Me.LBFPS.Size = New System.Drawing.Size(43, 12)
         Me.LBFPS.TabIndex = 13
@@ -175,7 +164,7 @@ Partial Class FRMProgress
         'LBNETWORK
         '
         Me.LBNETWORK.AutoSize = True
-        Me.LBNETWORK.Location = New System.Drawing.Point(511, 9)
+        Me.LBNETWORK.Location = New System.Drawing.Point(515, 9)
         Me.LBNETWORK.Name = "LBNETWORK"
         Me.LBNETWORK.Size = New System.Drawing.Size(84, 12)
         Me.LBNETWORK.TabIndex = 14
@@ -205,7 +194,6 @@ Partial Class FRMProgress
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ProgressBar1)
@@ -224,7 +212,6 @@ Partial Class FRMProgress
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
