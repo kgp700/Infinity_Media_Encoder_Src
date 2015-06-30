@@ -1430,7 +1430,7 @@ noencoding:
             FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + ":pass=2" + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
         Else
-            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + " -y " + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
 
         End If
@@ -1581,6 +1581,18 @@ noencoding:
     End Sub
 
     Private Sub BTBATCHENC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTBATCHENC.Click
+        If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
+            Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo)
+            If answer = DialogResult.Yes Then
+                GoTo continueencoding
+            ElseIf answer = DialogResult.No Then
+                initialValue()
+                GoTo noencoding
+            End If
+
+        End If
+continueencoding:
+
         Dim CMD As String
         Dim CMD1 As String
         If CHKMULTIENC.Checked = False Then
@@ -1605,16 +1617,32 @@ noencoding:
             MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
         If CHKMULTIENC.Checked = False Then
+            SHELLCMD = CMD1 + CMD
             FRMProgress.Show()
         Else
-            'Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+            Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
+
+noencoding:
+        initialValue()
 
         CMD1 = ""
         CMD = ""
+        SHELLCMD = ""
     End Sub
 
     Private Sub BTENCSELECTED_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTENCSELECTED.Click
+        If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
+            Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo)
+            If answer = DialogResult.Yes Then
+                GoTo continueencoding
+            ElseIf answer = DialogResult.No Then
+                initialValue()
+                GoTo noencoding
+            End If
+
+        End If
+continueencoding:
         Dim CMD As String
         Dim CMD1 As String
         If CHKMULTIENC.Checked = False Then
@@ -1639,13 +1667,17 @@ noencoding:
             MsgBox(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
         If CHKMULTIENC.Checked = False Then
+            SHELLCMD = CMD1 + CMD
             FRMProgress.Show()
         Else
-            'Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
+            Shell(CMD1 + CMD + " & comp.bat", vbNormalFocus)
         End If
+noencoding:
+        initialValue()
 
         CMD1 = ""
         CMD = ""
+        SHELLCMD = ""
 
     End Sub
 

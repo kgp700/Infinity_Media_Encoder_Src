@@ -114,6 +114,8 @@ Partial Class Main
         Me.Label32 = New System.Windows.Forms.Label()
         Me.BOXSPP = New System.Windows.Forms.ComboBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.Button14 = New System.Windows.Forms.Button()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.BOXDEBUG = New System.Windows.Forms.TextBox()
@@ -144,6 +146,7 @@ Partial Class Main
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.CHKCMDWINDOW = New System.Windows.Forms.CheckBox()
         Me.CHKMULTIENC = New System.Windows.Forms.CheckBox()
         Me.CHKASYNC = New System.Windows.Forms.CheckBox()
         Me.CHKVSYNC0 = New System.Windows.Forms.CheckBox()
@@ -164,9 +167,6 @@ Partial Class Main
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.CHKCMDWINDOW = New System.Windows.Forms.CheckBox()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1170,6 +1170,26 @@ Partial Class Main
         Me.TabPage2.Text = "Advanced"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'TextBox1
+        '
+        Me.TextBox1.Enabled = False
+        Me.TextBox1.Location = New System.Drawing.Point(147, 108)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(469, 22)
+        Me.TextBox1.TabIndex = 72
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Enabled = False
+        Me.CheckBox2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CheckBox2.Location = New System.Drawing.Point(9, 110)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(133, 17)
+        Me.CheckBox2.TabIndex = 71
+        Me.CheckBox2.Text = "Custom HLS Address"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
         'Button14
         '
         Me.Button14.Location = New System.Drawing.Point(9, 172)
@@ -1221,7 +1241,7 @@ Partial Class Main
         Me.CHK4K.AutoSize = True
         Me.CHK4K.Location = New System.Drawing.Point(9, 49)
         Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
+        Me.CHK4K.Size = New System.Drawing.Size(374, 17)
         Me.CHK4K.TabIndex = 63
         Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
         Me.CHK4K.UseVisualStyleBackColor = True
@@ -1336,7 +1356,7 @@ Partial Class Main
         Me.Label28.AutoSize = True
         Me.Label28.Location = New System.Drawing.Point(7, 35)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(293, 13)
+        Me.Label28.Size = New System.Drawing.Size(294, 13)
         Me.Label28.TabIndex = 17
         Me.Label28.Text = "Input Subtitle Path (Subtitle only support for MP4, MKV)"
         '
@@ -1492,6 +1512,16 @@ Partial Class Main
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Settings"
         Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'CHKCMDWINDOW
+        '
+        Me.CHKCMDWINDOW.AutoSize = True
+        Me.CHKCMDWINDOW.Location = New System.Drawing.Point(168, 64)
+        Me.CHKCMDWINDOW.Name = "CHKCMDWINDOW"
+        Me.CHKCMDWINDOW.Size = New System.Drawing.Size(192, 17)
+        Me.CHKCMDWINDOW.TabIndex = 76
+        Me.CHKCMDWINDOW.Text = "GUI Progress with CMD Window"
+        Me.CHKCMDWINDOW.UseVisualStyleBackColor = True
         '
         'CHKMULTIENC
         '
@@ -1667,36 +1697,6 @@ Partial Class Main
         Me.PerformanceCounter1.CategoryName = "Processor"
         Me.PerformanceCounter1.CounterName = "% Processor Time"
         Me.PerformanceCounter1.InstanceName = "_Total"
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Enabled = False
-        Me.TextBox1.Location = New System.Drawing.Point(147, 108)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(469, 22)
-        Me.TextBox1.TabIndex = 72
-        '
-        'CheckBox2
-        '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Enabled = False
-        Me.CheckBox2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CheckBox2.Location = New System.Drawing.Point(9, 110)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(133, 17)
-        Me.CheckBox2.TabIndex = 71
-        Me.CheckBox2.Text = "Custom HLS Address"
-        Me.CheckBox2.UseVisualStyleBackColor = True
-        '
-        'CHKCMDWINDOW
-        '
-        Me.CHKCMDWINDOW.AutoSize = True
-        Me.CHKCMDWINDOW.Location = New System.Drawing.Point(168, 64)
-        Me.CHKCMDWINDOW.Name = "CHKCMDWINDOW"
-        Me.CHKCMDWINDOW.Size = New System.Drawing.Size(192, 17)
-        Me.CHKCMDWINDOW.TabIndex = 76
-        Me.CHKCMDWINDOW.Text = "GUI Progress with CMD Window"
-        Me.CHKCMDWINDOW.UseVisualStyleBackColor = True
         '
         'Main
         '
