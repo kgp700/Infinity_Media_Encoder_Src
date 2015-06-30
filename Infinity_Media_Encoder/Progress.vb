@@ -1,19 +1,24 @@
-﻿Imports System.Diagnostics
-Imports System.IO
-Imports System.Dynamic
+﻿'Imports System.Diagnostics
+'Imports System.IO
+'Imports System.Dynamic
 Imports System.Management
 
 Public Class FRMProgress
-    Private totalHits As Integer = 0
     Private cpuusage As Integer
-    Public myId As Integer
-    Private myId2 As Integer
-    Public myId3 As Integer
 
 
     Private Sub FRMProgress_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
         If Main.p.HasExited = False Then
-            KillProcessAndChildren(Main.p.Id)
+            Try
+                KillProcessAndChildren(Main.p.Id)
+            Catch ex As Exception
+
+            End Try
+            If Main.BackgroundWorker1.IsBusy = True Then
+                Main.BackgroundWorker1.CancelAsync()
+            End If
+
         End If
     End Sub
 
@@ -22,17 +27,18 @@ Public Class FRMProgress
     End Sub
 
     Private Sub FRMProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Main.RunProcess()
-        Timer1.Start()
-
+            Main.RunProcess()
+            Timer1.Start()
 
     End Sub
 
     Private Sub BTNSTOP_Click(sender As Object, e As EventArgs) Handles BTNSTOP.Click
         If Main.p.HasExited = False Then
+            Try
+                KillProcessAndChildren(Main.p.Id)
+            Catch ex As Exception
 
-            KillProcessAndChildren(Main.p.Id)
-
+            End Try
         End If
 
 

@@ -43,7 +43,7 @@ Partial Class FRMProgress
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.BackColor = System.Drawing.SystemColors.Menu
+        Me.RichTextBox1.BackColor = System.Drawing.SystemColors.Window
         Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.RichTextBox1.Location = New System.Drawing.Point(2, 33)
         Me.RichTextBox1.Name = "RichTextBox1"
@@ -54,12 +54,16 @@ Partial Class FRMProgress
         '
         'BTNSTOP
         '
+        Me.BTNSTOP.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.BTNSTOP.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BTNSTOP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BTNSTOP.ForeColor = System.Drawing.SystemColors.ControlText
         Me.BTNSTOP.Location = New System.Drawing.Point(209, 461)
         Me.BTNSTOP.Name = "BTNSTOP"
         Me.BTNSTOP.Size = New System.Drawing.Size(148, 23)
         Me.BTNSTOP.TabIndex = 1
         Me.BTNSTOP.Text = "Stop Processing"
-        Me.BTNSTOP.UseVisualStyleBackColor = True
+        Me.BTNSTOP.UseVisualStyleBackColor = False
         '
         'ProgressBar1
         '
@@ -86,18 +90,21 @@ Partial Class FRMProgress
         '
         'Button1
         '
+        Me.Button1.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Button1.Enabled = False
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button1.Location = New System.Drawing.Point(363, 461)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(148, 23)
         Me.Button1.TabIndex = 6
         Me.Button1.Text = "Pause Processing"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'Label3
         '
-        Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(87, 9)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(42, 12)
         Me.Label3.TabIndex = 7
@@ -105,8 +112,8 @@ Partial Class FRMProgress
         '
         'Label4
         '
-        Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(157, 9)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(52, 12)
         Me.Label4.TabIndex = 8
@@ -114,8 +121,8 @@ Partial Class FRMProgress
         '
         'Label5
         '
-        Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(7, 9)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(78, 12)
         Me.Label5.TabIndex = 9
@@ -123,8 +130,8 @@ Partial Class FRMProgress
         '
         'Label6
         '
-        Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(312, 9)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(34, 12)
         Me.Label6.TabIndex = 10
@@ -132,8 +139,8 @@ Partial Class FRMProgress
         '
         'Label7
         '
-        Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(417, 9)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(103, 12)
         Me.Label7.TabIndex = 11
@@ -145,8 +152,8 @@ Partial Class FRMProgress
         '
         'LBBITRATE
         '
-        Me.LBBITRATE.AutoSize = True
         Me.LBBITRATE.Location = New System.Drawing.Point(207, 9)
+        Me.LBBITRATE.Margin = New System.Windows.Forms.Padding(0)
         Me.LBBITRATE.Name = "LBBITRATE"
         Me.LBBITRATE.Size = New System.Drawing.Size(71, 12)
         Me.LBBITRATE.TabIndex = 12
@@ -154,8 +161,8 @@ Partial Class FRMProgress
         '
         'LBFPS
         '
-        Me.LBFPS.AutoSize = True
         Me.LBFPS.Location = New System.Drawing.Point(344, 9)
+        Me.LBFPS.Margin = New System.Windows.Forms.Padding(0)
         Me.LBFPS.Name = "LBFPS"
         Me.LBFPS.Size = New System.Drawing.Size(43, 12)
         Me.LBFPS.TabIndex = 13
@@ -163,8 +170,8 @@ Partial Class FRMProgress
         '
         'LBNETWORK
         '
-        Me.LBNETWORK.AutoSize = True
         Me.LBNETWORK.Location = New System.Drawing.Point(515, 9)
+        Me.LBNETWORK.Margin = New System.Windows.Forms.Padding(0)
         Me.LBNETWORK.Name = "LBNETWORK"
         Me.LBNETWORK.Size = New System.Drawing.Size(84, 12)
         Me.LBNETWORK.TabIndex = 14

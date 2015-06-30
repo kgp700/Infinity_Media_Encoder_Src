@@ -1,11 +1,11 @@
 ﻿Imports System.Xml
 Imports System.IO
 Imports System.IO.Path
-Imports System.Runtime.InteropServices
-Imports System.Threading.Tasks
-Imports System.Text
-Imports System.Threading
-Imports System.Diagnostics
+'Imports System.Runtime.InteropServices
+'Imports System.Threading.Tasks
+'Imports System.Text
+'Imports System.Threading
+'Imports System.Diagnostics
 
 
 Public Class Main
@@ -80,8 +80,10 @@ Public Class Main
     Public INFOFRAMEMODE As String
     Public EXTRAFFPRAM As String
     Public p As New Process
+    Public STREAMPARAM As String
     Public STREAMINPUT As String
     Public STREAMOUTPUT As String
+    Public HLSADDRESS As String
 
     Dim DURHOURS As Integer
     Dim DURMIN As Integer
@@ -194,22 +196,19 @@ Public Class Main
         End If
 continueencoding:
         If CHKMULTIENC.Checked = False Then
-            FRMProgress.Close()
+            'FRMProgress.Close()
         End If
 
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
             prepareEncoding2()
 
-
-
-
-
             If CHKMULTIENC.Checked Or InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
             InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
             InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
                 Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
             Else
+                Threading.Thread.Sleep(500)
                 FRMProgress.Show()
             End If
 
@@ -491,6 +490,9 @@ noencoding:
     Private Sub Button7_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
         If BOXFPSINFO.Text = "" Then
             prepareOpen()
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+
+
         End If
 
         If My.Computer.FileSystem.FileExists(InputCBOX.Text + ".avs") Then
@@ -549,7 +551,10 @@ noencoding:
         Else
             MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical)
         End If
-        LISTCHKENC2.SetSelected(0, True)
+        If LISTCHKENC2.SelectedItems.Count = 0 Then
+            LISTCHKENC2.SetSelected(0, True)
+        End If
+
     End Sub
 
     Private Sub InputCBOX_TextUpdate(ByVal sender As Object, ByVal e As System.EventArgs) Handles InputCBOX.TextChanged
@@ -863,7 +868,11 @@ noencoding:
 
     Private Sub CHKAUTONAME_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CHKAUTONAME.CheckedChanged
         If CHKAUTONAME.Checked Then
+
             If InputCBOX.Text = "" Then
+
+            ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+
             ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
                 OutputCBox.Text = ""
                 OUTPUTFILENAME = ""
@@ -965,7 +974,8 @@ noencoding:
     Public Function prepareEncoding() As String()
 
         If BOXCODECINFO.Text = "" Then
-            prepareOpen()
+            getMediainfo()
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
         End If
 
         If CHKAVISYNTH.Checked = True Then
@@ -1004,62 +1014,6 @@ noencoding:
 
 
 
-        If BOXBITRATEMODE.Text = "CRF" Then
-            BITVAL = " -crf " + BITBOX.Text
-
-        ElseIf BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "libx264" Then
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
-        ElseIf BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" And BOXCODEC.Text = "mpeg4" Then
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + " -maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
-        ElseIf BOXBITRATEMODE.Text = "CBR" Or BOXBITRATEMODE.Text = "ABR" Or BOXBITRATEMODE.Text = "2pass-ABR" Then
-            BITVAL = " -b:v " + BITBOX.Text + "k"
-
-
-        ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
-            BITVAL = " -crf " + BITBOX.Text
-            CBRVAL = " -bufsize " + BITBOX2.Text + "k " + "-maxrate " + BITBOX2.Text + "k "
-        ElseIf BOXBITRATEMODE.Text = "File Size" Then
-            If CHKTRIM.Checked Then
-                sDate = BOXTRIMSS.Text
-                hours = Trim(Split(sDate, ":")(0))
-                minutes = Trim(Split(sDate, ":")(1))
-                seconds = Trim(Split(sDate, ":")(2))
-                dblStringToDblSS = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
-
-                sDate = BOXTRIMTO.Text
-                hours = Trim(Split(sDate, ":")(0))
-                minutes = Trim(Split(sDate, ":")(1))
-                seconds = Trim(Split(sDate, ":")(2))
-                dblStringToDblTO = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
-
-                dblStringToDblRESULT = dblStringToDblTO - dblStringToDblSS
-                Dim TRIMDURATION As Integer = CInt(Int(dblStringToDblRESULT))
-                Dim VIDEOBITRATESIZE As Integer
-                Dim DURSECRESULT3 As Integer
-                DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
-                VIDEOBITRATESIZE = BITBOX.Text * 8192 / TRIMDURATION
-                BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize " + VIDEOBITRATESIZE.ToString + "k"
-
-            Else
-                Dim AUDIOSIZE As Integer
-                Dim TARGETVIDEOSIZE As Integer
-                Dim VIDEOBITRATESIZE As Integer
-                Dim DURSECRESULT3 As Integer
-                DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
-                VIDEOBITRATESIZE = BITBOX.Text * 8192 / DURSECRESULT3
-
-                BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize " + VIDEOBITRATESIZE.ToString + "k"
-            End If
-        Else
-            CBRVAL = " -bufsize " + BITBOX.Text + "k " + "-maxrate " + BITBOX.Text + "k " + "-minrate " + BITBOX.Text + "k "
-        End If
-
-
-        If BITBOX.Text = "Auto" Then
-            BITVAL = ""
-            CBRVAL = ""
-        End If
-
 
         If BOXCODEC.Text = "libx264" Then
             If REFBOX.Text = "Original" Then
@@ -1069,27 +1023,28 @@ noencoding:
             End If
         End If
 
-        If Not BOXCODEC.Text = "copy" Then
+
+
+        If BOXCODEC.Text = "copy" Or RSBOX.Text = "Original" Then
+            RSVAL = ""
+        Else
             RSVAL = ",scale=" + RSBOX.Text + ":flags=lanczos"
 
         End If
-        If RSBOX.Text = "Original" Then
-            RSVAL = ""
-        End If
 
-        If Not BOXCODEC.Text = "copy" Then
+        If BOXCODEC.Text = "copy" Or BOXDEINT.Text = "Disabled" Then
+            DEINTVAL = ""
+        Else
             DEINTVAL = ",yadif=" + BOXDEINT.Text
         End If
-        If BOXDEINT.Text = "Disabled" Then
-            DEINTVAL = ""
-        End If
 
-        If Not BOXCODEC.Text = "copy" Then
+
+        If BOXCODEC.Text = "copy" Or BOXSPP.Text = "Disabled" Then
+            SPPVAL = ""
+        Else
             SPPVAL = ",spp=" + BOXSPP.Text
         End If
-        If BOXSPP.Text = "Disabled" Then
-            SPPVAL = ""
-        End If
+
 
 
 
@@ -1172,20 +1127,7 @@ noencoding:
             AUDIOCODECVAL = BOXACODEC.Text
         End If
 
-        If Not BOXAUDBITRATE.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
-            AUDIOBITRATEVAL = " -ab " + BOXAUDBITRATE.Text + "k"
-        End If
-        If BOXAUDBITRATE.Text = "Auto" And Not BOXACODEC.Text = "No Audio" And Not BOXACODEC.Text = "copy" And Not BOXACODEC.Text = "PCM" And Not BOXACODEC.Text = "dca" Then
-            AUDIOBITRATEVAL = " -ab 256k"
-        End If
-        If Not BOXSAMPLE.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
-            AUDIOSAMPLEVAL = " -ar " + BOXSAMPLE.Text
-        End If
-
-        If Not BOXCHANNEL.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
-            AUDIOCHANNELVAL = " -ac " + BOXCHANNEL.Text
-        End If
-
+        Bitrateparam()
 
 
         If Not BOXDELAY.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
@@ -1219,22 +1161,15 @@ noencoding:
             Dim RATIOVALUE As String = Replace(RESINPUT, "x", "/")
             ASPECTRATIOVAL = " -aspect " + RATIOVALUE + " "
         End If
+
         If RSBOX.Text = "Original" Then
             ASPECTRATIOVAL = ""
         End If
-
-
-
 
         DEBLOCKVAL = AdvancedFRM.LBDEBLOCK
         If BOXCFR.Text = "CFR" And BOXCODEC.Text = "libx264" Or BOXCODEC.Text = "libx265" Then
             CFRVAL = ":force-cfr=1"
         End If
-
-
-
-
-
 
 
         If Not BOXAUDIOPATH.Text = "" Then
@@ -1318,8 +1253,8 @@ noencoding:
             CODECPRESET = " -preset " + BOXCODECPRESET.Text + " "
         End If
 
-
         YTMAP = " -map 0:v:0 -map 1:a:0 "
+
         Dim VSYNCVAL As String
         Dim CHKASYNCVAL As String
         If CHKVSYNC0.Checked = True Then
@@ -1369,16 +1304,28 @@ noencoding:
             CODEC = " -vcodec " + BOXCODEC.Text
         End If
 
+        If CHKCHLSADDRESS.Checked = True Then
+            HLSADDRESS = " -hls_base_url " + BOXCHLSADDRESS.Text
+        End If
+
+
+
     End Function
 
     Public Function prepareEncoding2() As String()
-        Dim testFile As System.IO.FileInfo
-        testFile = My.Computer.FileSystem.GetFileInfo(OutputCBox.Text)
-        Dim folderPath As String = testFile.DirectoryName
+        If OutputCBox.Text.Contains("/") Then
+        Else
+            Dim testFile As System.IO.FileInfo
+            testFile = My.Computer.FileSystem.GetFileInfo(OutputCBox.Text)
+            Dim folderPath As String = testFile.DirectoryName
 
-        If Not Directory.Exists(folderPath) Then
-            Directory.CreateDirectory(folderPath)
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
         End If
+
+
+
 
         If BOXACODEC.Text = "copy" And BOXFORMATINFO.Text = "MPEG-TS" And BOXACODECINFO.Text = "AAC LC" And Not BOXCONTAINER.Text = "ts" Then
             BITSTREAMFILTER = " -bsf:a aac_adtstoasc "
@@ -1388,11 +1335,11 @@ noencoding:
 
         If CHKQA.Checked Then
             HLSOPTIONFLAG = " -force_key_frames expr:gte(t,n_forced*" + BOXCUSTOMT.Text + ") -keyint_min " + BOXCUSTOMT.Text + " -hls_list_size 0 -hls_time " + BOXCUSTOMT.Text + " "
-            SHELLCMD = FFMPEGEXE + " " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + " " + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + HLSADDRESS + CUSTOMFFMPEGOPT + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
         ElseIf InStr(InputCBOX.Text, "-f dshow") Then
-            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + INPUTVIDNAME + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + InputCBOX.Text + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + " -f flv " + """" + OUTPUTFILENAME + """"
 
         ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
@@ -1435,12 +1382,7 @@ noencoding:
 
         End If
     End Function
-    Public Function prepareOpen() As String()
-
-        INPUTFILENAME = InputCBOX.Text
-        CHKAVISYNTH.Checked = False
-        INPUTFILENAME2 = InputCBOX.Text
-
+    Public Function getMediainfo() As String()
         MI.Open(InputCBOX.Text)
         BOXCODECINFO.Text = MI.Get_(StreamKind.Visual, 0, "Codec")
         BOXFPSINFO.Text = MI.Get_(StreamKind.Visual, 0, "FrameRate")
@@ -1466,6 +1408,14 @@ noencoding:
         BOXREFINFO.Text = MI.Get_(StreamKind.Visual, 0, "Format_Settings_RefFrames")
 
         MI.Close()
+    End Function
+    Public Function prepareOpen() As String()
+        getMediainfo()
+        INPUTFILENAME = InputCBOX.Text
+        CHKAVISYNTH.Checked = False
+        INPUTFILENAME2 = InputCBOX.Text
+
+       
         If CHKAUTONAME.Checked Then
             If InputCBOX.Text = "" Then
 
@@ -1476,6 +1426,8 @@ noencoding:
                 Else
 
                 End If
+            ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+
             Else
                 INPUTVIDNAME = InputCBOX.Text
                 Dim testFile As System.IO.FileInfo
@@ -1497,7 +1449,7 @@ noencoding:
             INPUTVIDNAME = InputCBOX.Text
             OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
         ElseIf CHKQA.Checked = False Then
-            ChangeItems()
+            'ChangeItems()
         End If
 
         SwitchContainer()
@@ -1592,11 +1544,15 @@ noencoding:
 
         End If
 continueencoding:
+        If BOXCODECINFO.Text = "" Then
+            getMediainfo()
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+        End If
 
         Dim CMD As String
         Dim CMD1 As String
         If CHKMULTIENC.Checked = False Then
-            FRMProgress.Close()
+            'FRMProgress.Close()
         End If
         If CHKMULTIENC.Checked = False Then
             CMD1 = " " + CStr(LISTCHKENC2.SelectedItems(0))
@@ -1643,10 +1599,16 @@ noencoding:
 
         End If
 continueencoding:
+
+        If BOXCODECINFO.Text = "" Then
+            getMediainfo()
+        ElseIf InStr(InputCBOX.Text, "-f dshow") Then
+        End If
+
         Dim CMD As String
         Dim CMD1 As String
         If CHKMULTIENC.Checked = False Then
-            FRMProgress.Close()
+            'FRMProgress.Close()
         End If
         If CHKMULTIENC.Checked = False Then
             CMD1 = " " + CStr(LISTCHKENC2.SelectedItems(0))
@@ -1719,10 +1681,6 @@ noencoding:
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             e.Effect = DragDropEffects.Copy
         End If
-
-    End Sub
-
-    Private Sub BOXBITRATEMODE_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BOXBITRATEMODE.SelectedIndexChanged
 
     End Sub
 
@@ -1934,10 +1892,6 @@ noencoding:
         End If
     End Sub
 
-    Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-
-    End Sub
-
     Private Sub Button14_Click(sender As System.Object, e As System.EventArgs) Handles Button14.Click
         If CHKAVISYNTH.Checked = True Then
             FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
@@ -1953,21 +1907,23 @@ noencoding:
 
         INPUTVIDNAME = InputCBOX.Text
 
-        Dim testFile As System.IO.FileInfo
-        testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
-        Dim folderPath As String = testFile.DirectoryName + "\"
+        If InStr(InputCBOX.Text, "-f dshow") Or InStr(InputCBOX.Text, "//") Then
 
-        Dim SHELLCMD2 As String
+        Else
+            Dim testFile As System.IO.FileInfo
+            testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
+            Dim folderPath As String = testFile.DirectoryName + "\"
+            Dim SHELLCMD2 As String
 
 
-        Dim infileName As String = IO.Path.GetFileNameWithoutExtension(INPUTVIDNAME)
+            Dim infileName As String = IO.Path.GetFileNameWithoutExtension(INPUTVIDNAME)
 
-        SHELLCMD = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + " -c copy -an " + """" + folderPath + infileName + ".mkv" + """"
-        SHELLCMD2 = FFMPEGEXE + " -y -i " + """" + folderPath + infileName + ".mkv" + """" + " -f rawvideo " + """" + folderPath + infileName + ".yuv" + """" + " & del " + """" + folderPath + infileName + ".mkv" + """"
-        Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & " + SHELLCMD2 + " & comp.bat", vbNormalFocus)
-
-        If CHKDEBUG.Checked Then
-            BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " & " + SHELLCMD2 + " & comp.bat"
+            SHELLCMD = FFMPEGEXE + " -y -i " + """" + INPUTVIDNAME + """" + " -c copy -an " + """" + folderPath + infileName + ".mkv" + """"
+            SHELLCMD2 = FFMPEGEXE + " -y -i " + """" + folderPath + infileName + ".mkv" + """" + " -f rawvideo " + """" + folderPath + infileName + ".yuv" + """" + " & del " + """" + folderPath + infileName + ".mkv" + """"
+            Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & " + SHELLCMD2 + " & comp.bat", vbNormalFocus)
+            If CHKDEBUG.Checked Then
+                BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " & " + SHELLCMD2 + " & comp.bat"
+            End If
         End If
 
         initialValue()
@@ -1996,14 +1952,6 @@ noencoding:
         SwitchContainer()
 
     End Sub
-
-    Private Sub OutputCBox_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles OutputCBox.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub CHKAVISYNTH_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CHKAVISYNTH.CheckedChanged
-
-    End Sub
     Public Function SWBitratemode() As String()
         If BOXBITRATEMODE.Text = "CRF" Then
             LBBPS.Text = ""
@@ -2024,7 +1972,7 @@ noencoding:
 
         ElseIf BOXBITRATEMODE.Text = "File Size" Then
             LBBPS.Text = "MB"
-            LBBITRATE.Text = "File Size"
+            LBBITRATE.Text = "Size"
             LBBPS2.Text = ""
             BITBOX2.Enabled = False
             BITBOX2.Visible = False
@@ -2105,16 +2053,19 @@ noencoding:
         SWBitratemode()
     End Sub
     Public Function RunProcess() As String()
-
         BackgroundWorker1.WorkerSupportsCancellation = True
+        If BackgroundWorker1.IsBusy = True Then
+            BackgroundWorker1.CancelAsync()
+        End If
+
         BackgroundWorker1.WorkerReportsProgress = True
         BackgroundWorker1.RunWorkerAsync()
+
+
 
     End Function
 
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        'Dim p As New Process
-        Dim results As String = ""
         With p.StartInfo
             .Arguments = " /c title Infinity Media Encoder & " + SHELLCMD
             .FileName = "cmd"
@@ -2127,24 +2078,20 @@ noencoding:
                 .CreateNoWindow = True
             End If
 
-            .WindowStyle = ProcessWindowStyle.Hidden
         End With
         p.Start()
         Dim outputReader As StreamReader = p.StandardError
         Dim output As String
 
-
         While p.StandardError.EndOfStream = False
 
             output = outputReader.ReadLine()
-
             BackgroundWorker1.ReportProgress(0, output)
-
-
 
         End While
 
         If p.StandardError.EndOfStream = True Then
+
             MsgBox("Processing Done!", MsgBoxStyle.Information)
 
         End If
@@ -2230,22 +2177,104 @@ noencoding:
 
 
             If Duration.Contains("muxing overhead:") Then
-                FRMProgress.Label1.Text = "Processing Done"
+                FRMProgress.Label1.Text = "Processing Done!"
                 FRMProgress.Label2.Text = ""
-            End If
-            If Duration.Contains("Invalid argument") Then
+            ElseIf Duration.Contains("Invalid argument") Or Duration.Contains("Invalid data found when processing input") Then
                 FRMProgress.Label1.Text = "Error Occured"
                 FRMProgress.Label2.Text = ""
             End If
-            If Duration.Contains("Invalid data found when processing input") Then
-                FRMProgress.Label1.Text = "Error Occured"
-                FRMProgress.Label2.Text = ""
-            End If
+
         End If
 
     End Sub
 
     Private Sub BTNRUNSTREAM_Click(sender As Object, e As EventArgs)
 
+    End Sub
+
+    Private Sub CHKINPUTDSHOW_CheckedChanged(sender As Object, e As EventArgs) Handles CHKINPUTDSHOW.CheckedChanged
+        If CHKINPUTDSHOW.Checked = True Then
+            INPUTVIDNAME = "-rtbufsize 2M -f dshow -i video=" + """" + BOXDSHOWVID.Text + """"
+            INPUTAUDFILENAME = " -f dshow -i audio=" + """" + BOXDSHOWAUD.Text + """" + " -pix_fmt yuv420p "
+            InputCBOX.Text = " " + INPUTVIDNAME + INPUTAUDFILENAME
+        End If
+    End Sub
+
+    Public Function Bitrateparam() As String()
+        If BITBOX.Text = "Auto" Then
+            BITVAL = ""
+            CBRVAL = ""
+        Else
+            If BOXBITRATEMODE.Text = "CBR" Or BOXBITRATEMODE.Text = "ABR" Or BOXBITRATEMODE.Text = "2pass-ABR" Then
+                BITVAL = " -b:v " + BITBOX.Text + "k"
+            ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
+                BITVAL = " -crf " + BITBOX.Text
+            End If
+
+            If BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" Then
+                CBRVAL = " -bufsize:v " + BITBOX.Text + "k " + " -maxrate:v " + BITBOX.Text + "k " + "-minrate:v " + BITBOX.Text + "k "
+            ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
+                CBRVAL = " -bufsize:v " + BITBOX2.Text + "k " + "-maxrate:v " + BITBOX2.Text + "k "
+            ElseIf BOXBITRATEMODE.Text = "File Size" Then
+                If CHKTRIM.Checked Then
+                    sDate = BOXTRIMSS.Text
+                    hours = Trim(Split(sDate, ":")(0))
+                    minutes = Trim(Split(sDate, ":")(1))
+                    seconds = Trim(Split(sDate, ":")(2))
+                    dblStringToDblSS = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
+
+                    sDate = BOXTRIMTO.Text
+                    hours = Trim(Split(sDate, ":")(0))
+                    minutes = Trim(Split(sDate, ":")(1))
+                    seconds = Trim(Split(sDate, ":")(2))
+                    dblStringToDblTO = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
+
+                    dblStringToDblRESULT = dblStringToDblTO - dblStringToDblSS
+                    Dim TRIMDURATION As Integer = CInt(Int(dblStringToDblRESULT))
+                    Dim VIDEOBITRATESIZE As Integer
+                    Dim DURSECRESULT3 As Integer
+                    DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
+                    VIDEOBITRATESIZE = BITBOX.Text * 8192 / TRIMDURATION
+                    BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize:v " + VIDEOBITRATESIZE.ToString + "k"
+
+                Else
+                    Dim VIDEOBITRATESIZE As Integer
+                    Dim DURSECRESULT3 As Integer
+                    DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
+                    VIDEOBITRATESIZE = BITBOX.Text * 8192 / DURSECRESULT3
+
+                    BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize:v " + VIDEOBITRATESIZE.ToString + "k"
+                End If
+            Else
+                CBRVAL = " -bufsize:v " + BITBOX.Text + "k " + "-maxrate:v " + BITBOX.Text + "k " + "-minrate:v " + BITBOX.Text + "k "
+            End If
+        End If
+
+        If BOXBITRATEMODE.Text = "ABR" Then
+            CBRVAL = ""
+        End If
+
+        If Not BOXAUDBITRATE.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
+            AUDIOBITRATEVAL = " -b:a " + BOXAUDBITRATE.Text + "k"
+        End If
+        If BOXAUDBITRATE.Text = "Auto" And Not BOXACODEC.Text = "No Audio" And Not BOXACODEC.Text = "copy" And Not BOXACODEC.Text = "PCM" And Not BOXACODEC.Text = "dca" Then
+            AUDIOBITRATEVAL = " -b:a 256k"
+        End If
+        If Not BOXSAMPLE.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
+            AUDIOSAMPLEVAL = " -ar " + BOXSAMPLE.Text
+        End If
+
+        If Not BOXCHANNEL.Text = "Auto" And Not BOXACODEC.Text = "No Audio" Then
+            AUDIOCHANNELVAL = " -ac " + BOXCHANNEL.Text
+        End If
+    End Function
+
+    Private Sub CHKCHLSADDRESS_CheckedChanged(sender As Object, e As EventArgs) Handles CHKCHLSADDRESS.CheckedChanged
+        If CHKCHLSADDRESS.Checked = True Then
+            BOXCHLSADDRESS.Enabled = True
+        Else
+            BOXCHLSADDRESS.Enabled = False
+            BOXCHLSADDRESS.Text = ""
+        End If
     End Sub
 End Class
