@@ -227,7 +227,11 @@ noencoding:
     End Sub
 
     Private Sub BOXCODEC_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXCODEC.TextChanged
-        ChangeItems()
+        If CHKQA.Checked = True Then
+        Else
+            ChangeItems()
+        End If
+
         If Not BOXCODEC.Text = "libx264" And Not BOXCODEC.Text = "libx265" Then
             BOXBITRATEMODE.Text = "ABR"
 
@@ -1415,7 +1419,7 @@ noencoding:
         CHKAVISYNTH.Checked = False
         INPUTFILENAME2 = InputCBOX.Text
 
-       
+
         If CHKAUTONAME.Checked Then
             If InputCBOX.Text = "" Then
 
@@ -1555,15 +1559,15 @@ continueencoding:
             'FRMProgress.Close()
         End If
         If CHKMULTIENC.Checked = False Then
-            CMD1 = " " + CStr(LISTCHKENC2.SelectedItems(0))
+            CMD1 = " " + CStr(LISTCHKENC2.Items(0))
         Else
-            CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.SelectedItems(0))
+            CMD1 = "cmd /c title Infinity Media Encoder & " + CStr(LISTCHKENC2.Items(0))
         End If
 
         Dim listIndex As Integer = 1
-        For listCount As Integer = 1 To LISTCHKENC2.SelectedItems.Count - 1
+        For listCount As Integer = 1 To LISTCHKENC2.Items.Count - 1
 
-            CMD = CMD & " & " & CStr(LISTCHKENC2.SelectedItems(listIndex))
+            CMD = CMD & " & " & CStr(LISTCHKENC2.Items(listIndex))
 
 
             listIndex = listIndex + 1
@@ -2272,9 +2276,10 @@ noencoding:
     Private Sub CHKCHLSADDRESS_CheckedChanged(sender As Object, e As EventArgs) Handles CHKCHLSADDRESS.CheckedChanged
         If CHKCHLSADDRESS.Checked = True Then
             BOXCHLSADDRESS.Enabled = True
-        Else
+        ElseIf CHKCHLSADDRESS.Checked = False Then
             BOXCHLSADDRESS.Enabled = False
             BOXCHLSADDRESS.Text = ""
         End If
     End Sub
+
 End Class
