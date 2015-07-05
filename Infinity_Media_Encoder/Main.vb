@@ -1,6 +1,9 @@
 ﻿Imports System.Xml
 Imports System.IO
 Imports System.IO.Path
+Imports System.Xml.Serialization
+'Imports System.Drawing
+'Imports DirectShowLib
 'Imports System.Runtime.InteropServices
 'Imports System.Threading.Tasks
 'Imports System.Text
@@ -79,11 +82,15 @@ Public Class Main
     Public VDELAYINFO As String
     Public INFOFRAMEMODE As String
     Public EXTRAFFPRAM As String
-    Public p As New Process
+    Public TRIMCHKVAL As Boolean
+    Public TRIMSS As String
+    Public TRIMTO As String
+
     Public STREAMPARAM As String
     Public STREAMINPUT As String
     Public STREAMOUTPUT As String
     Public HLSADDRESS As String
+
 
     Dim DURHOURS As Integer
     Dim DURMIN As Integer
@@ -108,7 +115,7 @@ Public Class Main
 
     Dim MI As New MediaInfo
     Dim WScript
-
+    Private FileName As String = System.IO.Path.Combine(Application.StartupPath, "Settings.xml")
 
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -184,6 +191,12 @@ Public Class Main
 
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        If FRMProgress.Visible = True Then
+            If CHKMULTIENC.Checked = False And FRMProgress.p.HasExited = True Then
+                FRMProgress.Close()
+            End If
+        End If
+
         If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
             Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo)
             If answer = DialogResult.Yes Then
@@ -192,12 +205,9 @@ Public Class Main
                 initialValue()
                 GoTo noencoding
             End If
-
         End If
 continueencoding:
-        If CHKMULTIENC.Checked = False Then
-            'FRMProgress.Close()
-        End If
+
 
         If Not InputCBOX.Text = "" And Not OutputCBox.Text = "" Then
             prepareEncoding()
@@ -208,7 +218,7 @@ continueencoding:
             InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
                 Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
             Else
-                Threading.Thread.Sleep(500)
+
                 FRMProgress.Show()
             End If
 
@@ -602,88 +612,13 @@ noencoding:
         If BOXPRESETFILENAME.Text = "" Then
             PRESETFILENAME = fileDateTime
         End If
-        Dim xws As XmlWriterSettings = New XmlWriterSettings()
-        xws.Indent = True
-        xws.NewLineOnAttributes = True
-        Dim xw As XmlWriter = XmlWriter.Create(".\Preset\" + PRESETFILENAME + ".xml", xws)
-        xw.WriteStartDocument()
-        xw.WriteStartElement("Settings")
-        If CHKCQM.Checked Then
-            xw.WriteElementString("EnableCQM", "True")
-        Else
-            xw.WriteElementString("EnableCQM", "False")
-        End If
-        If CHKLOG.Checked Then
-            xw.WriteElementString("EnableLOG", "True")
-        Else
-            xw.WriteElementString("EnableLOG", "False")
-        End If
+        Dim Data As New List(Of ControlData)
+        FindControls(Me, Data)
 
-        xw.WriteStartElement("VideoSettings")
-        xw.WriteElementString("VideoCodec", BOXCODEC.Text)
-        xw.WriteElementString("Profile", PFBOX.Text)
-        xw.WriteElementString("Level", LVBOX.Text)
-        xw.WriteElementString("Reframes", REFBOX.Text)
-        xw.WriteElementString("Deinterlace", BOXDEINT.Text)
-        xw.WriteElementString("Resolution", RSBOX.Text)
-        xw.WriteElementString("Bitrate", BITBOX.Text)
-        xw.WriteElementString("BitrateMode", BOXBITRATEMODE.Text)
-        xw.WriteElementString("Framerate", BOXFPS.Text)
-        xw.WriteElementString("FramerateMode", BOXCFR.Text)
-        xw.WriteElementString("KeyframeInterval", BOXKEYINT.Text)
-        xw.WriteElementString("SPPFilter", BOXSPP.Text)
-        xw.WriteElementString("CodecPreset", BOXCODECPRESET.Text)
-        If CHKMULTITR.Checked Then
-            xw.WriteElementString("MultiTrack", "True")
-        Else
-            xw.WriteElementString("MultiTrack", "False")
-        End If
-        If CHKQA.Checked Then
-            xw.WriteElementString("QAMode", "True")
-        Else
-            xw.WriteElementString("QAMode", "False")
-        End If
-        xw.WriteElementString("QASplitDuration", BOXCUSTOMT.Text)
-        xw.WriteEndElement()
-
-
-        xw.WriteStartElement("TrimSettings")
-        If CHKTRIM.Checked Then
-            xw.WriteElementString("Trim", "True")
-        Else
-            xw.WriteElementString("Trim", "False")
-        End If
-        xw.WriteElementString("TrimStart", BOXTRIMSS.Text)
-        xw.WriteElementString("TrimEnd", BOXTRIMTO.Text)
-        xw.WriteEndElement()
-
-
-        xw.WriteStartElement("AudioSettings")
-        xw.WriteElementString("AudioCodec", BOXACODEC.Text)
-        xw.WriteElementString("AudioBitrate", BOXAUDBITRATE.Text)
-        xw.WriteElementString("SamplingRate", BOXSAMPLE.Text)
-        xw.WriteElementString("Channel", BOXCHANNEL.Text)
-        xw.WriteElementString("AudioProfile", BOXAACPF.Text)
-        xw.WriteElementString("AudioDelay", BOXDELAY.Text)
-        If CHKREPLACEAUD.Checked Then
-            xw.WriteElementString("EnableReplaceAudio", "True")
-        Else
-            xw.WriteElementString("EnableReplaceAudio", "False")
-        End If
-        If CHKAUTONAME.Checked Then
-            xw.WriteElementString("EnableAutoFilename", "True")
-        Else
-            xw.WriteElementString("EnableAutoFilename", "False")
-        End If
-        xw.WriteEndElement()
-        xw.WriteStartElement("AdvancedEncodingOptions")
-        xw.WriteEndElement()
-
-
-        xw.WriteEndElement()
-        xw.WriteEndDocument()
-        xw.Flush()
-        xw.Close()
+        Dim xml As New XmlSerializer(Data.GetType)
+        Using writer As New FileStream(".\Preset\" + PRESETFILENAME + ".xml", FileMode.Create)
+            xml.Serialize(writer, Data)
+        End Using
 
         If Not BOXPRESETFILENAME.Items.Contains(PRESETFILENAME) Then
             BOXPRESETFILENAME.Items.Add(PRESETFILENAME)
@@ -696,154 +631,105 @@ noencoding:
 
         PRESETFILENAME = BOXPRESETFILENAME.Text
         Parsingsettings()
+
         MsgBox("Preset Loaded", MsgBoxStyle.Information)
     End Sub
 
     Public Function Parsingsettings() As String()
-        Dim xrs As XmlReaderSettings = New XmlReaderSettings()
+        If System.IO.File.Exists(".\Preset\" + PRESETFILENAME + ".xml") Then
+            Dim Data As New List(Of ControlData)
+            Dim xml As New XmlSerializer(Data.GetType)
+            Using reader As New FileStream(".\Preset\" + PRESETFILENAME + ".xml", FileMode.Open)
+                Data = CType(xml.Deserialize(reader), List(Of ControlData))
 
-        xrs.IgnoreWhitespace = False
-        xrs.IgnoreComments = True
+            End Using
 
-        Using reader As XmlReader = XmlReader.Create(".\Preset\" + PRESETFILENAME + ".xml", xrs)
-            While (reader.Read())
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "EnableCQM") Then
-                    If reader.ReadElementString("EnableCQM") = "True" Then
-                        CHKCQM.Checked = True
-                    Else
-                        CHKCQM.Checked = False
-                    End If
+            Dim matches() As Control
+            For Each cd As ControlData In Data
+                matches = Me.Controls.Find(cd.ControlName, True)
+                If matches.Length > 0 Then
+                    CallByName(matches(0), cd.ControlProperty, CallType.Let, cd.ControlData)
                 End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "EnableLOG") Then
-                    If reader.ReadElementString("EnableLOG") = "True" Then
-                        CHKLOG.Checked = True
-                    Else
-                        CHKLOG.Checked = False
-                    End If
-                End If
-
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "VideoCodec") Then
-                    BOXCODEC.Text = reader.ReadElementString("VideoCodec")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Profile") Then
-                    PFBOX.Text = reader.ReadElementString("Profile")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Level") Then
-                    LVBOX.Text = reader.ReadElementString("Level")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Reframes") Then
-                    REFBOX.Text = reader.ReadElementString("Reframes")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Deinterlace") Then
-                    BOXDEINT.Text = reader.ReadElementString("Deinterlace")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Resolution") Then
-                    RSBOX.Text = reader.ReadElementString("Resolution")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Bitrate") Then
-                    BITBOX.Text = reader.ReadElementString("Bitrate")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "BitrateMode") Then
-                    BOXBITRATEMODE.Text = reader.ReadElementString("BitrateMode")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Framerate") Then
-                    BOXFPS.Text = reader.ReadElementString("Framerate")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "FramerateMode") Then
-                    BOXCFR.Text = reader.ReadElementString("FramerateMode")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "KeyframeInterval") Then
-                    BOXKEYINT.Text = reader.ReadElementString("KeyframeInterval")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "SPPFilter") Then
-                    BOXSPP.Text = reader.ReadElementString("SPPFilter")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "CodecPreset") Then
-                    BOXCODECPRESET.Text = reader.ReadElementString("CodecPreset")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "MultiTrack") Then
-                    If reader.ReadElementString("MultiTrack") = "True" Then
-                        CHKMULTITR.Checked = True
-                    Else
-                        CHKMULTITR.Checked = False
-                    End If
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "QAMode") Then
-                    If reader.ReadElementString("QAMode") = "True" Then
-                        CHKQA.Checked = True
-                    Else
-                        CHKQA.Checked = False
-                    End If
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "QASplitDuration") Then
-                    BOXCUSTOMT.Text = reader.ReadElementString("QASplitDuration")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Trim") Then
-                    If reader.ReadElementString("Trim") = "True" Then
-                        CHKTRIM.Checked = True
-                    Else
-                        CHKTRIM.Checked = False
-                    End If
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "TrimStart") Then
-                    BOXTRIMSS.Text = reader.ReadElementString("TrimStart")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "TrimEnd") Then
-                    BOXTRIMTO.Text = reader.ReadElementString("TrimEnd")
-                End If
-
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "AudioCodec") Then
-                    BOXACODEC.Text = reader.ReadElementString("AudioCodec")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "AudioBitrate") Then
-                    BOXAUDBITRATE.Text = reader.ReadElementString("AudioBitrate")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "SamplingRate") Then
-                    BOXSAMPLE.Text = reader.ReadElementString("SamplingRate")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "Channel") Then
-                    BOXCHANNEL.Text = reader.ReadElementString("Channel")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "AudioProfile") Then
-                    BOXAACPF.Text = reader.ReadElementString("AudioProfile")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "AudioDelay") Then
-                    BOXDELAY.Text = reader.ReadElementString("AudioDelay")
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "EnableReplaceAudio") Then
-                    If reader.ReadElementString("EnableReplaceAudio") = "True" Then
-                        CHKREPLACEAUD.Checked = True
-                    Else
-                        CHKREPLACEAUD.Checked = False
-                    End If
-                End If
-                If (reader.NodeType = XmlNodeType.Element And reader.LocalName = "EnableAutoFilename") Then
-                    If reader.ReadElementString("EnableAutoFilename") = "True" Then
-                        CHKAUTONAME.Checked = True
-                    Else
-                        CHKAUTONAME.Checked = False
-                    End If
-                End If
-
-
-            End While
-            reader.Close()
-
-
-
-        End Using
-
-
+            Next
+        Else
+            MsgBox("Do not exist Preset file " + PRESETFILENAME + ".xml")
+        End If
 
 
     End Function
+    Private Sub FindControls(ByVal cont As Control, ByVal Data As List(Of ControlData))
+        For Each ctl As Control In cont.Controls
+            If CHKALLSET.Checked = False Then
+                If TypeOf ctl Is ComboBox Then
+                    Dim CB As ComboBox = DirectCast(ctl, ComboBox)
+                    If Not IsNothing(CB.SelectedItem) Then
+                        Dim cd As New ControlData
+                        cd.ControlName = ctl.Name
+                        cd.ControlProperty = "SelectedItem"
+                        cd.ControlData = CB.SelectedItem.ToString
+                        Data.Add(cd)
+                    End If
+                ElseIf ctl.HasChildren Then
+                    FindControls(ctl, Data)
+                End If
+            Else
+                If TypeOf ctl Is ComboBox Then
+                    Dim CB As ComboBox = DirectCast(ctl, ComboBox)
+                    If Not IsNothing(CB.Text) Then
+                        Dim cd As New ControlData
+                        cd.ControlName = ctl.Name
+                        cd.ControlProperty = "Text"
+                        cd.ControlData = CB.Text.ToString
+                        Data.Add(cd)
+                    End If
+                ElseIf ctl.HasChildren Then
+                    FindControls(ctl, Data)
+                End If
+            End If
+
+            If TypeOf ctl Is CheckBox Then
+                Dim CB As CheckBox = DirectCast(ctl, CheckBox)
+                If Not CB.Checked = False Then
+                    Dim cd As New ControlData
+                    cd.ControlName = ctl.Name
+                    cd.ControlProperty = "Checked"
+                    cd.ControlData = CB.Checked.ToString
+                    Data.Add(cd)
+                ElseIf Not CB.Checked = True Then
+                    Dim cd As New ControlData
+                    cd.ControlName = ctl.Name
+                    cd.ControlProperty = "Checked"
+                    cd.ControlData = CB.Checked.ToString
+                    Data.Add(cd)
+
+                End If
+            End If
+            If TypeOf ctl Is TextBox Then
+                Dim CB As TextBox = DirectCast(ctl, TextBox)
+                If Not CB.Text = "" Then
+                    Dim cd As New ControlData
+                    cd.ControlName = ctl.Name
+                    cd.ControlProperty = "Text"
+                    cd.ControlData = CB.Text.ToString
+                    Data.Add(cd)
+                End If
+            End If
+
+
+        Next
+    End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Try
-            FRMProgress.KillProcessAndChildren(p.Id)
+            FRMProgress.KillProcessAndChildren(FRMProgress.p.Id)
         Catch
         End Try
-
+        Try
+            FRMProgress.BackgroundWorker_1.CancelAsync()
+            FRMProgress.outputReader.DiscardBufferedData()
+            FRMProgress.outputReader.Close()
+        Catch
+        End Try
     End Sub
 
 
@@ -1211,7 +1097,8 @@ noencoding:
         End If
 
         If InStr(InputCBOX.Text, "-f dshow") Then
-
+        ElseIf OutputCBox.Text.Contains("//") Then
+            FORCEEXTENSION = " -f flv "
         Else
             Dim testFile As System.IO.FileInfo
             testFile = My.Computer.FileSystem.GetFileInfo(OUTPUTFILENAME)
@@ -1251,7 +1138,7 @@ noencoding:
 
         End If
 
-        If BOXCODEC.Text = "No Video" Or BOXCODEC.Text = "h264_qsv" Then
+        If BOXCODEC.Text = "No Video" Or BOXCODEC.Text = "h264_qsv" Or BOXCODEC.Text = "libwebp" Then
             CODECPRESET = ""
         Else
             CODECPRESET = " -preset " + BOXCODECPRESET.Text + " "
@@ -1312,7 +1199,11 @@ noencoding:
             HLSADDRESS = " -hls_base_url " + BOXCHLSADDRESS.Text
         End If
 
-
+        If CHKTRIM.Checked = True Then
+            TRIMCHKVAL = True
+            TRIMSS = BOXTRIMSS.Text
+            TRIMTO = BOXTRIMTO.Text
+        End If
 
     End Function
 
@@ -1347,6 +1238,9 @@ noencoding:
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + " -f flv " + """" + OUTPUTFILENAME + """"
 
         ElseIf InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Then
+            If InStr(1, InputCBOX.Text, "https://youtube.com") Or InStr(1, InputCBOX.Text, "https://www.youtube.com") Then
+                InputCBOX.Text.Replace("https://", "http://")
+            End If
             CHKQA.Enabled = False
             CHKMULTITR.Enabled = False
 
@@ -1509,7 +1403,10 @@ noencoding:
         dblStringToDblRESULT = Nothing
         dblStringToDblTO = Nothing
         dblStringToDblSS = Nothing
+
         SHELLCMD = ""
+
+
         HLSOPTIONFLAG = ""
         YTMAP = ""
         FAST1STFLAG = ""
@@ -2056,145 +1953,6 @@ noencoding:
     Private Sub BOXBITRATEMODE_TextUpdate(sender As Object, e As System.EventArgs) Handles BOXBITRATEMODE.TextUpdate
         SWBitratemode()
     End Sub
-    Public Function RunProcess() As String()
-        BackgroundWorker1.WorkerSupportsCancellation = True
-        If BackgroundWorker1.IsBusy = True Then
-            BackgroundWorker1.CancelAsync()
-        End If
-
-        BackgroundWorker1.WorkerReportsProgress = True
-        BackgroundWorker1.RunWorkerAsync()
-
-
-
-    End Function
-
-    Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        With p.StartInfo
-            .Arguments = " /c title Infinity Media Encoder & " + SHELLCMD
-            .FileName = "cmd"
-
-            .UseShellExecute = False
-            .RedirectStandardError = True
-            If CHKCMDWINDOW.Checked = True Then
-                .CreateNoWindow = False
-            Else
-                .CreateNoWindow = True
-            End If
-
-        End With
-        p.Start()
-        Dim outputReader As StreamReader = p.StandardError
-        Dim output As String
-
-        While p.StandardError.EndOfStream = False
-
-            output = outputReader.ReadLine()
-            BackgroundWorker1.ReportProgress(0, output)
-
-        End While
-
-        If p.StandardError.EndOfStream = True Then
-
-            MsgBox("Processing Done!", MsgBoxStyle.Information)
-
-        End If
-
-    End Sub
-
-    Private Sub BackgroundWorker1_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-        Dim output As String = e.UserState.ToString
-        FRMProgress.RichTextBox1.Text &= output & Environment.NewLine
-        'FRMProgress.RichTextBox1.SelectionStart = FRMProgress.RichTextBox1.Text.Length
-        FRMProgress.RichTextBox1.SelectionStart = FRMProgress.RichTextBox1.Text.Length
-        FRMProgress.RichTextBox1.ScrollToCaret()
-
-        If InStr(InputCBOX.Text, "-f dshow") Then
-            Dim outputReader As StreamReader = p.StandardError
-            Dim Duration As String = e.UserState.ToString
-
-
-            If Duration.Contains("bitrate=") Then
-                Dim split3 As String() = Duration.Split(New [Char]() {"="})
-                Dim String9 As String = split3(6)
-                Dim String10 As String = String9.Replace(":", "")
-                Dim String11 As String = String10.Replace(".", "")
-                Dim String12 As String = String11.Replace(" bitrate", "")
-                Dim String13 As String = String9.Replace(" bitrate", "")
-                FRMProgress.LBBITRATE.Text = String13
-            End If
-
-            If Duration.Contains("fps=") Then
-                Dim split4 As String() = Duration.Split(New [Char]() {"="})
-                Dim String14 As String = split4(2)
-                Dim String15 As String = String14.Replace(":", "")
-                Dim String16 As String = String15.Replace(".", "")
-                Dim String17 As String = String16.Replace(" fps", "")
-                Dim String18 As String = String14.Replace(" q", "")
-                FRMProgress.LBFPS.Text = String18 + "fps"
-            End If
-
-            If Duration.Contains("frame dropped!") And Duration.Contains("size=") Then
-                FRMProgress.LBWARN.Text = "Frame Dropped!"
-            End If
-        Else
-
-
-            Dim outputReader As StreamReader = p.StandardError
-            Dim Duration As String = e.UserState.ToString
-            If Duration.Contains("Duration:") Then
-                Try
-                    Dim split1 As String() = Duration.Split(New [Char]() {" ", ","})
-                    Dim String1 As String = split1(3)
-                    Dim String2 As String = String1.Replace(":", "")
-                    Dim String3 As String = String2.Replace(".", "")
-                    FRMProgress.ProgressBar1.Maximum = String3
-                    FRMProgress.Label2.Text = String1 & " Completed"
-                Catch
-                End Try
-            End If
-            If Duration.Contains("frame=") Then
-                Try
-                    Dim split2 As String() = Duration.Split(New [Char]() {"="})
-                    Dim String4 As String = split2(5)
-                    Dim String5 As String = String4.Replace(":", "")
-                    Dim String6 As String = String5.Replace(".", "")
-                    Dim String7 As String = String6.Replace(" bitrate", "")
-                    Dim String8 As String = String4.Replace(" bitrate", "")
-                    FRMProgress.ProgressBar1.Value = String7
-                    FRMProgress.Label1.Text = String8 & " of "
-                Catch
-                End Try
-                Try
-                    If Duration.Contains("bitrate=") Then
-                        Dim split3 As String() = Duration.Split(New [Char]() {"="})
-                        Dim String9 As String = split3(6)
-                        Dim String10 As String = String9.Replace(":", "")
-                        Dim String11 As String = String10.Replace(".", "")
-                        Dim String12 As String = String11.Replace(" bitrate", "")
-                        Dim String13 As String = String9.Replace(" dup", "")
-                        FRMProgress.LBBITRATE.Text = String13
-                    End If
-                Catch
-                End Try
-            End If
-
-
-            If Duration.Contains("muxing overhead:") Then
-                FRMProgress.Label1.Text = "Processing Done!"
-                FRMProgress.Label2.Text = ""
-            ElseIf Duration.Contains("Invalid argument") Or Duration.Contains("Invalid data found when processing input") Then
-                FRMProgress.Label1.Text = "Error Occured"
-                FRMProgress.Label2.Text = ""
-            End If
-
-        End If
-
-    End Sub
-
-    Private Sub BTNRUNSTREAM_Click(sender As Object, e As EventArgs)
-
-    End Sub
 
     Private Sub CHKINPUTDSHOW_CheckedChanged(sender As Object, e As EventArgs) Handles CHKINPUTDSHOW.CheckedChanged
         If CHKINPUTDSHOW.Checked = True Then
@@ -2211,12 +1969,14 @@ noencoding:
         Else
             If BOXBITRATEMODE.Text = "CBR" Or BOXBITRATEMODE.Text = "ABR" Or BOXBITRATEMODE.Text = "2pass-ABR" Then
                 BITVAL = " -b:v " + BITBOX.Text + "k"
-            ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
+            ElseIf BOXBITRATEMODE.Text = "CRF" Then
                 BITVAL = " -crf " + BITBOX.Text
             End If
 
             If BOXBITRATEMODE.Text = "CBR" And Not BITBOX.Text = "" Then
                 CBRVAL = " -bufsize:v " + BITBOX.Text + "k " + " -maxrate:v " + BITBOX.Text + "k " + "-minrate:v " + BITBOX.Text + "k "
+            ElseIf BOXBITRATEMODE.Text = "CRF" Then
+                CBRVAL = ""
             ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
                 CBRVAL = " -bufsize:v " + BITBOX2.Text + "k " + "-maxrate:v " + BITBOX2.Text + "k "
             ElseIf BOXBITRATEMODE.Text = "File Size" Then
