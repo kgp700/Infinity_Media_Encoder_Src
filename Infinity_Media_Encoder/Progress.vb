@@ -1,10 +1,10 @@
 ﻿'Imports System.Diagnostics
 'Imports System.IO
-'Imports System.Dynamic
+Imports System.Dynamic
 Imports System.Management
 Imports System.Runtime.InteropServices
 Imports System.IO
-Imports System.Net.NetworkInformation
+'Imports System.Net.NetworkInformation
 
 
 Public Class FRMProgress
@@ -13,8 +13,8 @@ Public Class FRMProgress
     Public p As New Process
     Public FFPARAM As String
     Public outputReader As StreamReader
-    Public TRIMCHK As Boolean = Main.TRIMCHKVAL
-    Public TRIMTO As String = Main.TRIMTO
+    Public TRIMCHK As Boolean
+    Public TRIMTO As String
     Private Sub FRMProgress_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
         If p.HasExited = False Then
@@ -46,18 +46,20 @@ Public Class FRMProgress
     End Sub
 
     Private Sub BTNSTOP_Click(sender As Object, e As EventArgs) Handles BTNSTOP.Click
-        If p.HasExited = False Then
-            Try
-                AttachConsole(CUInt(p.Id))
-                GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(p.Id))
-                FreeConsole()
-            Catch ex As Exception
 
-            End Try
-        End If
+        Try
+            AttachConsole(CUInt(p.Id))
+            GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(p.Id))
+            FreeConsole()
+        Catch ex As Exception
+
+        End Try
+
         p.WaitForExit(2000)
         outputReader.Close()
-
+        If p.HasExited = False Then
+            KillProcessAndChildren(p.Id)
+        End If
     End Sub
 
 
@@ -66,8 +68,8 @@ Public Class FRMProgress
         Label3.Text = cpuusage.ToString + "%"
         If InStr(Main.OutputCBox.Text, "//") Then
             Label7.Text = "Network Usage : "
-            networkusage = PerformanceCounter2.NextValue
-            LBNETWORK.Text = networkusage.ToString + "Kbps/s"
+            'networkusage = PerformanceCounter2.NextValue
+            'LBNETWORK.Text = networkusage.ToString + "Kbps/s"
         End If
         
 
@@ -85,7 +87,55 @@ Public Class FRMProgress
         Next
         Try
             Dim proc As Process = Process.GetProcessById(pid)
+
             proc.Kill()
+    
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+    End Sub
+
+    Public Shared Sub PauseProcess(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            PauseProcess(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+
+            SuspendProcess(proc)
+
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+    End Sub
+    Public Shared Sub ResumeProcess(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            ResumeProcess(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+            ResumeProcess(proc)
+
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+    End Sub
+    Public Shared Sub TerminateProcess(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            TerminateProcess(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+            TerminateThreada(proc)
 
         Catch generatedExceptionName As ArgumentException
         End Try
@@ -184,7 +234,7 @@ Public Class FRMProgress
 
                     If Main.TRIMCHKVAL = True Then
                         ProgressBar1.Maximum = String3
-                        Label2.Text = Main.TRIMTO & " Completed"
+                        Label2.Text = TRIMTO & " Completed"
                         ProgressBar1.Visible = False
                     Else
                         ProgressBar1.Maximum = String3
@@ -233,11 +283,22 @@ Public Class FRMProgress
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub BTNPAUSE_Click(sender As Object, e As EventArgs) Handles BTNPAUSE.Click
 
-        AttachConsole(CUInt(p.Id))
-        GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(p.Id))
-        FreeConsole()
+        If BTNPAUSE.Text = "Pause Processing" Then
+            PauseProcess(p.Id)
+            'SuspendProcess(p)
+            BTNPAUSE.Text = "Resume Processing"
+        ElseIf BTNPAUSE.Text = "Resume Processing" Then
+            ResumeProcess(p.Id)
+            BTNPAUSE.Text = "Pause Processing"
+        End If
+
+        'AttachConsole(CUInt(p.Id))
+        'SetConsoleCtrlHandler(Nothing, False)
+        'GenerateConsoleCtrlEvent(CtrlTypes.CTRL_C_EVENT, CUInt(p.Id))
+        'p.WaitForExit(2000)
+        'FreeConsole()
 
     End Sub
 
@@ -245,8 +306,8 @@ Public Class FRMProgress
     ' Enumerated type for the control messages sent to the handler routine
     Private Enum CtrlTypes As UInteger
         CTRL_C_EVENT = 0
-        CTRL_BREAK_EVENT
-        CTRL_CLOSE_EVENT
+        CTRL_BREAK_EVENT = 1
+        CTRL_CLOSE_EVENT = 2
         CTRL_LOGOFF_EVENT = 5
         CTRL_SHUTDOWN_EVENT
     End Enum
@@ -257,10 +318,10 @@ Public Class FRMProgress
 
     Private Delegate Function ConsoleCtrlDelegate(CtrlType As UInteger) As [Boolean]
 
-    <DllImport("kernel32.dll", SetLastError:=True)>
-    Private Shared Function AttachConsole(dwProcessId As UInteger) As Boolean
-    End Function
-
+    '<DllImport("kernel32.dll", SetLastError:=True)>
+    'Private Shared Function AttachConsole(dwProcessId As UInteger) As Boolean
+    'End Function
+    Private Declare Function AttachConsole Lib "kernel32.dll" (dwProcessId As UInt32) As Boolean
     Private Declare Auto Function FreeConsole Lib "kernel32.dll" () As Boolean
 
     <DllImport("kernel32.dll")>
@@ -272,8 +333,10 @@ Public Class FRMProgress
     End Function
 
     Private Const CTRL_C_EVENT As UInteger = 0
+    Private Const CTRL_BREAK_EVENT As UInteger = 1
+    Private Const CTRL_CLOSE_EVENT As UInteger = 2
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub BTNFORCESTOP_Click(sender As Object, e As EventArgs) Handles BTNFORCESTOP.Click
         Try
             KillProcessAndChildren(p.Id)
         Catch ex As Exception
@@ -286,4 +349,56 @@ Public Class FRMProgress
 
     End Sub
 
+    Public Enum ThreadAccess As Integer
+        TERMINATE = (&H1)
+        SUSPEND_RESUME = (&H2)
+        GET_CONTEXT = (&H8)
+        SET_CONTEXT = (&H10)
+        SET_INFORMATION = (&H20)
+        QUERY_INFORMATION = (&H40)
+        SET_THREAD_TOKEN = (&H80)
+        IMPERSONATE = (&H100)
+        DIRECT_IMPERSONATION = (&H200)
+    End Enum
+
+    Public Declare Function OpenThread Lib "kernel32.dll" (ByVal dwDesiredAccess As ThreadAccess, ByVal bInheritHandle As Boolean, ByVal dwThreadId As UInteger) As IntPtr
+    Public Declare Function SuspendThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInteger
+    Public Declare Function ResumeThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInteger
+    Public Declare Function TerminateThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInteger
+    Public Declare Function CloseHandle Lib "kernel32.dll" (ByVal hHandle As IntPtr) As Boolean
+
+    Private Shared Sub SuspendProcess(ByVal process As System.Diagnostics.Process)
+        For Each t As ProcessThread In process.Threads
+            Dim th As IntPtr
+            th = OpenThread(ThreadAccess.SUSPEND_RESUME, False, t.Id)
+            If th <> IntPtr.Zero Then
+                SuspendThread(th)
+                'CloseHandle(th)
+            End If
+        Next
+    End Sub
+    Private Shared Sub ResumeProcess(ByVal process As System.Diagnostics.Process)
+        For Each t As ProcessThread In process.Threads
+            Dim th As IntPtr
+            th = OpenThread(ThreadAccess.SUSPEND_RESUME, False, t.Id)
+            If th <> IntPtr.Zero Then
+                ResumeThread(th)
+                'CloseHandle(th)
+            End If
+        Next
+    End Sub
+    Private Shared Sub TerminateThreada(ByVal process As System.Diagnostics.Process)
+        For Each t As ProcessThread In process.Threads
+            Dim th As IntPtr
+            th = OpenThread(ThreadAccess.TERMINATE, False, t.Id)
+            If th <> IntPtr.Zero Then
+                TerminateThread(th)
+                'CloseHandle(th)
+            End If
+        Next
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        TerminateProcess(p.Id)
+    End Sub
 End Class

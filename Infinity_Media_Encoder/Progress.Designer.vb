@@ -28,7 +28,7 @@ Partial Class FRMProgress
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.BTNPAUSE = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -40,12 +40,11 @@ Partial Class FRMProgress
         Me.LBNETWORK = New System.Windows.Forms.Label()
         Me.LBWARN = New System.Windows.Forms.Label()
         Me.BackgroundWorker_1 = New System.ComponentModel.BackgroundWorker()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.BTNFORCESTOP = New System.Windows.Forms.Button()
         Me.CHKVIEWLOG = New System.Windows.Forms.CheckBox()
         Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
-        Me.PerformanceCounter2 = New System.Diagnostics.PerformanceCounter()
+        Me.Button3 = New System.Windows.Forms.Button()
         CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PerformanceCounter2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RichTextBox1
@@ -65,7 +64,7 @@ Partial Class FRMProgress
         Me.BTNSTOP.Cursor = System.Windows.Forms.Cursors.Hand
         Me.BTNSTOP.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.BTNSTOP.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.BTNSTOP.Location = New System.Drawing.Point(143, 456)
+        Me.BTNSTOP.Location = New System.Drawing.Point(150, 456)
         Me.BTNSTOP.Name = "BTNSTOP"
         Me.BTNSTOP.Size = New System.Drawing.Size(148, 23)
         Me.BTNSTOP.TabIndex = 1
@@ -95,18 +94,17 @@ Partial Class FRMProgress
         Me.Label2.Size = New System.Drawing.Size(0, 12)
         Me.Label2.TabIndex = 4
         '
-        'Button1
+        'BTNPAUSE
         '
-        Me.Button1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button1.Enabled = False
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button1.Location = New System.Drawing.Point(297, 456)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(148, 23)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "Pause Processing"
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.BTNPAUSE.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.BTNPAUSE.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BTNPAUSE.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.BTNPAUSE.Location = New System.Drawing.Point(304, 456)
+        Me.BTNPAUSE.Name = "BTNPAUSE"
+        Me.BTNPAUSE.Size = New System.Drawing.Size(148, 23)
+        Me.BTNPAUSE.TabIndex = 6
+        Me.BTNPAUSE.Text = "Pause Processing"
+        Me.BTNPAUSE.UseVisualStyleBackColor = False
         '
         'Label3
         '
@@ -198,18 +196,18 @@ Partial Class FRMProgress
         Me.BackgroundWorker_1.WorkerReportsProgress = True
         Me.BackgroundWorker_1.WorkerSupportsCancellation = True
         '
-        'Button2
+        'BTNFORCESTOP
         '
-        Me.Button2.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button2.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button2.Location = New System.Drawing.Point(451, 456)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(148, 23)
-        Me.Button2.TabIndex = 16
-        Me.Button2.Text = "Force Stop"
-        Me.Button2.UseVisualStyleBackColor = False
+        Me.BTNFORCESTOP.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.BTNFORCESTOP.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BTNFORCESTOP.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BTNFORCESTOP.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.BTNFORCESTOP.Location = New System.Drawing.Point(458, 456)
+        Me.BTNFORCESTOP.Name = "BTNFORCESTOP"
+        Me.BTNFORCESTOP.Size = New System.Drawing.Size(148, 23)
+        Me.BTNFORCESTOP.TabIndex = 16
+        Me.BTNFORCESTOP.Text = "Force Stop"
+        Me.BTNFORCESTOP.UseVisualStyleBackColor = False
         '
         'CHKVIEWLOG
         '
@@ -229,19 +227,28 @@ Partial Class FRMProgress
         Me.PerformanceCounter1.CounterName = "% Processor Time"
         Me.PerformanceCounter1.InstanceName = "_Total"
         '
-        'PerformanceCounter2
+        'Button3
         '
-        Me.PerformanceCounter2.CategoryName = "Network Adapter"
-        Me.PerformanceCounter2.CounterName = "Current Bandwidth"
-        Me.PerformanceCounter2.InstanceName = "Realtek PCIe GBE Family Controller"
+        Me.Button3.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Button3.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button3.Location = New System.Drawing.Point(679, 455)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(41, 23)
+        Me.Button3.TabIndex = 18
+        Me.Button3.Text = "TEST"
+        Me.Button3.UseVisualStyleBackColor = False
+        Me.Button3.Visible = False
         '
         'FRMProgress
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(741, 491)
+        Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.CHKVIEWLOG)
-        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.BTNFORCESTOP)
         Me.Controls.Add(Me.LBWARN)
         Me.Controls.Add(Me.LBNETWORK)
         Me.Controls.Add(Me.LBFPS)
@@ -251,7 +258,7 @@ Partial Class FRMProgress
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.BTNPAUSE)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ProgressBar1)
@@ -262,7 +269,6 @@ Partial Class FRMProgress
         Me.Name = "FRMProgress"
         Me.Text = "Infinity Media Encoder - Encoding Progress"
         CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PerformanceCounter2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -272,7 +278,7 @@ Partial Class FRMProgress
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents BTNPAUSE As System.Windows.Forms.Button
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
@@ -284,8 +290,8 @@ Partial Class FRMProgress
     Friend WithEvents LBNETWORK As System.Windows.Forms.Label
     Friend WithEvents LBWARN As System.Windows.Forms.Label
     Friend WithEvents BackgroundWorker_1 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents BTNFORCESTOP As System.Windows.Forms.Button
     Friend WithEvents CHKVIEWLOG As System.Windows.Forms.CheckBox
     Friend WithEvents PerformanceCounter1 As System.Diagnostics.PerformanceCounter
-    Friend WithEvents PerformanceCounter2 As System.Diagnostics.PerformanceCounter
+    Friend WithEvents Button3 As System.Windows.Forms.Button
 End Class

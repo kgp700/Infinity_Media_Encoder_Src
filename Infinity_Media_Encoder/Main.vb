@@ -191,11 +191,11 @@ Public Class Main
 
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        If FRMProgress.Visible = True Then
-            If CHKMULTIENC.Checked = False And FRMProgress.p.HasExited = True Then
-                FRMProgress.Close()
-            End If
-        End If
+        'If FRMProgress.Visible = True Then
+        'If CHKMULTIENC.Checked = False And FRMProgress.p.HasExited = True Then
+        'FRMProgress.Close()
+        'End If
+        'End If
 
         If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
             Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo)
@@ -1201,8 +1201,10 @@ noencoding:
 
         If CHKTRIM.Checked = True Then
             TRIMCHKVAL = True
+            FRMProgress.TRIMCHK = True
             TRIMSS = BOXTRIMSS.Text
             TRIMTO = BOXTRIMTO.Text
+            FRMProgress.TRIMTO = BOXTRIMTO.Text
         End If
 
     End Function
