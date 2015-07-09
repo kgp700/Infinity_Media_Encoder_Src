@@ -56,6 +56,7 @@ Public Class FRMProgress
         End Try
 
         p.WaitForExit(2000)
+        outputReader.DiscardBufferedData()
         outputReader.Close()
         If p.HasExited = False Then
             KillProcessAndChildren(p.Id)
@@ -199,7 +200,7 @@ Public Class FRMProgress
         End If
 
 
-        If InStr(Main.OutputCBox.Text, "//") Then
+        If InStr(Main.OutputCBox.Text, "//") Or InStr(Main.InputCBOX.Text, "//") Then
             If output.Contains("bitrate=") Then
                 Dim split3 As String() = output.Split(New [Char]() {"="})
                 Dim String9 As String = split3(6)

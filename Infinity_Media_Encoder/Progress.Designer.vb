@@ -169,7 +169,7 @@ Partial Class FRMProgress
         Me.LBFPS.Location = New System.Drawing.Point(344, 9)
         Me.LBFPS.Margin = New System.Windows.Forms.Padding(0)
         Me.LBFPS.Name = "LBFPS"
-        Me.LBFPS.Size = New System.Drawing.Size(43, 12)
+        Me.LBFPS.Size = New System.Drawing.Size(73, 12)
         Me.LBFPS.TabIndex = 13
         Me.LBFPS.Text = "LBFPS"
         '

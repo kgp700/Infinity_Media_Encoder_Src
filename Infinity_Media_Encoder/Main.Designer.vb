@@ -46,10 +46,6 @@ Partial Class Main
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.LBBPS2 = New System.Windows.Forms.Label()
         Me.BITBOX2 = New System.Windows.Forms.ComboBox()
-        Me.BOXDURATION2 = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.BOXCUSTOMT = New System.Windows.Forms.ComboBox()
-        Me.CHKQA = New System.Windows.Forms.CheckBox()
         Me.CHECKADV = New System.Windows.Forms.CheckBox()
         Me.BTNADV = New System.Windows.Forms.Button()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -114,8 +110,6 @@ Partial Class Main
         Me.Label32 = New System.Windows.Forms.Label()
         Me.BOXSPP = New System.Windows.Forms.ComboBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.BOXCHLSADDRESS = New System.Windows.Forms.TextBox()
-        Me.CHKCHLSADDRESS = New System.Windows.Forms.CheckBox()
         Me.Button14 = New System.Windows.Forms.Button()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.BOXDEBUG = New System.Windows.Forms.TextBox()
@@ -136,15 +130,23 @@ Partial Class Main
         Me.BOXSUBPATH = New System.Windows.Forms.ComboBox()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.CHKINPUTDSHOW = New System.Windows.Forms.CheckBox()
-        Me.Button16 = New System.Windows.Forms.Button()
-        Me.Button15 = New System.Windows.Forms.Button()
-        Me.BTNSTOPNGINX = New System.Windows.Forms.Button()
-        Me.BTNSTARTNGINX = New System.Windows.Forms.Button()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.BOXDSHOWAUD = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.BOXDSHOWVID = New System.Windows.Forms.ComboBox()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.BTNSTARTNGINX = New System.Windows.Forms.Button()
+        Me.CHKINPUTDSHOW = New System.Windows.Forms.CheckBox()
+        Me.BTNSTOPNGINX = New System.Windows.Forms.Button()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.CHKDASH = New System.Windows.Forms.CheckBox()
+        Me.CHKSMOOTH = New System.Windows.Forms.CheckBox()
+        Me.BOXCHLSADDRESS = New System.Windows.Forms.TextBox()
+        Me.CHKCHLSADDRESS = New System.Windows.Forms.CheckBox()
+        Me.BOXDURATION2 = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.BOXCUSTOMT = New System.Windows.Forms.ComboBox()
+        Me.CHKQA = New System.Windows.Forms.CheckBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.CHKCMDWINDOW = New System.Windows.Forms.CheckBox()
         Me.CHKMULTIENC = New System.Windows.Forms.CheckBox()
@@ -177,6 +179,8 @@ Partial Class Main
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.TabPage5.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -390,10 +394,6 @@ Partial Class Main
         '
         Me.GroupBox2.Controls.Add(Me.LBBPS2)
         Me.GroupBox2.Controls.Add(Me.BITBOX2)
-        Me.GroupBox2.Controls.Add(Me.BOXDURATION2)
-        Me.GroupBox2.Controls.Add(Me.Label12)
-        Me.GroupBox2.Controls.Add(Me.BOXCUSTOMT)
-        Me.GroupBox2.Controls.Add(Me.CHKQA)
         Me.GroupBox2.Controls.Add(Me.CHECKADV)
         Me.GroupBox2.Controls.Add(Me.BTNADV)
         Me.GroupBox2.Controls.Add(Me.Label30)
@@ -451,43 +451,6 @@ Partial Class Main
         Me.BITBOX2.TabIndex = 83
         Me.BITBOX2.Text = "Auto"
         '
-        'BOXDURATION2
-        '
-        Me.BOXDURATION2.Enabled = False
-        Me.BOXDURATION2.Location = New System.Drawing.Point(173, 198)
-        Me.BOXDURATION2.Name = "BOXDURATION2"
-        Me.BOXDURATION2.Size = New System.Drawing.Size(59, 23)
-        Me.BOXDURATION2.TabIndex = 80
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(12, 201)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(82, 15)
-        Me.Label12.TabIndex = 82
-        Me.Label12.Text = "Split Duration"
-        '
-        'BOXCUSTOMT
-        '
-        Me.BOXCUSTOMT.AllowDrop = True
-        Me.BOXCUSTOMT.FormattingEnabled = True
-        Me.BOXCUSTOMT.Location = New System.Drawing.Point(106, 198)
-        Me.BOXCUSTOMT.Name = "BOXCUSTOMT"
-        Me.BOXCUSTOMT.Size = New System.Drawing.Size(61, 21)
-        Me.BOXCUSTOMT.TabIndex = 81
-        Me.BOXCUSTOMT.Text = "10"
-        '
-        'CHKQA
-        '
-        Me.CHKQA.AutoSize = True
-        Me.CHKQA.Location = New System.Drawing.Point(6, 176)
-        Me.CHKQA.Name = "CHKQA"
-        Me.CHKQA.Size = New System.Drawing.Size(189, 19)
-        Me.CHKQA.TabIndex = 79
-        Me.CHKQA.Text = "HLS Contents Encoding Mode"
-        Me.CHKQA.UseVisualStyleBackColor = True
-        '
         'CHECKADV
         '
         Me.CHECKADV.AutoSize = True
@@ -510,7 +473,7 @@ Partial Class Main
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(4, 152)
+        Me.Label30.Location = New System.Drawing.Point(14, 191)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(101, 15)
         Me.Label30.TabIndex = 76
@@ -520,7 +483,7 @@ Partial Class Main
         '
         Me.BOXCONTAINER.AllowDrop = True
         Me.BOXCONTAINER.FormattingEnabled = True
-        Me.BOXCONTAINER.Location = New System.Drawing.Point(107, 149)
+        Me.BOXCONTAINER.Location = New System.Drawing.Point(117, 188)
         Me.BOXCONTAINER.Name = "BOXCONTAINER"
         Me.BOXCONTAINER.Size = New System.Drawing.Size(75, 21)
         Me.BOXCONTAINER.TabIndex = 75
@@ -1151,8 +1114,6 @@ Partial Class Main
         '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.BOXCHLSADDRESS)
-        Me.TabPage2.Controls.Add(Me.CHKCHLSADDRESS)
         Me.TabPage2.Controls.Add(Me.Button14)
         Me.TabPage2.Controls.Add(Me.Button13)
         Me.TabPage2.Controls.Add(Me.BOXDEBUG)
@@ -1169,25 +1130,6 @@ Partial Class Main
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Advanced"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'BOXCHLSADDRESS
-        '
-        Me.BOXCHLSADDRESS.Enabled = False
-        Me.BOXCHLSADDRESS.Location = New System.Drawing.Point(147, 108)
-        Me.BOXCHLSADDRESS.Name = "BOXCHLSADDRESS"
-        Me.BOXCHLSADDRESS.Size = New System.Drawing.Size(469, 22)
-        Me.BOXCHLSADDRESS.TabIndex = 72
-        '
-        'CHKCHLSADDRESS
-        '
-        Me.CHKCHLSADDRESS.AutoSize = True
-        Me.CHKCHLSADDRESS.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CHKCHLSADDRESS.Location = New System.Drawing.Point(9, 110)
-        Me.CHKCHLSADDRESS.Name = "CHKCHLSADDRESS"
-        Me.CHKCHLSADDRESS.Size = New System.Drawing.Size(133, 17)
-        Me.CHKCHLSADDRESS.TabIndex = 71
-        Me.CHKCHLSADDRESS.Text = "Custom HLS Address"
-        Me.CHKCHLSADDRESS.UseVisualStyleBackColor = True
         '
         'Button14
         '
@@ -1380,15 +1322,10 @@ Partial Class Main
         '
         'TabPage5
         '
-        Me.TabPage5.Controls.Add(Me.CHKINPUTDSHOW)
-        Me.TabPage5.Controls.Add(Me.Button16)
-        Me.TabPage5.Controls.Add(Me.Button15)
-        Me.TabPage5.Controls.Add(Me.BTNSTOPNGINX)
-        Me.TabPage5.Controls.Add(Me.BTNSTARTNGINX)
         Me.TabPage5.Controls.Add(Me.Label29)
-        Me.TabPage5.Controls.Add(Me.BOXDSHOWAUD)
         Me.TabPage5.Controls.Add(Me.Label19)
-        Me.TabPage5.Controls.Add(Me.BOXDSHOWVID)
+        Me.TabPage5.Controls.Add(Me.GroupBox4)
+        Me.TabPage5.Controls.Add(Me.GroupBox5)
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
@@ -1397,77 +1334,21 @@ Partial Class Main
         Me.TabPage5.Text = "Streaming"
         Me.TabPage5.UseVisualStyleBackColor = True
         '
-        'CHKINPUTDSHOW
-        '
-        Me.CHKINPUTDSHOW.AutoSize = True
-        Me.CHKINPUTDSHOW.Location = New System.Drawing.Point(16, 79)
-        Me.CHKINPUTDSHOW.Name = "CHKINPUTDSHOW"
-        Me.CHKINPUTDSHOW.Size = New System.Drawing.Size(142, 17)
-        Me.CHKINPUTDSHOW.TabIndex = 78
-        Me.CHKINPUTDSHOW.Text = "Input DirectShow Filter"
-        Me.CHKINPUTDSHOW.UseVisualStyleBackColor = True
-        '
-        'Button16
-        '
-        Me.Button16.Enabled = False
-        Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button16.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button16.Location = New System.Drawing.Point(493, 111)
-        Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(126, 26)
-        Me.Button16.TabIndex = 76
-        Me.Button16.Text = "View Server Errorlog"
-        Me.Button16.UseVisualStyleBackColor = True
-        '
-        'Button15
-        '
-        Me.Button15.Enabled = False
-        Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button15.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button15.Location = New System.Drawing.Point(493, 79)
-        Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(126, 26)
-        Me.Button15.TabIndex = 75
-        Me.Button15.Text = "View Server log"
-        Me.Button15.UseVisualStyleBackColor = True
-        '
-        'BTNSTOPNGINX
-        '
-        Me.BTNSTOPNGINX.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTNSTOPNGINX.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTNSTOPNGINX.Location = New System.Drawing.Point(493, 47)
-        Me.BTNSTOPNGINX.Name = "BTNSTOPNGINX"
-        Me.BTNSTOPNGINX.Size = New System.Drawing.Size(126, 26)
-        Me.BTNSTOPNGINX.TabIndex = 74
-        Me.BTNSTOPNGINX.Text = "Stop NGINX Server"
-        Me.BTNSTOPNGINX.UseVisualStyleBackColor = True
-        '
-        'BTNSTARTNGINX
-        '
-        Me.BTNSTARTNGINX.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTNSTARTNGINX.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTNSTARTNGINX.Location = New System.Drawing.Point(493, 13)
-        Me.BTNSTARTNGINX.Name = "BTNSTARTNGINX"
-        Me.BTNSTARTNGINX.Size = New System.Drawing.Size(126, 26)
-        Me.BTNSTARTNGINX.TabIndex = 73
-        Me.BTNSTARTNGINX.Text = "Start NGINX Server"
-        Me.BTNSTARTNGINX.UseVisualStyleBackColor = True
-        '
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(13, 47)
+        Me.Label29.Location = New System.Drawing.Point(13, 51)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(111, 13)
+        Me.Label29.Size = New System.Drawing.Size(172, 13)
         Me.Label29.TabIndex = 37
-        Me.Label29.Text = "Input Source (Audio)"
+        Me.Label29.Text = "DirectShow Input Source (Audio)"
         '
         'BOXDSHOWAUD
         '
         Me.BOXDSHOWAUD.AllowDrop = True
         Me.BOXDSHOWAUD.FormattingEnabled = True
         Me.BOXDSHOWAUD.Items.AddRange(New Object() {"FFsplit Playback Mixer"})
-        Me.BOXDSHOWAUD.Location = New System.Drawing.Point(130, 44)
+        Me.BOXDSHOWAUD.Location = New System.Drawing.Point(185, 47)
         Me.BOXDSHOWAUD.Name = "BOXDSHOWAUD"
         Me.BOXDSHOWAUD.Size = New System.Drawing.Size(158, 21)
         Me.BOXDSHOWAUD.TabIndex = 36
@@ -1476,22 +1357,162 @@ Partial Class Main
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(13, 20)
+        Me.Label19.Location = New System.Drawing.Point(13, 24)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(111, 13)
+        Me.Label19.Size = New System.Drawing.Size(172, 13)
         Me.Label19.TabIndex = 35
-        Me.Label19.Text = "Input Source (Video)"
+        Me.Label19.Text = "DirectShow Input Source (Video)"
         '
         'BOXDSHOWVID
         '
         Me.BOXDSHOWVID.AllowDrop = True
         Me.BOXDSHOWVID.FormattingEnabled = True
         Me.BOXDSHOWVID.Items.AddRange(New Object() {"FFsource"})
-        Me.BOXDSHOWVID.Location = New System.Drawing.Point(130, 17)
+        Me.BOXDSHOWVID.Location = New System.Drawing.Point(185, 20)
         Me.BOXDSHOWVID.Name = "BOXDSHOWVID"
         Me.BOXDSHOWVID.Size = New System.Drawing.Size(158, 21)
         Me.BOXDSHOWVID.TabIndex = 34
         Me.BOXDSHOWVID.Text = "FFsource"
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.BTNSTARTNGINX)
+        Me.GroupBox4.Controls.Add(Me.BOXDSHOWAUD)
+        Me.GroupBox4.Controls.Add(Me.CHKINPUTDSHOW)
+        Me.GroupBox4.Controls.Add(Me.BTNSTOPNGINX)
+        Me.GroupBox4.Controls.Add(Me.BOXDSHOWVID)
+        Me.GroupBox4.Location = New System.Drawing.Point(6, 4)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(637, 91)
+        Me.GroupBox4.TabIndex = 79
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "DirectShow Filter Input (Support Desktop Screen Input)"
+        '
+        'BTNSTARTNGINX
+        '
+        Me.BTNSTARTNGINX.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTNSTARTNGINX.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNSTARTNGINX.Location = New System.Drawing.Point(500, 19)
+        Me.BTNSTARTNGINX.Name = "BTNSTARTNGINX"
+        Me.BTNSTARTNGINX.Size = New System.Drawing.Size(126, 26)
+        Me.BTNSTARTNGINX.TabIndex = 73
+        Me.BTNSTARTNGINX.Text = "Start NGINX Server"
+        Me.BTNSTARTNGINX.UseVisualStyleBackColor = True
+        '
+        'CHKINPUTDSHOW
+        '
+        Me.CHKINPUTDSHOW.AutoSize = True
+        Me.CHKINPUTDSHOW.Location = New System.Drawing.Point(10, 69)
+        Me.CHKINPUTDSHOW.Name = "CHKINPUTDSHOW"
+        Me.CHKINPUTDSHOW.Size = New System.Drawing.Size(142, 17)
+        Me.CHKINPUTDSHOW.TabIndex = 78
+        Me.CHKINPUTDSHOW.Text = "Input DirectShow Filter"
+        Me.CHKINPUTDSHOW.UseVisualStyleBackColor = True
+        '
+        'BTNSTOPNGINX
+        '
+        Me.BTNSTOPNGINX.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTNSTOPNGINX.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNSTOPNGINX.Location = New System.Drawing.Point(500, 51)
+        Me.BTNSTOPNGINX.Name = "BTNSTOPNGINX"
+        Me.BTNSTOPNGINX.Size = New System.Drawing.Size(126, 26)
+        Me.BTNSTOPNGINX.TabIndex = 74
+        Me.BTNSTOPNGINX.Text = "Stop NGINX Server"
+        Me.BTNSTOPNGINX.UseVisualStyleBackColor = True
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.CHKDASH)
+        Me.GroupBox5.Controls.Add(Me.CHKSMOOTH)
+        Me.GroupBox5.Controls.Add(Me.BOXCHLSADDRESS)
+        Me.GroupBox5.Controls.Add(Me.CHKCHLSADDRESS)
+        Me.GroupBox5.Controls.Add(Me.BOXDURATION2)
+        Me.GroupBox5.Controls.Add(Me.Label12)
+        Me.GroupBox5.Controls.Add(Me.BOXCUSTOMT)
+        Me.GroupBox5.Controls.Add(Me.CHKQA)
+        Me.GroupBox5.Location = New System.Drawing.Point(6, 101)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(637, 327)
+        Me.GroupBox5.TabIndex = 80
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Streaming Contents Encoding"
+        '
+        'CHKDASH
+        '
+        Me.CHKDASH.AutoSize = True
+        Me.CHKDASH.Enabled = False
+        Me.CHKDASH.Location = New System.Drawing.Point(10, 137)
+        Me.CHKDASH.Name = "CHKDASH"
+        Me.CHKDASH.Size = New System.Drawing.Size(245, 17)
+        Me.CHKDASH.TabIndex = 90
+        Me.CHKDASH.Text = "DASH Streaming Contents Encoding Mode"
+        Me.CHKDASH.UseVisualStyleBackColor = True
+        '
+        'CHKSMOOTH
+        '
+        Me.CHKSMOOTH.AutoSize = True
+        Me.CHKSMOOTH.Location = New System.Drawing.Point(10, 114)
+        Me.CHKSMOOTH.Name = "CHKSMOOTH"
+        Me.CHKSMOOTH.Size = New System.Drawing.Size(256, 17)
+        Me.CHKSMOOTH.TabIndex = 89
+        Me.CHKSMOOTH.Text = "Smooth Streaming Contents Encoding Mode"
+        Me.CHKSMOOTH.UseVisualStyleBackColor = True
+        '
+        'BOXCHLSADDRESS
+        '
+        Me.BOXCHLSADDRESS.Enabled = False
+        Me.BOXCHLSADDRESS.Location = New System.Drawing.Point(144, 71)
+        Me.BOXCHLSADDRESS.Name = "BOXCHLSADDRESS"
+        Me.BOXCHLSADDRESS.Size = New System.Drawing.Size(469, 22)
+        Me.BOXCHLSADDRESS.TabIndex = 88
+        '
+        'CHKCHLSADDRESS
+        '
+        Me.CHKCHLSADDRESS.AutoSize = True
+        Me.CHKCHLSADDRESS.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHKCHLSADDRESS.Location = New System.Drawing.Point(10, 73)
+        Me.CHKCHLSADDRESS.Name = "CHKCHLSADDRESS"
+        Me.CHKCHLSADDRESS.Size = New System.Drawing.Size(133, 17)
+        Me.CHKCHLSADDRESS.TabIndex = 87
+        Me.CHKCHLSADDRESS.Text = "Custom HLS Address"
+        Me.CHKCHLSADDRESS.UseVisualStyleBackColor = True
+        '
+        'BOXDURATION2
+        '
+        Me.BOXDURATION2.Enabled = False
+        Me.BOXDURATION2.Location = New System.Drawing.Point(177, 43)
+        Me.BOXDURATION2.Name = "BOXDURATION2"
+        Me.BOXDURATION2.Size = New System.Drawing.Size(59, 22)
+        Me.BOXDURATION2.TabIndex = 84
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(16, 46)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(78, 13)
+        Me.Label12.TabIndex = 86
+        Me.Label12.Text = "Split Duration"
+        '
+        'BOXCUSTOMT
+        '
+        Me.BOXCUSTOMT.AllowDrop = True
+        Me.BOXCUSTOMT.FormattingEnabled = True
+        Me.BOXCUSTOMT.Location = New System.Drawing.Point(110, 43)
+        Me.BOXCUSTOMT.Name = "BOXCUSTOMT"
+        Me.BOXCUSTOMT.Size = New System.Drawing.Size(61, 21)
+        Me.BOXCUSTOMT.TabIndex = 85
+        Me.BOXCUSTOMT.Text = "10"
+        '
+        'CHKQA
+        '
+        Me.CHKQA.AutoSize = True
+        Me.CHKQA.Location = New System.Drawing.Point(10, 21)
+        Me.CHKQA.Name = "CHKQA"
+        Me.CHKQA.Size = New System.Drawing.Size(179, 17)
+        Me.CHKQA.TabIndex = 83
+        Me.CHKQA.Text = "HLS Contents Encoding Mode"
+        Me.CHKQA.UseVisualStyleBackColor = True
         '
         'TabPage6
         '
@@ -1732,34 +1753,38 @@ Partial Class Main
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.MaximizeBox = false
+        Me.MaximizeBox = False
         Me.Name = "Main"
         Me.Text = "Infinity Media Encoder Alpha 5"
-        Me.GroupBox2.ResumeLayout(false)
-        Me.GroupBox2.PerformLayout
-        Me.GroupBox3.ResumeLayout(false)
-        Me.GroupBox3.PerformLayout
-        Me.GroupBox1.ResumeLayout(false)
-        Me.GroupBox1.PerformLayout
-        Me.TAB.ResumeLayout(false)
-        Me.TabPage1.ResumeLayout(false)
-        Me.TabPage1.PerformLayout
-        Me.TabPage7.ResumeLayout(false)
-        Me.TabPage7.PerformLayout
-        Me.TabPage2.ResumeLayout(false)
-        Me.TabPage2.PerformLayout
-        Me.TabPage3.ResumeLayout(false)
-        Me.TabPage4.ResumeLayout(false)
-        Me.TabPage4.PerformLayout
-        Me.TabPage5.ResumeLayout(false)
-        Me.TabPage5.PerformLayout
-        Me.TabPage6.ResumeLayout(false)
-        Me.TabPage6.PerformLayout
-        CType(Me.PerformanceCounter1,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ResumeLayout(false)
-        Me.PerformLayout
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.TAB.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage5.PerformLayout()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
+        Me.TabPage6.ResumeLayout(False)
+        Me.TabPage6.PerformLayout()
+        CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
 
-End Sub
+    End Sub
     Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
@@ -1861,8 +1886,6 @@ End Sub
     Friend WithEvents OutputCBox As System.Windows.Forms.ComboBox
     Friend WithEvents BTNSTOPNGINX As System.Windows.Forms.Button
     Friend WithEvents BTNSTARTNGINX As System.Windows.Forms.Button
-    Friend WithEvents Button16 As System.Windows.Forms.Button
-    Friend WithEvents Button15 As System.Windows.Forms.Button
     Friend WithEvents CHKFAST1ST As System.Windows.Forms.CheckBox
     Friend WithEvents LISTCHKENC2 As System.Windows.Forms.ListBox
     Friend WithEvents Label30 As System.Windows.Forms.Label
@@ -1887,10 +1910,6 @@ End Sub
     Friend WithEvents BOXFPSINFO As System.Windows.Forms.TextBox
     Friend WithEvents BOXFORMATINFO As System.Windows.Forms.TextBox
     Friend WithEvents LBINPUTINFO As System.Windows.Forms.Label
-    Friend WithEvents BOXDURATION2 As System.Windows.Forms.TextBox
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents BOXCUSTOMT As System.Windows.Forms.ComboBox
-    Friend WithEvents CHKQA As System.Windows.Forms.CheckBox
     Friend WithEvents CHECKADV As System.Windows.Forms.CheckBox
     Friend WithEvents BTNADV As System.Windows.Forms.Button
     Friend WithEvents CHKASYNC As System.Windows.Forms.CheckBox
@@ -1900,8 +1919,16 @@ End Sub
     Friend WithEvents CHKINPUTDSHOW As System.Windows.Forms.CheckBox
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents PerformanceCounter1 As System.Diagnostics.PerformanceCounter
-    Friend WithEvents BOXCHLSADDRESS As System.Windows.Forms.TextBox
-    Friend WithEvents CHKCHLSADDRESS As System.Windows.Forms.CheckBox
     Friend WithEvents CHKCMDWINDOW As System.Windows.Forms.CheckBox
     Friend WithEvents CHKALLSET As System.Windows.Forms.CheckBox
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents CHKDASH As System.Windows.Forms.CheckBox
+    Friend WithEvents CHKSMOOTH As System.Windows.Forms.CheckBox
+    Friend WithEvents BOXCHLSADDRESS As System.Windows.Forms.TextBox
+    Friend WithEvents CHKCHLSADDRESS As System.Windows.Forms.CheckBox
+    Friend WithEvents BOXDURATION2 As System.Windows.Forms.TextBox
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents BOXCUSTOMT As System.Windows.Forms.ComboBox
+    Friend WithEvents CHKQA As System.Windows.Forms.CheckBox
 End Class

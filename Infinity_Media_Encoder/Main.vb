@@ -191,11 +191,11 @@ Public Class Main
 
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        'If FRMProgress.Visible = True Then
-        'If CHKMULTIENC.Checked = False And FRMProgress.p.HasExited = True Then
-        'FRMProgress.Close()
-        'End If
-        'End If
+        If FRMProgress.Visible = True Then
+            If CHKMULTIENC.Checked = False And FRMProgress.p.HasExited = True Then
+                FRMProgress.Close()
+            End If
+        End If
 
         If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
             Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo)
@@ -213,9 +213,10 @@ continueencoding:
             prepareEncoding()
             prepareEncoding2()
 
-            If CHKMULTIENC.Checked Or InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
-            InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
-            InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
+            ' If CHKMULTIENC.Checked Or InStr(1, InputCBOX.Text, "http://youtube.com") Or InStr(1, InputCBOX.Text, "https://youtu.be") Or InStr(1, InputCBOX.Text, "http://www.youtube.com") Or InStr(1, InputCBOX.Text, "https://youtube.com/") Or InStr(1, InputCBOX.Text, "https://www.youtube.com/") Or
+            ' InStr(1, InputCBOX.Text, "http://ustream.tv") Or InStr(1, InputCBOX.Text, "http://www.ustream.tv") Or InStr(1, InputCBOX.Text, "https://ustream.tv/") Or
+            ' InStr(1, InputCBOX.Text, "https://www.ustream.tv/") Or InStr(1, InputCBOX.Text, "http://www.connectcast.tv/") Or InStr(1, InputCBOX.Text, "http://connectcast.tv/") Then
+            If CHKMULTIENC.Checked Then
                 Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " & comp.bat", vbNormalFocus)
             Else
 
@@ -233,7 +234,7 @@ continueencoding:
         End If
 
 noencoding:
-        initialValue()
+            initialValue()
     End Sub
 
     Private Sub BOXCODEC_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXCODEC.TextChanged
@@ -1853,6 +1854,14 @@ noencoding:
             ChangeItems()
         End If
         SwitchContainer()
+        If CHKQA.Checked = True Then
+            CHKSMOOTH.Enabled = False
+            'CHKDASH.Enabled = False
+        Else
+            CHKSMOOTH.Enabled = True
+            'CHKDASH.Enabled = True
+        End If
+
 
     End Sub
     Public Function SWBitratemode() As String()
@@ -2044,4 +2053,24 @@ noencoding:
         End If
     End Sub
 
+    Private Sub CHKSMOOTH_CheckedChanged(sender As Object, e As EventArgs) Handles CHKSMOOTH.CheckedChanged
+        If CHKSMOOTH.Checked = True And Not InputCBOX.Text = "" Then
+            BOXCONTAINER.Items.Clear()
+            BOXCONTAINER.Items.Add("ismv")
+            BOXCONTAINER.Items.Add("isma")
+            BOXCONTAINER.Text = "ismv"
+            INPUTVIDNAME = InputCBOX.Text
+        ElseIf CHKQA.Checked = False Then
+            ChangeItems()
+        End If
+        SwitchContainer()
+
+        If CHKSMOOTH.Checked = True Then
+            CHKQA.Enabled = False
+            'CHKDASH.Enabled = False
+        Else
+            CHKQA.Enabled = True
+            'CHKDASH.Enabled = True
+        End If
+    End Sub
 End Class

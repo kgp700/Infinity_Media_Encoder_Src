@@ -175,6 +175,7 @@ Partial Class AdvancedFRM
         '
         Me.NMMERANGE.Location = New System.Drawing.Point(155, 15)
         Me.NMMERANGE.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
+        Me.NMMERANGE.Minimum = New Decimal(New Integer() {16, 0, 0, 0})
         Me.NMMERANGE.Name = "NMMERANGE"
         Me.NMMERANGE.Size = New System.Drawing.Size(54, 22)
         Me.NMMERANGE.TabIndex = 3
@@ -500,8 +501,8 @@ Partial Class AdvancedFRM
         'NMDBTR
         '
         Me.NMDBTR.Location = New System.Drawing.Point(165, 19)
-        Me.NMDBTR.Maximum = New Decimal(New Integer() {4, 0, 0, 0})
-        Me.NMDBTR.Minimum = New Decimal(New Integer() {4, 0, 0, -2147483648})
+        Me.NMDBTR.Maximum = New Decimal(New Integer() {6, 0, 0, 0})
+        Me.NMDBTR.Minimum = New Decimal(New Integer() {6, 0, 0, -2147483648})
         Me.NMDBTR.Name = "NMDBTR"
         Me.NMDBTR.Size = New System.Drawing.Size(54, 22)
         Me.NMDBTR.TabIndex = 12
@@ -509,8 +510,8 @@ Partial Class AdvancedFRM
         'NMDBSTR
         '
         Me.NMDBSTR.Location = New System.Drawing.Point(105, 19)
-        Me.NMDBSTR.Maximum = New Decimal(New Integer() {4, 0, 0, 0})
-        Me.NMDBSTR.Minimum = New Decimal(New Integer() {4, 0, 0, -2147483648})
+        Me.NMDBSTR.Maximum = New Decimal(New Integer() {6, 0, 0, 0})
+        Me.NMDBSTR.Minimum = New Decimal(New Integer() {6, 0, 0, -2147483648})
         Me.NMDBSTR.Name = "NMDBSTR"
         Me.NMDBSTR.Size = New System.Drawing.Size(54, 22)
         Me.NMDBSTR.TabIndex = 11
