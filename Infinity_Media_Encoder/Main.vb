@@ -863,7 +863,7 @@ noencoding:
     End Sub
 
     Public Function prepareEncoding() As String()
-
+        FRMProgress.FFPARAM = ""
         If BOXCODECINFO.Text = "" Then
             getMediainfo()
         ElseIf InStr(InputCBOX.Text, "-f dshow") Then
@@ -1282,6 +1282,7 @@ noencoding:
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
 
         End If
+        FRMProgress.FFPARAM = SHELLCMD
     End Function
     Public Function getMediainfo() As String()
         MI.Open(InputCBOX.Text)

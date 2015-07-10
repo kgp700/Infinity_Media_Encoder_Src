@@ -38,7 +38,7 @@ Public Class FRMProgress
     End Sub
 
     Private Sub FRMProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        FFPARAM = Main.SHELLCMD
+
         RunProcess()
 
         Timer1.Start()
@@ -175,7 +175,12 @@ Public Class FRMProgress
         While p.StandardError.EndOfStream = False
 
             output = outputReader.ReadLine()
-            BackgroundWorker_1.ReportProgress(0, output)
+            Try
+                BackgroundWorker_1.ReportProgress(0, output)
+            Catch
+
+            End Try
+
 
         End While
 
@@ -225,6 +230,13 @@ Public Class FRMProgress
             If output.Contains("frame dropped!") And output.Contains("time=") Then
                 LBWARN.Text = "Frame Dropped!"
             End If
+        ElseIf Main.BOXCODEC.Text = "No Video" Then
+            LBBITRATE.Text = ""
+            Label4.Text = ""
+            Label6.Text = ""
+            LBFPS.Text = ""
+
+
         Else
             If output.Contains("Duration:") Then
                 Try
@@ -246,18 +258,17 @@ Public Class FRMProgress
                 End Try
             End If
             If output.Contains("frame=") Then
-                Try
-                    Dim split2 As String() = output.Split(New [Char]() {"="})
-                    Dim String4 As String = split2(5)
-                    Dim String5 As String = String4.Replace(":", "")
-                    Dim String6 As String = String5.Replace(".", "")
-                    Dim String7 As String = String6.Replace(" bitrate", "")
-                    Dim String8 As String = String4.Replace(" bitrate", "")
-                    ProgressBar1.Value = String7
-                    Label1.Text = String8 & " of "
-                Catch
-                End Try
+
+                Dim split2 As String() = output.Split(New [Char]() {"="})
+                Dim String4 As String = split2(5)
+                Dim String5 As String = String4.Replace(":", "")
+                Dim String6 As String = String5.Replace(".", "")
+                Dim String7 As String = String6.Replace(" bitrate", "")
+                Dim String8 As String = String4.Replace(" bitrate", "")
+                ProgressBar1.Value = String7
+                Label1.Text = String8 & " of "
             End If
+
 
             If output.Contains("bitrate=") Then
                 Dim split3 As String() = output.Split(New [Char]() {"="})
@@ -269,6 +280,7 @@ Public Class FRMProgress
                 LBBITRATE.Text = String12
             End If
 
+
             If output.Contains("fps=") Then
                 Dim split4 As String() = output.Split(New [Char]() {"="})
                 Dim String14 As String = split4(2)
@@ -278,6 +290,7 @@ Public Class FRMProgress
                 Dim String18 As String = String14.Replace(" q", "")
                 LBFPS.Text = String18 + "fps"
             End If
+
         End If
 
 
