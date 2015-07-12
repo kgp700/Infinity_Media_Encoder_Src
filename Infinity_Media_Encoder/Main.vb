@@ -1990,6 +1990,7 @@ noencoding:
             ElseIf BOXBITRATEMODE.Text = "CRF" Then
                 CBRVAL = ""
             ElseIf BOXBITRATEMODE.Text = "CRF-MaxBitrate" Then
+                BITVAL = " -crf " + BITBOX.Text
                 CBRVAL = " -bufsize:v " + BITBOX2.Text + "k " + "-maxrate:v " + BITBOX2.Text + "k "
             ElseIf BOXBITRATEMODE.Text = "File Size" Then
                 If CHKTRIM.Checked Then

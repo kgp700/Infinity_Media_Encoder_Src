@@ -51,16 +51,16 @@ Public Class FRMProgress
             AttachConsole(CUInt(p.Id))
             GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(p.Id))
             FreeConsole()
-        Catch ex As Exception
-
+        Catch
+            If p.HasExited = False Then
+                KillProcessAndChildren(p.Id)
+            End If
         End Try
 
         p.WaitForExit(2000)
         outputReader.DiscardBufferedData()
         outputReader.Close()
-        If p.HasExited = False Then
-            KillProcessAndChildren(p.Id)
-        End If
+
     End Sub
 
 
@@ -207,24 +207,32 @@ Public Class FRMProgress
 
         If InStr(Main.OutputCBox.Text, "//") Or InStr(Main.InputCBOX.Text, "//") Then
             If output.Contains("bitrate=") Then
-                Dim split3 As String() = output.Split(New [Char]() {"="})
-                Dim String9 As String = split3(6)
-                Dim String10 As String = String9.Replace(":", "")
-                Dim String11 As String = String10.Replace(".", "")
-                Dim String12 As String = String11.Replace(" bitrate", "")
-                Dim String13 As String = String9.Replace(" bitrate", "")
-                LBBITRATE.Text = String13
+                Try
+                    Dim split3 As String() = output.Split(New [Char]() {"="})
+                    Dim String9 As String = split3(6)
+                    Dim String10 As String = String9.Replace(":", "")
+                    Dim String11 As String = String10.Replace(".", "")
+                    Dim String12 As String = String11.Replace(" bitrate", "")
+                    Dim String13 As String = String9.Replace(" bitrate", "")
+                    LBBITRATE.Text = String13
+                Catch
 
+                End Try
             End If
 
             If output.Contains("fps=") Then
-                Dim split4 As String() = output.Split(New [Char]() {"="})
-                Dim String14 As String = split4(2)
-                Dim String15 As String = String14.Replace(":", "")
-                Dim String16 As String = String15.Replace(".", "")
-                Dim String17 As String = String16.Replace(" fps", "")
-                Dim String18 As String = String14.Replace(" q", "")
-                LBFPS.Text = String18 + "fps"
+                Try
+                    Dim split4 As String() = output.Split(New [Char]() {"="})
+                    Dim String14 As String = split4(2)
+                    Dim String15 As String = String14.Replace(":", "")
+                    Dim String16 As String = String15.Replace(".", "")
+                    Dim String17 As String = String16.Replace(" fps", "")
+                    Dim String18 As String = String14.Replace(" q", "")
+                    LBFPS.Text = String18 + "fps"
+                Catch
+
+                End Try
+
             End If
 
             If output.Contains("frame dropped!") And output.Contains("time=") Then
@@ -250,6 +258,7 @@ Public Class FRMProgress
                         Label2.Text = TRIMTO & " Completed"
                         ProgressBar1.Visible = False
                     Else
+                        ProgressBar1.Visible = True
                         ProgressBar1.Maximum = String3
                         Label2.Text = String1 & " Completed"
                     End If
@@ -258,37 +267,49 @@ Public Class FRMProgress
                 End Try
             End If
             If output.Contains("frame=") Then
+                Try
+                    Dim split2 As String() = output.Split(New [Char]() {"="})
+                    Dim String4 As String = split2(5)
+                    Dim String5 As String = String4.Replace(":", "")
+                    Dim String6 As String = String5.Replace(".", "")
+                    Dim String7 As String = String6.Replace(" bitrate", "")
+                    Dim String8 As String = String4.Replace(" bitrate", "")
+                    ProgressBar1.Value = String7
+                    Label1.Text = String8 & " of "
+                Catch
 
-                Dim split2 As String() = output.Split(New [Char]() {"="})
-                Dim String4 As String = split2(5)
-                Dim String5 As String = String4.Replace(":", "")
-                Dim String6 As String = String5.Replace(".", "")
-                Dim String7 As String = String6.Replace(" bitrate", "")
-                Dim String8 As String = String4.Replace(" bitrate", "")
-                ProgressBar1.Value = String7
-                Label1.Text = String8 & " of "
+                End Try
             End If
 
 
             If output.Contains("bitrate=") Then
-                Dim split3 As String() = output.Split(New [Char]() {"="})
-                Dim String9 As String = split3(6)
-                Dim String10 As String = String9.Replace(":", "")
-                'Dim String11 As String = String10.Replace(".", "")
-                Dim String12 As String = String10.Replace("bitrate ", "")
+                Try
+                    Dim split3 As String() = output.Split(New [Char]() {"="})
+                    Dim String9 As String = split3(6)
+                    Dim String10 As String = String9.Replace(":", "")
+                    'Dim String11 As String = String10.Replace(".", "")
+                    Dim String12 As String = String10.Replace("bitrate ", "")
 
-                LBBITRATE.Text = String12
+                    LBBITRATE.Text = String12
+                Catch
+                End Try
+
             End If
 
 
             If output.Contains("fps=") Then
-                Dim split4 As String() = output.Split(New [Char]() {"="})
-                Dim String14 As String = split4(2)
-                Dim String15 As String = String14.Replace(":", "")
-                Dim String16 As String = String15.Replace(".", "")
-                Dim String17 As String = String16.Replace(" fps", "")
-                Dim String18 As String = String14.Replace(" q", "")
-                LBFPS.Text = String18 + "fps"
+                Try
+                    Dim split4 As String() = output.Split(New [Char]() {"="})
+                    Dim String14 As String = split4(2)
+                    Dim String15 As String = String14.Replace(":", "")
+                    Dim String16 As String = String15.Replace(".", "")
+                    Dim String17 As String = String16.Replace(" fps", "")
+                    Dim String18 As String = String14.Replace(" q", "")
+                    LBFPS.Text = String18 + "fps"
+                Catch
+
+                End Try
+
             End If
 
         End If
