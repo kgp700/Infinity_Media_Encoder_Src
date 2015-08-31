@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TextBox1.Text" xml:space="preserve">
+    <value>Infinity Media Encoder
+
+ This program is possible to install in Individual / Company / School / Government anywhere and use freely.
+ Copyright © 2014-2015 K.G.P
+ License: Freeware
+
+ ----------------------------------------------
+
+ FFmpeg for Infinity Media Encoder
+
+ Source: http://sourceforge.net/projects/infinity-media-encoder/files/FFmpeg/Source/
+ Copyright (c) 2000-2015 the FFmpeg developers
+ License: GPLv3
+
+ ----------------------------------------------
+
+ MediaInfo
+ Licensed under the LGPL
+ Download source code: http://mediainfo.sourceforge.net
+ Homepage: http://mediainfo.sourceforge.net
+
+ FFmpeg
+ Licensed under the GPL v3
+ Download source code: http://www.ffmpeg.org
+ Homepage: http://www.ffmpeg.org
+
+ ----------------------------------------------
+
+ Libfdk_aac, opencore-amr, vo-amrwbenc, vo-aacenc
+ Licensed under the Apache 2
+ Download source code: http://sourceforge.net/projects/opencore-amr
+ Homepage: http://sourceforge.net/projects/opencore-amr
+ Software License for The Fraunhofer FDK AAC Codec Library for Android
+ ⓒ Fraunhofer-Gesellschaft zur Forderung der angewandten Forschung e.V. All rights reserved
+
+ Lame
+ Licensed under the LGPL
+ Download source code: http://sourceforge.net/project/showfiles.php?group_id=290
+ Homepage: http://lame.sourceforge.net
+
+ Ogg
+ Licensed under the BSD license
+ Download source code: http://www.xiph.org/downloads
+ Homepage: http://www.xiph.org
+
+ Theora
+ Licensed under the BSD license
+ Download source code: http://www.xiph.org/downloads
+ Homepage: http://www.theora.org
+
+ Vorbis [aoTuV]
+ Licensed under the BSD license
+ Download source code: http://www.xiph.org/downloads
+ Download source codes [aoTuV]: http://www.geocities.jp/aoyoume/aotuv
+ Homepage: http://www.vorbis.com
+
+ Speex
+ Licensed under the BSD license
+ Download source code: http://www.xiph.org/downloads
+ Homepage: http://www.speex.org
+
+ Libgsm
+ Download source code: http://www.quut.com/gsm
+ Homepage: http://www.quut.com/gsm
+
+ Libvpx
+ Licensed under the BSD license
+ Download source code: git://review.webmproject.org/libvpx.git
+ Homepage: http://www.webmproject.org
+
+ X264
+ Licensed under the GPL
+ Download source code: git://git.videolan.org/x264.git
+ Download source code: ftp://ftp.videolan.org/pub/videolan/x264/snapshots
+ Homepage: http://www.videolan.org/developers/x264.html
+
+ Xvid
+ Licensed under the GPL
+ Download source code: http://www.xvid.org
+ Homepage: http://www.xvid.org
+
+ Zlib
+ Licensed under the zlib license
+ Download source code: http://www.zlib.net
+ Homepage: http://www.zlib.net
+
+ Bzip2
+ Licensed under the BSD license
+ Download source code: http://www.bzip.org/downloads.html
+ Homepage: http://www.bzip.org
+
+ Nasm
+ Licensed under the BSD license
+ Download source code: http://www.nasm.us/pub/nasm/releasebuilds/2.09.02
+ Homepage: http://www.nasm.us
+
+ Yasm
+ Licensed under the BSD license
+ Download source code: http://www.tortall.net/projects/yasm/wiki/Download
+ Homepage: http://www.tortall.net/projects/yasm/wiki
+
+ Freetype
+ Licensed under the FreeType License
+ Download source code: http://www.freetype.org/download.html
+ Homepage: http://www.freetype.org
+
+ Expat
+ Licensed under the MIT License
+ Download source code: http://sourceforge.net/projects/expat/files/?source=navbar
+ Homepage: http://sourceforge.net/projects/expat
+
+ Libiconv
+ Licensed under the LGPL
+ Download source code: http://www.gnu.org/s/libiconv
+ Homepage: http://www.gnu.org/s/libiconv
+
+ Pkg-config
+ Licensed under the GPL
+ Download source code: http://www.freedesktop.org/wiki/Software/pkg-config
+ Homepage: http://www.freedesktop.org/wiki/Software/pkg-config
+
+ Fontconfig
+ Licensed under the Permissive free software licence
+ Download source code: http://www.freedesktop.org/wiki/Software/fontconfig
+ Homepage: http://www.freedesktop.org/wiki/Software/fontconfig
+
+ Fribidi
+ Licensed under the LGPL
+ Download source code: http://fribidi.org
+ Homepage: http://fribidi.org
+
+ Libass
+ Licensed under the New BSD License
+ Download source code: http://code.google.com/p/libass/downloads/list
+ Homepage: http://code.google.com/p/libass
+
+ Libsdl
+ Licensed under the LGPL
+ Download source code: http://www.libsdl.org
+ Homepage: http://www.libsdl.org
+
+ Libbluray
+ Licensed under the LGPL
+ Download source code: git://git.videolan.org/libbluray.git
+ Homepage: http://www.videolan.org/developers/libbluray.html
+
+ Twolame
+ Licensed under the LGPL
+ Download source code: http://twolame.sourceforge.net
+ Homepage: http://twolame.sourceforge.net
+
+ Libcaca
+ Licensed under the WTFPLv2
+ Download source code: http://caca.zoy.org/wiki/libcaca
+ Homepage: http://caca.zoy.org/wiki/libcaca
+
+ Openjpeg
+ Licensed under the New BSD License
+ Download source code: http://code.google.com/p/openjpeg/downloads/list
+ Homepage: http://code.google.com/p/openjpeg
+
+ Opus
+ Licensed under the BSD License
+ Download source code: http://www.opus-codec.org/downloads
+ Homepage: http://www.opus-codec.org
+
+ Polarssl
+ Licensed under the GPL v2
+ Download source code: http://polarssl.org/download
+ Homepage: http://polarssl.org
+
+ Rtmpdump
+ Licensed under the GPL v2
+ Download source code: http://rtmpdump.mplayerhq.hu
+ Homepage: http://rtmpdump.mplayerhq.hu
+
+ Soxr
+ Licensed under the LGPL v2
+ Download source code: http://sourceforge.net/projects/soxr/files/?source=navbar
+ Homepage: http://sourceforge.net/projects/soxr
+
+ Modplug
+ Licensed under the Public domain
+ Download source code: http://modplug-xmms.sourceforge.net/#download
+ Homepage: http://modplug-xmms.sourceforge.net
+
+ Xavs
+ Licensed under the GPL
+ Download source code: http://xavs.sourceforge.net/#Download
+ Homepage: http://xavs.sourceforge.net
+
+ X265
+ Licensed under the GPL
+ Download source code: http://hg.videolan.org/x265
+ Homepage: http://www.videolan.org/developers/x265.html</value>
+  </data>
+</root>

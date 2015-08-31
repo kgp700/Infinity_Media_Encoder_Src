@@ -90,6 +90,9 @@ Public Class Main
     Public STREAMINPUT As String
     Public STREAMOUTPUT As String
     Public HLSADDRESS As String
+    Public STARTUPPATH As String
+    Public FFPLAYEXE As String
+    Public YOUTUBEDLPATH As String
 
 
     Dim DURHOURS As Integer
@@ -533,7 +536,7 @@ noencoding:
     End Sub
 
     Private Sub Button6_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
-        Shell("cmd /c ffplay -i " + """" + InputCBOX.Text + ".avs" + """")
+        Shell("cmd /c " + FFPLAYEXE + " -i " + """" + InputCBOX.Text + ".avs" + """")
 
     End Sub
 
@@ -737,12 +740,14 @@ noencoding:
 
     Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-
+        STARTUPPATH = Application.StartupPath()
         If Environment.Is64BitOperatingSystem = True Then
             BOXFFMPEGEXE.Text = "64bit FFmpeg"
         ElseIf Environment.Is64BitOperatingSystem = False Then
             BOXFFMPEGEXE.Text = "32bit FFmpeg"
         End If
+        FFPLAYEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffplay.exe" + """"
+        YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\youtube-dl.exe" + """"
 
 
         Dim PRESETFOLDER As String = ".\Preset\"
@@ -770,7 +775,7 @@ noencoding:
 
                 If Environment.Is64BitOperatingSystem = True Then
                     Dim oProcess As New Process()
-                    Dim oStartInfo As New ProcessStartInfo("cmd", "/c youtube-dl --get-filename " + InputCBOX.Text)
+                    Dim oStartInfo As New ProcessStartInfo("cmd", "/c " + YOUTUBEDLPATH + " --get-filename " + InputCBOX.Text)
                     oStartInfo.UseShellExecute = False
                     oStartInfo.RedirectStandardOutput = True
 
@@ -798,7 +803,7 @@ noencoding:
                     End Try
 
                 Else
-                    Shell("cmd /c youtube-dl --get-filename " + InputCBOX.Text + " > temp.txt", vbNormalFocus)
+                    Shell("cmd /c " + YOUTUBEDLPATH + " --get-filename " + InputCBOX.Text + " > temp.txt", vbNormalFocus)
                     Threading.Thread.Sleep(500)
 
                     Dim exists As String = System.IO.File.Exists("temp.txt")
@@ -843,7 +848,7 @@ noencoding:
 
 
             ElseIf CHKQA.Checked = True Then
-                OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
+                OutputCBox.Text = STARTUPPATH + "\HLS_Output\index.m3u8"
             Else
                 INPUTVIDNAME = InputCBOX.Text
                 Dim testFile As System.IO.FileInfo
@@ -870,15 +875,15 @@ noencoding:
         End If
 
         If CHKAVISYNTH.Checked = True Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeghyb32.exe" + """"
         ElseIf InStr(InputCBOX.Text, "-f dshow") Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeghyb32.exe " + """"
         ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
-            FFMPEGEXE = "ffmpeghyb.exe"
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg64\ffmpeghyb64.exe" + """"
         ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeghyb32.exe " + """"
         Else
-            FFMPEGEXE = BOXFFMPEGEXE.Text
+            FFMPEGEXE = """" + BOXFFMPEGEXE.Text + """"
         End If
 
 
@@ -913,7 +918,6 @@ noencoding:
                 REFVAL = ":ref=" + REFBOX.Text
             End If
         End If
-
 
 
         If BOXCODEC.Text = "copy" Or RSBOX.Text = "Original" Then
@@ -1252,13 +1256,13 @@ noencoding:
             End If
 
             If Not BOXCODEC.Text = "No Video" And Not BOXACODEC.Text = "No Audio" Then
-                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
-                "& youtube-dl -f 141/140 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + " -i " + """" + "temp_" + TEMPYTFILENAME + """" + INPUTAUDFILENAME + " -i - " + TRIMTOVAL + " -vcodec copy " + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + YTMAP + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """" +
+                SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
+                "& " + YOUTUBEDLPATH + " -f 141/140 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + " -i " + """" + "temp_" + TEMPYTFILENAME + """" + INPUTAUDFILENAME + " -i - " + TRIMTOVAL + " -vcodec copy " + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + YTMAP + "-metadata description=" + """" + "Youtube Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """" +
                 "& del " + """" + "temp_" + TEMPYTFILENAME + """"
             ElseIf Not BOXCODEC.Text = "No Video" And BOXACODEC.Text = "No Audio" Then
-                SHELLCMD = "youtube-dl -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
+                SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + AUDIODELAYVAL + INPUTAUDFILENAME + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
             Else
-                SHELLCMD = "youtube-dl -f 141/140 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + TRIMTOVAL + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + "-metadata description=" + """" + "Youtube Video Direct Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
+                SHELLCMD = YOUTUBEDLPATH + " -f 141/140 " + """" + INPUTVIDNAME + """" + " -o - | " + FFMPEGEXE + " -y " + GPTSIDTS + "-i - " + TRIMTOVAL + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + "-metadata description=" + """" + "Youtube Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + OUTPUTFILENAME + """"
             End If
 
 
@@ -1268,7 +1272,7 @@ noencoding:
                 VIDEOFILTER = ""
             End If
 
-            SHELLCMD = ".\livestreamer\livestreamer " + """" + INPUTVIDNAME + """" + " best -o - | " +
+            SHELLCMD = """" + STARTUPPATH + "\Tools\livestreamer\livestreamer" + """" + """" + INPUTVIDNAME + """" + " best -o - | " +
                   FFMPEGEXE + " -y" + GPTSIDTS + "-i - " + "- " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
         ElseIf BOXBITRATEMODE.Text = "2pass-ABR" Then
@@ -1349,7 +1353,7 @@ noencoding:
             BOXCONTAINER.Items.Add("m3u8")
             BOXCONTAINER.Text = "m3u8"
             INPUTVIDNAME = InputCBOX.Text
-            OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
+            OutputCBox.Text = STARTUPPATH + "\HLS_Output\index.m3u8"
         ElseIf CHKQA.Checked = False Then
             'ChangeItems()
         End If
@@ -1775,9 +1779,9 @@ noencoding:
             FORCEEXTENSION = " -f mpegts "
             SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + GPTSIDTS + TRIMSSVAL + AUDIODELAYVAL + " -i " + """" + INPUTVIDNAME + """" + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + X264OPTVAL + X264OPT + REFVAL + CQMVAL + ADVOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
-            Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " | ffplay -i - &  comp.bat", vbNormalFocus)
+            Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD + " | " + FFPLAYEXE + " -i - " + BITSTREAMFILTER + " &  comp.bat", vbNormalFocus)
             If CHKDEBUG.Checked Then
-                BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " | ffplay -i - &  comp.bat"
+                BOXDEBUG.Text = "cmd /c title Infinity Media Encoder & " + SHELLCMD + " | " + FFPLAYEXE + " -i - " + BITSTREAMFILTER + " &  comp.bat"
             End If
 
             initialValue()
@@ -1799,15 +1803,15 @@ noencoding:
 
     Private Sub Button14_Click(sender As System.Object, e As System.EventArgs) Handles Button14.Click
         If CHKAVISYNTH.Checked = True Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeghyb32.exe" + """"
         ElseIf InStr(InputCBOX.Text, "-f dshow") Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe "
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeghyb32.exe " + """"
         ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
-            FFMPEGEXE = "ffmpeghyb.exe"
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg64\ffmpeghyb64.exe" + """"
         ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
-            FFMPEGEXE = ".\Tools\ffmpeg32\ffmpeghyb32.exe"
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeghyb32.exe" + """"
         Else
-            FFMPEGEXE = BOXFFMPEGEXE.Text
+            FFMPEGEXE = """" + BOXFFMPEGEXE.Text + """"
         End If
 
         INPUTVIDNAME = InputCBOX.Text
@@ -1850,7 +1854,7 @@ noencoding:
             BOXCONTAINER.Items.Add("m3u8")
             BOXCONTAINER.Text = "m3u8"
             INPUTVIDNAME = InputCBOX.Text
-            OutputCBox.Text = Application.StartupPath() + "\HLS_Output\index.m3u8"
+            OutputCBox.Text = STARTUPPATH + "\HLS_Output\index.m3u8"
         ElseIf CHKQA.Checked = False Then
             ChangeItems()
         End If
@@ -2074,5 +2078,9 @@ noencoding:
             CHKQA.Enabled = True
             'CHKDASH.Enabled = True
         End If
+    End Sub
+
+    Private Sub Button10_Click_1(sender As Object, e As EventArgs) Handles Button10.Click
+        About.ShowDialog()
     End Sub
 End Class

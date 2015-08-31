@@ -131,13 +131,13 @@ Partial Class Main
         Me.Button11 = New System.Windows.Forms.Button()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Label29 = New System.Windows.Forms.Label()
-        Me.BOXDSHOWAUD = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.BOXDSHOWVID = New System.Windows.Forms.ComboBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.BTNSTARTNGINX = New System.Windows.Forms.Button()
+        Me.BOXDSHOWAUD = New System.Windows.Forms.ComboBox()
         Me.CHKINPUTDSHOW = New System.Windows.Forms.CheckBox()
         Me.BTNSTOPNGINX = New System.Windows.Forms.Button()
+        Me.BOXDSHOWVID = New System.Windows.Forms.ComboBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.CHKDASH = New System.Windows.Forms.CheckBox()
         Me.CHKSMOOTH = New System.Windows.Forms.CheckBox()
@@ -169,6 +169,7 @@ Partial Class Main
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
         Me.CHKALLSET = New System.Windows.Forms.CheckBox()
+        Me.Button10 = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1343,17 +1344,6 @@ Partial Class Main
         Me.Label29.TabIndex = 37
         Me.Label29.Text = "DirectShow Input Source (Audio)"
         '
-        'BOXDSHOWAUD
-        '
-        Me.BOXDSHOWAUD.AllowDrop = True
-        Me.BOXDSHOWAUD.FormattingEnabled = True
-        Me.BOXDSHOWAUD.Items.AddRange(New Object() {"FFsplit Playback Mixer"})
-        Me.BOXDSHOWAUD.Location = New System.Drawing.Point(185, 47)
-        Me.BOXDSHOWAUD.Name = "BOXDSHOWAUD"
-        Me.BOXDSHOWAUD.Size = New System.Drawing.Size(158, 21)
-        Me.BOXDSHOWAUD.TabIndex = 36
-        Me.BOXDSHOWAUD.Text = "FFsplit Playback Mixer"
-        '
         'Label19
         '
         Me.Label19.AutoSize = True
@@ -1362,17 +1352,6 @@ Partial Class Main
         Me.Label19.Size = New System.Drawing.Size(172, 13)
         Me.Label19.TabIndex = 35
         Me.Label19.Text = "DirectShow Input Source (Video)"
-        '
-        'BOXDSHOWVID
-        '
-        Me.BOXDSHOWVID.AllowDrop = True
-        Me.BOXDSHOWVID.FormattingEnabled = True
-        Me.BOXDSHOWVID.Items.AddRange(New Object() {"FFsource"})
-        Me.BOXDSHOWVID.Location = New System.Drawing.Point(185, 20)
-        Me.BOXDSHOWVID.Name = "BOXDSHOWVID"
-        Me.BOXDSHOWVID.Size = New System.Drawing.Size(158, 21)
-        Me.BOXDSHOWVID.TabIndex = 34
-        Me.BOXDSHOWVID.Text = "FFsource"
         '
         'GroupBox4
         '
@@ -1399,6 +1378,17 @@ Partial Class Main
         Me.BTNSTARTNGINX.Text = "Start NGINX Server"
         Me.BTNSTARTNGINX.UseVisualStyleBackColor = True
         '
+        'BOXDSHOWAUD
+        '
+        Me.BOXDSHOWAUD.AllowDrop = True
+        Me.BOXDSHOWAUD.FormattingEnabled = True
+        Me.BOXDSHOWAUD.Items.AddRange(New Object() {"FFsplit Playback Mixer"})
+        Me.BOXDSHOWAUD.Location = New System.Drawing.Point(185, 47)
+        Me.BOXDSHOWAUD.Name = "BOXDSHOWAUD"
+        Me.BOXDSHOWAUD.Size = New System.Drawing.Size(158, 21)
+        Me.BOXDSHOWAUD.TabIndex = 36
+        Me.BOXDSHOWAUD.Text = "FFsplit Playback Mixer"
+        '
         'CHKINPUTDSHOW
         '
         Me.CHKINPUTDSHOW.AutoSize = True
@@ -1419,6 +1409,17 @@ Partial Class Main
         Me.BTNSTOPNGINX.TabIndex = 74
         Me.BTNSTOPNGINX.Text = "Stop NGINX Server"
         Me.BTNSTOPNGINX.UseVisualStyleBackColor = True
+        '
+        'BOXDSHOWVID
+        '
+        Me.BOXDSHOWVID.AllowDrop = True
+        Me.BOXDSHOWVID.FormattingEnabled = True
+        Me.BOXDSHOWVID.Items.AddRange(New Object() {"FFsource"})
+        Me.BOXDSHOWVID.Location = New System.Drawing.Point(185, 20)
+        Me.BOXDSHOWVID.Name = "BOXDSHOWVID"
+        Me.BOXDSHOWVID.Size = New System.Drawing.Size(158, 21)
+        Me.BOXDSHOWVID.TabIndex = 34
+        Me.BOXDSHOWVID.Text = "FFsource"
         '
         'GroupBox5
         '
@@ -1620,11 +1621,11 @@ Partial Class Main
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label13.ForeColor = System.Drawing.SystemColors.ButtonShadow
-        Me.Label13.Location = New System.Drawing.Point(401, 8)
+        Me.Label13.Location = New System.Drawing.Point(469, 8)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(248, 15)
+        Me.Label13.Size = New System.Drawing.Size(180, 15)
         Me.Label13.TabIndex = 65
-        Me.Label13.Text = "Copyright ⓒ K.G.P (Louis) All rights reserved"
+        Me.Label13.Text = "Copyright ⓒ K.G.P (Louis) 2015"
         '
         'CHKLOG
         '
@@ -1716,12 +1717,21 @@ Partial Class Main
         '
         Me.CHKALLSET.AutoSize = True
         Me.CHKALLSET.Font = New System.Drawing.Font("맑은 고딕", 8.5!)
-        Me.CHKALLSET.Location = New System.Drawing.Point(462, 34)
+        Me.CHKALLSET.Location = New System.Drawing.Point(462, 32)
         Me.CHKALLSET.Name = "CHKALLSET"
         Me.CHKALLSET.Size = New System.Drawing.Size(116, 19)
         Me.CHKALLSET.TabIndex = 72
         Me.CHKALLSET.Text = "Save All Settings"
         Me.CHKALLSET.UseVisualStyleBackColor = True
+        '
+        'Button10
+        '
+        Me.Button10.Location = New System.Drawing.Point(570, 53)
+        Me.Button10.Name = "Button10"
+        Me.Button10.Size = New System.Drawing.Size(82, 23)
+        Me.Button10.TabIndex = 85
+        Me.Button10.Text = "About"
+        Me.Button10.UseVisualStyleBackColor = True
         '
         'Main
         '
@@ -1730,6 +1740,7 @@ Partial Class Main
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.ClientSize = New System.Drawing.Size(656, 694)
+        Me.Controls.Add(Me.Button10)
         Me.Controls.Add(Me.CHKALLSET)
         Me.Controls.Add(Me.CHKAUTONAME)
         Me.Controls.Add(Me.BTPRLOAD)
@@ -1931,4 +1942,5 @@ Partial Class Main
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents BOXCUSTOMT As System.Windows.Forms.ComboBox
     Friend WithEvents CHKQA As System.Windows.Forms.CheckBox
+    Friend WithEvents Button10 As System.Windows.Forms.Button
 End Class
