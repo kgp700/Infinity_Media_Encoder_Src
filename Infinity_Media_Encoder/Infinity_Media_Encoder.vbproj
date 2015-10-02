@@ -118,12 +118,6 @@
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form4.Designer.vb">
-      <DependentUpon>Form4.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form4.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ADVEncOpt.Designer.vb">
       <DependentUpon>ADVEncOpt.vb</DependentUpon>
     </Compile>
@@ -136,13 +130,14 @@
     <Compile Include="Progress.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsAPIs.vb" />
-    <Compile Include="YTQuality.Designer.vb">
-      <DependentUpon>YTQuality.vb</DependentUpon>
+    <Compile Include="Settings.vb" />
+    <Compile Include="WaitScreen.Designer.vb">
+      <DependentUpon>WaitScreen.vb</DependentUpon>
     </Compile>
-    <Compile Include="YTQuality.vb">
+    <Compile Include="WaitScreen.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowsAPIs.vb" />
     <Compile Include="AvisynthOpt.Designer.vb">
       <DependentUpon>AvisynthOpt.vb</DependentUpon>
     </Compile>
@@ -182,17 +177,14 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form4.resx">
-      <DependentUpon>Form4.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ADVEncOpt.resx">
       <DependentUpon>ADVEncOpt.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Progress.resx">
       <DependentUpon>Progress.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YTQuality.resx">
-      <DependentUpon>YTQuality.vb</DependentUpon>
+    <EmbeddedResource Include="WaitScreen.resx">
+      <DependentUpon>WaitScreen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AvisynthOpt.resx">
       <DependentUpon>AvisynthOpt.vb</DependentUpon>
@@ -208,6 +200,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

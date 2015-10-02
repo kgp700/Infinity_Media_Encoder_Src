@@ -31,7 +31,7 @@
             fso = CreateObject("Scripting.FileSystemObject")
             oFile = fso.CreateTextFile("avs.cmd", True)
             oFile.WriteLine("title Simple FFMpeg Encoder")
-            oFile.WriteLine(".\avisynthPlugins\ffmsindex -t -1 -f -m lavf " + """" + Main.INPUTFILENAME2 + """")
+            oFile.WriteLine(".\avisynthPlugins\ffmsindex -t -1 -f " + """" + Main.INPUTFILENAME2 + """")
             oFile.WriteLine("exit")
             oFile.Close()
 
@@ -46,27 +46,8 @@
 
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CHKDGDEBLOCK.CheckedChanged
-
-    End Sub
-
-    Private Sub BOXAVSSCRIPT_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXAVSSCRIPT.Click
-
-
-    End Sub
-
-    Private Sub BOXAVSSCRIPT_ControlAdded(ByVal sender As Object, ByVal e As System.Windows.Forms.ControlEventArgs) Handles BOXAVSSCRIPT.ControlAdded
-
-    End Sub
-
-    Private Sub BOXAVSSCRIPT_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BOXAVSSCRIPT.TextChanged
-
-    End Sub
-
     Private Sub BOXAVSSCRIPT_VisibleChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXAVSSCRIPT.VisibleChanged
         prepareScript()
-
-
 
     End Sub
 
@@ -105,9 +86,6 @@
 
     End Sub
 
-    Private Sub AvisynthOpt_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-    End Sub
 
     Private Sub RDBFFMS2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RDBFFMS2.CheckedChanged
         prepareScript()
@@ -116,7 +94,7 @@
     Public Function prepareScript() As String()
 
 
-        If RDBDGINDEX.Checked = True Then
+        If RDBDGINDEX.Checked = True And Not My.Computer.FileSystem.FileExists(Main.InputCBOX.Text + ".avs") Then
             BOXAVSSCRIPT.Text = "#SETMTMODE" + vbCrLf +
             "LoadPlugin(" + """" + "appdirectory0703\avisynthPlugins\DGDecode.dll" + """" + ")" + vbCrLf +
             "DGDecode_mpeg2source(" + """" + "INPUTFILECODEABS07" + """" + ", cpu = 4, info = 3)" + vbCrLf +
@@ -136,7 +114,7 @@
                 BOXAVSSCRIPT.Text = BOXAVSSCRIPT.Text.Replace("appdirectory0703", directory)
 
             End If
-        Else
+        ElseIf RDBFFMS2.Checked = True And Not My.Computer.FileSystem.FileExists(Main.InputCBOX.Text + ".avs") Then
             If InStr(2, Main.BOXFPSINFO.Text, ".000") Then
                 FPSNUM = Int(Main.BOXFPSINFO.Text).ToString + ", "
                 FPSDEN = "fpsden=1"
@@ -148,9 +126,9 @@
             End If
 
             BOXAVSSCRIPT.Text = "#SETMTMODE" + vbCrLf +
-            "LoadPlugin(" + """" + "appdirectory0703\avisynthPlugins\ffms2.dll" + """" + ")" + vbCrLf +
+            "LoadCPlugin(" + """" + "appdirectory0703\avisynthPlugins\ffms2.dll" + """" + ")" + vbCrLf +
             "Import(" + """" + "appdirectory0703\avisynthPlugins\ffms2.avsi" + """" + ")" + vbCrLf +
-            "FFmpegSource2(" + """" + "INPUTFILECODEABS07" + """" + ", fpsnum=" + FPSNUM + FPSDEN + ", threads=-1, vtrack=-1, atrack=-1" + ")" + vbCrLf +
+            "FFmpegSource2(" + """" + "INPUTFILECODEABS07" + """" + ", fpsnum=" + FPSNUM + FPSDEN + ", threads=-1, vtrack=-1" + ")" + vbCrLf +
             "#NOISEFILTER" + vbCrLf
 
             If BOXAVSSCRIPT.Text.Contains("INPUTFILECODEABS07") Then

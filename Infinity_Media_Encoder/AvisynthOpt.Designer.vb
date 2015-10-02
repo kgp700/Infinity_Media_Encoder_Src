@@ -125,6 +125,7 @@ Partial Class AvisynthOpt
         'CHKAVSMT
         '
         Me.CHKAVSMT.AutoSize = True
+        Me.CHKAVSMT.Enabled = False
         Me.CHKAVSMT.Location = New System.Drawing.Point(218, 5)
         Me.CHKAVSMT.Name = "CHKAVSMT"
         Me.CHKAVSMT.Size = New System.Drawing.Size(119, 16)

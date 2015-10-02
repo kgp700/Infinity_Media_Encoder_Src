@@ -30,6 +30,7 @@ Partial Class About
         '
         Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBox1.CausesValidation = False
+        Me.TextBox1.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.TextBox1.Location = New System.Drawing.Point(1, 2)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
@@ -45,6 +46,8 @@ Partial Class About
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(538, 246)
         Me.Controls.Add(Me.TextBox1)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "About"
         Me.Text = "About"
         Me.ResumeLayout(False)

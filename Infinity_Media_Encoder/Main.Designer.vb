@@ -48,8 +48,6 @@ Partial Class Main
         Me.BITBOX2 = New System.Windows.Forms.ComboBox()
         Me.CHECKADV = New System.Windows.Forms.CheckBox()
         Me.BTNADV = New System.Windows.Forms.Button()
-        Me.Label30 = New System.Windows.Forms.Label()
-        Me.BOXCONTAINER = New System.Windows.Forms.ComboBox()
         Me.CHKFAST1ST = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BOXCODECPRESET = New System.Windows.Forms.ComboBox()
@@ -64,9 +62,13 @@ Partial Class Main
         Me.BOXCFR = New System.Windows.Forms.ComboBox()
         Me.BOXBITRATEMODE = New System.Windows.Forms.ComboBox()
         Me.BOXDEINT = New System.Windows.Forms.ComboBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.BOXCONTAINER = New System.Windows.Forms.ComboBox()
         Me.BOXPFINFO = New System.Windows.Forms.TextBox()
         Me.BOXDELAYINFO = New System.Windows.Forms.TextBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.BOXAUDBITDEPTH = New System.Windows.Forms.ComboBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
@@ -99,6 +101,7 @@ Partial Class Main
         Me.Button8 = New System.Windows.Forms.Button()
         Me.TAB = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.BOXRSINFO = New System.Windows.Forms.TextBox()
         Me.LBINPUTINFO = New System.Windows.Forms.Label()
         Me.BOXFORMATINFO = New System.Windows.Forms.TextBox()
         Me.BOXASPECT = New System.Windows.Forms.TextBox()
@@ -110,16 +113,22 @@ Partial Class Main
         Me.Label32 = New System.Windows.Forms.Label()
         Me.BOXSPP = New System.Windows.Forms.ComboBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Button12 = New System.Windows.Forms.Button()
         Me.Button14 = New System.Windows.Forms.Button()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.BOXDEBUG = New System.Windows.Forms.TextBox()
         Me.CHKDEBUG = New System.Windows.Forms.CheckBox()
         Me.Button4 = New System.Windows.Forms.Button()
-        Me.CHK4K = New System.Windows.Forms.CheckBox()
         Me.CHKAVISYNTH = New System.Windows.Forms.CheckBox()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.ENCLISTVIEWMAIN = New System.Windows.Forms.ListView()
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.COLSTARTTIME = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.COLENDTIME = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.LISTCHKENC2 = New System.Windows.Forms.ListBox()
         Me.BTENCSELECTED = New System.Windows.Forms.Button()
         Me.Button9 = New System.Windows.Forms.Button()
@@ -148,6 +157,10 @@ Partial Class Main
         Me.BOXCUSTOMT = New System.Windows.Forms.ComboBox()
         Me.CHKQA = New System.Windows.Forms.CheckBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.CHKRMMETADATA = New System.Windows.Forms.CheckBox()
+        Me.CHKATRACKAVISYNTH = New System.Windows.Forms.CheckBox()
+        Me.CHKPREFVP9 = New System.Windows.Forms.CheckBox()
+        Me.CHK4K = New System.Windows.Forms.CheckBox()
         Me.CHKCMDWINDOW = New System.Windows.Forms.CheckBox()
         Me.CHKMULTIENC = New System.Windows.Forms.CheckBox()
         Me.CHKASYNC = New System.Windows.Forms.CheckBox()
@@ -155,6 +168,25 @@ Partial Class Main
         Me.CHKPTSDTS = New System.Windows.Forms.CheckBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.BOXFFMPEGEXE = New System.Windows.Forms.ComboBox()
+        Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.RB720P60F = New System.Windows.Forms.RadioButton()
+        Me.RB1080P60F = New System.Windows.Forms.RadioButton()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.BYOPENYTFOLDER = New System.Windows.Forms.Button()
+        Me.BOXYTFILENAME = New System.Windows.Forms.TextBox()
+        Me.YTPARSINGINFO = New System.Windows.Forms.TextBox()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.BTDNYOUTUBE = New System.Windows.Forms.Button()
+        Me.RB480P = New System.Windows.Forms.RadioButton()
+        Me.RB360P = New System.Windows.Forms.RadioButton()
+        Me.RB720P = New System.Windows.Forms.RadioButton()
+        Me.RB1080P = New System.Windows.Forms.RadioButton()
+        Me.RB2K = New System.Windows.Forms.RadioButton()
+        Me.RB4K = New System.Windows.Forms.RadioButton()
+        Me.BTPASTEYTADDRESS = New System.Windows.Forms.Button()
+        Me.LBYTADDRESS = New System.Windows.Forms.Label()
+        Me.YTDNFORMAT = New System.Windows.Forms.ComboBox()
         Me.BTADDENCLIST = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.CHKLOG = New System.Windows.Forms.CheckBox()
@@ -170,6 +202,9 @@ Partial Class Main
         Me.PerformanceCounter1 = New System.Diagnostics.PerformanceCounter()
         Me.CHKALLSET = New System.Windows.Forms.CheckBox()
         Me.Button10 = New System.Windows.Forms.Button()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
+        Me.COLDURATION = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -183,6 +218,7 @@ Partial Class Main
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
+        Me.TabPage8.SuspendLayout()
         CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -192,7 +228,7 @@ Partial Class Main
         Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button2.Location = New System.Drawing.Point(564, 614)
+        Me.Button2.Location = New System.Drawing.Point(563, 585)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(85, 26)
         Me.Button2.TabIndex = 8
@@ -209,7 +245,7 @@ Partial Class Main
         Me.BOXFPS.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXFPS.FormattingEnabled = True
         Me.BOXFPS.Items.AddRange(New Object() {"Original", "1", "5", "15", "20", "24", "25", "29.97", "30", "48", "59.95", "60", "80", "120", "240"})
-        Me.BOXFPS.Location = New System.Drawing.Point(285, 106)
+        Me.BOXFPS.Location = New System.Drawing.Point(275, 130)
         Me.BOXFPS.Name = "BOXFPS"
         Me.BOXFPS.Size = New System.Drawing.Size(68, 21)
         Me.BOXFPS.TabIndex = 6
@@ -220,7 +256,7 @@ Partial Class Main
         Me.Button1.AllowDrop = True
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button1.Location = New System.Drawing.Point(564, 533)
+        Me.Button1.Location = New System.Drawing.Point(563, 504)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(85, 26)
         Me.Button1.TabIndex = 5
@@ -231,7 +267,7 @@ Partial Class Main
         '
         Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button3.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button3.Location = New System.Drawing.Point(118, 663)
+        Me.Button3.Location = New System.Drawing.Point(117, 634)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(126, 26)
         Me.Button3.TabIndex = 11
@@ -242,7 +278,7 @@ Partial Class Main
         '
         Me.InputCBOX.AllowDrop = True
         Me.InputCBOX.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.InputCBOX.Location = New System.Drawing.Point(7, 537)
+        Me.InputCBOX.Location = New System.Drawing.Point(6, 508)
         Me.InputCBOX.Name = "InputCBOX"
         Me.InputCBOX.Size = New System.Drawing.Size(551, 21)
         Me.InputCBOX.TabIndex = 12
@@ -251,7 +287,7 @@ Partial Class Main
         '
         Me.OutputCBox.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.OutputCBox.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.OutputCBox.Location = New System.Drawing.Point(8, 618)
+        Me.OutputCBox.Location = New System.Drawing.Point(7, 589)
         Me.OutputCBox.Name = "OutputCBox"
         Me.OutputCBox.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.OutputCBox.Size = New System.Drawing.Size(550, 21)
@@ -261,7 +297,7 @@ Partial Class Main
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label2.Location = New System.Drawing.Point(6, 522)
+        Me.Label2.Location = New System.Drawing.Point(5, 493)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(431, 13)
         Me.Label2.TabIndex = 14
@@ -271,7 +307,7 @@ Partial Class Main
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label3.Location = New System.Drawing.Point(9, 603)
+        Me.Label3.Location = New System.Drawing.Point(8, 574)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(332, 13)
         Me.Label3.TabIndex = 15
@@ -283,9 +319,9 @@ Partial Class Main
         Me.PFBOX.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.PFBOX.FormattingEnabled = True
         Me.PFBOX.Items.AddRange(New Object() {"high", "main", "baseline"})
-        Me.PFBOX.Location = New System.Drawing.Point(274, 22)
+        Me.PFBOX.Location = New System.Drawing.Point(103, 44)
         Me.PFBOX.Name = "PFBOX"
-        Me.PFBOX.Size = New System.Drawing.Size(74, 21)
+        Me.PFBOX.Size = New System.Drawing.Size(77, 21)
         Me.PFBOX.TabIndex = 16
         Me.PFBOX.Text = "high"
         '
@@ -295,9 +331,9 @@ Partial Class Main
         Me.LVBOX.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.LVBOX.FormattingEnabled = True
         Me.LVBOX.Items.AddRange(New Object() {"5.2", "5.1", "5.0", "4.2", "4.1", "4.0", "3.2", "3.1", "3.0", "2.2", "2.1", "2.0", "1.2", "1.1", "1b", "1.0"})
-        Me.LVBOX.Location = New System.Drawing.Point(354, 22)
+        Me.LVBOX.Location = New System.Drawing.Point(185, 44)
         Me.LVBOX.Name = "LVBOX"
-        Me.LVBOX.Size = New System.Drawing.Size(44, 21)
+        Me.LVBOX.Size = New System.Drawing.Size(65, 21)
         Me.LVBOX.TabIndex = 17
         '
         'RSBOX
@@ -306,7 +342,7 @@ Partial Class Main
         Me.RSBOX.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.RSBOX.FormattingEnabled = True
         Me.RSBOX.Items.AddRange(New Object() {"Original", "1920x1080", "1280x720", "1024x576"})
-        Me.RSBOX.Location = New System.Drawing.Point(74, 106)
+        Me.RSBOX.Location = New System.Drawing.Point(72, 130)
         Me.RSBOX.Name = "RSBOX"
         Me.RSBOX.Size = New System.Drawing.Size(132, 21)
         Me.RSBOX.TabIndex = 20
@@ -318,7 +354,7 @@ Partial Class Main
         Me.BITBOX.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BITBOX.FormattingEnabled = True
         Me.BITBOX.Items.AddRange(New Object() {"Auto", "1000", "1500", "2000", "3000", "5000", "8000", "10000", "12000"})
-        Me.BITBOX.Location = New System.Drawing.Point(159, 78)
+        Me.BITBOX.Location = New System.Drawing.Point(161, 103)
         Me.BITBOX.Name = "BITBOX"
         Me.BITBOX.Size = New System.Drawing.Size(65, 21)
         Me.BITBOX.TabIndex = 24
@@ -327,9 +363,10 @@ Partial Class Main
         'LBBPS
         '
         Me.LBBPS.AutoSize = True
-        Me.LBBPS.Location = New System.Drawing.Point(229, 81)
+        Me.LBBPS.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.LBBPS.Location = New System.Drawing.Point(232, 106)
         Me.LBBPS.Name = "LBBPS"
-        Me.LBBPS.Size = New System.Drawing.Size(33, 15)
+        Me.LBBPS.Size = New System.Drawing.Size(32, 13)
         Me.LBBPS.TabIndex = 26
         Me.LBBPS.Text = "Kbps"
         '
@@ -339,9 +376,9 @@ Partial Class Main
         Me.REFBOX.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.REFBOX.FormattingEnabled = True
         Me.REFBOX.Items.AddRange(New Object() {"Original", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"})
-        Me.REFBOX.Location = New System.Drawing.Point(504, 22)
+        Me.REFBOX.Location = New System.Drawing.Point(548, 45)
         Me.REFBOX.Name = "REFBOX"
-        Me.REFBOX.Size = New System.Drawing.Size(72, 21)
+        Me.REFBOX.Size = New System.Drawing.Size(80, 21)
         Me.REFBOX.TabIndex = 27
         Me.REFBOX.Text = "2"
         '
@@ -351,9 +388,9 @@ Partial Class Main
         Me.BOXKEYINT.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXKEYINT.FormattingEnabled = True
         Me.BOXKEYINT.Items.AddRange(New Object() {"Auto", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"})
-        Me.BOXKEYINT.Location = New System.Drawing.Point(111, 48)
+        Me.BOXKEYINT.Location = New System.Drawing.Point(104, 71)
         Me.BOXKEYINT.Name = "BOXKEYINT"
-        Me.BOXKEYINT.Size = New System.Drawing.Size(67, 21)
+        Me.BOXKEYINT.Size = New System.Drawing.Size(72, 21)
         Me.BOXKEYINT.TabIndex = 32
         Me.BOXKEYINT.Text = "Auto"
         '
@@ -362,19 +399,20 @@ Partial Class Main
         Me.BOXCODEC.AllowDrop = True
         Me.BOXCODEC.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXCODEC.FormattingEnabled = True
-        Me.BOXCODEC.Items.AddRange(New Object() {"libx264", "libx265", "copy", "mpeg4", "libxvid", "mpeg2video", "wmv2", "libvpx", "libvpx-vp9", "No Video"})
-        Me.BOXCODEC.Location = New System.Drawing.Point(51, 22)
+        Me.BOXCODEC.Items.AddRange(New Object() {"libx264", "libx265", "copy", "mpeg4", "libxvid", "mpeg2video", "wmv2", "libvpx", "libvpx-vp9", "h263p", "msmpeg4", "VP10 (Video Only)", "No Video"})
+        Me.BOXCODEC.Location = New System.Drawing.Point(49, 17)
         Me.BOXCODEC.Name = "BOXCODEC"
-        Me.BOXCODEC.Size = New System.Drawing.Size(102, 21)
+        Me.BOXCODEC.Size = New System.Drawing.Size(264, 21)
         Me.BOXCODEC.TabIndex = 33
         Me.BOXCODEC.Text = "libx264"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(3, 25)
+        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label4.Location = New System.Drawing.Point(4, 20)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(41, 15)
+        Me.Label4.Size = New System.Drawing.Size(39, 13)
         Me.Label4.TabIndex = 34
         Me.Label4.Text = "Codec"
         '
@@ -383,12 +421,12 @@ Partial Class Main
         Me.CHKCQM.AutoSize = True
         Me.CHKCQM.Checked = True
         Me.CHKCQM.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CHKCQM.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHKCQM.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.CHKCQM.Location = New System.Drawing.Point(5, 8)
         Me.CHKCQM.Name = "CHKCQM"
-        Me.CHKCQM.Size = New System.Drawing.Size(205, 19)
+        Me.CHKCQM.Size = New System.Drawing.Size(250, 17)
         Me.CHKCQM.TabIndex = 53
-        Me.CHKCQM.Text = "KGP Custom Quantization Matrix"
+        Me.CHKCQM.Text = "KGP Custom Quantization Matrix (for H.264)"
         Me.CHKCQM.UseVisualStyleBackColor = True
         '
         'GroupBox2
@@ -397,8 +435,6 @@ Partial Class Main
         Me.GroupBox2.Controls.Add(Me.BITBOX2)
         Me.GroupBox2.Controls.Add(Me.CHECKADV)
         Me.GroupBox2.Controls.Add(Me.BTNADV)
-        Me.GroupBox2.Controls.Add(Me.Label30)
-        Me.GroupBox2.Controls.Add(Me.BOXCONTAINER)
         Me.GroupBox2.Controls.Add(Me.CHKFAST1ST)
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Controls.Add(Me.BOXCODECPRESET)
@@ -424,9 +460,9 @@ Partial Class Main
         Me.GroupBox2.Controls.Add(Me.PFBOX)
         Me.GroupBox2.Controls.Add(Me.BOXFPS)
         Me.GroupBox2.Font = New System.Drawing.Font("맑은 고딕", 8.5!)
-        Me.GroupBox2.Location = New System.Drawing.Point(5, 6)
+        Me.GroupBox2.Location = New System.Drawing.Point(5, 27)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(641, 229)
+        Me.GroupBox2.Size = New System.Drawing.Size(641, 195)
         Me.GroupBox2.TabIndex = 54
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Video"
@@ -434,7 +470,7 @@ Partial Class Main
         'LBBPS2
         '
         Me.LBBPS2.AutoSize = True
-        Me.LBBPS2.Location = New System.Drawing.Point(349, 81)
+        Me.LBBPS2.Location = New System.Drawing.Point(360, 106)
         Me.LBBPS2.Name = "LBBPS2"
         Me.LBBPS2.Size = New System.Drawing.Size(33, 15)
         Me.LBBPS2.TabIndex = 84
@@ -446,57 +482,42 @@ Partial Class Main
         Me.BITBOX2.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BITBOX2.FormattingEnabled = True
         Me.BITBOX2.Items.AddRange(New Object() {"Auto", "1000", "1500", "2000", "3000", "5000", "8000", "10000", "12000"})
-        Me.BITBOX2.Location = New System.Drawing.Point(265, 78)
+        Me.BITBOX2.Location = New System.Drawing.Point(275, 103)
         Me.BITBOX2.Name = "BITBOX2"
-        Me.BITBOX2.Size = New System.Drawing.Size(78, 21)
+        Me.BITBOX2.Size = New System.Drawing.Size(77, 21)
         Me.BITBOX2.TabIndex = 83
         Me.BITBOX2.Text = "Auto"
         '
         'CHECKADV
         '
         Me.CHECKADV.AutoSize = True
-        Me.CHECKADV.Location = New System.Drawing.Point(274, 176)
+        Me.CHECKADV.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHECKADV.Location = New System.Drawing.Point(322, 76)
         Me.CHECKADV.Name = "CHECKADV"
-        Me.CHECKADV.Size = New System.Drawing.Size(202, 19)
+        Me.CHECKADV.Size = New System.Drawing.Size(179, 17)
         Me.CHECKADV.TabIndex = 78
-        Me.CHECKADV.Text = "Use Advanced Encoding Options"
+        Me.CHECKADV.Text = "Use Advanced Codec Options"
         Me.CHECKADV.UseVisualStyleBackColor = True
         '
         'BTNADV
         '
-        Me.BTNADV.Location = New System.Drawing.Point(486, 172)
+        Me.BTNADV.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNADV.Location = New System.Drawing.Point(510, 72)
         Me.BTNADV.Name = "BTNADV"
-        Me.BTNADV.Size = New System.Drawing.Size(135, 23)
+        Me.BTNADV.Size = New System.Drawing.Size(118, 23)
         Me.BTNADV.TabIndex = 77
         Me.BTNADV.Text = "Advanced"
         Me.BTNADV.UseVisualStyleBackColor = True
-        '
-        'Label30
-        '
-        Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(14, 191)
-        Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(101, 15)
-        Me.Label30.TabIndex = 76
-        Me.Label30.Text = "Output Container"
-        '
-        'BOXCONTAINER
-        '
-        Me.BOXCONTAINER.AllowDrop = True
-        Me.BOXCONTAINER.FormattingEnabled = True
-        Me.BOXCONTAINER.Location = New System.Drawing.Point(117, 188)
-        Me.BOXCONTAINER.Name = "BOXCONTAINER"
-        Me.BOXCONTAINER.Size = New System.Drawing.Size(75, 21)
-        Me.BOXCONTAINER.TabIndex = 75
         '
         'CHKFAST1ST
         '
         Me.CHKFAST1ST.AutoSize = True
         Me.CHKFAST1ST.Checked = True
         Me.CHKFAST1ST.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CHKFAST1ST.Location = New System.Drawing.Point(486, 203)
+        Me.CHKFAST1ST.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHKFAST1ST.Location = New System.Drawing.Point(477, 105)
         Me.CHKFAST1ST.Name = "CHKFAST1ST"
-        Me.CHKFAST1ST.Size = New System.Drawing.Size(148, 19)
+        Me.CHKFAST1ST.Size = New System.Drawing.Size(143, 17)
         Me.CHKFAST1ST.TabIndex = 74
         Me.CHKFAST1ST.Text = "Fast 1st pass Encoding"
         Me.CHKFAST1ST.UseVisualStyleBackColor = True
@@ -504,9 +525,10 @@ Partial Class Main
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(211, 51)
+        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(277, 46)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 15)
+        Me.Label1.Size = New System.Drawing.Size(38, 13)
         Me.Label1.TabIndex = 73
         Me.Label1.Text = "Preset"
         '
@@ -516,46 +538,50 @@ Partial Class Main
         Me.BOXCODECPRESET.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXCODECPRESET.FormattingEnabled = True
         Me.BOXCODECPRESET.Items.AddRange(New Object() {"ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow", "placebo"})
-        Me.BOXCODECPRESET.Location = New System.Drawing.Point(274, 48)
+        Me.BOXCODECPRESET.Location = New System.Drawing.Point(322, 44)
         Me.BOXCODECPRESET.Name = "BOXCODECPRESET"
-        Me.BOXCODECPRESET.Size = New System.Drawing.Size(72, 21)
+        Me.BOXCODECPRESET.Size = New System.Drawing.Size(101, 21)
         Me.BOXCODECPRESET.TabIndex = 72
         Me.BOXCODECPRESET.Text = "faster"
         '
         'CHKMULTITR
         '
         Me.CHKMULTITR.AutoSize = True
-        Me.CHKMULTITR.Location = New System.Drawing.Point(274, 203)
+        Me.CHKMULTITR.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHKMULTITR.Location = New System.Drawing.Point(435, 172)
         Me.CHKMULTITR.Name = "CHKMULTITR"
-        Me.CHKMULTITR.Size = New System.Drawing.Size(208, 19)
+        Me.CHKMULTITR.Size = New System.Drawing.Size(201, 17)
         Me.CHKMULTITR.TabIndex = 64
-        Me.CHKMULTITR.Text = "Encoding MultiTrack Video/Audio"
+        Me.CHKMULTITR.Text = "Encoding all Video/Audio streams"
         Me.CHKMULTITR.UseVisualStyleBackColor = True
         '
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(3, 51)
+        Me.Label21.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label21.Location = New System.Drawing.Point(4, 72)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(100, 15)
+        Me.Label21.Size = New System.Drawing.Size(94, 13)
         Me.Label21.TabIndex = 70
         Me.Label21.Text = "Keyframe Interval"
         '
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(219, 109)
+        Me.Label20.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label20.Location = New System.Drawing.Point(211, 133)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(60, 15)
+        Me.Label20.Size = New System.Drawing.Size(58, 13)
         Me.Label20.TabIndex = 69
         Me.Label20.Text = "Framerate"
         '
         'LBBITRATE
         '
         Me.LBBITRATE.AutoSize = True
-        Me.LBBITRATE.Location = New System.Drawing.Point(115, 81)
+        Me.LBBITRATE.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.LBBITRATE.Location = New System.Drawing.Point(117, 106)
         Me.LBBITRATE.Name = "LBBITRATE"
-        Me.LBBITRATE.Size = New System.Drawing.Size(41, 15)
+        Me.LBBITRATE.Size = New System.Drawing.Size(40, 13)
         Me.LBBITRATE.TabIndex = 68
         Me.LBBITRATE.Text = "Bitrate"
         Me.LBBITRATE.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -563,36 +589,40 @@ Partial Class Main
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(3, 109)
+        Me.Label18.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label18.Location = New System.Drawing.Point(5, 133)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(63, 15)
+        Me.Label18.Size = New System.Drawing.Size(61, 13)
         Me.Label18.TabIndex = 67
         Me.Label18.Text = "Resolution"
         '
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(435, 109)
+        Me.Label17.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label17.Location = New System.Drawing.Point(4, 160)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(106, 15)
+        Me.Label17.Size = New System.Drawing.Size(99, 13)
         Me.Label17.TabIndex = 66
         Me.Label17.Text = "Deinterlace (Yadif)"
         '
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(435, 25)
+        Me.Label16.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label16.Location = New System.Drawing.Point(446, 48)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(66, 15)
+        Me.Label16.Size = New System.Drawing.Size(96, 13)
         Me.Label16.TabIndex = 65
-        Me.Label16.Text = "Ref Frames"
+        Me.Label16.Text = "Reference Frames"
         '
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(189, 25)
+        Me.Label15.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label15.Location = New System.Drawing.Point(4, 47)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(80, 15)
+        Me.Label15.Size = New System.Drawing.Size(75, 13)
         Me.Label15.TabIndex = 64
         Me.Label15.Text = "Profile@Level"
         '
@@ -602,18 +632,18 @@ Partial Class Main
         Me.BOXCFR.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXCFR.FormattingEnabled = True
         Me.BOXCFR.Items.AddRange(New Object() {"Auto", "CFR"})
-        Me.BOXCFR.Location = New System.Drawing.Point(359, 106)
+        Me.BOXCFR.Location = New System.Drawing.Point(349, 130)
         Me.BOXCFR.Name = "BOXCFR"
         Me.BOXCFR.Size = New System.Drawing.Size(58, 21)
         Me.BOXCFR.TabIndex = 63
-        Me.BOXCFR.Text = "CFR"
+        Me.BOXCFR.Text = "Auto"
         '
         'BOXBITRATEMODE
         '
         Me.BOXBITRATEMODE.AutoCompleteCustomSource.AddRange(New String() {"CRF", "ABR"})
         Me.BOXBITRATEMODE.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXBITRATEMODE.FormattingEnabled = True
-        Me.BOXBITRATEMODE.Location = New System.Drawing.Point(6, 78)
+        Me.BOXBITRATEMODE.Location = New System.Drawing.Point(8, 103)
         Me.BOXBITRATEMODE.Name = "BOXBITRATEMODE"
         Me.BOXBITRATEMODE.Size = New System.Drawing.Size(102, 21)
         Me.BOXBITRATEMODE.TabIndex = 55
@@ -625,16 +655,37 @@ Partial Class Main
         Me.BOXDEINT.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXDEINT.FormattingEnabled = True
         Me.BOXDEINT.Items.AddRange(New Object() {"Disabled", "1", "2", "3"})
-        Me.BOXDEINT.Location = New System.Drawing.Point(547, 106)
+        Me.BOXDEINT.Location = New System.Drawing.Point(109, 157)
         Me.BOXDEINT.Name = "BOXDEINT"
         Me.BOXDEINT.Size = New System.Drawing.Size(77, 21)
         Me.BOXDEINT.TabIndex = 45
         Me.BOXDEINT.Text = "Disabled"
         '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label30.Location = New System.Drawing.Point(9, 8)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(83, 13)
+        Me.Label30.TabIndex = 76
+        Me.Label30.Text = "Output Format"
+        '
+        'BOXCONTAINER
+        '
+        Me.BOXCONTAINER.AllowDrop = True
+        Me.BOXCONTAINER.FormattingEnabled = True
+        Me.BOXCONTAINER.Items.AddRange(New Object() {"mp4", "mkv", "avi", "ts", "flv", "mov", "3gp", "3g2", "webm", "wmv", "m4a", "aac", "mp3", "ogg", "flac", "aac", "ac3", "wav", "wma", "opus", "dts", "mp2"})
+        Me.BOXCONTAINER.Location = New System.Drawing.Point(108, 6)
+        Me.BOXCONTAINER.Name = "BOXCONTAINER"
+        Me.BOXCONTAINER.Size = New System.Drawing.Size(210, 21)
+        Me.BOXCONTAINER.TabIndex = 75
+        Me.BOXCONTAINER.Text = "mp4"
+        '
         'BOXPFINFO
         '
         Me.BOXPFINFO.Enabled = False
-        Me.BOXPFINFO.Location = New System.Drawing.Point(441, 241)
+        Me.BOXPFINFO.Location = New System.Drawing.Point(441, 228)
         Me.BOXPFINFO.Name = "BOXPFINFO"
         Me.BOXPFINFO.Size = New System.Drawing.Size(77, 22)
         Me.BOXPFINFO.TabIndex = 72
@@ -643,7 +694,7 @@ Partial Class Main
         'BOXDELAYINFO
         '
         Me.BOXDELAYINFO.Enabled = False
-        Me.BOXDELAYINFO.Location = New System.Drawing.Point(301, 241)
+        Me.BOXDELAYINFO.Location = New System.Drawing.Point(301, 228)
         Me.BOXDELAYINFO.Name = "BOXDELAYINFO"
         Me.BOXDELAYINFO.Size = New System.Drawing.Size(45, 22)
         Me.BOXDELAYINFO.TabIndex = 53
@@ -651,6 +702,8 @@ Partial Class Main
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label33)
+        Me.GroupBox3.Controls.Add(Me.BOXAUDBITDEPTH)
         Me.GroupBox3.Controls.Add(Me.Label27)
         Me.GroupBox3.Controls.Add(Me.Label26)
         Me.GroupBox3.Controls.Add(Me.Label25)
@@ -667,75 +720,97 @@ Partial Class Main
         Me.GroupBox3.Controls.Add(Me.Label7)
         Me.GroupBox3.Controls.Add(Me.BOXAUDBITRATE)
         Me.GroupBox3.Controls.Add(Me.BOXACODEC)
-        Me.GroupBox3.Font = New System.Drawing.Font("맑은 고딕", 8.5!)
-        Me.GroupBox3.Location = New System.Drawing.Point(5, 335)
+        Me.GroupBox3.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.GroupBox3.Location = New System.Drawing.Point(5, 311)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(641, 90)
         Me.GroupBox3.TabIndex = 55
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Audio"
         '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Location = New System.Drawing.Point(2, 65)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(20, 13)
+        Me.Label33.TabIndex = 65
+        Me.Label33.Text = "Bit"
+        '
+        'BOXAUDBITDEPTH
+        '
+        Me.BOXAUDBITDEPTH.AllowDrop = True
+        Me.BOXAUDBITDEPTH.Enabled = False
+        Me.BOXAUDBITDEPTH.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
+        Me.BOXAUDBITDEPTH.FormattingEnabled = True
+        Me.BOXAUDBITDEPTH.Items.AddRange(New Object() {"Auto", "4", "8", "16", "24", "32"})
+        Me.BOXAUDBITDEPTH.Location = New System.Drawing.Point(60, 63)
+        Me.BOXAUDBITDEPTH.Name = "BOXAUDBITDEPTH"
+        Me.BOXAUDBITDEPTH.Size = New System.Drawing.Size(116, 21)
+        Me.BOXAUDBITDEPTH.TabIndex = 64
+        Me.BOXAUDBITDEPTH.Text = "Auto"
+        '
         'Label27
         '
         Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(373, 47)
+        Me.Label27.Location = New System.Drawing.Point(396, 42)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(37, 15)
+        Me.Label27.Size = New System.Drawing.Size(35, 13)
         Me.Label27.TabIndex = 63
         Me.Label27.Text = "Delay"
         '
         'Label26
         '
         Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(174, 47)
+        Me.Label26.Location = New System.Drawing.Point(197, 42)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(41, 15)
+        Me.Label26.Size = New System.Drawing.Size(39, 13)
         Me.Label26.TabIndex = 62
         Me.Label26.Text = "Profile"
         '
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(1, 46)
+        Me.Label25.Location = New System.Drawing.Point(1, 41)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(51, 15)
+        Me.Label25.Size = New System.Drawing.Size(47, 13)
         Me.Label25.TabIndex = 61
         Me.Label25.Text = "Channel"
         '
         'Label24
         '
         Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(373, 23)
+        Me.Label24.Location = New System.Drawing.Point(396, 18)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(85, 15)
+        Me.Label24.Size = New System.Drawing.Size(82, 13)
         Me.Label24.TabIndex = 60
         Me.Label24.Text = "Sampling Rate"
         '
         'Label23
         '
         Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(174, 23)
+        Me.Label23.Location = New System.Drawing.Point(197, 18)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(41, 15)
+        Me.Label23.Size = New System.Drawing.Size(40, 13)
         Me.Label23.TabIndex = 40
         Me.Label23.Text = "Bitrate"
         '
         'CHKREPLACEAUD
         '
         Me.CHKREPLACEAUD.AutoSize = True
-        Me.CHKREPLACEAUD.Location = New System.Drawing.Point(4, 70)
+        Me.CHKREPLACEAUD.Location = New System.Drawing.Point(200, 67)
         Me.CHKREPLACEAUD.Name = "CHKREPLACEAUD"
-        Me.CHKREPLACEAUD.Size = New System.Drawing.Size(103, 19)
+        Me.CHKREPLACEAUD.Size = New System.Drawing.Size(276, 17)
         Me.CHKREPLACEAUD.TabIndex = 59
-        Me.CHKREPLACEAUD.Text = "Replace Audio"
+        Me.CHKREPLACEAUD.Text = "Change first Audio Track to audio input path file"
         Me.CHKREPLACEAUD.UseVisualStyleBackColor = True
         '
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(560, 47)
+        Me.Label10.Location = New System.Drawing.Point(583, 42)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(26, 15)
+        Me.Label10.Size = New System.Drawing.Size(24, 13)
         Me.Label10.TabIndex = 58
         Me.Label10.Text = "Sec"
         '
@@ -745,7 +820,7 @@ Partial Class Main
         Me.BOXDELAY.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXDELAY.FormattingEnabled = True
         Me.BOXDELAY.Items.AddRange(New Object() {"Auto", "Disabled", "0.000", "-0.000"})
-        Me.BOXDELAY.Location = New System.Drawing.Point(468, 44)
+        Me.BOXDELAY.Location = New System.Drawing.Point(491, 39)
         Me.BOXDELAY.Name = "BOXDELAY"
         Me.BOXDELAY.Size = New System.Drawing.Size(86, 21)
         Me.BOXDELAY.TabIndex = 56
@@ -757,7 +832,7 @@ Partial Class Main
         Me.BOXAACPF.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXAACPF.FormattingEnabled = True
         Me.BOXAACPF.Items.AddRange(New Object() {"Auto", "aac_low", "aac_he", "aac_he_v2", "aac_ld", "aac_eld"})
-        Me.BOXAACPF.Location = New System.Drawing.Point(223, 44)
+        Me.BOXAACPF.Location = New System.Drawing.Point(246, 39)
         Me.BOXAACPF.Name = "BOXAACPF"
         Me.BOXAACPF.Size = New System.Drawing.Size(86, 21)
         Me.BOXAACPF.TabIndex = 54
@@ -768,19 +843,19 @@ Partial Class Main
         Me.BOXCHANNEL.AllowDrop = True
         Me.BOXCHANNEL.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXCHANNEL.FormattingEnabled = True
-        Me.BOXCHANNEL.Items.AddRange(New Object() {"Auto", "1", "2", "4", "6"})
-        Me.BOXCHANNEL.Location = New System.Drawing.Point(60, 44)
+        Me.BOXCHANNEL.Items.AddRange(New Object() {"Auto", "1", "2", "4", "6", "8"})
+        Me.BOXCHANNEL.Location = New System.Drawing.Point(60, 39)
         Me.BOXCHANNEL.Name = "BOXCHANNEL"
-        Me.BOXCHANNEL.Size = New System.Drawing.Size(96, 21)
+        Me.BOXCHANNEL.Size = New System.Drawing.Size(116, 21)
         Me.BOXCHANNEL.TabIndex = 51
         Me.BOXCHANNEL.Text = "Auto"
         '
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(560, 23)
+        Me.Label9.Location = New System.Drawing.Point(583, 18)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(22, 15)
+        Me.Label9.Size = New System.Drawing.Size(20, 13)
         Me.Label9.TabIndex = 50
         Me.Label9.Text = "Hz"
         '
@@ -789,8 +864,8 @@ Partial Class Main
         Me.BOXSAMPLE.AllowDrop = True
         Me.BOXSAMPLE.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXSAMPLE.FormattingEnabled = True
-        Me.BOXSAMPLE.Items.AddRange(New Object() {"Auto", "44100", "48000", "96000", "192000"})
-        Me.BOXSAMPLE.Location = New System.Drawing.Point(468, 20)
+        Me.BOXSAMPLE.Items.AddRange(New Object() {"Auto", "8000", "16000", "24000", "32000", "44100", "48000", "96000", "192000"})
+        Me.BOXSAMPLE.Location = New System.Drawing.Point(491, 15)
         Me.BOXSAMPLE.Name = "BOXSAMPLE"
         Me.BOXSAMPLE.Size = New System.Drawing.Size(86, 21)
         Me.BOXSAMPLE.TabIndex = 48
@@ -799,18 +874,18 @@ Partial Class Main
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(315, 23)
+        Me.Label8.Location = New System.Drawing.Point(338, 18)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(33, 15)
+        Me.Label8.Size = New System.Drawing.Size(32, 13)
         Me.Label8.TabIndex = 47
         Me.Label8.Text = "Kbps"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(2, 23)
+        Me.Label7.Location = New System.Drawing.Point(2, 18)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(41, 15)
+        Me.Label7.Size = New System.Drawing.Size(39, 13)
         Me.Label7.TabIndex = 36
         Me.Label7.Text = "Codec"
         '
@@ -820,7 +895,7 @@ Partial Class Main
         Me.BOXAUDBITRATE.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXAUDBITRATE.FormattingEnabled = True
         Me.BOXAUDBITRATE.Items.AddRange(New Object() {"Auto", "128", "192", "256", "320", "384", "620"})
-        Me.BOXAUDBITRATE.Location = New System.Drawing.Point(223, 20)
+        Me.BOXAUDBITRATE.Location = New System.Drawing.Point(246, 15)
         Me.BOXAUDBITRATE.Name = "BOXAUDBITRATE"
         Me.BOXAUDBITRATE.Size = New System.Drawing.Size(86, 21)
         Me.BOXAUDBITRATE.TabIndex = 45
@@ -831,10 +906,10 @@ Partial Class Main
         Me.BOXACODEC.AllowDrop = True
         Me.BOXACODEC.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXACODEC.FormattingEnabled = True
-        Me.BOXACODEC.Items.AddRange(New Object() {"libfdk_aac", "libmp3lame", "ac3", "copy", "PCM", "libvorbis", "libopus", "dca", "wmav2", "No Audio"})
-        Me.BOXACODEC.Location = New System.Drawing.Point(60, 20)
+        Me.BOXACODEC.Items.AddRange(New Object() {"libfdk_aac", "libmp3lame", "ac3", "eac3", "flac", "copy", "PCM", "libvorbis", "libopus", "dca", "wmav2", "libtwolame", "No Audio"})
+        Me.BOXACODEC.Location = New System.Drawing.Point(60, 15)
         Me.BOXACODEC.Name = "BOXACODEC"
-        Me.BOXACODEC.Size = New System.Drawing.Size(96, 21)
+        Me.BOXACODEC.Size = New System.Drawing.Size(116, 21)
         Me.BOXACODEC.TabIndex = 35
         Me.BOXACODEC.Text = "copy"
         '
@@ -846,9 +921,9 @@ Partial Class Main
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.BOXTRIMSS)
         Me.GroupBox1.Font = New System.Drawing.Font("맑은 고딕", 8.5!)
-        Me.GroupBox1.Location = New System.Drawing.Point(5, 275)
+        Me.GroupBox1.Location = New System.Drawing.Point(5, 256)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(641, 57)
+        Me.GroupBox1.Size = New System.Drawing.Size(641, 54)
         Me.GroupBox1.TabIndex = 56
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "XPress Trim"
@@ -856,9 +931,10 @@ Partial Class Main
         'CHKTRIM
         '
         Me.CHKTRIM.AutoSize = True
+        Me.CHKTRIM.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.CHKTRIM.Location = New System.Drawing.Point(17, 28)
         Me.CHKTRIM.Name = "CHKTRIM"
-        Me.CHKTRIM.Size = New System.Drawing.Size(59, 19)
+        Me.CHKTRIM.Size = New System.Drawing.Size(58, 17)
         Me.CHKTRIM.TabIndex = 39
         Me.CHKTRIM.Text = "Trim -"
         Me.CHKTRIM.UseVisualStyleBackColor = True
@@ -866,9 +942,10 @@ Partial Class Main
         'Label5
         '
         Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label5.Location = New System.Drawing.Point(243, 13)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(146, 15)
+        Me.Label5.Size = New System.Drawing.Size(133, 13)
         Me.Label5.TabIndex = 38
         Me.Label5.Text = "End Time  (ex - 00:01:20)"
         '
@@ -886,9 +963,10 @@ Partial Class Main
         'Label6
         '
         Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label6.Location = New System.Drawing.Point(82, 13)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(147, 15)
+        Me.Label6.Size = New System.Drawing.Size(134, 13)
         Me.Label6.TabIndex = 36
         Me.Label6.Text = "Start Time (ex - 00:00:20)"
         '
@@ -907,17 +985,17 @@ Partial Class Main
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label11.Location = New System.Drawing.Point(6, 562)
+        Me.Label11.Location = New System.Drawing.Point(5, 533)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(370, 13)
+        Me.Label11.Size = New System.Drawing.Size(349, 13)
         Me.Label11.TabIndex = 60
-        Me.Label11.Text = "Audio Input File Path (Optional for Add Audio or Replace Audio Track)"
+        Me.Label11.Text = "Audio Input Path (Optional for Add Audio or Replace Audio Track)"
         '
         'BOXAUDIOPATH
         '
         Me.BOXAUDIOPATH.AllowDrop = True
         Me.BOXAUDIOPATH.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BOXAUDIOPATH.Location = New System.Drawing.Point(8, 577)
+        Me.BOXAUDIOPATH.Location = New System.Drawing.Point(7, 548)
         Me.BOXAUDIOPATH.Name = "BOXAUDIOPATH"
         Me.BOXAUDIOPATH.Size = New System.Drawing.Size(550, 21)
         Me.BOXAUDIOPATH.TabIndex = 59
@@ -927,7 +1005,7 @@ Partial Class Main
         Me.BTAUDINPUNT.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.BTAUDINPUNT.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BTAUDINPUNT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTAUDINPUNT.Location = New System.Drawing.Point(564, 573)
+        Me.BTAUDINPUNT.Location = New System.Drawing.Point(563, 544)
         Me.BTAUDINPUNT.Name = "BTAUDINPUNT"
         Me.BTAUDINPUNT.Size = New System.Drawing.Size(85, 26)
         Me.BTAUDINPUNT.TabIndex = 61
@@ -941,16 +1019,16 @@ Partial Class Main
         'BOXDURATION
         '
         Me.BOXDURATION.Enabled = False
-        Me.BOXDURATION.Location = New System.Drawing.Point(348, 241)
+        Me.BOXDURATION.Location = New System.Drawing.Point(348, 228)
         Me.BOXDURATION.Name = "BOXDURATION"
-        Me.BOXDURATION.Size = New System.Drawing.Size(92, 22)
+        Me.BOXDURATION.Size = New System.Drawing.Size(33, 22)
         Me.BOXDURATION.TabIndex = 56
         Me.BOXDURATION.Visible = False
         '
         'BOXREFINFO
         '
         Me.BOXREFINFO.Enabled = False
-        Me.BOXREFINFO.Location = New System.Drawing.Point(519, 241)
+        Me.BOXREFINFO.Location = New System.Drawing.Point(519, 228)
         Me.BOXREFINFO.Name = "BOXREFINFO"
         Me.BOXREFINFO.Size = New System.Drawing.Size(30, 22)
         Me.BOXREFINFO.TabIndex = 73
@@ -959,7 +1037,7 @@ Partial Class Main
         'BOXACODECINFO
         '
         Me.BOXACODECINFO.Enabled = False
-        Me.BOXACODECINFO.Location = New System.Drawing.Point(568, 241)
+        Me.BOXACODECINFO.Location = New System.Drawing.Point(568, 228)
         Me.BOXACODECINFO.Name = "BOXACODECINFO"
         Me.BOXACODECINFO.Size = New System.Drawing.Size(57, 22)
         Me.BOXACODECINFO.TabIndex = 59
@@ -969,7 +1047,7 @@ Partial Class Main
         '
         Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button8.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button8.Location = New System.Drawing.Point(406, 663)
+        Me.Button8.Location = New System.Drawing.Point(405, 634)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(126, 26)
         Me.Button8.TabIndex = 57
@@ -985,21 +1063,25 @@ Partial Class Main
         Me.TAB.Controls.Add(Me.TabPage4)
         Me.TAB.Controls.Add(Me.TabPage5)
         Me.TAB.Controls.Add(Me.TabPage6)
+        Me.TAB.Controls.Add(Me.TabPage8)
         Me.TAB.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TAB.Location = New System.Drawing.Point(2, 59)
         Me.TAB.Name = "TAB"
         Me.TAB.SelectedIndex = 0
-        Me.TAB.Size = New System.Drawing.Size(657, 460)
+        Me.TAB.Size = New System.Drawing.Size(657, 430)
         Me.TAB.TabIndex = 63
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.BOXRSINFO)
         Me.TabPage1.Controls.Add(Me.LBINPUTINFO)
         Me.TabPage1.Controls.Add(Me.BOXREFINFO)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
         Me.TabPage1.Controls.Add(Me.BOXPFINFO)
+        Me.TabPage1.Controls.Add(Me.Label30)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.GroupBox3)
+        Me.TabPage1.Controls.Add(Me.BOXCONTAINER)
         Me.TabPage1.Controls.Add(Me.BOXACODECINFO)
         Me.TabPage1.Controls.Add(Me.BOXDURATION)
         Me.TabPage1.Controls.Add(Me.BOXDELAYINFO)
@@ -1010,24 +1092,33 @@ Partial Class Main
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage1.Size = New System.Drawing.Size(649, 404)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Encoding Options"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'BOXRSINFO
+        '
+        Me.BOXRSINFO.Enabled = False
+        Me.BOXRSINFO.Location = New System.Drawing.Point(387, 228)
+        Me.BOXRSINFO.Name = "BOXRSINFO"
+        Me.BOXRSINFO.Size = New System.Drawing.Size(33, 22)
+        Me.BOXRSINFO.TabIndex = 79
+        Me.BOXRSINFO.Visible = False
+        '
         'LBINPUTINFO
         '
         Me.LBINPUTINFO.AutoSize = True
-        Me.LBINPUTINFO.Location = New System.Drawing.Point(9, 241)
+        Me.LBINPUTINFO.Location = New System.Drawing.Point(9, 228)
         Me.LBINPUTINFO.Name = "LBINPUTINFO"
-        Me.LBINPUTINFO.Size = New System.Drawing.Size(121, 13)
+        Me.LBINPUTINFO.Size = New System.Drawing.Size(151, 13)
         Me.LBINPUTINFO.TabIndex = 78
-        Me.LBINPUTINFO.Text = "No Media Information"
+        Me.LBINPUTINFO.Text = "No Input Media Information"
         '
         'BOXFORMATINFO
         '
         Me.BOXFORMATINFO.Enabled = False
-        Me.BOXFORMATINFO.Location = New System.Drawing.Point(129, 241)
+        Me.BOXFORMATINFO.Location = New System.Drawing.Point(129, 228)
         Me.BOXFORMATINFO.Name = "BOXFORMATINFO"
         Me.BOXFORMATINFO.Size = New System.Drawing.Size(70, 22)
         Me.BOXFORMATINFO.TabIndex = 58
@@ -1036,7 +1127,7 @@ Partial Class Main
         'BOXASPECT
         '
         Me.BOXASPECT.Enabled = False
-        Me.BOXASPECT.Location = New System.Drawing.Point(257, 241)
+        Me.BOXASPECT.Location = New System.Drawing.Point(257, 228)
         Me.BOXASPECT.Name = "BOXASPECT"
         Me.BOXASPECT.Size = New System.Drawing.Size(42, 22)
         Me.BOXASPECT.TabIndex = 54
@@ -1045,7 +1136,7 @@ Partial Class Main
         'BOXFPSINFO
         '
         Me.BOXFPSINFO.Enabled = False
-        Me.BOXFPSINFO.Location = New System.Drawing.Point(201, 241)
+        Me.BOXFPSINFO.Location = New System.Drawing.Point(201, 228)
         Me.BOXFPSINFO.Name = "BOXFPSINFO"
         Me.BOXFPSINFO.Size = New System.Drawing.Size(54, 22)
         Me.BOXFPSINFO.TabIndex = 51
@@ -1054,7 +1145,7 @@ Partial Class Main
         'BOXCODECINFO
         '
         Me.BOXCODECINFO.Enabled = False
-        Me.BOXCODECINFO.Location = New System.Drawing.Point(21, 241)
+        Me.BOXCODECINFO.Location = New System.Drawing.Point(21, 228)
         Me.BOXCODECINFO.Name = "BOXCODECINFO"
         Me.BOXCODECINFO.Size = New System.Drawing.Size(106, 22)
         Me.BOXCODECINFO.TabIndex = 50
@@ -1068,7 +1159,7 @@ Partial Class Main
         Me.TabPage7.Controls.Add(Me.BOXSPP)
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage7.Size = New System.Drawing.Size(649, 404)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "Video Filters"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -1115,26 +1206,35 @@ Partial Class Main
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Button12)
         Me.TabPage2.Controls.Add(Me.Button14)
         Me.TabPage2.Controls.Add(Me.Button13)
         Me.TabPage2.Controls.Add(Me.BOXDEBUG)
         Me.TabPage2.Controls.Add(Me.CHKDEBUG)
         Me.TabPage2.Controls.Add(Me.Button4)
-        Me.TabPage2.Controls.Add(Me.CHK4K)
         Me.TabPage2.Controls.Add(Me.CHKAVISYNTH)
         Me.TabPage2.Controls.Add(Me.Button7)
         Me.TabPage2.Controls.Add(Me.Button6)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage2.Size = New System.Drawing.Size(649, 404)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Advanced"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'Button12
+        '
+        Me.Button12.Location = New System.Drawing.Point(168, 120)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(177, 23)
+        Me.Button12.TabIndex = 71
+        Me.Button12.Text = "Select Video/Audio Stream"
+        Me.Button12.UseVisualStyleBackColor = True
+        '
         'Button14
         '
-        Me.Button14.Location = New System.Drawing.Point(9, 172)
+        Me.Button14.Location = New System.Drawing.Point(16, 120)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(141, 23)
         Me.Button14.TabIndex = 70
@@ -1143,7 +1243,7 @@ Partial Class Main
         '
         'Button13
         '
-        Me.Button13.Location = New System.Drawing.Point(344, 143)
+        Me.Button13.Location = New System.Drawing.Point(351, 91)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(151, 23)
         Me.Button13.TabIndex = 69
@@ -1153,7 +1253,7 @@ Partial Class Main
         'BOXDEBUG
         '
         Me.BOXDEBUG.Enabled = False
-        Me.BOXDEBUG.Location = New System.Drawing.Point(147, 79)
+        Me.BOXDEBUG.Location = New System.Drawing.Point(146, 41)
         Me.BOXDEBUG.Name = "BOXDEBUG"
         Me.BOXDEBUG.Size = New System.Drawing.Size(469, 22)
         Me.BOXDEBUG.TabIndex = 68
@@ -1162,7 +1262,7 @@ Partial Class Main
         '
         Me.CHKDEBUG.AutoSize = True
         Me.CHKDEBUG.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CHKDEBUG.Location = New System.Drawing.Point(9, 81)
+        Me.CHKDEBUG.Location = New System.Drawing.Point(8, 43)
         Me.CHKDEBUG.Name = "CHKDEBUG"
         Me.CHKDEBUG.Size = New System.Drawing.Size(132, 17)
         Me.CHKDEBUG.TabIndex = 67
@@ -1171,27 +1271,17 @@ Partial Class Main
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(161, 143)
+        Me.Button4.Location = New System.Drawing.Point(168, 91)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(177, 23)
         Me.Button4.TabIndex = 66
         Me.Button4.Text = "Custom Encoding Parameters"
         Me.Button4.UseVisualStyleBackColor = True
         '
-        'CHK4K
-        '
-        Me.CHK4K.AutoSize = True
-        Me.CHK4K.Location = New System.Drawing.Point(9, 49)
-        Me.CHK4K.Name = "CHK4K"
-        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
-        Me.CHK4K.TabIndex = 63
-        Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
-        Me.CHK4K.UseVisualStyleBackColor = True
-        '
         'CHKAVISYNTH
         '
         Me.CHKAVISYNTH.AutoSize = True
-        Me.CHKAVISYNTH.Location = New System.Drawing.Point(9, 16)
+        Me.CHKAVISYNTH.Location = New System.Drawing.Point(8, 16)
         Me.CHKAVISYNTH.Name = "CHKAVISYNTH"
         Me.CHKAVISYNTH.Size = New System.Drawing.Size(90, 17)
         Me.CHKAVISYNTH.TabIndex = 61
@@ -1200,7 +1290,7 @@ Partial Class Main
         '
         'Button7
         '
-        Me.Button7.Location = New System.Drawing.Point(115, 12)
+        Me.Button7.Location = New System.Drawing.Point(105, 12)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(142, 23)
         Me.Button7.TabIndex = 60
@@ -1209,7 +1299,7 @@ Partial Class Main
         '
         'Button6
         '
-        Me.Button6.Location = New System.Drawing.Point(9, 143)
+        Me.Button6.Location = New System.Drawing.Point(16, 91)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(141, 23)
         Me.Button6.TabIndex = 59
@@ -1218,6 +1308,7 @@ Partial Class Main
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.ENCLISTVIEWMAIN)
         Me.TabPage3.Controls.Add(Me.LISTCHKENC2)
         Me.TabPage3.Controls.Add(Me.BTENCSELECTED)
         Me.TabPage3.Controls.Add(Me.Button9)
@@ -1225,20 +1316,59 @@ Partial Class Main
         Me.TabPage3.Controls.Add(Me.BTBATCHENC)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage3.Size = New System.Drawing.Size(649, 404)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Encoding List"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'ENCLISTVIEWMAIN
+        '
+        Me.ENCLISTVIEWMAIN.AllowDrop = True
+        Me.ENCLISTVIEWMAIN.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.COLSTARTTIME, Me.COLENDTIME, Me.COLDURATION})
+        Me.ENCLISTVIEWMAIN.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ENCLISTVIEWMAIN.FullRowSelect = True
+        Me.ENCLISTVIEWMAIN.Location = New System.Drawing.Point(0, 4)
+        Me.ENCLISTVIEWMAIN.Name = "ENCLISTVIEWMAIN"
+        Me.ENCLISTVIEWMAIN.ShowItemToolTips = True
+        Me.ENCLISTVIEWMAIN.Size = New System.Drawing.Size(646, 346)
+        Me.ENCLISTVIEWMAIN.TabIndex = 78
+        Me.ENCLISTVIEWMAIN.UseCompatibleStateImageBehavior = False
+        Me.ENCLISTVIEWMAIN.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "File Name"
+        Me.ColumnHeader1.Width = 453
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Status"
+        Me.ColumnHeader2.Width = 87
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Command"
+        Me.ColumnHeader3.Width = 117
+        '
+        'COLSTARTTIME
+        '
+        Me.COLSTARTTIME.Text = "Start Time"
+        '
+        'COLENDTIME
+        '
+        Me.COLENDTIME.Text = "End Time"
+        '
         'LISTCHKENC2
         '
+        Me.LISTCHKENC2.AllowDrop = True
         Me.LISTCHKENC2.FormattingEnabled = True
         Me.LISTCHKENC2.HorizontalScrollbar = True
-        Me.LISTCHKENC2.Location = New System.Drawing.Point(6, 4)
+        Me.LISTCHKENC2.Location = New System.Drawing.Point(1, 4)
         Me.LISTCHKENC2.Name = "LISTCHKENC2"
         Me.LISTCHKENC2.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.LISTCHKENC2.Size = New System.Drawing.Size(637, 342)
+        Me.LISTCHKENC2.Size = New System.Drawing.Size(645, 147)
         Me.LISTCHKENC2.TabIndex = 77
+        Me.LISTCHKENC2.Visible = False
         '
         'BTENCSELECTED
         '
@@ -1288,7 +1418,7 @@ Partial Class Main
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage4.Size = New System.Drawing.Size(649, 404)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Subtitle"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -1330,7 +1460,7 @@ Partial Class Main
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage5.Size = New System.Drawing.Size(649, 404)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Streaming"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -1365,7 +1495,7 @@ Partial Class Main
         Me.GroupBox4.Size = New System.Drawing.Size(637, 91)
         Me.GroupBox4.TabIndex = 79
         Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "DirectShow Filter Input (Support Desktop Screen Input)"
+        Me.GroupBox4.Text = "DirectShow Filter Input"
         '
         'BTNSTARTNGINX
         '
@@ -1433,7 +1563,7 @@ Partial Class Main
         Me.GroupBox5.Controls.Add(Me.CHKQA)
         Me.GroupBox5.Location = New System.Drawing.Point(6, 101)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(637, 327)
+        Me.GroupBox5.Size = New System.Drawing.Size(637, 297)
         Me.GroupBox5.TabIndex = 80
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Streaming Contents Encoding"
@@ -1454,9 +1584,9 @@ Partial Class Main
         Me.CHKSMOOTH.AutoSize = True
         Me.CHKSMOOTH.Location = New System.Drawing.Point(10, 114)
         Me.CHKSMOOTH.Name = "CHKSMOOTH"
-        Me.CHKSMOOTH.Size = New System.Drawing.Size(256, 17)
+        Me.CHKSMOOTH.Size = New System.Drawing.Size(355, 17)
         Me.CHKSMOOTH.TabIndex = 89
-        Me.CHKSMOOTH.Text = "Smooth Streaming Contents Encoding Mode"
+        Me.CHKSMOOTH.Text = "Smooth Streaming Contents Encoding Mode (Encoding to ismv)"
         Me.CHKSMOOTH.UseVisualStyleBackColor = True
         '
         'BOXCHLSADDRESS
@@ -1491,9 +1621,9 @@ Partial Class Main
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(16, 46)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(78, 13)
+        Me.Label12.Size = New System.Drawing.Size(88, 13)
         Me.Label12.TabIndex = 86
-        Me.Label12.Text = "Split Duration"
+        Me.Label12.Text = "Target Duration"
         '
         'BOXCUSTOMT
         '
@@ -1517,6 +1647,10 @@ Partial Class Main
         '
         'TabPage6
         '
+        Me.TabPage6.Controls.Add(Me.CHKRMMETADATA)
+        Me.TabPage6.Controls.Add(Me.CHKATRACKAVISYNTH)
+        Me.TabPage6.Controls.Add(Me.CHKPREFVP9)
+        Me.TabPage6.Controls.Add(Me.CHK4K)
         Me.TabPage6.Controls.Add(Me.CHKCMDWINDOW)
         Me.TabPage6.Controls.Add(Me.CHKMULTIENC)
         Me.TabPage6.Controls.Add(Me.CHKASYNC)
@@ -1526,15 +1660,63 @@ Partial Class Main
         Me.TabPage6.Controls.Add(Me.BOXFFMPEGEXE)
         Me.TabPage6.Location = New System.Drawing.Point(4, 22)
         Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(649, 434)
+        Me.TabPage6.Size = New System.Drawing.Size(649, 404)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Settings"
         Me.TabPage6.UseVisualStyleBackColor = True
         '
+        'CHKRMMETADATA
+        '
+        Me.CHKRMMETADATA.AutoSize = True
+        Me.CHKRMMETADATA.Checked = True
+        Me.CHKRMMETADATA.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CHKRMMETADATA.Location = New System.Drawing.Point(11, 130)
+        Me.CHKRMMETADATA.Name = "CHKRMMETADATA"
+        Me.CHKRMMETADATA.Size = New System.Drawing.Size(162, 17)
+        Me.CHKRMMETADATA.TabIndex = 80
+        Me.CHKRMMETADATA.Text = "Remove chapter/metadata"
+        Me.CHKRMMETADATA.UseVisualStyleBackColor = True
+        '
+        'CHKATRACKAVISYNTH
+        '
+        Me.CHKATRACKAVISYNTH.AutoSize = True
+        Me.CHKATRACKAVISYNTH.Checked = True
+        Me.CHKATRACKAVISYNTH.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CHKATRACKAVISYNTH.Location = New System.Drawing.Point(11, 107)
+        Me.CHKATRACKAVISYNTH.Name = "CHKATRACKAVISYNTH"
+        Me.CHKATRACKAVISYNTH.Size = New System.Drawing.Size(313, 17)
+        Me.CHKATRACKAVISYNTH.TabIndex = 79
+        Me.CHKATRACKAVISYNTH.Text = "Auto encoding audio track when encoding with avisynth"
+        Me.CHKATRACKAVISYNTH.UseVisualStyleBackColor = True
+        '
+        'CHKPREFVP9
+        '
+        Me.CHKPREFVP9.AutoSize = True
+        Me.CHKPREFVP9.Enabled = False
+        Me.CHKPREFVP9.Location = New System.Drawing.Point(11, 174)
+        Me.CHKPREFVP9.Name = "CHKPREFVP9"
+        Me.CHKPREFVP9.Size = New System.Drawing.Size(397, 17)
+        Me.CHKPREFVP9.TabIndex = 78
+        Me.CHKPREFVP9.Text = "Prefer Download VP9 Video on Youtube (Only Support webm Container)"
+        Me.CHKPREFVP9.UseVisualStyleBackColor = True
+        Me.CHKPREFVP9.Visible = False
+        '
+        'CHK4K
+        '
+        Me.CHK4K.AutoSize = True
+        Me.CHK4K.Enabled = False
+        Me.CHK4K.Location = New System.Drawing.Point(11, 153)
+        Me.CHK4K.Name = "CHK4K"
+        Me.CHK4K.Size = New System.Drawing.Size(373, 17)
+        Me.CHK4K.TabIndex = 77
+        Me.CHK4K.Text = "Always Download Best Quality Video on Youtube (Support 4K UHD)"
+        Me.CHK4K.UseVisualStyleBackColor = True
+        Me.CHK4K.Visible = False
+        '
         'CHKCMDWINDOW
         '
         Me.CHKCMDWINDOW.AutoSize = True
-        Me.CHKCMDWINDOW.Location = New System.Drawing.Point(168, 64)
+        Me.CHKCMDWINDOW.Location = New System.Drawing.Point(11, 84)
         Me.CHKCMDWINDOW.Name = "CHKCMDWINDOW"
         Me.CHKCMDWINDOW.Size = New System.Drawing.Size(192, 17)
         Me.CHKCMDWINDOW.TabIndex = 76
@@ -1546,9 +1728,9 @@ Partial Class Main
         Me.CHKMULTIENC.AutoSize = True
         Me.CHKMULTIENC.Location = New System.Drawing.Point(11, 64)
         Me.CHKMULTIENC.Name = "CHKMULTIENC"
-        Me.CHKMULTIENC.Size = New System.Drawing.Size(151, 17)
+        Me.CHKMULTIENC.Size = New System.Drawing.Size(329, 17)
         Me.CHKMULTIENC.TabIndex = 75
-        Me.CHKMULTIENC.Text = "Allow Multiple Encoding"
+        Me.CHKMULTIENC.Text = "Allow Multiple Encoding (CMD / NON-GUI Progress Mode)"
         Me.CHKMULTIENC.UseVisualStyleBackColor = True
         '
         'CHKASYNC
@@ -1566,8 +1748,6 @@ Partial Class Main
         'CHKVSYNC0
         '
         Me.CHKVSYNC0.AutoSize = True
-        Me.CHKVSYNC0.Checked = True
-        Me.CHKVSYNC0.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CHKVSYNC0.Location = New System.Drawing.Point(168, 41)
         Me.CHKVSYNC0.Name = "CHKVSYNC0"
         Me.CHKVSYNC0.Size = New System.Drawing.Size(120, 17)
@@ -1605,11 +1785,226 @@ Partial Class Main
         Me.BOXFFMPEGEXE.TabIndex = 70
         Me.BOXFFMPEGEXE.Text = "64bit FFmpeg"
         '
+        'TabPage8
+        '
+        Me.TabPage8.Controls.Add(Me.RB720P60F)
+        Me.TabPage8.Controls.Add(Me.RB1080P60F)
+        Me.TabPage8.Controls.Add(Me.Label36)
+        Me.TabPage8.Controls.Add(Me.BYOPENYTFOLDER)
+        Me.TabPage8.Controls.Add(Me.BOXYTFILENAME)
+        Me.TabPage8.Controls.Add(Me.YTPARSINGINFO)
+        Me.TabPage8.Controls.Add(Me.Label35)
+        Me.TabPage8.Controls.Add(Me.Label34)
+        Me.TabPage8.Controls.Add(Me.BTDNYOUTUBE)
+        Me.TabPage8.Controls.Add(Me.RB480P)
+        Me.TabPage8.Controls.Add(Me.RB360P)
+        Me.TabPage8.Controls.Add(Me.RB720P)
+        Me.TabPage8.Controls.Add(Me.RB1080P)
+        Me.TabPage8.Controls.Add(Me.RB2K)
+        Me.TabPage8.Controls.Add(Me.RB4K)
+        Me.TabPage8.Controls.Add(Me.BTPASTEYTADDRESS)
+        Me.TabPage8.Controls.Add(Me.LBYTADDRESS)
+        Me.TabPage8.Controls.Add(Me.YTDNFORMAT)
+        Me.TabPage8.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage8.Name = "TabPage8"
+        Me.TabPage8.Size = New System.Drawing.Size(649, 404)
+        Me.TabPage8.TabIndex = 7
+        Me.TabPage8.Text = "Youtube"
+        Me.TabPage8.UseVisualStyleBackColor = True
+        '
+        'RB720P60F
+        '
+        Me.RB720P60F.AutoSize = True
+        Me.RB720P60F.Enabled = False
+        Me.RB720P60F.Location = New System.Drawing.Point(126, 164)
+        Me.RB720P60F.Name = "RB720P60F"
+        Me.RB720P60F.Size = New System.Drawing.Size(81, 17)
+        Me.RB720P60F.TabIndex = 103
+        Me.RB720P60F.Text = "720p 60fps"
+        Me.RB720P60F.UseVisualStyleBackColor = True
+        '
+        'RB1080P60F
+        '
+        Me.RB1080P60F.AutoSize = True
+        Me.RB1080P60F.Enabled = False
+        Me.RB1080P60F.Location = New System.Drawing.Point(126, 141)
+        Me.RB1080P60F.Name = "RB1080P60F"
+        Me.RB1080P60F.Size = New System.Drawing.Size(87, 17)
+        Me.RB1080P60F.TabIndex = 102
+        Me.RB1080P60F.Text = "1080p 60fps"
+        Me.RB1080P60F.UseVisualStyleBackColor = True
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label36.Location = New System.Drawing.Point(15, 98)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(43, 13)
+        Me.Label36.TabIndex = 101
+        Me.Label36.Text = "Quality"
+        '
+        'BYOPENYTFOLDER
+        '
+        Me.BYOPENYTFOLDER.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BYOPENYTFOLDER.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BYOPENYTFOLDER.Location = New System.Drawing.Point(227, 237)
+        Me.BYOPENYTFOLDER.Name = "BYOPENYTFOLDER"
+        Me.BYOPENYTFOLDER.Size = New System.Drawing.Size(194, 26)
+        Me.BYOPENYTFOLDER.TabIndex = 100
+        Me.BYOPENYTFOLDER.Text = "Open Youtube Downloaded folder"
+        Me.BYOPENYTFOLDER.UseVisualStyleBackColor = True
+        '
+        'BOXYTFILENAME
+        '
+        Me.BOXYTFILENAME.Location = New System.Drawing.Point(6, 278)
+        Me.BOXYTFILENAME.Name = "BOXYTFILENAME"
+        Me.BOXYTFILENAME.Size = New System.Drawing.Size(632, 22)
+        Me.BOXYTFILENAME.TabIndex = 99
+        '
+        'YTPARSINGINFO
+        '
+        Me.YTPARSINGINFO.Location = New System.Drawing.Point(6, 317)
+        Me.YTPARSINGINFO.Multiline = True
+        Me.YTPARSINGINFO.Name = "YTPARSINGINFO"
+        Me.YTPARSINGINFO.ReadOnly = True
+        Me.YTPARSINGINFO.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.YTPARSINGINFO.Size = New System.Drawing.Size(636, 73)
+        Me.YTPARSINGINFO.TabIndex = 98
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label35.Location = New System.Drawing.Point(15, 70)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(117, 13)
+        Me.Label35.TabIndex = 97
+        Me.Label35.Text = "Format (Video/Audio)"
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label34.Location = New System.Drawing.Point(15, 12)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(100, 13)
+        Me.Label34.TabIndex = 95
+        Me.Label34.Text = "Youtube Address :"
+        '
+        'BTDNYOUTUBE
+        '
+        Me.BTDNYOUTUBE.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTDNYOUTUBE.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTDNYOUTUBE.Location = New System.Drawing.Point(18, 237)
+        Me.BTDNYOUTUBE.Name = "BTDNYOUTUBE"
+        Me.BTDNYOUTUBE.Size = New System.Drawing.Size(203, 26)
+        Me.BTDNYOUTUBE.TabIndex = 93
+        Me.BTDNYOUTUBE.Text = "Download Youtube"
+        Me.BTDNYOUTUBE.UseVisualStyleBackColor = True
+        '
+        'RB480P
+        '
+        Me.RB480P.AutoSize = True
+        Me.RB480P.Enabled = False
+        Me.RB480P.Location = New System.Drawing.Point(64, 187)
+        Me.RB480P.Name = "RB480P"
+        Me.RB480P.Size = New System.Drawing.Size(50, 17)
+        Me.RB480P.TabIndex = 92
+        Me.RB480P.Text = "480p"
+        Me.RB480P.UseVisualStyleBackColor = True
+        '
+        'RB360P
+        '
+        Me.RB360P.AutoSize = True
+        Me.RB360P.Enabled = False
+        Me.RB360P.Location = New System.Drawing.Point(64, 210)
+        Me.RB360P.Name = "RB360P"
+        Me.RB360P.Size = New System.Drawing.Size(50, 17)
+        Me.RB360P.TabIndex = 91
+        Me.RB360P.Text = "360p"
+        Me.RB360P.UseVisualStyleBackColor = True
+        '
+        'RB720P
+        '
+        Me.RB720P.AutoSize = True
+        Me.RB720P.Enabled = False
+        Me.RB720P.Location = New System.Drawing.Point(64, 164)
+        Me.RB720P.Name = "RB720P"
+        Me.RB720P.Size = New System.Drawing.Size(50, 17)
+        Me.RB720P.TabIndex = 90
+        Me.RB720P.Text = "720p"
+        Me.RB720P.UseVisualStyleBackColor = True
+        '
+        'RB1080P
+        '
+        Me.RB1080P.AutoSize = True
+        Me.RB1080P.Enabled = False
+        Me.RB1080P.Location = New System.Drawing.Point(64, 141)
+        Me.RB1080P.Name = "RB1080P"
+        Me.RB1080P.Size = New System.Drawing.Size(56, 17)
+        Me.RB1080P.TabIndex = 89
+        Me.RB1080P.Text = "1080p"
+        Me.RB1080P.UseVisualStyleBackColor = True
+        '
+        'RB2K
+        '
+        Me.RB2K.AutoSize = True
+        Me.RB2K.Enabled = False
+        Me.RB2K.Location = New System.Drawing.Point(64, 118)
+        Me.RB2K.Name = "RB2K"
+        Me.RB2K.Size = New System.Drawing.Size(37, 17)
+        Me.RB2K.TabIndex = 88
+        Me.RB2K.Text = "2K"
+        Me.RB2K.UseVisualStyleBackColor = True
+        '
+        'RB4K
+        '
+        Me.RB4K.AutoSize = True
+        Me.RB4K.Enabled = False
+        Me.RB4K.Location = New System.Drawing.Point(64, 95)
+        Me.RB4K.Name = "RB4K"
+        Me.RB4K.Size = New System.Drawing.Size(37, 17)
+        Me.RB4K.TabIndex = 87
+        Me.RB4K.Text = "4K"
+        Me.RB4K.UseVisualStyleBackColor = True
+        '
+        'BTPASTEYTADDRESS
+        '
+        Me.BTPASTEYTADDRESS.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTPASTEYTADDRESS.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTPASTEYTADDRESS.Location = New System.Drawing.Point(18, 34)
+        Me.BTPASTEYTADDRESS.Name = "BTPASTEYTADDRESS"
+        Me.BTPASTEYTADDRESS.Size = New System.Drawing.Size(231, 26)
+        Me.BTPASTEYTADDRESS.TabIndex = 86
+        Me.BTPASTEYTADDRESS.Text = "Paste Youtube Link"
+        Me.BTPASTEYTADDRESS.UseVisualStyleBackColor = True
+        '
+        'LBYTADDRESS
+        '
+        Me.LBYTADDRESS.AutoSize = True
+        Me.LBYTADDRESS.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.LBYTADDRESS.Location = New System.Drawing.Point(120, 12)
+        Me.LBYTADDRESS.Name = "LBYTADDRESS"
+        Me.LBYTADDRESS.Size = New System.Drawing.Size(0, 13)
+        Me.LBYTADDRESS.TabIndex = 86
+        '
+        'YTDNFORMAT
+        '
+        Me.YTDNFORMAT.AllowDrop = True
+        Me.YTDNFORMAT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.YTDNFORMAT.Items.AddRange(New Object() {"mp4", "mkv", "flv", "webm", "m4a", "aac"})
+        Me.YTDNFORMAT.Location = New System.Drawing.Point(137, 67)
+        Me.YTDNFORMAT.Name = "YTDNFORMAT"
+        Me.YTDNFORMAT.Size = New System.Drawing.Size(112, 21)
+        Me.YTDNFORMAT.TabIndex = 13
+        Me.YTDNFORMAT.Text = "mp4"
+        '
         'BTADDENCLIST
         '
         Me.BTADDENCLIST.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BTADDENCLIST.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTADDENCLIST.Location = New System.Drawing.Point(260, 663)
+        Me.BTADDENCLIST.Location = New System.Drawing.Point(259, 634)
         Me.BTADDENCLIST.Name = "BTADDENCLIST"
         Me.BTADDENCLIST.Size = New System.Drawing.Size(126, 26)
         Me.BTADDENCLIST.TabIndex = 64
@@ -1621,19 +2016,19 @@ Partial Class Main
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label13.ForeColor = System.Drawing.SystemColors.ButtonShadow
-        Me.Label13.Location = New System.Drawing.Point(469, 8)
+        Me.Label13.Location = New System.Drawing.Point(384, 7)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(180, 15)
         Me.Label13.TabIndex = 65
-        Me.Label13.Text = "Copyright ⓒ K.G.P (Louis) 2015"
+        Me.Label13.Text = "Copyright ⓒ 2015 K.G.P (Louis)"
         '
         'CHKLOG
         '
         Me.CHKLOG.AutoSize = True
-        Me.CHKLOG.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CHKLOG.Location = New System.Drawing.Point(221, 8)
+        Me.CHKLOG.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHKLOG.Location = New System.Drawing.Point(259, 8)
         Me.CHKLOG.Name = "CHKLOG"
-        Me.CHKLOG.Size = New System.Drawing.Size(88, 19)
+        Me.CHKLOG.Size = New System.Drawing.Size(86, 17)
         Me.CHKLOG.TabIndex = 66
         Me.CHKLOG.Text = "Enable LOG"
         Me.CHKLOG.UseVisualStyleBackColor = True
@@ -1650,17 +2045,17 @@ Partial Class Main
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label14.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label14.Location = New System.Drawing.Point(8, 33)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(39, 15)
+        Me.Label14.Size = New System.Drawing.Size(38, 13)
         Me.Label14.TabIndex = 68
         Me.Label14.Text = "Preset"
         '
         'BTPRSAVE
         '
         Me.BTPRSAVE.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTPRSAVE.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTPRSAVE.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTPRSAVE.Location = New System.Drawing.Point(299, 30)
         Me.BTPRSAVE.Name = "BTPRSAVE"
         Me.BTPRSAVE.Size = New System.Drawing.Size(75, 23)
@@ -1671,7 +2066,7 @@ Partial Class Main
         'BTPRLOAD
         '
         Me.BTPRLOAD.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTPRLOAD.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTPRLOAD.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTPRLOAD.Location = New System.Drawing.Point(380, 30)
         Me.BTPRLOAD.Name = "BTPRLOAD"
         Me.BTPRLOAD.Size = New System.Drawing.Size(75, 23)
@@ -1683,7 +2078,7 @@ Partial Class Main
         '
         Me.CHKAUTONAME.AutoSize = True
         Me.CHKAUTONAME.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CHKAUTONAME.Location = New System.Drawing.Point(8, 644)
+        Me.CHKAUTONAME.Location = New System.Drawing.Point(7, 615)
         Me.CHKAUTONAME.Name = "CHKAUTONAME"
         Me.CHKAUTONAME.Size = New System.Drawing.Size(195, 17)
         Me.CHKAUTONAME.TabIndex = 71
@@ -1716,22 +2111,36 @@ Partial Class Main
         'CHKALLSET
         '
         Me.CHKALLSET.AutoSize = True
-        Me.CHKALLSET.Font = New System.Drawing.Font("맑은 고딕", 8.5!)
-        Me.CHKALLSET.Location = New System.Drawing.Point(462, 32)
+        Me.CHKALLSET.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CHKALLSET.Location = New System.Drawing.Point(460, 33)
         Me.CHKALLSET.Name = "CHKALLSET"
-        Me.CHKALLSET.Size = New System.Drawing.Size(116, 19)
+        Me.CHKALLSET.Size = New System.Drawing.Size(140, 17)
         Me.CHKALLSET.TabIndex = 72
-        Me.CHKALLSET.Text = "Save All Settings"
+        Me.CHKALLSET.Text = "Save/Load All Settings"
         Me.CHKALLSET.UseVisualStyleBackColor = True
         '
         'Button10
         '
-        Me.Button10.Location = New System.Drawing.Point(570, 53)
+        Me.Button10.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button10.Location = New System.Drawing.Point(570, 4)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(82, 23)
         Me.Button10.TabIndex = 85
         Me.Button10.Text = "About"
         Me.Button10.UseVisualStyleBackColor = True
+        '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
+        '
+        'BackgroundWorker2
+        '
+        Me.BackgroundWorker2.WorkerReportsProgress = True
+        Me.BackgroundWorker2.WorkerSupportsCancellation = True
+        '
+        'COLDURATION
+        '
+        Me.COLDURATION.Text = "Duration"
         '
         'Main
         '
@@ -1739,7 +2148,7 @@ Partial Class Main
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
-        Me.ClientSize = New System.Drawing.Size(656, 694)
+        Me.ClientSize = New System.Drawing.Size(656, 669)
         Me.Controls.Add(Me.Button10)
         Me.Controls.Add(Me.CHKALLSET)
         Me.Controls.Add(Me.CHKAUTONAME)
@@ -1766,7 +2175,7 @@ Partial Class Main
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "Main"
-        Me.Text = "Infinity Media Encoder Alpha 5"
+        Me.Text = "Infinity Media Encoder Alpha 6.2"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
@@ -1791,6 +2200,8 @@ Partial Class Main
         Me.GroupBox5.PerformLayout()
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
+        Me.TabPage8.ResumeLayout(False)
+        Me.TabPage8.PerformLayout()
         CType(Me.PerformanceCounter1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -1851,7 +2262,6 @@ Partial Class Main
     Friend WithEvents Button6 As System.Windows.Forms.Button
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
     Friend WithEvents BTADDENCLIST As System.Windows.Forms.Button
-    Friend WithEvents CHK4K As System.Windows.Forms.CheckBox
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents CHKLOG As System.Windows.Forms.CheckBox
     Friend WithEvents BOXPRESETFILENAME As System.Windows.Forms.ComboBox
@@ -1943,4 +2353,40 @@ Partial Class Main
     Friend WithEvents BOXCUSTOMT As System.Windows.Forms.ComboBox
     Friend WithEvents CHKQA As System.Windows.Forms.CheckBox
     Friend WithEvents Button10 As System.Windows.Forms.Button
+    Friend WithEvents CHKPREFVP9 As System.Windows.Forms.CheckBox
+    Friend WithEvents CHK4K As System.Windows.Forms.CheckBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents CHKATRACKAVISYNTH As System.Windows.Forms.CheckBox
+    Friend WithEvents CHKRMMETADATA As System.Windows.Forms.CheckBox
+    Friend WithEvents ENCLISTVIEWMAIN As System.Windows.Forms.ListView
+    Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents COLSTARTTIME As System.Windows.Forms.ColumnHeader
+    Friend WithEvents COLENDTIME As System.Windows.Forms.ColumnHeader
+    Friend WithEvents BackgroundWorker2 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Label33 As System.Windows.Forms.Label
+    Friend WithEvents BOXAUDBITDEPTH As System.Windows.Forms.ComboBox
+    Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
+    Friend WithEvents RB480P As System.Windows.Forms.RadioButton
+    Friend WithEvents RB360P As System.Windows.Forms.RadioButton
+    Friend WithEvents RB720P As System.Windows.Forms.RadioButton
+    Friend WithEvents RB1080P As System.Windows.Forms.RadioButton
+    Friend WithEvents RB2K As System.Windows.Forms.RadioButton
+    Friend WithEvents RB4K As System.Windows.Forms.RadioButton
+    Friend WithEvents BTPASTEYTADDRESS As System.Windows.Forms.Button
+    Friend WithEvents LBYTADDRESS As System.Windows.Forms.Label
+    Friend WithEvents YTDNFORMAT As System.Windows.Forms.ComboBox
+    Friend WithEvents BTDNYOUTUBE As System.Windows.Forms.Button
+    Friend WithEvents Label34 As System.Windows.Forms.Label
+    Friend WithEvents Label35 As System.Windows.Forms.Label
+    Friend WithEvents YTPARSINGINFO As System.Windows.Forms.TextBox
+    Friend WithEvents BOXYTFILENAME As System.Windows.Forms.TextBox
+    Friend WithEvents BYOPENYTFOLDER As System.Windows.Forms.Button
+    Friend WithEvents Label36 As System.Windows.Forms.Label
+    Friend WithEvents RB720P60F As System.Windows.Forms.RadioButton
+    Friend WithEvents RB1080P60F As System.Windows.Forms.RadioButton
+    Friend WithEvents BOXRSINFO As System.Windows.Forms.TextBox
+    Friend WithEvents Button12 As System.Windows.Forms.Button
+    Friend WithEvents COLDURATION As System.Windows.Forms.ColumnHeader
 End Class
