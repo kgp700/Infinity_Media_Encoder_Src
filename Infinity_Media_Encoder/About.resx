@@ -124,7 +124,7 @@
     <value>Infinity Media Encoder
 
  This program is possible to install in Individual / Company / School / Government anywhere and use freely.
- Copyright © 2014-2015 K.G.P
+ Copyright © 2014-2016 K.G.P
  License: Freeware
 
  ----------------------------------------------
@@ -133,7 +133,7 @@
 
  Source: http://sourceforge.net/projects/infinity-media-encoder/files/FFmpeg/Source/
  Copyright (c) 2000-2015 the FFmpeg developers
- License: GPLv3
+ License: LGPL
 
  ----------------------------------------------
 
@@ -152,6 +152,10 @@
  Download source code: https://github.com/rg3/youtube-dl
  Homepage: http://youtube-dl.org/
 
+ MPlayer
+ Licensed under the GPL v2
+ Download source code: https://www.mplayerhq.hu/
+ Homepage: https://www.mplayerhq.hu/
  ----------------------------------------------
 
  Libfdk_aac, opencore-amr, vo-amrwbenc, vo-aacenc

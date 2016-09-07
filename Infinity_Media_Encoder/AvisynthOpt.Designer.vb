@@ -74,11 +74,11 @@ Partial Class AvisynthOpt
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(139, 364)
+        Me.Button1.Location = New System.Drawing.Point(163, 364)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(111, 23)
+        Me.Button1.Size = New System.Drawing.Size(127, 23)
         Me.Button1.TabIndex = 4
-        Me.Button1.Text = "Save / Indexing"
+        Me.Button1.Text = "Save with Indexing"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'BOXDGNOISEFILTER
@@ -92,11 +92,11 @@ Partial Class AvisynthOpt
         '
         'BOXAVSSCRIPT
         '
-        Me.BOXAVSSCRIPT.Location = New System.Drawing.Point(9, 96)
+        Me.BOXAVSSCRIPT.Location = New System.Drawing.Point(1, 96)
         Me.BOXAVSSCRIPT.Multiline = True
         Me.BOXAVSSCRIPT.Name = "BOXAVSSCRIPT"
         Me.BOXAVSSCRIPT.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.BOXAVSSCRIPT.Size = New System.Drawing.Size(499, 261)
+        Me.BOXAVSSCRIPT.Size = New System.Drawing.Size(593, 261)
         Me.BOXAVSSCRIPT.TabIndex = 6
         Me.BOXAVSSCRIPT.Text = resources.GetString("BOXAVSSCRIPT.Text")
         '
@@ -135,9 +135,9 @@ Partial Class AvisynthOpt
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(256, 364)
+        Me.Button2.Location = New System.Drawing.Point(296, 364)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(111, 23)
+        Me.Button2.Size = New System.Drawing.Size(134, 23)
         Me.Button2.TabIndex = 10
         Me.Button2.Text = "Save Script Only"
         Me.Button2.UseVisualStyleBackColor = True
@@ -146,7 +146,7 @@ Partial Class AvisynthOpt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(519, 399)
+        Me.ClientSize = New System.Drawing.Size(595, 399)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.CHKAVSMT)
         Me.Controls.Add(Me.RDBFFMS2)

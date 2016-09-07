@@ -11,14 +11,17 @@ Public Class AdvancedFRM
     Public LBBFRAMES As String
     Public LBAQSTR As String
     Public LBDEBLOCK As String
-    Public LBFADE As String
     Public LBSCENE As String
+    Public X264ADVOPT As String
+
 
 
     Private FileName As String = System.IO.Path.Combine(Application.StartupPath, "ADVENCSettings.xml")
 
 
+
     Private Sub Button1s_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1s.Click
+
         Dim Data As New List(Of ControlData)
         FindControls(Me, Data)
 
@@ -37,7 +40,6 @@ Public Class AdvancedFRM
         LBAQMODE = ":aq-mode=" + BOXAQMODE.Text
         LBAQSTR = ":aq-strength=" + BOXAQSTR.Text
         LBDEBLOCK = " -deblock " + NMDBSTR.Text + ":" + NMDBTR.Text + " "
-        LBFADE = ":fade_compensate=" + BOXFADE.Text
         LBSCENE = ":scenecut=" + BOXSCENE.Text
 
         Me.Hide()
@@ -52,40 +54,72 @@ Public Class AdvancedFRM
     End Sub
 
     Private Sub AdvancedFRM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If System.IO.File.Exists(FileName) Then
+
+
+    End Sub
+    Public Sub FindControls(ByVal cont As Control, ByVal Data As List(Of ControlData))
+        For Each ctl As Control In cont.Controls
+            If TypeOf ctl Is ComboBox Then
+                Dim CB As ComboBox = DirectCast(ctl, ComboBox)
+                If Not CB.Text = "" Then
+
+                    Dim cd As New ControlData
+                    cd.ControlName = ctl.Name
+                    cd.ControlProperty = "Text"
+                    cd.ControlData = CB.Text.ToString
+                    Data.Add(cd)
+
+                End If
+            ElseIf ctl.HasChildren Then
+                FindControls(ctl, Data)
+
+            End If
+
+            If TypeOf ctl Is CheckBox Then
+                Dim CB As CheckBox = DirectCast(ctl, CheckBox)
+
+                Dim cd As New ControlData
+                cd.ControlName = ctl.Name
+                cd.ControlProperty = "Checked"
+                cd.ControlData = CB.Checked.ToString
+                Data.Add(cd)
+
+
+            End If
+
+
+            If TypeOf ctl Is NumericUpDown Then
+                Dim CB As NumericUpDown = DirectCast(ctl, NumericUpDown)
+
+                Dim cd As New ControlData
+                cd.ControlName = ctl.Name
+                cd.ControlProperty = "Text"
+                cd.ControlData = CB.Text.ToString
+                Data.Add(cd)
+
+
+            End If
+        Next
+    End Sub
+    Public Function LoadPresetADV()
+        If System.IO.File.Exists(".\Preset\" + Main.PRESETFILENAME + ".xml") Then
             Dim Data As New List(Of ControlData)
             Dim xml As New XmlSerializer(Data.GetType)
-            Using reader As New FileStream(FileName, FileMode.Open)
+            Using reader As New FileStream(".\Preset\" + Main.PRESETFILENAME + ".xml", FileMode.Open)
                 Data = CType(xml.Deserialize(reader), List(Of ControlData))
+
             End Using
 
             Dim matches() As Control
             For Each cd As ControlData In Data
                 matches = Me.Controls.Find(cd.ControlName, True)
                 If matches.Length > 0 Then
-                    CallByName(matches(0), cd.ControlProperty, CallType.Let, cd.ControlData) ' <-- this could also be done using proper REFLECTION!
+                    CallByName(matches(0), cd.ControlProperty, CallType.Let, cd.ControlData)
                 End If
             Next
         End If
 
-    End Sub
-    Private Sub FindControls(ByVal cont As Control, ByVal Data As List(Of ControlData))
-        For Each ctl As Control In cont.Controls
-            If TypeOf ctl Is ComboBox Then
-                Dim CB As ComboBox = DirectCast(ctl, ComboBox)
-                If Not IsNothing(CB.SelectedItem) Then
-                    Dim cd As New ControlData
-                    cd.ControlName = ctl.Name
-                    cd.ControlProperty = "SelectedItem"
-                    cd.ControlData = CB.SelectedItem.ToString
-                    Data.Add(cd)
-                End If
-            ElseIf ctl.HasChildren Then
-                FindControls(ctl, Data)
-            End If
-        Next
-    End Sub
-
+    End Function
     Private Sub Button2_Click(sender As Object, e As EventArgs)
 
     End Sub

@@ -5,15 +5,12 @@
 
 
     Private Sub WaitScreen_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        SplashTimer.Start()
-        Me.Show()
+       
     End Sub
 
     Private Sub SplashTimer_Tick(sender As Object, e As EventArgs) Handles SplashTimer.Tick
-        SplashTimer.Stop()
-        If FRMProgress.p.HasExited Then
-            Me.Hide()
-        End If
+
+       
 
     End Sub
 End Class

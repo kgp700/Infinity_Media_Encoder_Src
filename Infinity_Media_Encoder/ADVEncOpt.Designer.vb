@@ -264,9 +264,9 @@ Partial Class AdvancedFRM
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(13, 303)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(99, 13)
+        Me.Label3.Size = New System.Drawing.Size(53, 13)
         Me.Label3.TabIndex = 20
-        Me.Label3.Text = "Fade Compensate"
+        Me.Label3.Text = "Reserved"
         '
         'Label8
         '
@@ -320,6 +320,7 @@ Partial Class AdvancedFRM
         '
         'BOXFADE
         '
+        Me.BOXFADE.Enabled = False
         Me.BOXFADE.FormattingEnabled = True
         Me.BOXFADE.Items.AddRange(New Object() {"0.0", "0.5", "1.0"})
         Me.BOXFADE.Location = New System.Drawing.Point(121, 300)

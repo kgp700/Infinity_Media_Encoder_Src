@@ -34,7 +34,26 @@ Public Class FRMCUSTOMENC
     End Sub
 
 
-    Public Function ParsingsettingsCustomEncOpt() As String()
+    Public Function ParsingsettingsCustomEncOpt()
+        BOXCUSTOMCODECOPT.Text = ""
+        Main.CUSTOMCODECOPT = ""
+        BOXCUSTOMCODECOPTTEXT = ""
+
+        BOXCUSTOMVFILTEROPT.Text = ""
+        Main.CUSTOMVIDEOFILTER = ""
+        CUSTOMVIDEOFILTERTEXT = ""
+
+        BOXCUSTOMAUDFILTEROPT.Text = ""
+        Main.CUSTOMAUDIOFILTER = ""
+        CUSTOMAUDIOFILTERTEXT = ""
+
+        BOXCUSTOMFFMPEGOPT.Text = ""
+        Main.CUSTOMFFMPEGOPT = ""
+        CUSTOMFFMPEGOPTTEXT = ""
+
+        BOXCUSTOMFFMPEGOPTF.Text = ""
+        Main.CUSTOMFFMPEGOPTF = ""
+        CUSTOMFFMPEGOPTTEXTF = ""
 
         If System.IO.File.Exists(".\Preset\" + Main.PRESETFILENAME + ".xml") Then
             Dim Data As New List(Of ControlData)

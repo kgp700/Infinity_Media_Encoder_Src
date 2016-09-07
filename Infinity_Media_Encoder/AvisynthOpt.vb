@@ -115,7 +115,7 @@
 
             End If
         ElseIf RDBFFMS2.Checked = True And Not My.Computer.FileSystem.FileExists(Main.InputCBOX.Text + ".avs") Then
-            If InStr(2, Main.BOXFPSINFO.Text, ".000") Then
+            If InStr(2, Main.BOXFPSINFO.Text, ".00") Then
                 FPSNUM = Int(Main.BOXFPSINFO.Text).ToString + ", "
                 FPSDEN = "fpsden=1"
             ElseIf Main.INFOFRAMEMODE = "VFR" Then

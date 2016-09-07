@@ -16,13 +16,9 @@ Public Class FRMProgress
     Public p As New Process
     Public FFPARAM As String
     Public outputReader As StreamReader
-    Public TRIMCHK As Boolean
     Public TRIMTO As String
-    'Dim strbuilder As New StringBuilder
     Public outdata As String
     Public logdata As String
-    'Public VALTRIMTO As Double = TimeSpan.Parse(Main.BOXTRIMTO.Text).TotalSeconds
-    'Public VALTRIMSS As Double = TimeSpan.Parse(Main.BOXTRIMSS.Text).TotalSeconds
     Public VALTRIMTO As Double
     Public VALTRIMSS As Double
     Public LISTINDEX As Integer = 0
@@ -38,9 +34,15 @@ Public Class FRMProgress
     Private VIDEODUR As Double
     Private AUDIODUR As Double
     Private TempDuration As Double
-
+    Private startstreamflag As Boolean = False
+    Public TRIMCHK As String
     Public osver As System.OperatingSystem
+    Dim CALCDURATION As Double
     Private WithEvents worker As BackgroundWorker
+    Public Delegate Sub NextPrimeDelegate()
+
+
+
 
 
     Private Sub DoWorkHandler(sender As Object, args As DoWorkEventArgs) Handles worker.DoWork
@@ -69,11 +71,11 @@ Public Class FRMProgress
         End While
 
 
-        
+
         'BackgroundWorker_1.CancelAsync()
 
         'outputReader.Close()
-    
+
 
 
 
@@ -95,6 +97,8 @@ Public Class FRMProgress
 
     Private Sub BTNSTOP_Click(sender As Object, e As EventArgs) Handles BTNSTOP.Click
         Stopped = True
+        ForceStopped = False
+
         If osver.ToString.Contains("6.1") Or osver.ToString.Contains("5.1") Or osver.ToString.Contains("5.0") Or osver.ToString.Contains("6.0") Then
             Try
                 KillProcessAndChildren(p.Id)
@@ -102,8 +106,8 @@ Public Class FRMProgress
 
             End Try
             BackgroundWorker_1.CancelAsync()
-            outputReader.DiscardBufferedData()
-            outputReader.Close()
+            'outputReader.DiscardBufferedData()
+            'outputReader.Close()
         Else
             If BTNPAUSE.Text = "Resume Process" Then
                 Try
@@ -174,10 +178,9 @@ Public Class FRMProgress
 
         Try
             Dim proc As Process = Process.GetProcessById(pid)
+            'proc.StandardInput.Write(Command)
+            proc.StandardInput.Write("q" & vbLf)
 
-            AttachConsole(CUInt(pid))
-            GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(pid))
-            FreeConsole()
 
         Catch
         End Try
@@ -192,7 +195,11 @@ Public Class FRMProgress
         For Each mo2 As ManagementObject In moc2
             StopProcessTree(Convert.ToInt32(mo2("ProcessID")))
         Next
-
+        Dim searcher3 As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc3 As ManagementObjectCollection = searcher3.[Get]()
+        For Each mo3 As ManagementObject In moc3
+            StopProcessTree(Convert.ToInt32(mo3("ProcessID")))
+        Next
 
     End Sub
 
@@ -309,21 +316,22 @@ Public Class FRMProgress
     Public Function GetCMD() As String()
 
         RUNCMD = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(2).Text
-        MEDIADURATION = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(5).Text
-        DURATION2 = Convert.ToInt32(TimeSpan.Parse(ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(5).Text).TotalSeconds)
-        DURATIONTIME = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(5).Text
+        ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Processing"
+        Try
+            MEDIADURATION = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(5).Text
+            DURATION2 = Convert.ToInt32(TimeSpan.Parse(ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(5).Text).TotalSeconds)
+            DURATIONTIME = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(5).Text
+        Catch
+
+        End Try
+
         Windows.Forms.Application.DoEvents()
     End Function
-    Public Function inputDuration() As String()
 
-
-
-    End Function
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker_1.DoWork
 
         Invoke(New Action(Function() GetCMD()))
 
-        'Invoke(New Action(Function() ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "In Progress"))
 
         With p.StartInfo
             .WindowStyle = ProcessWindowStyle.Minimized
@@ -332,6 +340,8 @@ Public Class FRMProgress
             .FileName = "cmd"
 
             .UseShellExecute = False
+
+
             .RedirectStandardError = True
             .RedirectStandardInput = True
             If Main.CHKCMDWINDOW.Checked = True Then
@@ -343,12 +353,12 @@ Public Class FRMProgress
         End With
 
         p.Start()
-        outputReader = p.StandardError
+        'outputReader = p.StandardError
 
         'Dim output As String
 
         While p.StandardError.EndOfStream = False
-            outdata = outputReader.ReadLine()
+            outdata = p.StandardError.ReadLine()
 
             Try
                 BackgroundWorker_1.ReportProgress(0, outdata)
@@ -359,10 +369,7 @@ Public Class FRMProgress
 
 
         End While
-        'If p.StandardError.EndOfStream = True Then
-        'Label8.Text = "Processing Done!"
-        'MsgBox("Processing Done!", MsgBoxStyle.Information)
-        'End If
+
 
 
     End Sub
@@ -374,200 +381,291 @@ Public Class FRMProgress
         Catch
 
         End Try
-       
 
-        logdata = e.UserState.ToString
-        If TRIMCHK = True Then
-            Label1.Visible = False
-            Label2.Visible = False
-            If Not VALTRIMSS = "0" And Not VALTRIMTO = "0" Then
-                Try
-                    Dim Line = e.UserState.ToString : Static Durationtr As Double
-                    If Line.Contains("Duration:") Then
-                        Dim str = Line.Substring(Line.IndexOf(":") + 2)
-                        Durationtr = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
-                    ElseIf Line.Contains("time=") Then
-                        Dim strtr = Line.Substring(Line.IndexOf(":") - 2)
+        Try
+            logdata = e.UserState.ToString
 
-                        Dim CALCDURATION As Double = VALTRIMTO - VALTRIMSS
-                        Dim CALCDUR = CALCDURATION.ToString
-                        ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / CALCDURATION * 100)
-                        Percentage.Text = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / CALCDURATION * 100).ToString + "%"
-                    End If
-                Catch
-                End Try
-            Else
-                Try
-                    Dim Line = e.UserState.ToString : Static Durationtra As Double
-                    If Line.Contains("Duration:") Then
-                        Dim str = Line.Substring(Line.IndexOf(":") + 2)
-                        Durationtra = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
-                    ElseIf Line.Contains("time=") Then
-                        Dim str = Line.Substring(Line.IndexOf(":") - 2)
-    
-                        ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100)
-                        Percentage.Text = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100).ToString + "%"
-                    End If
-                Catch
-                End Try
-            End If
+            If Not ENCODINGLISTVIEW.Items(0).SubItems(0).Text = "Live Streaming" Then
 
-        Else
-            Label1.Visible = True
-            Label2.Visible = True
-            Try
-                Dim Line = e.UserState.ToString : Static Duration As Double
+                If TRIMCHK = "Yes" Then
+                    Label1.Visible = False
+                    Label2.Visible = False
+                    If Not VALTRIMSS = "0" And Not VALTRIMTO = "0" Then
+                        Label1.Visible = True
+                        Label2.Visible = True
+                        Try
+                            Dim Line = e.UserState.ToString : Static Durationtr As Double
+                            If Line.Contains("Duration:") Then
+                                Dim str = Line.Substring(Line.IndexOf(":") + 2)
+                                Durationtr = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
+                            ElseIf Line.Contains("time=") Then
+                                Dim strtr = Line.Substring(Line.IndexOf(":") - 2)
 
-                If Line.Contains("Duration:") Then
-                    Dim str = Line.Substring(Line.IndexOf(":") + 2)
-                    TempDuration = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
+                                CALCDURATION = VALTRIMTO - VALTRIMSS
+                                Dim CALCDUR = CALCDURATION.ToString
+                                ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / CALCDURATION * 100)
+                                Percentage.Text = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / CALCDURATION * 100).ToString + "%"
+                            End If
+                        Catch
+                        End Try
+                    ElseIf Not VALTRIMSS = "0" And VALTRIMTO = "0" And VALTRIMTO = DURATION2 Then
+                        Try
+                            Dim Line = e.UserState.ToString : Static Durationtaa1 As Double
+                            If Line.Contains("Duration:") Then
+                                Dim str = Line.Substring(Line.IndexOf(":") + 2)
+                                Durationtaa1 = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
+                            ElseIf Line.Contains("time=") Then
+                                Dim strtr = Line.Substring(Line.IndexOf(":") - 2)
+                                Dim DUR As Integer = DURATION2 - VALTRIMSS
 
 
-                    If Duration > TempDuration Then
+                                ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / DUR * 100)
+                                Percentage.Text = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / DUR * 100).ToString + "%"
+                            End If
+                        Catch
+                        End Try
+                    ElseIf VALTRIMSS = "0" And Not VALTRIMTO = "0" Then
+                        Label1.Visible = True
+                        Label2.Visible = True
+                        Try
+                            Dim Line = e.UserState.ToString : Static Durationtaa As Double
+                            If Line.Contains("Duration:") Then
+                                Dim str = Line.Substring(Line.IndexOf(":") + 2)
+                                Durationtaa = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
+                            ElseIf Line.Contains("time=") Then
+                                Dim strtr = Line.Substring(Line.IndexOf(":") - 2)
 
-                    ElseIf Duration = 0.0 And Duration < TempDuration Then
-                        Duration = TempDuration
+
+                                ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / VALTRIMTO * 100)
+                                Percentage.Text = Convert.ToInt32(TimeSpan.Parse(strtr.Remove(strtr.IndexOf("b") - 1)).TotalSeconds / VALTRIMTO * 100).ToString + "%"
+                            End If
+                        Catch
+                        End Try
                     Else
 
+                        Try
+                            Dim Line = e.UserState.ToString : Static Durationtra As Double
+                            If Line.Contains("Duration:") Then
+                                Dim str = Line.Substring(Line.IndexOf(":") + 2)
+                                Durationtra = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
+                            ElseIf Line.Contains("time=") Then
+                                Dim str = Line.Substring(Line.IndexOf(":") - 2)
+
+                                ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100)
+                                Percentage.Text = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100).ToString + "%"
+                            End If
+                        Catch
+                        End Try
                     End If
 
+                Else
 
-                ElseIf Line.Contains("time=") Then
-                    Dim str = Line.Substring(Line.IndexOf(":") - 2)
-                    ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100)
-                    Percentage.Text = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100).ToString + "%"
+                    Try
+                        Dim Line = e.UserState.ToString : Static Duration As Double
+
+                        If Line.Contains("Duration:") Then
+                            Dim str = Line.Substring(Line.IndexOf(":") + 2)
+                            Duration = TimeSpan.Parse(str.Remove(str.IndexOf(","))).TotalSeconds
+
+
+                        ElseIf Line.Contains("time=") Then
+                            Dim str = Line.Substring(Line.IndexOf(":") - 2)
+                            ProgressBar1.Value = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100)
+                            Percentage.Text = Convert.ToInt32(TimeSpan.Parse(str.Remove(str.IndexOf("b") - 1)).TotalSeconds / DURATION2 * 100).ToString + "%"
+                        End If
+                    Catch
+                    End Try
                 End If
-            Catch
-            End Try
-        End If
-
-
-
-
-
-        If CHKVIEWLOG.Checked = True Then
-            Try
-                ListBox1.Items.Add(logdata)
-                Me.ListBox1.SelectedIndex = Me.ListBox1.SelectedIndex + 1
-            Catch
-            End Try
-
-
-        End If
-
-
-        If InStr(Main.OutputCBox.Text, "//") Or InStr(Main.InputCBOX.Text, "//") Then
-            If logdata.Contains("bitrate=") Then
-                Try
-                    Dim split3 As String() = logdata.Split(New [Char]() {"="})
-                    Dim String9 As String = split3(6)
-                    Dim String10 As String = String9.Replace(":", "")
-                    Dim String11 As String = String10.Replace(".", "")
-                    Dim String12 As String = String11.Replace(" bitrate", "")
-                    Dim String13 As String = String9.Replace(" bitrate", "")
-                    LBBITRATE.Text = String13
-                Catch
-
-                End Try
             End If
 
-            If logdata.Contains("fps=") Then
-                Try
-                    Dim split4 As String() = logdata.Split(New [Char]() {"="})
-                    Dim String14 As String = split4(2)
-                    Dim String15 As String = String14.Replace(":", "")
-                    Dim String16 As String = String15.Replace(".", "")
-                    Dim String17 As String = String16.Replace(" fps", "")
-                    Dim String18 As String = String14.Replace(" q", "")
-                    LBFPS.Text = String18 + "fps"
-                Catch
 
+            If CHKVIEWLOG.Checked = True Then
+                Try
+
+                    'BeginInvoke(New Action(Function() ListBox1.Items.Add(logdata)))
+                    'ListBox1.BeginUpdate()
+
+                    'ListBox1.EndUpdate()
+
+                    Invoke(DirectCast(Sub()
+                                          ListBox1.Items.Add(logdata)
+                                          ListBox1.SelectedIndex = ListBox1.Items.Count - 1
+
+
+                                      End Sub, MethodInvoker))
+
+
+                Catch
                 End Try
 
+
             End If
 
-            If logdata.Contains("frame dropped!") And logdata.Contains("time=") Then
-                LBWARN.Text = "Frame Dropped!"
-            End If
-        ElseIf Main.BOXCODEC.Text = "No Video" Then
-            LBBITRATE.Text = ""
-            Label4.Text = ""
-            Label6.Text = ""
-            LBFPS.Text = ""
 
+            If ENCODINGLISTVIEW.Items(0).SubItems(0).Text = "Live Streaming" Then
+                If logdata.Contains("bitrate=") Then
+                    Try
+                        Dim split3 As String() = logdata.Split(New [Char]() {"="})
+                        Dim String9 As String = split3(6)
+                        Dim String10 As String = String9.Replace(":", "")
+                        Dim String11 As String = String10.Replace(".", "")
+                        Dim String12 As String = String11.Replace(" bitrate", "")
+                        Dim String13 As String = String9.Replace(" bitrate", "")
+                        LBBITRATE.Text = String13
+                    Catch
 
-        Else
-            If logdata.Contains("Duration:") Then
-                Try
-                    Dim split1 As String() = logdata.Split(New [Char]() {" ", ","})
-                    Dim String1 As String = split1(3)
-                    Dim String2 As String = String1.Replace(":", "")
-                    Dim String3 As String = String2.Replace(".", "")
+                    End Try
+                End If
 
-                    If Main.TRIMCHKVAL = True Then
-                        'ProgressBar1.Maximum = String3
-                        Label2.Text = TRIMTO & " Completed"
-                        'ProgressBar1.Visible = False
+                If logdata.Contains("fps=") Then
+                    Try
+                        Dim split4 As String() = logdata.Split(New [Char]() {"="})
+                        Dim String14 As String = split4(2)
+                        Dim String15 As String = String14.Replace(":", "")
+                        Dim String16 As String = String15.Replace(".", "")
+                        Dim String17 As String = String16.Replace(" fps", "")
+                        Dim String18 As String = String14.Replace(" q", "")
+                        LBFPS.Text = String18 + "fps"
+                    Catch
 
-                    Else
+                    End Try
 
-                        ProgressBar1.Visible = True
-                        'ProgressBar1.Maximum = String3
-                        'Label2.Text = String1 & " Completed"
-                        Label2.Text = DURATIONTIME & " Completed"
+                End If
+
+                If logdata.Contains("frame=") Then
+                    startstreamflag = True
+                End If
+                If startstreamflag = True Then
+                    If logdata.Contains("frame dropped!") Or logdata.Contains("drop=") Then
+                        LBWARN.Text = "Frame Dropped!"
                     End If
+                End If
 
-                Catch
-                End Try
+            ElseIf Main.BOXCODEC.Text = "No Video" Then
+                LBBITRATE.Text = ""
+                Label4.Text = ""
+                Label6.Text = ""
+                LBFPS.Text = ""
+
+
+            Else
+                If logdata.Contains("Duration:") Then
+                    Try
+                        Dim split1 As String() = logdata.Split(New [Char]() {" ", ","})
+                        Dim String1 As String = split1(3)
+                        Dim String2 As String = String1.Replace(":", "")
+                        Dim String3 As String = String2.Replace(".", "")
+
+                        If TRIMCHK = "Yes" Then
+                            If Not VALTRIMSS = "0" And Not VALTRIMTO = "0" Then
+                                CALCDURATION = VALTRIMTO - VALTRIMSS
+                                Dim ts As TimeSpan = TimeSpan.FromSeconds(CALCDURATION)
+                                Dim mydate As DateTime = New DateTime(ts.Ticks)
+                                Label2.Text = mydate.ToString(("HH:mm:ss"))
+
+                            ElseIf Not VALTRIMSS = "0" And VALTRIMTO = "0" And VALTRIMTO = DURATION2 Then
+                                Label2.Text = DURATION2 & " Completed"
+
+                            ElseIf VALTRIMSS = "0" And Not VALTRIMTO = "0" Then
+                                Label2.Text = TRIMTO & " Completed"
+                            End If
+
+                            'ProgressBar1.Maximum = String3
+                            'Label2.Text = TRIMTO & " Completed"
+                            'ProgressBar1.Visible = False
+
+                        Else
+
+                            ProgressBar1.Visible = True
+                            'ProgressBar1.Maximum = String3
+                            'Label2.Text = String1 & " Completed"
+                            Label2.Text = DURATIONTIME & " Completed"
+                        End If
+
+                    Catch
+                    End Try
+                End If
+
+                If logdata.Contains("frame=") Then
+                    Try
+                        Dim startchar As String = logdata.IndexOf("time=")
+                        Dim String9 As String = logdata.Substring(startchar)
+                        Dim String10 As String = String9.Replace("time=", "")
+                        Dim split2 As String() = String10.Split(New [Char]() {" "})
+                        Dim time As String = split2(0)
+                        Label1.Text = time & " of "
+                    Catch
+
+                    End Try
+
+                End If
+
+                If logdata.Contains("[download]") Then
+                    Try
+                        Label1.Visible = False
+                        Label2.Visible = False
+                        Dim startchar As String = logdata.IndexOf("[download]")
+                        Dim String9 As String = logdata.Substring(startchar)
+                        Dim String10 As String = String9.Replace("[download] ", "")
+                        Dim split2 As String() = String10.Split(New [Char]() {" "})
+
+                        If logdata.Contains("[download]   ") Then
+                            Dim downloadpercent As String = split2(2)
+                            Percentage.Text = downloadpercent
+                            Dim percent As Integer = downloadpercent.Replace("%", "")
+                            ProgressBar1.Value = Convert.ToInt32(percent)
+                        ElseIf logdata.Contains("[download]  ") Then
+                            Dim downloadpercent As String = split2(1)
+                            Percentage.Text = downloadpercent
+                            Dim percent As Integer = downloadpercent.Replace("%", "")
+                            ProgressBar1.Value = Convert.ToInt32(percent)
+                        ElseIf logdata.Contains("[download] ") Then
+                            Dim downloadpercent As String = split2(0)
+                            Percentage.Text = downloadpercent
+                            Dim percent As Integer = downloadpercent.Replace("%", "")
+                            ProgressBar1.Value = Convert.ToInt32(percent)
+
+                        End If
+
+                    Catch
+
+                    End Try
+
+                End If
+
+                If logdata.Contains("bitrate=") Then
+                    Try
+                        Dim startchar As String = logdata.IndexOf("bitrate=")
+                        Dim String9 As String = logdata.Substring(startchar)
+                        Dim String10 As String = String9.Replace("bitrate=", "")
+
+                        LBBITRATE.Text = String10
+                    Catch
+                    End Try
+
+                End If
+
+
+                If logdata.Contains("fps=") Then
+                    Try
+                        Dim split4 As String() = logdata.Split(New [Char]() {"="})
+                        Dim String14 As String = split4(2)
+                        Dim String15 As String = String14.Replace(":", "")
+                        Dim String16 As String = String15.Replace(".", "")
+                        Dim String17 As String = String16.Replace(" fps", "")
+                        Dim String18 As String = String14.Replace(" q", "")
+                        LBFPS.Text = String18 + "fps"
+                    Catch
+
+                    End Try
+
+                End If
+
             End If
-            If logdata.Contains("frame=") Then
-                Try
-                    Dim split2 As String() = logdata.Split(New [Char]() {"="})
-                    Dim String4 As String = split2(5)
-                    Dim String5 As String = String4.Replace(":", "")
-                    Dim String6 As String = String5.Replace(".", "")
-                    Dim String7 As String = String6.Replace(" bitrate", "")
-                    Dim String8 As String = String4.Replace(" bitrate", "")
-                    'ProgressBar1.Value = String7
-                    Label1.Text = String8 & " of "
-                Catch
+        Catch
 
-                End Try
+        End Try
 
-            End If
-
-
-            If logdata.Contains("bitrate=") Then
-                Try
-                    Dim split3 As String() = logdata.Split(New [Char]() {"="})
-                    Dim String9 As String = split3(6)
-                    Dim String10 As String = String9.Replace(":", "")
-                    'Dim String11 As String = String10.Replace(".", "")
-                    Dim String12 As String = String10.Replace("bitrate ", "")
-
-                    LBBITRATE.Text = String12
-                Catch
-                End Try
-
-            End If
-
-
-            If logdata.Contains("fps=") Then
-                Try
-                    Dim split4 As String() = logdata.Split(New [Char]() {"="})
-                    Dim String14 As String = split4(2)
-                    Dim String15 As String = String14.Replace(":", "")
-                    Dim String16 As String = String15.Replace(".", "")
-                    Dim String17 As String = String16.Replace(" fps", "")
-                    Dim String18 As String = String14.Replace(" q", "")
-                    LBFPS.Text = String18 + "fps"
-                Catch
-
-                End Try
-
-            End If
-
-        End If
 
 
 
@@ -579,12 +677,10 @@ Public Class FRMProgress
             PauseProcess(p.Id)
             'SuspendProcess(p)
             BTNPAUSE.Text = "Resume Processing"
-            Label8.Text = "Pause Processing"
             ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Pause"
         ElseIf BTNPAUSE.Text = "Resume Processing" Then
             ResumeProcess(p.Id)
             BTNPAUSE.Text = "Pause Processing"
-            Label8.Text = ""
             ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Resumed"
         End If
 
@@ -595,7 +691,6 @@ Public Class FRMProgress
         'FreeConsole()
 
     End Sub
-
 
     ' Enumerated type for the control messages sent to the handler routine
     Private Enum CtrlTypes As UInteger
@@ -633,6 +728,7 @@ Public Class FRMProgress
 
     Private Sub BTNFORCESTOP_Click(sender As Object, e As EventArgs) Handles BTNFORCESTOP.Click
         ForceStopped = True
+        Stopped = False
 
         While BackgroundWorker_1.CancellationPending = False
             Try
@@ -750,77 +846,95 @@ Public Class FRMProgress
     Private Sub backgroundWorker1_RunWorkerCompleted( _
 ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs) _
 Handles BackgroundWorker_1.RunWorkerCompleted
-
-        If ForceStopped = True Then
-            ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Force Stopped"
-            Label2.Text = ""
-            Label1.Text = "Force Stopped"
-            Exit Sub
-        ElseIf Stopped = True Then
-            ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Stopped"
-            Label2.Text = ""
-            Label1.Text = "Stopped"
-
-        Else
-            ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Done"
-            Label2.Text = ""
-            Label1.Text = "Done"
-        End If
-
-        CURRENTENCODINGCMD = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(2).Text
-        'Threading.Thread.Sleep(1000)
-
-        Invoke(New Action(Function() ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Done"))
-        If ENCODINGLIST.Items.Count = 1 And Not CURRENTENCODINGCMD = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(2).Text Then
-            'If ENCODINGLIST.Items.Count = 1 Then
-            ENCODINGCOUNT = ENCODINGCOUNT - 1
-            LISTINDEX = LISTINDEX - 1
-        End If
-        Dim ENCODINGLISTCOUNT As Integer = ENCODINGLISTVIEW.Items.Count
-        Do Until ENCODINGCOUNT = ENCODINGLISTCOUNT
-            'MsgBox(ENCODINGCOUNT)
-            While BackgroundWorker_1.IsBusy()
-                Threading.Thread.Sleep(500)
-                Windows.Forms.Application.DoEvents()
-            End While
-            'MsgBox(ENCODINGCOUNT)
-            'MsgBox(ENCODINGLIST.Items.Count)
-            If ENCODINGCOUNT >= ENCODINGLISTCOUNT Or ForceStopped = True Then
-
-                GoTo DONTCONTINUE
+        Try
+            If ForceStopped = True Then
+                ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Force Stopped"
+                Label2.Text = ""
+                Label1.Text = "Force Stopped"
+                Exit Sub
+            ElseIf Stopped = True Then
+                ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Stopped"
+                Label2.Text = ""
+                Label1.Text = "Stopped"
 
             Else
-
-                Try
-                    LISTINDEX = LISTINDEX + 1
-
-                    BackgroundWorker_1.WorkerSupportsCancellation = True
-                    BackgroundWorker_1.WorkerReportsProgress = True
-                    BackgroundWorker_1.RunWorkerAsync()
-                    ENCODINGCOUNT = ENCODINGCOUNT + 1
-                    'Timer1.Start()
-                    'FFPARAM = ENCODINGLIST.Items.Item(LISTINDEX)
-
-
-
-                Catch
-
-                End Try
-
+                ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Done"
+                Label2.Text = ""
+                Label1.Text = "Done"
             End If
 
-            'MsgBox(ENCODINGCOUNT)
-        Loop
+            CURRENTENCODINGCMD = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(2).Text
+            'Threading.Thread.Sleep(1000)
+
+            Invoke(New Action(Function() ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Done"))
+            If ENCODINGLIST.Items.Count = 1 And Not CURRENTENCODINGCMD = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(2).Text Then
+                'If ENCODINGLIST.Items.Count = 1 Then
+                ENCODINGCOUNT = ENCODINGCOUNT - 1
+                LISTINDEX = LISTINDEX - 1
+            End If
+            Dim ENCODINGLISTCOUNT As Integer = ENCODINGLISTVIEW.Items.Count
+            Do Until ENCODINGCOUNT = ENCODINGLISTCOUNT
+                'MsgBox(ENCODINGCOUNT)
+                While BackgroundWorker_1.IsBusy()
+                    Threading.Thread.Sleep(500)
+                    Windows.Forms.Application.DoEvents()
+                End While
+                'MsgBox(ENCODINGCOUNT)
+                'MsgBox(ENCODINGLIST.Items.Count)
+                If ENCODINGCOUNT >= ENCODINGLISTCOUNT Or ForceStopped = True Then
+
+                    GoTo DONTCONTINUE
+
+                Else
+
+                    ListBox1.Items.Clear()
+                    Me.Refresh()
+
+                    Try
+                        LISTINDEX = LISTINDEX + 1
+                        Label1.Text = ""
+                        BackgroundWorker_1.WorkerSupportsCancellation = True
+                        BackgroundWorker_1.WorkerReportsProgress = True
+                        BackgroundWorker_1.RunWorkerAsync()
+                        ENCODINGCOUNT = ENCODINGCOUNT + 1
+                        'Timer1.Start()
+                        'FFPARAM = ENCODINGLIST.Items.Item(LISTINDEX)
+
+
+
+                    Catch
+
+                    End Try
+
+                End If
+
+                'MsgBox(ENCODINGCOUNT)
+            Loop
+
 
 
 
 DONTCONTINUE:
+            Try
+                FlashWindow(Me.Handle, 3)
+                If Label1.Text = "Done" Then
+                    ProgressBar1.Value = ProgressBar1.Maximum
+                End If
+            Catch
+
+            End Try
 
 
-        Exit Sub
+            Exit Sub
+        Catch
+
+        End Try
+
 
 
     End Sub
+    <DllImport("user32")> Public Shared Function FlashWindow(ByVal hwnd As Integer, ByVal bInvert As Integer) As Integer
+    End Function
 
     Function BWMonitor()
         Dim networkInterfaces As New System.Diagnostics.PerformanceCounterCategory("Network Interface")
@@ -858,6 +972,28 @@ DONTCONTINUE:
 
         End If
     End Sub
+    Private Sub ENCODINGLISTVIEW_MouseDoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles ENCODINGLISTVIEW.DoubleClick
+        ' If e.Button = Windows.Forms.MouseButtons.Left Then
+        Try
+            Dim filename As String
+            Dim commandinfo As String
+
+            filename = ENCODINGLISTVIEW.SelectedItems(0).SubItems(0).Text
+            commandinfo = ENCODINGLISTVIEW.SelectedItems(0).SubItems(2).Text
+            MsgBox("Output : " + filename + vbCrLf + vbCrLf + "Command : " + commandinfo)
+        Catch
+
+        End Try
+
+
+
+
+
+
+
+
+        ' End If
+    End Sub
     Private Sub MENUSTOPENC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MENUSTOPENC.Click
         'ENCODINGLIST.Items.Insert(ENCODINGLIST.SelectedIndex, "(Skip)" + ENCODINGLIST.SelectedItem.ToString)
         'ENCODINGLIST.Items.RemoveAt(ENCODINGLIST.SelectedIndex)
@@ -870,8 +1006,8 @@ DONTCONTINUE:
 
                 End Try
                 BackgroundWorker_1.CancelAsync()
-                outputReader.DiscardBufferedData()
-                outputReader.Close()
+                'outputReader.DiscardBufferedData()
+                'outputReader.Close()
             Else
 
                 Try
@@ -889,7 +1025,7 @@ DONTCONTINUE:
                     'If p.HasExited = False Then
                     ForceCloseProcessTree(p.Id)
                     BackgroundWorker_1.CancelAsync()
-                    outputReader.Close()
+                    'outputReader.Close()
                     'End If
                 End Try
             End If
@@ -903,6 +1039,7 @@ DONTCONTINUE:
         End If
 
     End Sub
+
 
 
 End Class
