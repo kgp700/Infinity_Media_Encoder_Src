@@ -124,6 +124,12 @@
     <Compile Include="Form3.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FRMMERGEMEDIA.Designer.vb">
+      <DependentUpon>FRMMERGEMEDIA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FRMMERGEMEDIA.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
     </Compile>
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRMMERGEMEDIA.resx">
+      <DependentUpon>FRMMERGEMEDIA.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>

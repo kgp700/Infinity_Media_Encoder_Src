@@ -210,6 +210,7 @@ Partial Class Main
         Me.Label31 = New System.Windows.Forms.Label()
         Me.BOXFFMPEGEXE = New System.Windows.Forms.ComboBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.BTNUPDATEYTDL = New System.Windows.Forms.Button()
         Me.RB8K = New System.Windows.Forms.RadioButton()
         Me.LBYTSTREAM = New System.Windows.Forms.Label()
         Me.BTNINPUTPATHYTVID = New System.Windows.Forms.Button()
@@ -249,6 +250,7 @@ Partial Class Main
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
         Me.CHKINPUTDSHOW = New System.Windows.Forms.CheckBox()
+        Me.BTMERGEMEDIA = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1631,6 +1633,7 @@ Partial Class Main
         'TabPage2
         '
         Me.TabPage2.AllowDrop = True
+        Me.TabPage2.Controls.Add(Me.BTMERGEMEDIA)
         Me.TabPage2.Controls.Add(Me.CHKINFOFILENAME)
         Me.TabPage2.Controls.Add(Me.BTNFNGR)
         Me.TabPage2.Controls.Add(Me.Label44)
@@ -2076,6 +2079,7 @@ Partial Class Main
         Me.BOXDURATION2.Name = "BOXDURATION2"
         Me.BOXDURATION2.Size = New System.Drawing.Size(59, 22)
         Me.BOXDURATION2.TabIndex = 84
+        Me.BOXDURATION2.Visible = False
         '
         'TAPRTMP
         '
@@ -2238,6 +2242,7 @@ Partial Class Main
         '
         'TabPage8
         '
+        Me.TabPage8.Controls.Add(Me.BTNUPDATEYTDL)
         Me.TabPage8.Controls.Add(Me.RB8K)
         Me.TabPage8.Controls.Add(Me.LBYTSTREAM)
         Me.TabPage8.Controls.Add(Me.BTNINPUTPATHYTVID)
@@ -2265,6 +2270,17 @@ Partial Class Main
         Me.TabPage8.TabIndex = 7
         Me.TabPage8.Text = "Youtube"
         Me.TabPage8.UseVisualStyleBackColor = True
+        '
+        'BTNUPDATEYTDL
+        '
+        Me.BTNUPDATEYTDL.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BTNUPDATEYTDL.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNUPDATEYTDL.Location = New System.Drawing.Point(446, 196)
+        Me.BTNUPDATEYTDL.Name = "BTNUPDATEYTDL"
+        Me.BTNUPDATEYTDL.Size = New System.Drawing.Size(157, 26)
+        Me.BTNUPDATEYTDL.TabIndex = 106
+        Me.BTNUPDATEYTDL.Text = "Update Youtube-dl"
+        Me.BTNUPDATEYTDL.UseVisualStyleBackColor = True
         '
         'RB8K
         '
@@ -2636,6 +2652,15 @@ Partial Class Main
         Me.CHKINPUTDSHOW.Text = "Input DirectShow Filter"
         Me.CHKINPUTDSHOW.UseVisualStyleBackColor = True
         '
+        'BTMERGEMEDIA
+        '
+        Me.BTMERGEMEDIA.Location = New System.Drawing.Point(337, 120)
+        Me.BTMERGEMEDIA.Name = "BTMERGEMEDIA"
+        Me.BTMERGEMEDIA.Size = New System.Drawing.Size(151, 23)
+        Me.BTMERGEMEDIA.TabIndex = 83
+        Me.BTMERGEMEDIA.Text = "Merge Media Files"
+        Me.BTMERGEMEDIA.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AllowDrop = True
@@ -2932,4 +2957,6 @@ Partial Class Main
     Friend WithEvents BOXKEYINTMIN As System.Windows.Forms.ComboBox
     Friend WithEvents BTRTMPMULTI As System.Windows.Forms.Button
     Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents BTNUPDATEYTDL As Button
+    Friend WithEvents BTMERGEMEDIA As Button
 End Class

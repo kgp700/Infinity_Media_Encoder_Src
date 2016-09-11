@@ -237,7 +237,8 @@ Public Class Main
         End If
 
         If InputCBOX.Text.Contains("http://ustream.tv") Or InputCBOX.Text.Contains("http://www.ustream.tv") Or InputCBOX.Text.Contains("https://ustream.tv/") Or
-            InputCBOX.Text.Contains("https://www.ustream.tv/") Or InputCBOX.Text.Contains("http://www.connectcast.tv/") Or InputCBOX.Text.Contains("http://connectcast.tv/") Or InputCBOX.Text.Contains("http://www.dailymotion.com") Then
+            InputCBOX.Text.Contains("https://www.ustream.tv/") Or InputCBOX.Text.Contains("http://www.connectcast.tv/") Or InputCBOX.Text.Contains("http://connectcast.tv/") Or InputCBOX.Text.Contains("http://www.dailymotion.com") Or
+            InputCBOX.Text.Contains("https://twitch.tv/") Or InputCBOX.Text.Contains("https://www.twitch.tv/") Then
             CHKMULTITR.Enabled = False
 
         End If
@@ -1026,7 +1027,7 @@ Public Class Main
 
                 BOXDELAYINFO.Text = VDELAYINFO
             End If
-            'BOXDURATION2.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Visual, 0, "Duration")))
+            BOXDURATION2.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Visual, 0, "Duration")))
             BOXFORMATINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.General, 0, "Format")))
             BOXACODECINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Audio, 0, "Codec")))
 
@@ -1282,7 +1283,8 @@ INITIAL:
     Private Sub InputCBOX_TextUpdate(ByVal sender As Object, ByVal e As System.EventArgs) Handles InputCBOX.TextChanged
         INPUTVIDNAME = InputCBOX.Text
         If InputCBOX.Text.Contains("http://ustream.tv") Or InputCBOX.Text.Contains("http://www.ustream.tv") Or InputCBOX.Text.Contains("https://ustream.tv/") Or
-        InputCBOX.Text.Contains("https://www.ustream.tv/") Or InputCBOX.Text.Contains("http://www.connectcast.tv/") Or InputCBOX.Text.Contains("http://connectcast.tv/") Then
+        InputCBOX.Text.Contains("https://www.ustream.tv/") Or InputCBOX.Text.Contains("http://www.connectcast.tv/") Or InputCBOX.Text.Contains("http://connectcast.tv/") Or
+        InputCBOX.Text.Contains("https://twitch.tv/") Or InputCBOX.Text.Contains("https://www.twitch.tv/") Then
             BOXTRIMSS.Enabled = False
             BOXTRIMTO.Enabled = False
             CHKTRIM.Enabled = False
@@ -1516,11 +1518,14 @@ INITIAL:
 
         FindControls(Me, Data)
         AdvancedFRM.FindControls(AdvancedFRM, Data)
+        FRMMULTIRTMP.FindControls(FRMMULTIRTMP, Data)
 
         If CHKALLSET.Checked = True Then
             FRMCUSTOMENC.FindControls(FRMCUSTOMENC, Data)
 
         End If
+
+
 
         Dim xml As New XmlSerializer(Data.GetType)
 
@@ -1547,6 +1552,7 @@ INITIAL:
             FRMCUSTOMENC.ParsingsettingsCustomEncOpt()
         End If
         AdvancedFRM.LoadPresetADV()
+        FRMMULTIRTMP.LoadPresetMRTMP()
         LISTVFILTER.Items.Clear()
         LISTAFILTER.Items.Clear()
         'DeserializeToListView(LISTVFILTER, PRESETFILENAME)
@@ -2142,7 +2148,8 @@ INITIAL:
             'SHELLCMD = FFMPEGEXE + " " + FFLAGS + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSADDRESS + CUSTOMFFMPEGOPT +VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             'MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + HLSOPTIONFLAG
         ElseIf INPUTVIDNAME.Contains("http://ustream.tv") Or INPUTVIDNAME.Contains("http://www.ustream.tv") Or INPUTVIDNAME.Contains("https://ustream.tv/") Or
-            INPUTVIDNAME.Contains("https://www.ustream.tv/") Or INPUTVIDNAME.Contains("http://www.connectcast.tv/") Or INPUTVIDNAME.Contains("http://connectcast.tv/") Or INPUTVIDNAME.Contains("http://www.dailymotion.com") Or INPUTVIDNAME.Contains("http://vaughnlive.tv") Then
+            INPUTVIDNAME.Contains("https://www.ustream.tv/") Or INPUTVIDNAME.Contains("http://www.connectcast.tv/") Or INPUTVIDNAME.Contains("http://connectcast.tv/") Or INPUTVIDNAME.Contains("http://www.dailymotion.com") Or INPUTVIDNAME.Contains("http://vaughnlive.tv") Or
+            INPUTVIDNAME.Contains("https://twitch.tv/") Or INPUTVIDNAME.Contains("https://www.twitch.tv/") Then
             If BOXCODEC.Text = "copy" Then
                 VIDEOFILTER = ""
             End If
@@ -2151,7 +2158,7 @@ INITIAL:
             End If
 
             SHELLCMD = LIVESTREAMEREXE + " " + """" + INPUTVIDNAME + """" + " best -o - | " +
-                  FFMPEGEXE + " -y " + FFLAGS + FFLAGS + " -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + AUDIOFILTER + CODEC + " -vsync 0 " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
+                  FFMPEGEXE + " -y " + FFLAGS + FFLAGS + " -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + AUDIOFILTER + CODEC + " -vsync 0 -bsf:a aac_adtstoasc " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
         ElseIf BOXBITRATEMODE.Text = "2pass-ABR" Then
 
@@ -2210,8 +2217,8 @@ INITIAL:
         End If
         Try
             BOXASPECT.Text = MI.Get_(StreamKind.Visual, 0, "DisplayAspectRatio/String")
-            'BOXDURATION.Text = MI.Get_(StreamKind.Visual, 0, "Duration/String3")
-            'BOXDURATION2.Text = MI.Get_(StreamKind.Visual, 0, "Duration")
+            BOXDURATION.Text = MI.Get_(StreamKind.Visual, 0, "Duration/String3")
+            BOXDURATION2.Text = MI.Get_(StreamKind.Visual, 0, "Duration")
             BOXPFINFO.Text = MI.Get_(StreamKind.Visual, 0, "Format_Profile")
             BOXFORMATINFO.Text = MI.Get_(StreamKind.General, 0, "Format")
 
@@ -3063,16 +3070,18 @@ noencoding:
             ElseIf BOXBITRATEMODE.Text = "File Size" Then
                 If CHKTRIM.Checked Then
                     sDate = BOXTRIMSS.Text
-                    hours = Trim(Split(sDate, ":")(0))
-                    minutes = Trim(Split(sDate, ":")(1))
-                    seconds = Trim(Split(sDate, ":")(2))
-                    dblStringToDblSS = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
-
+                    'hours = Trim(Split(sDate, ":")(0))
+                    'minutes = Trim(Split(sDate, ":")(1))
+                    'seconds = Trim(Split(sDate, ":")(2))
+                    'dblStringToDblSS = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
+                    dblStringToDblSS = TimeSpan.Parse(BOXTRIMSS.Text).TotalSeconds
                     sDate = BOXTRIMTO.Text
-                    hours = Trim(Split(sDate, ":")(0))
-                    minutes = Trim(Split(sDate, ":")(1))
-                    seconds = Trim(Split(sDate, ":")(2))
-                    dblStringToDblTO = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
+                    'hours = Trim(Split(sDate, ":")(0))
+                    'minutes = Trim(Split(sDate, ":")(1))
+                    'seconds = Trim(Split(sDate, ":")(2))
+                    'dblStringToDblTO = CLng(hours) * 3600 + CLng(minutes) * 60 + CLng(seconds)
+                    dblStringToDblTO = TimeSpan.Parse(BOXTRIMTO.Text).TotalSeconds
+
 
                     dblStringToDblRESULT = dblStringToDblTO - dblStringToDblSS
                     Dim TRIMDURATION As Integer = CInt(Int(dblStringToDblRESULT))
@@ -3080,7 +3089,7 @@ noencoding:
                     Dim DURSECRESULT3 As Integer
                     'DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
                     DURSECRESULT3 = BOXDURATION2.Text
-                    VIDEOBITRATESIZE = BITBOX.Text * 8192 / TRIMDURATION
+                    VIDEOBITRATESIZE = (BITBOX.Text * 8192 / (TRIMDURATION * 1000)) * 1024
                     BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize:v " + VIDEOBITRATESIZE.ToString + "k"
 
                 Else
@@ -3088,7 +3097,7 @@ noencoding:
                     Dim DURSECRESULT3 As Integer
                     'DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
                     DURSECRESULT3 = BOXDURATION2.Text
-                    VIDEOBITRATESIZE = BITBOX.Text * 8192 / DURSECRESULT3
+                    VIDEOBITRATESIZE = BITBOX.Text /DURSECRESULT3 * 8192*1024
 
                     BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize:v " + VIDEOBITRATESIZE.ToString + "k"
                 End If
@@ -4051,6 +4060,15 @@ noencoding:
         tempinputfileName = ""
         TEMPFILENAME = ""
     End Function
+
+    Private Sub BTNUPDATEYTDL_Click(sender As Object, e As EventArgs) Handles BTNUPDATEYTDL.Click
+        Shell("cmd /c title Infinity Media Encoder & " + """" + STARTUPPATH + "\Tools\youtube-dl\youtube-dl.exe" + """" + " -U & pause", vbNormalFocus)
+    End Sub
+
+    Private Sub BTMERGEMEDIA_Click(sender As Object, e As EventArgs) Handles BTMERGEMEDIA.Click
+        FRMMERGEMEDIA.Show()
+
+    End Sub
 
     Private Sub BTRTMPMULTI_Click(sender As Object, e As EventArgs) Handles BTRTMPMULTI.Click
         FRMMULTIRTMP.ShowDialog()

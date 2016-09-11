@@ -9,4 +9,8 @@
         Main.INPUTAUDFILENAME = ""
         Me.Hide()
     End Sub
+
+    Private Sub BTSHOWFILTER_Click(sender As Object, e As EventArgs) Handles BTSHOWFILTER.Click
+        Shell("cmd /c title Infinity Media Encoder & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -list_devices true -f dshow -i dummy & pause", vbNormalFocus)
+    End Sub
 End Class

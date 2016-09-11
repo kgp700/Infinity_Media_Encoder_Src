@@ -23,31 +23,32 @@ Partial Class FRMMULTIRTMP
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.BTCPSTREAM1 = New System.Windows.Forms.Button()
-        Me.BOXRTMPADR = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
-        Me.Button6 = New System.Windows.Forms.Button()
-        Me.Button7 = New System.Windows.Forms.Button()
+        Me.BTCPSTREAMALL = New System.Windows.Forms.Button()
+        Me.BTCPSTREAM2 = New System.Windows.Forms.Button()
+        Me.BTCPSTREAM3 = New System.Windows.Forms.Button()
+        Me.BTCPSTREAM4 = New System.Windows.Forms.Button()
+        Me.BTCPSTREAM5 = New System.Windows.Forms.Button()
+        Me.BTCPSTREAM6 = New System.Windows.Forms.Button()
+        Me.BTCPSTREAM7 = New System.Windows.Forms.Button()
+        Me.BOXRTMPADR1 = New System.Windows.Forms.ComboBox()
+        Me.BOXRTMPADR2 = New System.Windows.Forms.ComboBox()
+        Me.BOXRTMPADR3 = New System.Windows.Forms.ComboBox()
+        Me.BOXRTMPADR4 = New System.Windows.Forms.ComboBox()
+        Me.BOXRTMPADR5 = New System.Windows.Forms.ComboBox()
+        Me.BOXRTMPADR6 = New System.Windows.Forms.ComboBox()
+        Me.BOXRTMPADR7 = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'BTCPSTREAM1
         '
+        Me.BTCPSTREAM1.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTCPSTREAM1.Location = New System.Drawing.Point(583, 6)
         Me.BTCPSTREAM1.Name = "BTCPSTREAM1"
         Me.BTCPSTREAM1.Size = New System.Drawing.Size(93, 23)
@@ -55,234 +56,265 @@ Partial Class FRMMULTIRTMP
         Me.BTCPSTREAM1.Text = "Copy Stream"
         Me.BTCPSTREAM1.UseVisualStyleBackColor = True
         '
-        'BOXRTMPADR
-        '
-        Me.BOXRTMPADR.Location = New System.Drawing.Point(108, 6)
-        Me.BOXRTMPADR.Name = "BOXRTMPADR"
-        Me.BOXRTMPADR.Size = New System.Drawing.Size(469, 21)
-        Me.BOXRTMPADR.TabIndex = 11
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(5, 9)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(97, 12)
+        Me.Label1.Size = New System.Drawing.Size(87, 13)
         Me.Label1.TabIndex = 12
         Me.Label1.Text = "RTMP Address1"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(5, 36)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(97, 12)
+        Me.Label2.Size = New System.Drawing.Size(87, 13)
         Me.Label2.TabIndex = 14
         Me.Label2.Text = "RTMP Address2"
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(108, 34)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(469, 21)
-        Me.TextBox1.TabIndex = 13
         '
         'Label3
         '
         Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(5, 64)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(97, 12)
+        Me.Label3.Size = New System.Drawing.Size(87, 13)
         Me.Label3.TabIndex = 16
         Me.Label3.Text = "RTMP Address3"
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(108, 61)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(469, 21)
-        Me.TextBox2.TabIndex = 15
         '
         'Label4
         '
         Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(5, 91)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(97, 12)
+        Me.Label4.Size = New System.Drawing.Size(87, 13)
         Me.Label4.TabIndex = 18
         Me.Label4.Text = "RTMP Address4"
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Location = New System.Drawing.Point(108, 88)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(469, 21)
-        Me.TextBox3.TabIndex = 17
         '
         'Label5
         '
         Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(5, 118)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(97, 12)
+        Me.Label5.Size = New System.Drawing.Size(87, 13)
         Me.Label5.TabIndex = 20
         Me.Label5.Text = "RTMP Address5"
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Location = New System.Drawing.Point(108, 115)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(469, 21)
-        Me.TextBox4.TabIndex = 19
         '
         'Label6
         '
         Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(5, 145)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(97, 12)
+        Me.Label6.Size = New System.Drawing.Size(87, 13)
         Me.Label6.TabIndex = 22
         Me.Label6.Text = "RTMP Address6"
-        '
-        'TextBox5
-        '
-        Me.TextBox5.Location = New System.Drawing.Point(108, 142)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(469, 21)
-        Me.TextBox5.TabIndex = 21
         '
         'Label7
         '
         Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(5, 172)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(97, 12)
+        Me.Label7.Size = New System.Drawing.Size(87, 13)
         Me.Label7.TabIndex = 24
         Me.Label7.Text = "RTMP Address7"
         '
-        'TextBox6
+        'BTCPSTREAMALL
         '
-        Me.TextBox6.Location = New System.Drawing.Point(108, 169)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(469, 21)
-        Me.TextBox6.TabIndex = 23
+        Me.BTCPSTREAMALL.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAMALL.Location = New System.Drawing.Point(235, 197)
+        Me.BTCPSTREAMALL.Name = "BTCPSTREAMALL"
+        Me.BTCPSTREAMALL.Size = New System.Drawing.Size(185, 23)
+        Me.BTCPSTREAMALL.TabIndex = 25
+        Me.BTCPSTREAMALL.Text = "Copy Stream to All addresses"
+        Me.BTCPSTREAMALL.UseVisualStyleBackColor = True
         '
-        'Button1
+        'BTCPSTREAM2
         '
-        Me.Button1.Location = New System.Drawing.Point(266, 197)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(125, 23)
-        Me.Button1.TabIndex = 25
-        Me.Button1.Text = "Copy All Streams"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.BTCPSTREAM2.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAM2.Location = New System.Drawing.Point(583, 32)
+        Me.BTCPSTREAM2.Name = "BTCPSTREAM2"
+        Me.BTCPSTREAM2.Size = New System.Drawing.Size(93, 23)
+        Me.BTCPSTREAM2.TabIndex = 26
+        Me.BTCPSTREAM2.Text = "Copy Stream"
+        Me.BTCPSTREAM2.UseVisualStyleBackColor = True
         '
-        'Button2
+        'BTCPSTREAM3
         '
-        Me.Button2.Location = New System.Drawing.Point(583, 32)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(93, 23)
-        Me.Button2.TabIndex = 26
-        Me.Button2.Text = "Copy Stream"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.BTCPSTREAM3.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAM3.Location = New System.Drawing.Point(583, 59)
+        Me.BTCPSTREAM3.Name = "BTCPSTREAM3"
+        Me.BTCPSTREAM3.Size = New System.Drawing.Size(93, 23)
+        Me.BTCPSTREAM3.TabIndex = 27
+        Me.BTCPSTREAM3.Text = "Copy Stream"
+        Me.BTCPSTREAM3.UseVisualStyleBackColor = True
         '
-        'Button3
+        'BTCPSTREAM4
         '
-        Me.Button3.Location = New System.Drawing.Point(583, 59)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(93, 23)
-        Me.Button3.TabIndex = 27
-        Me.Button3.Text = "Copy Stream"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.BTCPSTREAM4.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAM4.Location = New System.Drawing.Point(583, 86)
+        Me.BTCPSTREAM4.Name = "BTCPSTREAM4"
+        Me.BTCPSTREAM4.Size = New System.Drawing.Size(93, 23)
+        Me.BTCPSTREAM4.TabIndex = 28
+        Me.BTCPSTREAM4.Text = "Copy Stream"
+        Me.BTCPSTREAM4.UseVisualStyleBackColor = True
         '
-        'Button4
+        'BTCPSTREAM5
         '
-        Me.Button4.Location = New System.Drawing.Point(583, 86)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(93, 23)
-        Me.Button4.TabIndex = 28
-        Me.Button4.Text = "Copy Stream"
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.BTCPSTREAM5.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAM5.Location = New System.Drawing.Point(583, 113)
+        Me.BTCPSTREAM5.Name = "BTCPSTREAM5"
+        Me.BTCPSTREAM5.Size = New System.Drawing.Size(93, 23)
+        Me.BTCPSTREAM5.TabIndex = 29
+        Me.BTCPSTREAM5.Text = "Copy Stream"
+        Me.BTCPSTREAM5.UseVisualStyleBackColor = True
         '
-        'Button5
+        'BTCPSTREAM6
         '
-        Me.Button5.Location = New System.Drawing.Point(583, 113)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(93, 23)
-        Me.Button5.TabIndex = 29
-        Me.Button5.Text = "Copy Stream"
-        Me.Button5.UseVisualStyleBackColor = True
+        Me.BTCPSTREAM6.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAM6.Location = New System.Drawing.Point(583, 140)
+        Me.BTCPSTREAM6.Name = "BTCPSTREAM6"
+        Me.BTCPSTREAM6.Size = New System.Drawing.Size(93, 23)
+        Me.BTCPSTREAM6.TabIndex = 30
+        Me.BTCPSTREAM6.Text = "Copy Stream"
+        Me.BTCPSTREAM6.UseVisualStyleBackColor = True
         '
-        'Button6
+        'BTCPSTREAM7
         '
-        Me.Button6.Location = New System.Drawing.Point(583, 140)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(93, 23)
-        Me.Button6.TabIndex = 30
-        Me.Button6.Text = "Copy Stream"
-        Me.Button6.UseVisualStyleBackColor = True
+        Me.BTCPSTREAM7.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTCPSTREAM7.Location = New System.Drawing.Point(583, 167)
+        Me.BTCPSTREAM7.Name = "BTCPSTREAM7"
+        Me.BTCPSTREAM7.Size = New System.Drawing.Size(93, 23)
+        Me.BTCPSTREAM7.TabIndex = 31
+        Me.BTCPSTREAM7.Text = "Copy Stream"
+        Me.BTCPSTREAM7.UseVisualStyleBackColor = True
         '
-        'Button7
+        'BOXRTMPADR1
         '
-        Me.Button7.Location = New System.Drawing.Point(583, 167)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(93, 23)
-        Me.Button7.TabIndex = 31
-        Me.Button7.Text = "Copy Stream"
-        Me.Button7.UseVisualStyleBackColor = True
+        Me.BOXRTMPADR1.AllowDrop = True
+        Me.BOXRTMPADR1.FormattingEnabled = True
+        Me.BOXRTMPADR1.Location = New System.Drawing.Point(108, 8)
+        Me.BOXRTMPADR1.Name = "BOXRTMPADR1"
+        Me.BOXRTMPADR1.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR1.TabIndex = 35
+        '
+        'BOXRTMPADR2
+        '
+        Me.BOXRTMPADR2.AllowDrop = True
+        Me.BOXRTMPADR2.FormattingEnabled = True
+        Me.BOXRTMPADR2.Location = New System.Drawing.Point(108, 34)
+        Me.BOXRTMPADR2.Name = "BOXRTMPADR2"
+        Me.BOXRTMPADR2.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR2.TabIndex = 36
+        '
+        'BOXRTMPADR3
+        '
+        Me.BOXRTMPADR3.AllowDrop = True
+        Me.BOXRTMPADR3.FormattingEnabled = True
+        Me.BOXRTMPADR3.Location = New System.Drawing.Point(108, 61)
+        Me.BOXRTMPADR3.Name = "BOXRTMPADR3"
+        Me.BOXRTMPADR3.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR3.TabIndex = 37
+        '
+        'BOXRTMPADR4
+        '
+        Me.BOXRTMPADR4.AllowDrop = True
+        Me.BOXRTMPADR4.FormattingEnabled = True
+        Me.BOXRTMPADR4.Location = New System.Drawing.Point(108, 88)
+        Me.BOXRTMPADR4.Name = "BOXRTMPADR4"
+        Me.BOXRTMPADR4.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR4.TabIndex = 38
+        '
+        'BOXRTMPADR5
+        '
+        Me.BOXRTMPADR5.AllowDrop = True
+        Me.BOXRTMPADR5.FormattingEnabled = True
+        Me.BOXRTMPADR5.Location = New System.Drawing.Point(108, 115)
+        Me.BOXRTMPADR5.Name = "BOXRTMPADR5"
+        Me.BOXRTMPADR5.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR5.TabIndex = 39
+        '
+        'BOXRTMPADR6
+        '
+        Me.BOXRTMPADR6.AllowDrop = True
+        Me.BOXRTMPADR6.FormattingEnabled = True
+        Me.BOXRTMPADR6.Location = New System.Drawing.Point(108, 142)
+        Me.BOXRTMPADR6.Name = "BOXRTMPADR6"
+        Me.BOXRTMPADR6.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR6.TabIndex = 40
+        '
+        'BOXRTMPADR7
+        '
+        Me.BOXRTMPADR7.AllowDrop = True
+        Me.BOXRTMPADR7.FormattingEnabled = True
+        Me.BOXRTMPADR7.Location = New System.Drawing.Point(108, 169)
+        Me.BOXRTMPADR7.Name = "BOXRTMPADR7"
+        Me.BOXRTMPADR7.Size = New System.Drawing.Size(469, 20)
+        Me.BOXRTMPADR7.TabIndex = 41
         '
         'FRMMULTIRTMP
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(696, 225)
-        Me.Controls.Add(Me.Button7)
-        Me.Controls.Add(Me.Button6)
-        Me.Controls.Add(Me.Button5)
-        Me.Controls.Add(Me.Button4)
-        Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.ClientSize = New System.Drawing.Size(688, 225)
+        Me.Controls.Add(Me.BOXRTMPADR7)
+        Me.Controls.Add(Me.BOXRTMPADR6)
+        Me.Controls.Add(Me.BOXRTMPADR5)
+        Me.Controls.Add(Me.BOXRTMPADR4)
+        Me.Controls.Add(Me.BOXRTMPADR3)
+        Me.Controls.Add(Me.BOXRTMPADR2)
+        Me.Controls.Add(Me.BOXRTMPADR1)
+        Me.Controls.Add(Me.BTCPSTREAM7)
+        Me.Controls.Add(Me.BTCPSTREAM6)
+        Me.Controls.Add(Me.BTCPSTREAM5)
+        Me.Controls.Add(Me.BTCPSTREAM4)
+        Me.Controls.Add(Me.BTCPSTREAM3)
+        Me.Controls.Add(Me.BTCPSTREAM2)
+        Me.Controls.Add(Me.BTCPSTREAMALL)
         Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.TextBox6)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.TextBox5)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.BOXRTMPADR)
         Me.Controls.Add(Me.BTCPSTREAM1)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "FRMMULTIRTMP"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = "MultiRTMP"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents BTCPSTREAM1 As System.Windows.Forms.Button
-    Friend WithEvents BOXRTMPADR As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents TextBox6 As System.Windows.Forms.TextBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents Button3 As System.Windows.Forms.Button
-    Friend WithEvents Button4 As System.Windows.Forms.Button
-    Friend WithEvents Button5 As System.Windows.Forms.Button
-    Friend WithEvents Button6 As System.Windows.Forms.Button
-    Friend WithEvents Button7 As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAMALL As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAM2 As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAM3 As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAM4 As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAM5 As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAM6 As System.Windows.Forms.Button
+    Friend WithEvents BTCPSTREAM7 As System.Windows.Forms.Button
+    Friend WithEvents BOXRTMPADR1 As ComboBox
+    Friend WithEvents BOXRTMPADR2 As ComboBox
+    Friend WithEvents BOXRTMPADR3 As ComboBox
+    Friend WithEvents BOXRTMPADR4 As ComboBox
+    Friend WithEvents BOXRTMPADR5 As ComboBox
+    Friend WithEvents BOXRTMPADR6 As ComboBox
+    Friend WithEvents BOXRTMPADR7 As ComboBox
 End Class
