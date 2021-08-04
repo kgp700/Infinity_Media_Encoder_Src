@@ -16,6 +16,7 @@
 
 Infinity_Media_Encoder/bin/Debug/
 Infinity_Media_Encoder/bin/Release/
+Infinity_Media_Encoder/bin/x64/
 Infinity_Media_Encoder/obj/x86/Debug/
 Infinity_Media_Encoder/obj/x86/Release/
 Infinity_Media_Encoder/bin/Debug/*.exe

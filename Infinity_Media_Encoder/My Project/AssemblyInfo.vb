@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' 어셈블리 특성 값을 검토합니다.
 
-<Assembly: AssemblyTitle("Infinity Media Encoder Alpha 6.3")>
+<Assembly: AssemblyTitle("Infinity Media Encoder Alpha")>
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Infinity Media Encoder Alpha 6.3")>
-<Assembly: AssemblyCopyright("Copyright © 2016 K.G.P (Louis)")>
+<Assembly: AssemblyProduct("Infinity Media Encoder Alpha")>
+<Assembly: AssemblyCopyright("Copyright © 2020 K.G.P (Louis)")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 지정되도록 할 수 있습니다.
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.2.0.0")>
-<Assembly: AssemblyFileVersion("1.2.0.0")>
+<Assembly: AssemblyVersion("6.6.0.0")>
+<Assembly: AssemblyFileVersion("6.6.0.0")>

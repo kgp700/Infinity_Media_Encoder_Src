@@ -18,7 +18,7 @@ Imports System.Runtime.InteropServices
 
 Public Enum StreamKind As UInteger
     General
-    Visual
+    Video
     Audio
     Text
     Chapters

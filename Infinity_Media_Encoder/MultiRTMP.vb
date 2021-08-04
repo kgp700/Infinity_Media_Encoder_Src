@@ -1,33 +1,78 @@
 ﻿Imports System.IO
 Imports System.Xml.Serialization
 
+
+
 Public Class FRMMULTIRTMP
+    Public RTMPRINPUT1 As String
+    Public RTMPRINPUT2 As String
+    Public RTMPRINPUT3 As String
+    Public RTMPRINPUT4 As String
+    Public RTMPRINPUT5 As String
+    Public RTMPRINPUT6 As String
+    Public RTMPRINPUT7 As String
+
     Public Function RTMPCOPY1()
-        Shell("cmd /c title Infinity Media Encoder - RTMP1 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT.Checked = True Then
+            RTMPRINPUT1 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP1 & " + Main.FFMPEGEXE + RTMPRINPUT1 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
              " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR1.Text + """" + " &pause", vbNormalFocus)
     End Function
     Public Function RTMPCOPY2()
-        Shell("cmd /c title Infinity Media Encoder - RTMP2 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT2.Checked = True Then
+            RTMPRINPUT2 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP2 & " + Main.FFMPEGEXE + RTMPRINPUT2 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
               " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR2.Text + """" + " &pause", vbNormalFocus)
     End Function
     Public Function RTMPCOPY3()
-        Shell("cmd /c title Infinity Media Encoder - RTMP3 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT3.Checked = True Then
+            RTMPRINPUT3 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP3 & " + Main.FFMPEGEXE + RTMPRINPUT3 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
              " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR3.Text + """" + " &pause", vbNormalFocus)
     End Function
     Public Function RTMPCOPY4()
-        Shell("cmd /c title Infinity Media Encoder - RTMP4 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT4.Checked = True Then
+            RTMPRINPUT4 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP4 & " + Main.FFMPEGEXE + RTMPRINPUT4 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
       " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR4.Text + """" + " &pause", vbNormalFocus)
     End Function
     Public Function RTMPCOPY5()
-        Shell("cmd /c title Infinity Media Encoder - RTMP5 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT5.Checked = True Then
+            RTMPRINPUT5 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP5 & " + Main.FFMPEGEXE + RTMPRINPUT5 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
               " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR5.Text + """" + " &pause", vbNormalFocus)
     End Function
     Public Function RTMPCOPY6()
-        Shell("cmd /c title Infinity Media Encoder - RTMP6 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT6.Checked = True Then
+            RTMPRINPUT6 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP6 & " + Main.FFMPEGEXE + RTMPRINPUT6 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
               " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR6.Text + """" + " &pause", vbNormalFocus)
     End Function
     Public Function RTMPCOPY7()
-        Shell("cmd /c title Infinity Media Encoder - RTMP7 & " + """" + Main.STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """" + " -rtbufsize 2100M -i " + """" + Main.OutputCBox.Text + """" +
+        Main.getFFmpegPath()
+        If CHKRINPUT7.Checked = True Then
+            RTMPRINPUT7 = " -re"
+        End If
+
+        Shell("cmd /c title Infinity Media Encoder - RTMP7 & " + Main.FFMPEGEXE + RTMPRINPUT7 + " -f live_flv -i " + """" + Main.OutputCBox.Text + """" +
       " -vcodec copy -acodec copy -metadata description=" + """" + "Encoded by Infinity Media Encoder K.G.P (Louis)" + """" + " -f flv " + """" + BOXRTMPADR7.Text + """" + " &pause", vbNormalFocus)
     End Function
     Private Sub BTCPSTREAM1_Click(sender As Object, e As EventArgs) Handles BTCPSTREAM1.Click
@@ -85,6 +130,7 @@ Public Class FRMMULTIRTMP
             Dim Data As New List(Of ControlData)
             Dim xml As New XmlSerializer(Data.GetType)
             Using reader As New FileStream(".\Preset\" + Main.PRESETFILENAME + ".xml", FileMode.Open)
+
                 Data = CType(xml.Deserialize(reader), List(Of ControlData))
 
             End Using
@@ -125,4 +171,5 @@ Public Class FRMMULTIRTMP
 
 
     End Sub
+
 End Class

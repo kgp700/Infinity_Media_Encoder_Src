@@ -1,47 +1,73 @@
-﻿Public Class AvisynthOpt
+﻿Imports System.Text
+Imports System.Text.RegularExpressions
+
+Public Class AvisynthOpt
     Private FPSNUM As String
     Private FPSDEN As String
 
+
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-
-
+        Dim utf8WithoutBom As New System.Text.UTF8Encoding(False)
         Dim FILE_NAME As String = Main.InputCBOX.Text
-        Dim Writer As IO.StreamWriter
-        Dim Encode As System.Text.Encoding
-        Encode = System.Text.Encoding.Default
-        Writer = New IO.StreamWriter(FILE_NAME + ".avs", False, Encode)
+        If Regex.IsMatch(FILE_NAME, "\p{IsThai}") Or Regex.IsMatch(FILE_NAME, "\p{IsArabic}") Or Regex.IsMatch(FILE_NAME, "\p{IsLatin-1Supplement}") Or Regex.IsMatch(FILE_NAME, "\p{IsGreek}") Or
+            Regex.IsMatch(FILE_NAME, "\p{IsLatinExtended-A}") Or Regex.IsMatch(FILE_NAME, "\p{IsLatinExtended-B}") Then
+            MsgBox("Avisynth do not support some unicode language file name. please change input file name to english", vbCritical)
+            Dim Writer As System.IO.StreamWriter
+            Dim Encode As System.Text.Encoding
+            Encode = System.Text.Encoding.Default
+            Writer = New System.IO.StreamWriter(FILE_NAME + ".avs", False, Encode)
+            Writer.Write(BOXAVSSCRIPT.Text)
+            Writer.Close()
+            MsgBox("AVS Script writen to file")
+        Else
+            Dim Writer As System.IO.StreamWriter
+            Dim Encode As System.Text.Encoding
+            Encode = System.Text.Encoding.Default
+            Writer = New System.IO.StreamWriter(FILE_NAME + ".avs", False, Encode)
+            Writer.Write(BOXAVSSCRIPT.Text)
+            Writer.Close()
+            MsgBox("AVS Script writen to file")
+        End If
 
-        Writer.Write(BOXAVSSCRIPT.Text)
-        Writer.Close()
-        MsgBox("AVS Script writen to file")
+
+
+
+
 
 
         If RDBDGINDEX.Checked = True Then
+            Dim p As New Process
 
-            Dim fso, oFile
-            fso = CreateObject("Scripting.FileSystemObject")
-            oFile = fso.CreateTextFile("avs.cmd", True)
-            oFile.WriteLine("title Simple FFMpeg Encoder")
-            oFile.WriteLine(".\avisynthPlugins\dgindex -i " + """" + Main.INPUTFILENAME2 + """" + " -o " + """" + Main.INPUTFILENAME2 + """" + " -fo 0 -om 2 -exit")
-            oFile.WriteLine("exit")
-            oFile.Close()
-            Shell("cmd /c avs.cmd & cmd /c call comp.bat", vbNormalFocus)
+            With p.StartInfo
+                .WindowStyle = ProcessWindowStyle.Normal
+                .Arguments = "/c title Infinity Media Encoder & .\avisynthPlugins\dgindex -i " + """" + Main.INPUTFILENAME2 + """" + " -o " + """" + Main.INPUTFILENAME2 + """" + " -fo 0 -om 2 -exit"
+                .FileName = "cmd"
+
+                .UseShellExecute = False
+                .CreateNoWindow = False
+
+
+            End With
+            p.Start()
         ElseIf RDBFFMS2.Checked = True Then
-            Dim fso, oFile
-            fso = CreateObject("Scripting.FileSystemObject")
-            oFile = fso.CreateTextFile("avs.cmd", True)
-            oFile.WriteLine("title Simple FFMpeg Encoder")
-            oFile.WriteLine(".\avisynthPlugins\ffmsindex -t -1 -f " + """" + Main.INPUTFILENAME2 + """")
-            oFile.WriteLine("exit")
-            oFile.Close()
+            Dim p As New Process
+
+            With p.StartInfo
+                .WindowStyle = ProcessWindowStyle.Normal
+                .Arguments = "/c title Infinity Media Encoder & .\avisynthPlugins\ffmsindex -t -1 -f " + """" + Main.INPUTFILENAME2 + """"
+                .FileName = "cmd"
+
+                .UseShellExecute = False
+                .CreateNoWindow = False
 
 
-
-
-            Shell("cmd /c avs.cmd & cmd /c call comp.bat", vbNormalFocus)
+            End With
+            p.Start()
         End If
         FPSNUM = ""
         FPSDEN = ""
+
+
         Me.Hide()
 
     End Sub
@@ -55,6 +81,7 @@
 
 
         Dim FILE_NAME As String = Main.InputCBOX.Text + ".avs"
+
         Dim Writer As IO.StreamWriter
         Dim Encode As System.Text.Encoding
         Encode = System.Text.Encoding.Default
@@ -65,12 +92,12 @@
         MsgBox("AVS Script writen to file")
 
         If My.Computer.FileSystem.FileExists(Main.InputCBOX.Text + ".avs") Then
-            MsgBox("AVS File found.")
+            ToolStripStatusLabel1.Text = "AVS File loaded"
             Dim fileReader As String
             fileReader = My.Computer.FileSystem.ReadAllText(Main.InputCBOX.Text + ".avs", System.Text.Encoding.Default)
             BOXAVSSCRIPT.Text = fileReader
         Else
-            MsgBox("AVS File not found.")
+            ToolStripStatusLabel1.Text = "Do not have AVS File"
         End If
         FPSNUM = ""
         FPSDEN = ""
@@ -97,7 +124,7 @@
         If RDBDGINDEX.Checked = True And Not My.Computer.FileSystem.FileExists(Main.InputCBOX.Text + ".avs") Then
             BOXAVSSCRIPT.Text = "#SETMTMODE" + vbCrLf +
             "LoadPlugin(" + """" + "appdirectory0703\avisynthPlugins\DGDecode.dll" + """" + ")" + vbCrLf +
-            "DGDecode_mpeg2source(" + """" + "INPUTFILECODEABS07" + """" + ", cpu = 4, info = 3)" + vbCrLf +
+            "DGDecode_mpeg2source(" + """" + "INPUTFILECODEABS07" + """" + ", cpu = 0, info = 3)" + vbCrLf +
             "LoadPlugin(" + """" + "appdirectory0703\avisynthPlugins\ColorMatrix.dll" + """" + ")" + vbCrLf +
             "ColorMatrix(hints = True, interlaced = True, threads = 0)" + vbCrLf +
             "#NOISEFILTER" + vbCrLf

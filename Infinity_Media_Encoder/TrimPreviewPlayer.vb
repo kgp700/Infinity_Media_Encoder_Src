@@ -14,7 +14,11 @@ Public Class TrimPreviewPlayer
     Private isWMV3 As String
     Private dragingtrackbar As Boolean = False
     Private iSecond As Double
-    
+    Private Interlaced As String
+    Private deInterlace As String
+    Private demoThread As Thread = Nothing
+
+
     Private STARTTIME As Double
 
     Private Sub TrimPreviewPlayer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -26,12 +30,14 @@ Public Class TrimPreviewPlayer
         Catch
 
         End Try
-
+        StopVideo()
 
     End Sub
 
 
     Private Sub TrimPreviewPlayer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Invalidate()
+        SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.ResizeRedraw, True)
         MPLAYERPATH = """" + Application.StartupPath + "\Tools\mplayer\mplayer.exe" + """"
 
 
@@ -47,7 +53,7 @@ Public Class TrimPreviewPlayer
 
         End With
 
-        BackgroundWorker1.RunWorkerAsync()
+        'BackgroundWorker1.RunWorkerAsync()
         p.Start()
     End Sub
     Public Sub SendCommand(ByVal cmd As String)
@@ -59,14 +65,24 @@ Public Class TrimPreviewPlayer
         End Try
     End Sub
     Public Sub StartPlay()
-        Initiallize()
-        If Main.BOXCODECINFO.Text = "WMV3" Then
-            args = "-slave -noquiet -identify -cache 8192 -volume 100 -demuxer asf -nosub -noass -noautosub -vo gl:nomanyfmts -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
-        ElseIf Main.BOXFORMATINFO.Text = "MPEG-TS" Then
-            args = "-slave -noquiet -identify -cache 1000000 -volume 100 -demuxer lavf -nosub -noass -noautosub -vo gl:nomanyfmts -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+        LISTLOG.Items.Clear()
+        If BackgroundWorker1.IsBusy = False Then
+            BackgroundWorker1.RunWorkerAsync()
         Else
 
-            args = "-slave -noquiet -identify -cache 8192 -volume 100 -demuxer lavf -nosub -noass -noautosub -vo gl:nomanyfmts -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+        End If
+        Initiallize()
+        Interlaced = Main.BOXINTERLACE.Text
+        If Interlaced = "MBAFF" Or Interlaced = "Interlaced" Then
+            deInterlace = " -vf kerndeint=1 "
+        End If
+        If Main.BOXCODECINFO.Text = "WMV3" Then
+            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 8192 -volume 100 -demuxer asf -nosub -noass -noautosub -vo gl -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+        ElseIf Main.BOXFORMATINFO.Text = "MPEG-TS" Then
+            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 8192 -volume 100 -demuxer lavf -nosub -noass -noautosub -vo gl " + deInterlace + "-speed 1 -ao dsound -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+        Else
+
+            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 8192 -volume 100 -demuxer lavf -nosub -noass -noautosub -vo gl -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
         End If
 
         With p.StartInfo
@@ -80,6 +96,7 @@ Public Class TrimPreviewPlayer
         p.Start()
 
         Timer1.Start()
+        SendCommand("frame_drop 0")
     End Sub
     Public Function StopVideo() As String()
         Try
@@ -90,35 +107,46 @@ Public Class TrimPreviewPlayer
 
         Timer1.Stop()
 
+        posh = 0
+        Initiallize()
+        BackgroundWorker1.CancelAsync()
     End Function
     Public Function Initiallize() As String()
+        'LISTLOG.Items.Clear()
 
+        pauseseek = "0"
         time_length = ""
         time_pos = ""
-        BTNPLAYPREV.Text = "Pause"
+        BTNPLAYPREV.Text = "Play"
         Timer1.Stop()
         TrackBar1.Value = 0
         Label1.Text = "00:00:00"
         Label2.Text = "00:00:00"
     End Function
     Private Sub BTNPLAYPREV_Click(sender As Object, e As EventArgs) Handles BTNPLAYPREV.Click
-        LISTLOG.Items.Clear()
+
 
         Me.Refresh()
-        If p.HasExited = True Then
-            StartPlay()
-        Else
-            If BTNPLAYPREV.Text = "Pause" Then
-                posh = 0
-                BTNPLAYPREV.Text = "Play"
-                Timer1.Stop()
-                SendCommand("pause")
+        Try
+            If p.HasExited = True Then
+                StartPlay()
             Else
-                posh = 1
-                BTNPLAYPREV.Text = "Pause"
-                SendCommand("pause")
-                Timer1.Start()
+
             End If
+        Catch
+
+        End Try
+
+        If BTNPLAYPREV.Text = "Pause" Then
+            posh = 0
+            BTNPLAYPREV.Text = "Play"
+            Timer1.Stop()
+            SendCommand("pause")
+        Else
+            posh = 1
+            BTNPLAYPREV.Text = "Pause"
+            SendCommand("pause")
+            Timer1.Start()
         End If
 
 
@@ -219,10 +247,15 @@ Public Class TrimPreviewPlayer
             'SendCommand("get_property time_pos")
         End If
     End Sub
+
+
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+
         Dim safedelegate As New ChangeTextsSafe(AddressOf ChangeTexts)
         Do
             System.Threading.Thread.Sleep(1)
+
+
             Try
                 If pauseseek = 1 Then
                     Dim sLine As String = p.StandardOutput.ReadLine
@@ -257,8 +290,7 @@ Public Class TrimPreviewPlayer
 
                     Invoke(New Action(Function() LISTLOG.Items.Add(sLine)))
 
-                    Me.LISTLOG.SelectedIndex = Me.LISTLOG.SelectedIndex + 1
-
+                    'Me.LISTLOG.SelectedIndex = Me.LISTLOG.SelectedIndex + 1
 
                 ElseIf posh = 1 Then
                     Dim sLine As String = p.StandardOutput.ReadLine
@@ -285,9 +317,20 @@ Public Class TrimPreviewPlayer
 
 
 
-                    Invoke(New Action(Function() LISTLOG.Items.Add(sLine)))
 
-                    Me.LISTLOG.SelectedIndex = Me.LISTLOG.SelectedIndex + 1
+                    'Me.LISTLOG.SelectedIndex = Me.LISTLOG.SelectedIndex + 1
+                    Try
+                        Invoke(New Action(Function() LISTLOG.Items.Add(sLine)))
+
+                    Catch
+
+                    End Try
+                    If sLine.Contains("Exiting... (End of file)") Then
+                        Exit Do
+                    End If
+
+                Else
+
 
 
 
@@ -299,7 +342,16 @@ Public Class TrimPreviewPlayer
 
             Catch
             End Try
+
+
+
+
+
+
         Loop
+
+
+
 
 
 
@@ -324,7 +376,8 @@ Public Class TrimPreviewPlayer
         End If
         Try
             Timer1.Stop()
-            BackgroundWorker1.CancelAsync()
+            StopVideo()
+            'BackgroundWorker1.CancelAsync()
         Catch
 
         End Try
@@ -342,18 +395,32 @@ Public Class TrimPreviewPlayer
 
             dblValue = (Convert.ToDouble(e.X) / Convert.ToDouble(TrackBar1.Width)) * (TrackBar1.Maximum - TrackBar1.Minimum)
             TrackBar1.Value = Convert.ToInt32(dblValue)
+            'SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
             Invoke(New Action(Function() Seekfunction()))
+
+
+            SendCommand("pausing_keep get_time_pos")
+
         End If
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-
+        StopVideo()
     End Sub
 
     Private Sub TrackBar1_MouseUp(sender As Object, e As MouseEventArgs) Handles TrackBar1.MouseUp
-        'SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+        If BackgroundWorker1.IsBusy = True Then
+            If e.Button = Windows.Forms.MouseButtons.Left Then
+                Dim dblValue As Double
 
-        'Invoke(New Action(Function() Seekfunction()))
+                dblValue = (Convert.ToDouble(e.X) / Convert.ToDouble(TrackBar1.Width)) * (TrackBar1.Maximum - TrackBar1.Minimum)
+                TrackBar1.Value = Convert.ToInt32(dblValue)
+                Label1.Text = dblValue
+            End If
+
+        End If
+
+
     End Sub
 
 
@@ -361,18 +428,23 @@ Public Class TrimPreviewPlayer
         Try
             'dragingtrackbar = True
 
+
+            'Label1.Text = TrackBar1.Value
+
+
             Invoke(New Action(Function() Seekfunction()))
             'dragingtrackbar = False
+            If posh = 0 Then
+                Label1.Text = TrackBar1.Value
+            Else
 
+            End If
 
         Catch
 
         End Try
     End Sub
 
-    Private Sub TrackBar1_ValueChanged(sender As Object, e As EventArgs) Handles TrackBar1.ValueChanged
-
-    End Sub
 
 
     Private Sub BTREWIND_MouseDown(sender As Object, e As EventArgs) Handles BTREWIND.MouseDown
@@ -388,7 +460,7 @@ Public Class TrimPreviewPlayer
 
     Private Sub BTFF_MouseDown(sender As Object, e As EventArgs) Handles BTFF.MouseDown
         posh = 1
-        pauseseek = 1
+        pauseseek = 0
         Try
             'dragingtrackbar = True
             Invoke(New Action(Function() Seekplus()))
@@ -409,19 +481,30 @@ Public Class TrimPreviewPlayer
 
 
     End Function
+
+    Private Sub BackgroundWorker2_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker2.DoWork
+
+    End Sub
+
+
+
     Public Function Seekplus()
 
+        Try
+            If posh = 0 Then
+                TrackBar1.Value = TrackBar1.Value + 1
+                SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+                Label1.Text = TrackBar1.Value
+            Else
+                TrackBar1.Value = TrackBar1.Value + 2
+                SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+                Label1.Text = TrackBar1.Value
 
-        If posh = 0 Then
-            TrackBar1.Value = TrackBar1.Value + 1
-            SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+            End If
 
-        Else
-            TrackBar1.Value = TrackBar1.Value + 2
-            SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+        Catch
 
-
-        End If
+        End Try
 
         'SendCommand("seek " & TrackBar1.Value + 1 & " 2")
         'TrackBar1.Value = TrackBar1.Value + 1
@@ -429,33 +512,45 @@ Public Class TrimPreviewPlayer
     End Function
     Public Function Seekminor()
         'SendCommand("pause")
+        Try
+            If posh = 0 Then
+                TrackBar1.Value = TrackBar1.Value - 1
+                SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+                'Label1.Text = TrackBar1.Value
 
-        If posh = 0 Then
-            TrackBar1.Value = TrackBar1.Value - 1
-            SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+            Else
+                TrackBar1.Value = TrackBar1.Value - 2
+                SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+                Label1.Text = TrackBar1.Value
 
+            End If
+        Catch
 
-        Else
-            TrackBar1.Value = TrackBar1.Value - 4
-            SendCommand("pausing_keep seek " & TrackBar1.Value & " 2")
+        End Try
 
-
-        End If
 
 
         'TrackBar1.Value = TrackBar1.Value - 1
     End Function
+    Public Function framestep()
 
-    Private Sub BTNSEEKFRAME_Click(sender As Object, e As MouseEventArgs) Handles BTNSEEKFRAME.Click
-        VideoScreen.Focus()
         SendCommand("pausing_keep frame_step ")
 
+    End Function
+    Private Sub BTNSEEKFRAME_Click(sender As Object, e As MouseEventArgs) Handles BTNSEEKFRAME.Click
+        VideoScreen.Focus()
+
+        framestep()
+
+        Label1.Text = TrackBar1.Value
     End Sub
 
-    Private Sub BTFF_Click(sender As Object, e As EventArgs) Handles BTFF.Click
-
-
+    Private Sub TrimPreviewPlayer_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias
     End Sub
 
-
+    Private Sub LISTLOG_MouseWheel(sender As Object, e As MouseEventArgs) Handles LISTLOG.MouseWheel
+        LISTLOG.Visible = False
+        LISTLOG.Visible = True
+    End Sub
 End Class

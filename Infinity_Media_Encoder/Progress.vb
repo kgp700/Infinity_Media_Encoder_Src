@@ -7,10 +7,12 @@ Imports System.IO
 Imports System.ComponentModel
 Imports System.Threading
 
+
 'Imports System.Net.NetworkInformation
 
 
 Public Class FRMProgress
+
     Private cpuusage As Integer
     Private networkusage As Integer
     Public p As New Process
@@ -40,7 +42,8 @@ Public Class FRMProgress
     Dim CALCDURATION As Double
     Private WithEvents worker As BackgroundWorker
     Public Delegate Sub NextPrimeDelegate()
-
+    Private SW As New Stopwatch
+    Private WithEvents Tmr As New System.Windows.Forms.Timer
 
 
 
@@ -92,10 +95,9 @@ Public Class FRMProgress
                 ' Windows Vista
         End Select
 
-
+        Tmr.Interval = 1000
     End Sub
-
-    Private Sub BTNSTOP_Click(sender As Object, e As EventArgs) Handles BTNSTOP.Click
+    Public Function StopProcess()
         Stopped = True
         ForceStopped = False
 
@@ -109,10 +111,10 @@ Public Class FRMProgress
             'outputReader.DiscardBufferedData()
             'outputReader.Close()
         Else
-            If BTNPAUSE.Text = "Resume Process" Then
+            If BTNPAUSE.Text = "Resume Processing" Then
                 Try
                     ResumeProcess(p.Id)
-                Catch ex As Exception
+                Catch
 
                 End Try
             End If
@@ -122,19 +124,25 @@ Public Class FRMProgress
                 AttachConsole(CUInt(p.Id))
                 GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(p.Id))
                 FreeConsole()
-
+                'BackgroundWorker_1.CancelAsync()
+                'outputReader.DiscardBufferedData()
+                'outputReader.Close()
 
             Catch ex As Exception
                 'If p.HasExited = False Then
                 ForceCloseProcessTree(p.Id)
-                BackgroundWorker_1.CancelAsync()
+                'BackgroundWorker_1.CancelAsync()
+                'outputReader.DiscardBufferedData()
                 'outputReader.Close()
                 'End If
             End Try
         End If
         p.WaitForExit(5000)
+    End Function
+    Private Sub BTNSTOP_Click(sender As Object, e As EventArgs) Handles BTNSTOP.Click
 
 
+        StopProcess()
 
 
 
@@ -351,13 +359,17 @@ Public Class FRMProgress
             End If
 
         End With
-
+        p.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8
         p.Start()
+        SW.Start()
+        Tmr.Start()
+
         'outputReader = p.StandardError
 
         'Dim output As String
 
         While p.StandardError.EndOfStream = False
+
             outdata = p.StandardError.ReadLine()
 
             Try
@@ -375,9 +387,11 @@ Public Class FRMProgress
     End Sub
 
     Private Sub BackgroundWorker1_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker_1.ProgressChanged
+
         Try
             VALTRIMSS = TimeSpan.Parse(ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(3).Text).TotalSeconds
             VALTRIMTO = TimeSpan.Parse(ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(4).Text).TotalSeconds
+            LBELAPSEDTIME.Text = "Elapsed Time : " + SW.Elapsed.ToString("hh\:mm\:ss\.f")
         Catch
 
         End Try
@@ -488,8 +502,13 @@ Public Class FRMProgress
                     'ListBox1.EndUpdate()
 
                     Invoke(DirectCast(Sub()
+                                          ListBox1.BeginUpdate()
+                                          ListBox1.SuspendLayout()
                                           ListBox1.Items.Add(logdata)
                                           ListBox1.SelectedIndex = ListBox1.Items.Count - 1
+                                          ListBox1.EndUpdate()
+                                          ListBox1.ResumeLayout()
+                                          StreamInfopopup.LBSTREAMINFOP.Text = logdata + " CPU Usage : " + cpuusage.ToString + "%" + " " + LBWARN.Text
 
 
                                       End Sub, MethodInvoker))
@@ -535,11 +554,11 @@ Public Class FRMProgress
                 If logdata.Contains("frame=") Then
                     startstreamflag = True
                 End If
-                If startstreamflag = True Then
-                    If logdata.Contains("frame dropped!") Or logdata.Contains("drop=") Then
-                        LBWARN.Text = "Frame Dropped!"
-                    End If
-                End If
+                'If startstreamflag = True Then
+                'If logdata.Contains("frame dropped!") Or logdata.Contains("drop=") Then
+                'LBWARN.Text = "Frame Dropped!"
+                ' End If
+                ' End If
 
             ElseIf Main.BOXCODEC.Text = "No Video" Then
                 LBBITRATE.Text = ""
@@ -701,7 +720,7 @@ Public Class FRMProgress
         CTRL_SHUTDOWN_EVENT
     End Enum
 
-    <DllImport("kernel32.dll", CallingConvention:=CallingConvention.Cdecl)> _
+    <DllImport("kernel32.dll", CallingConvention:=CallingConvention.Cdecl)>
     Private Shared Function GenerateConsoleCtrlEvent(dwCtrlEvent As CtrlTypes, dwProcessGroupId As UInteger) As <MarshalAs(UnmanagedType.Bool)> Boolean
     End Function
 
@@ -810,10 +829,10 @@ Public Class FRMProgress
     End Sub
 
     Private Declare Function OpenProcess Lib "kernel32" _
-      (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, _
+      (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long,
        ByVal dwProcessId As Long) As Long
     Private Declare Function WaitForSingleObjectEx Lib "kernel32" _
-      (ByVal hHandle As Long, ByVal dwMilliseconds As Long, _
+      (ByVal hHandle As Long, ByVal dwMilliseconds As Long,
        ByVal bAlertable As Long) As Long
     Private Declare Function CloseHandle Lib "kernel32" _
       (ByVal hObject As Long) As Long
@@ -843,7 +862,7 @@ Public Class FRMProgress
 
     Public Event RunWorkerCompleted As RunWorkerCompletedEventHandler
 
-    Private Sub backgroundWorker1_RunWorkerCompleted( _
+    Private Sub backgroundWorker1_RunWorkerCompleted(
 ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs) _
 Handles BackgroundWorker_1.RunWorkerCompleted
         Try
@@ -910,8 +929,9 @@ Handles BackgroundWorker_1.RunWorkerCompleted
 
                 'MsgBox(ENCODINGCOUNT)
             Loop
-
-
+            SW.Stop()
+            Tmr.Stop()
+            SW.Reset()
 
 
 DONTCONTINUE:
@@ -920,6 +940,9 @@ DONTCONTINUE:
                 If Label1.Text = "Done" Then
                     ProgressBar1.Value = ProgressBar1.Maximum
                 End If
+                SW.Stop()
+                Tmr.Stop()
+
             Catch
 
             End Try
@@ -999,37 +1022,7 @@ DONTCONTINUE:
         'ENCODINGLIST.Items.RemoveAt(ENCODINGLIST.SelectedIndex)
 
         If ENCODINGLISTVIEW.Items.Count = 1 Then
-            If osver.ToString.Contains("6.1") Or osver.ToString.Contains("5.1") Or osver.ToString.Contains("5.0") Or osver.ToString.Contains("6.0") Then
-                Try
-                    ForceCloseProcessTree(p.Id)
-                Catch ex As Exception
-
-                End Try
-                BackgroundWorker_1.CancelAsync()
-                'outputReader.DiscardBufferedData()
-                'outputReader.Close()
-            Else
-
-                Try
-                    ResumeProcess(p.Id)
-                Catch ex As Exception
-
-                End Try
-
-                Try
-                    AttachConsole(CUInt(p.Id))
-                    GenerateConsoleCtrlEvent(CTRL_C_EVENT, CUInt(p.Id))
-                    FreeConsole()
-
-                Catch ex As Exception
-                    'If p.HasExited = False Then
-                    ForceCloseProcessTree(p.Id)
-                    BackgroundWorker_1.CancelAsync()
-                    'outputReader.Close()
-                    'End If
-                End Try
-            End If
-            p.WaitForExit(5000)
+            StopProcess()
         Else
             For i = 0 To ENCODINGLISTVIEW.SelectedItems.Count - 1
 
@@ -1040,8 +1033,137 @@ DONTCONTINUE:
 
     End Sub
 
+    Private Sub BTOPENOUTFOLDER_Click(sender As Object, e As EventArgs) Handles BTOPENOUTFOLDER.Click
+        If ENCODINGLISTVIEW.SelectedItems.Count > 0 Then
+            Dim outputpath1 As String = ENCODINGLISTVIEW.SelectedItems(0).SubItems(6).Text
+            If My.Computer.FileSystem.FileExists(outputpath1) Then
+                Shell("explorer /select, " & Chr(34) & outputpath1 & Chr(34), vbNormalFocus)
+            Else
+                MsgBox("Do not exist output file", vbCritical)
+            End If
+        Else
+            ENCODINGLISTVIEW.Items(0).Selected = True
+
+            Dim outputpath1 As String = ENCODINGLISTVIEW.SelectedItems(0).SubItems(6).Text
+            If My.Computer.FileSystem.FileExists(outputpath1) Then
+                Shell("explorer /select, " & Chr(34) & outputpath1 & Chr(34), vbNormalFocus)
+            Else
+                MsgBox("Do not exist output file", vbCritical)
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
 
 
+    End Sub
+
+    Private Sub BTNSTREAMINFOPOP_Click(sender As Object, e As EventArgs) Handles BTNSTREAMINFOPOP.Click
+        StreamInfopopup.Show()
+
+    End Sub
+
+    Private Sub CBPRI_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CBPRI.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub CBPRI_TextChanged(sender As Object, e As EventArgs) Handles CBPRI.TextChanged
+        Try
+            If CBPRI.Text = "Normal" Then
+                SetPriorityNormal(p.Id)
+            ElseIf CBPRI.Text = "AboveNormal" Then
+                SetPriorityAboveNormal(p.Id)
+            ElseIf CBPRI.Text = "High" Then
+                SetPriorityHigh(p.Id)
+            ElseIf CBPRI.Text = "BelowNormal" Then
+                SetPriorityBelowNormal(p.Id)
+
+            End If
+        Catch
+
+        End Try
+
+    End Sub
+    Public Shared Sub SetPriorityHigh(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            SetPriorityHigh(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+
+            proc.PriorityClass = System.Diagnostics.ProcessPriorityClass.High
+
+
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+
+
+    End Sub
+
+    Public Shared Sub SetPriorityNormal(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            SetPriorityNormal(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+
+            proc.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal
+
+
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+
+
+    End Sub
+
+    Public Shared Sub SetPriorityBelowNormal(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            SetPriorityBelowNormal(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+
+            proc.PriorityClass = System.Diagnostics.ProcessPriorityClass.BelowNormal
+
+
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+
+
+    End Sub
+
+    Public Shared Sub SetPriorityAboveNormal(pid As Integer)
+
+        Dim searcher As New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & Convert.ToString(pid))
+        Dim moc As ManagementObjectCollection = searcher.[Get]()
+        For Each mo As ManagementObject In moc
+            SetPriorityAboveNormal(Convert.ToInt32(mo("ProcessID")))
+        Next
+        Try
+            Dim proc As Process = Process.GetProcessById(pid)
+
+            proc.PriorityClass = System.Diagnostics.ProcessPriorityClass.AboveNormal
+
+
+        Catch generatedExceptionName As ArgumentException
+        End Try
+
+
+
+    End Sub
 End Class
 
 

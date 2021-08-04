@@ -33,6 +33,10 @@ Partial Class AvisynthOpt
         Me.RDBFFMS2 = New System.Windows.Forms.RadioButton()
         Me.CHKAVSMT = New System.Windows.Forms.CheckBox()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.LBAVSAV = New System.Windows.Forms.Label()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'CHKDGDEBLOCK
@@ -142,11 +146,36 @@ Partial Class AvisynthOpt
         Me.Button2.Text = "Save Script Only"
         Me.Button2.UseVisualStyleBackColor = True
         '
+        'LBAVSAV
+        '
+        Me.LBAVSAV.AutoSize = True
+        Me.LBAVSAV.Location = New System.Drawing.Point(463, 369)
+        Me.LBAVSAV.Name = "LBAVSAV"
+        Me.LBAVSAV.Size = New System.Drawing.Size(0, 12)
+        Me.LBAVSAV.TabIndex = 11
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 391)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(597, 22)
+        Me.StatusStrip1.TabIndex = 12
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(123, 17)
+        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
+        '
         'AvisynthOpt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(595, 399)
+        Me.ClientSize = New System.Drawing.Size(597, 413)
+        Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.LBAVSAV)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.CHKAVSMT)
         Me.Controls.Add(Me.RDBFFMS2)
@@ -160,6 +189,8 @@ Partial Class AvisynthOpt
         Me.MaximizeBox = False
         Me.Name = "AvisynthOpt"
         Me.Text = "Avisynth Options"
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -174,4 +205,7 @@ Partial Class AvisynthOpt
     Friend WithEvents RDBFFMS2 As System.Windows.Forms.RadioButton
     Friend WithEvents CHKAVSMT As System.Windows.Forms.CheckBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents LBAVSAV As Label
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 End Class

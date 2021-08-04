@@ -17,6 +17,7 @@ Public Class AdvancedFRM
 
 
     Private FileName As String = System.IO.Path.Combine(Application.StartupPath, "ADVENCSettings.xml")
+    Private RevertXML As String = System.IO.Path.Combine(Application.StartupPath, "RevertADVENCSettings.xml")
 
 
 
@@ -43,9 +44,12 @@ Public Class AdvancedFRM
         LBSCENE = ":scenecut=" + BOXSCENE.Text
 
         Me.Hide()
+        'CHECKADV.Checked = True
 
     End Sub
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+    Private Sub BTNCANCEL_Click(sender As System.Object, e As System.EventArgs) Handles BTNCANCEL.Click
+        LoadPresetRevert()
+
         Me.Hide()
     End Sub
 
@@ -54,7 +58,28 @@ Public Class AdvancedFRM
     End Sub
 
     Private Sub AdvancedFRM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim Data As New List(Of ControlData)
+        FindControls(Me, Data)
 
+        Dim xml As New XmlSerializer(Data.GetType)
+        Using writer As New FileStream(RevertXML, FileMode.Create)
+            xml.Serialize(writer, Data)
+        End Using
+
+        LBMERANGE = ":merange=" + NMMERANGE.Text
+        LBMEALGORITHM = ":me=" + BOXMEALGO.Text
+        LBSR = ":subme=" + BOXSR.Text
+        LBTR = ":trellis=" + BOXTR.Text
+        LBNOPSKIP = ":no-fast-pskip=1"
+        LBNODCT = ":no-dct-decimate=1"
+        LBBFRAMES = ":bframes=" + BOXBFRAMES.Text
+        LBAQMODE = ":aq-mode=" + BOXAQMODE.Text
+        LBAQSTR = ":aq-strength=" + BOXAQSTR.Text
+        LBDEBLOCK = " -deblock " + NMDBSTR.Text + ":" + NMDBTR.Text + " "
+        LBSCENE = ":scenecut=" + BOXSCENE.Text
+
+
+        'CHECKADV.Checked = True
 
     End Sub
     Public Sub FindControls(ByVal cont As Control, ByVal Data As List(Of ControlData))
@@ -106,6 +131,7 @@ Public Class AdvancedFRM
             Dim Data As New List(Of ControlData)
             Dim xml As New XmlSerializer(Data.GetType)
             Using reader As New FileStream(".\Preset\" + Main.PRESETFILENAME + ".xml", FileMode.Open)
+
                 Data = CType(xml.Deserialize(reader), List(Of ControlData))
 
             End Using
@@ -121,9 +147,39 @@ Public Class AdvancedFRM
 
     End Function
 
+    Public Function LoadPresetRevert()
+        If System.IO.File.Exists(RevertXML) Then
+            Dim Data As New List(Of ControlData)
+            Dim xml As New XmlSerializer(Data.GetType)
+            Using reader As New FileStream(RevertXML, FileMode.Open)
+                Data = CType(xml.Deserialize(reader), List(Of ControlData))
+
+            End Using
+
+            Dim matches() As Control
+            For Each cd As ControlData In Data
+                matches = Me.Controls.Find(cd.ControlName, True)
+                If matches.Length > 0 Then
+                    CallByName(matches(0), cd.ControlProperty, CallType.Let, cd.ControlData)
+                End If
+            Next
+        End If
+
+    End Function
+    Public items As New List(Of ListViewItems)
+    Public Structure ListViewItems
+
+        Public column1 As String
+
+        Public column2 As String
+
+    End Structure
 End Class
 <Serializable()> Public Class ControlData
     Public ControlName As String
     Public ControlProperty As String
     Public ControlData As String
+
+
+
 End Class

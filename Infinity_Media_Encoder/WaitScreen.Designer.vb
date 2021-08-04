@@ -34,17 +34,18 @@ Partial Class WaitScreen
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(52, 40)
+        Me.Label1.Location = New System.Drawing.Point(53, 38)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(206, 12)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Analyzing Media file. Please wait..."
+        Me.Label1.UseWaitCursor = True
         '
         'WaitScreen
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(317, 93)
+        Me.ClientSize = New System.Drawing.Size(317, 85)
         Me.ControlBox = False
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle

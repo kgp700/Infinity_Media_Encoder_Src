@@ -8,6 +8,8 @@ Imports System.Security
 Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Text.RegularExpressions
+Imports System.Xml.Linq.XDocument
 
 'Imports System.Drawing
 'Imports DirectShowLib
@@ -58,6 +60,10 @@ Public Class Main
     Public AUDIOBITVAL As String
     Public X264OPTVAL As String
     Public VCODECOPT As String
+    Public VIDFILTERFLAG As String
+    Public STARTTIME As String
+    Public isInterlaced As String
+
 
     Public ASPECTRATIOVAL As String
     Public RATIOVALUE As String
@@ -136,6 +142,9 @@ Public Class Main
     Dim dblStringToDblSS As Double
     Dim dblStringToDblTO As Double
     Dim dblStringToDblRESULT As Double
+    Dim YTVP9ONLY As Boolean
+    Public FLVOPT As String
+
 
     Dim iRow, iCol As Integer
 
@@ -232,7 +241,7 @@ Public Class Main
         End If
 
         If Not BOXCODEC.Text = "libx264" And Not BOXCODEC.Text = "libx265" Then
-            BOXBITRATEMODE.Text = "ABR"
+            BOXBITRATEMODE.Text = "CBR"
 
         End If
 
@@ -658,6 +667,33 @@ Public Class Main
 
 
     End Function
+    Public Function ChangePresetList() As String()
+        If BOXCODEC.Text = "hevc_nvenc" Or BOXCODEC.Text = "nvenc" Then
+            BOXCODECPRESET.Items.Clear()
+            BOXCODECPRESET.Items.Add("hq")
+            BOXCODECPRESET.Items.Add("bd")
+            BOXCODECPRESET.Items.Add("slow")
+            BOXCODECPRESET.Items.Add("medium")
+            BOXCODECPRESET.Items.Add("fast")
+            BOXCODECPRESET.Items.Add("lq")
+            BOXCODECPRESET.Text = "slow"
+
+        Else
+            BOXCODECPRESET.Items.Clear()
+            BOXCODECPRESET.Items.Add("ultrafast")
+            BOXCODECPRESET.Items.Add("superfast")
+            BOXCODECPRESET.Items.Add("veryfast")
+            BOXCODECPRESET.Items.Add("fast")
+            BOXCODECPRESET.Items.Add("faster")
+            BOXCODECPRESET.Items.Add("medium")
+            BOXCODECPRESET.Items.Add("slow")
+            BOXCODECPRESET.Items.Add("slower")
+            BOXCODECPRESET.Items.Add("veryslow")
+            BOXCODECPRESET.Items.Add("placebo")
+            BOXCODECPRESET.Text = "fast"
+        End If
+
+    End Function
     Public Function ChangeCodecOPT() As String()
         If BOXCODEC.Text = "libx265" Then
             If Not LVBOX.Items.Contains(LVBOX.Text) Then
@@ -667,10 +703,10 @@ Public Class Main
                 PFBOX.Text = ""
             End If
 
-            PFBOX.Enabled = False
+            PFBOX.Enabled = True
             LVBOX.Enabled = False
             REFBOX.Enabled = True
-            BOXDEINT.Enabled = True
+            LBDEINTMODE.Enabled = True
             RSBOX.Enabled = True
             BITBOX.Enabled = True
             BOXBITRATEMODE.Enabled = True
@@ -688,10 +724,12 @@ Public Class Main
                 PFBOX.Text = ""
             End If
 
+
+
             PFBOX.Enabled = False
             LVBOX.Enabled = False
             REFBOX.Enabled = True
-            BOXDEINT.Enabled = True
+            LBDEINTMODE.Enabled = True
             RSBOX.Enabled = True
             BITBOX.Enabled = True
             BOXBITRATEMODE.Enabled = True
@@ -712,7 +750,7 @@ Public Class Main
             PFBOX.Enabled = True
             LVBOX.Enabled = True
             REFBOX.Enabled = True
-            BOXDEINT.Enabled = True
+            LBDEINTMODE.Enabled = True
             RSBOX.Enabled = True
             BITBOX.Enabled = True
             BOXBITRATEMODE.Enabled = True
@@ -733,7 +771,7 @@ Public Class Main
             PFBOX.Enabled = True
             LVBOX.Enabled = True
             REFBOX.Enabled = True
-            BOXDEINT.Enabled = True
+            LBDEINTMODE.Enabled = True
             RSBOX.Enabled = True
             BITBOX.Enabled = True
             BOXBITRATEMODE.Enabled = True
@@ -749,7 +787,7 @@ Public Class Main
             PFBOX.Enabled = False
             LVBOX.Enabled = False
             REFBOX.Enabled = False
-            BOXDEINT.Enabled = False
+            LBDEINTMODE.Enabled = False
             RSBOX.Enabled = False
             BITBOX.Enabled = False
             BOXBITRATEMODE.Enabled = False
@@ -766,7 +804,7 @@ Public Class Main
             PFBOX.Enabled = False
             LVBOX.Enabled = False
             REFBOX.Enabled = False
-            BOXDEINT.Enabled = False
+            LBDEINTMODE.Enabled = False
             RSBOX.Enabled = False
             BITBOX.Enabled = False
             BOXBITRATEMODE.Enabled = False
@@ -782,7 +820,7 @@ Public Class Main
             PFBOX.Enabled = False
             LVBOX.Enabled = False
             REFBOX.Enabled = False
-            BOXDEINT.Enabled = True
+            LBDEINTMODE.Enabled = True
             RSBOX.Enabled = True
             BITBOX.Enabled = True
             BOXBITRATEMODE.Enabled = True
@@ -919,7 +957,7 @@ Public Class Main
             BOXAACPF.Enabled = False
             BOXAUDBITDEPTH.Enabled = False
         End If
-
+        ChangePresetList()
     End Function
 
     Private Sub BOXACODEC_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BOXACODEC.SelectedIndexChanged
@@ -959,12 +997,12 @@ Public Class Main
         End If
 
         If My.Computer.FileSystem.FileExists(InputCBOX.Text + ".avs") Then
-            MsgBox("AVS File found.")
+            AvisynthOpt.ToolStripStatusLabel1.Text = "AVS File loaded"
             Dim fileReader As String
             fileReader = My.Computer.FileSystem.ReadAllText(InputCBOX.Text + ".avs", System.Text.Encoding.Default)
             AvisynthOpt.BOXAVSSCRIPT.Text = fileReader
         Else
-            MsgBox("AVS File not found.")
+            AvisynthOpt.ToolStripStatusLabel1.Text = "Do not have AVS File"
         End If
         If BOXCODECINFO.Text = "MPEG-2V" Then
             AvisynthOpt.RDBDGINDEX.Checked = True
@@ -974,6 +1012,11 @@ Public Class Main
 
 
         AvisynthOpt.Show()
+        Dim FILE_NAME As String = InputCBOX.Text
+        If Regex.IsMatch(FILE_NAME, "\p{IsThai}") Or Regex.IsMatch(FILE_NAME, "\p{IsArabic}") Or Regex.IsMatch(FILE_NAME, "\p{IsLatin-1Supplement}") Or Regex.IsMatch(FILE_NAME, "\p{IsGreek}") Or
+            Regex.IsMatch(FILE_NAME, "\p{IsLatinExtended-A}") Or Regex.IsMatch(FILE_NAME, "\p{IsLatinExtended-B}") Then
+            MsgBox("Avisynth do not support some unicode language file name. please change input file name to english", vbCritical)
+        End If
     End Sub
 
     Private Sub Button9_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -1001,7 +1044,7 @@ Public Class Main
         End If
     End Sub
     Private Sub ENCLISTVIEWMAIN_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles ENCLISTVIEWMAIN.DragDrop
-
+        LBENCLISTHELP.Text = ""
         WaitScreen.Show()
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
         For Each path In files
@@ -1014,9 +1057,12 @@ Public Class Main
             BOXFPSINFO.Text = ""
             MI.Open(path)
 
-            BOXCODECINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Visual, 0, "Codec")))
+            'BOXCODECINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Video, 0, "Codec")))
+            BOXCODECINFO.Text = MI.Get_(StreamKind.Video, 0, "Codec")
 
-            BOXDELAYINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Audio, 0, "Video_Delay")))
+            'BOXDELAYINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Audio, 0, "Video_Delay")))
+            BOXDELAYINFO.Text = MI.Get_(StreamKind.Audio, 0, "Video_Delay")
+
             If BOXDELAYINFO.Text = "" Then
                 BOXDELAYINFO.Text = "0"
             End If
@@ -1027,15 +1073,15 @@ Public Class Main
 
                 BOXDELAYINFO.Text = VDELAYINFO
             End If
-            BOXDURATION2.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Visual, 0, "Duration")))
-            BOXFORMATINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.General, 0, "Format")))
-            BOXACODECINFO.Text = Invoke(New Action(Function() MI.Get_(StreamKind.Audio, 0, "Codec")))
+            BOXDURATION2.Text = MI.Get_(StreamKind.Video, 0, "Duration")
+            BOXFORMATINFO.Text = MI.Get_(StreamKind.General, 0, "Format")
+            BOXACODECINFO.Text = MI.Get_(StreamKind.Audio, 0, "Codec")
 
-            'BOXASPECT.Text = MI.Get_(StreamKind.Visual, 0, "DisplayAspectRatio/String")
-            'BOXDURATION.Text = MI.Get_(StreamKind.Visual, 0, "Duration/String3")
-            'BOXPFINFO.Text = MI.Get_(StreamKind.Visual, 0, "Format_Profile")
-            'BOXRSINFO.Text = MI.Get_(StreamKind.Visual, 0, "Width") + "x" + MI.Get_(StreamKind.Visual, 0, "Height")
-            'BOXREFINFO.Text = MI.Get_(StreamKind.Visual, 0, "Format_Settings_RefFrames")
+            'BOXASPECT.Text = MI.Get_(StreamKind.Video, 0, "DisplayAspectRatio/String")
+            'BOXDURATION.Text = MI.Get_(StreamKind.Video, 0, "Duration/String3")
+            'BOXPFINFO.Text = MI.Get_(StreamKind.Video, 0, "Format_Profile")
+            'BOXRSINFO.Text = MI.Get_(StreamKind.Video, 0, "Width") + "x" + MI.Get_(StreamKind.Video, 0, "Height")
+            'BOXREFINFO.Text = MI.Get_(StreamKind.Video, 0, "Format_Settings_RefFrames")
 
             MI.Close()
 
@@ -1204,6 +1250,7 @@ Public Class Main
 
 
     Private Sub BTADDENCLIST_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTADDENCLIST.Click
+        LBENCLISTHELP.Text = ""
         INPUTVIDNAME = InputCBOX.Text
         OUTPUTFILENAME = OutputCBox.Text
 
@@ -1307,6 +1354,18 @@ INITIAL:
 
         End If
     End Sub
+    Public Structure ListViewItems
+
+        Public column1 As String
+
+        Public column2 As String
+
+    End Structure
+
+    Private items As New List(Of ListViewItems)
+    Private itemsA As New List(Of ListViewItems)
+
+
     Public Sub FindControls(ByVal cont As Control, ByVal Data As List(Of ControlData))
         For Each ctl As Control In cont.Controls
             If CHKALLSET.Checked = False Then
@@ -1336,7 +1395,7 @@ INITIAL:
 
                 If TypeOf ctl Is TextBox Then
                     Dim CB As TextBox = DirectCast(ctl, TextBox)
-                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXCHLSADDRESS" Then
+                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXCHLSADDRESS" Or CB.Name = "BOXFLVFLAG" Then
                         Dim cd As New ControlData
                         cd.ControlName = ctl.Name
                         cd.ControlProperty = "Text"
@@ -1345,6 +1404,14 @@ INITIAL:
                     End If
                 End If
 
+                If TypeOf ctl Is ListView Then
+                    Dim LV As ListView = DirectCast(ctl, ListView)
+                    Dim cd As New ControlData
+                    cd.ControlName = ctl.Name
+                    cd.ControlProperty = "Text"
+                    cd.ControlData = LV.Text.ToString
+                    Data.Add(cd)
+                End If
 
                 If TypeOf ctl Is CheckBox Then
                     Dim CB As CheckBox = DirectCast(ctl, CheckBox)
@@ -1394,7 +1461,7 @@ INITIAL:
 
                 If TypeOf ctl Is TextBox Then
                     Dim CB As TextBox = DirectCast(ctl, TextBox)
-                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXCHLSADDRESS" Then
+                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXCHLSADDRESS" Or CB.Name = "BOXFLVFLAG" Then
                         Dim cd As New ControlData
                         cd.ControlName = ctl.Name
                         cd.ControlProperty = "Text"
@@ -1409,13 +1476,16 @@ INITIAL:
 
 
         Next
+
+
+
     End Sub
     <Serializable()>
     Public Class ListViewItemCollection
         Inherits System.Collections.ObjectModel.Collection(Of String())
     End Class
 
-  Private Sub DeserializeToListView(ByVal LV As ListView, ByVal filename As String)
+    Private Sub DeserializeToListView(ByVal LV As ListView, ByVal filename As String)
 
         '  Create a FileStream to access the storage file
 
@@ -1478,7 +1548,7 @@ INITIAL:
 
         '  each to the temporary ArrayList
 
-        For item As Integer = 0 To lv.Items.Count - 1
+        For item As Integer = 0 To LV.Items.Count - 1
 
             '  Add next item/subitem to the arraylist
 
@@ -1503,84 +1573,297 @@ INITIAL:
 
 
     End Sub
-
+    Public Sub MergeXml(ByVal XmlPath1 As String, ByVal XmlPath2 As String)
+        'Documents we need to merge
+        Dim xmlreader1 As New XmlTextReader(XmlPath1)
+        Dim xmlreader2 As New XmlTextReader(XmlPath2)
+        'Create a new dataset to hold Xml1
+        Dim ds1 As New DataSet()
+        Try
+            'Load Xml into dataset
+            ds1.ReadXml(xmlreader1)
+            'Same for Xml2
+            Dim ds2 As New DataSet()
+            ds2.ReadXml(xmlreader2)
+            'Merge the two Xmls
+            ds1.Merge(ds2)
+            ds1.WriteXml("C:\XmlTest.xml", XmlWriteMode.IgnoreSchema)
+        Catch ex As Exception
+            MessageBox.Show("Error merging Xml Documents")
+        End Try
+    End Sub
+    Public Function FindXmlNode(parentE As XmlNode, elementName As String) As XmlNode
+        For Each node As XmlNode In parentE.ChildNodes
+            If node.Name = elementName Then
+                Return node
+            Else
+                If node.HasChildNodes Then
+                    FindXmlNode(node, elementName)
+                End If
+            End If
+        Next
+        Return Nothing
+    End Function
 
     Private Sub BTPRSAVE_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTPRSAVE.Click
-        Dim fileDateTime As String = DateTime.Now.ToString("yyyyMMdd") & "_" & DateTime.Now.ToString("HHmmss")
-        PRESETFILENAME = BOXPRESETFILENAME.Text
         If BOXPRESETFILENAME.Text = "" Then
-            PRESETFILENAME = fileDateTime
-        End If
+            MsgBox("Please input preset name", MsgBoxStyle.Information)
+        Else
+            Dim fileDateTime As String = DateTime.Now.ToString("yyyyMMdd") & "_" & DateTime.Now.ToString("HHmmss")
+            PRESETFILENAME = BOXPRESETFILENAME.Text
+            If BOXPRESETFILENAME.Text = "" Then
+                PRESETFILENAME = fileDateTime
+            End If
 
+            Dim nsBlank As New XmlSerializerNamespaces
+            nsBlank.Add("", "")
 
-
-        Dim Data As New List(Of ControlData)
-
-        FindControls(Me, Data)
-        AdvancedFRM.FindControls(AdvancedFRM, Data)
-        FRMMULTIRTMP.FindControls(FRMMULTIRTMP, Data)
-
-        If CHKALLSET.Checked = True Then
-            FRMCUSTOMENC.FindControls(FRMCUSTOMENC, Data)
-
-        End If
-
-
-
-        Dim xml As New XmlSerializer(Data.GetType)
-
-
-        Using writer As New FileStream(".\Preset\" + PRESETFILENAME + ".xml", FileMode.Create)
-            xml.Serialize(writer, Data)
-        End Using
-
-        'SerializeListViewData(LISTVFILTER, PRESETFILENAME)
-        'SerializeListViewData(LISTAFILTER, PRESETFILENAME)
-
-        If Not BOXPRESETFILENAME.Items.Contains(PRESETFILENAME) Then
-            BOXPRESETFILENAME.Items.Add(PRESETFILENAME)
-        End If
-        BOXPRESETFILENAME.Text = PRESETFILENAME
-        MsgBox("Preset Saved", MsgBoxStyle.Information)
-    End Sub
-
-    Private Sub BTPRLOAD_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTPRLOAD.Click
-
-        PRESETFILENAME = BOXPRESETFILENAME.Text
-        Parsingsettings()
-        If CHKALLSET.Checked = True Then
-            FRMCUSTOMENC.ParsingsettingsCustomEncOpt()
-        End If
-        AdvancedFRM.LoadPresetADV()
-        FRMMULTIRTMP.LoadPresetMRTMP()
-        LISTVFILTER.Items.Clear()
-        LISTAFILTER.Items.Clear()
-        'DeserializeToListView(LISTVFILTER, PRESETFILENAME)
-        'DeserializeToListView(LISTAFILTER, PRESETFILENAME)
-        ChangeCodecOPT()
-        MsgBox("Preset Loaded", MsgBoxStyle.Information)
-    End Sub
-
-    Public Function Parsingsettings() As String()
-        If System.IO.File.Exists(".\Preset\" + PRESETFILENAME + ".xml") Then
+            '==Save textbox, combobox, checkbox value to xml 
             Dim Data As New List(Of ControlData)
+
+
+            FindControls(Me, Data)
+            AdvancedFRM.FindControls(AdvancedFRM, Data)
+            FRMMULTIRTMP.FindControls(FRMMULTIRTMP, Data)
+
+            If CHKALLSET.Checked = True Then
+                FRMCUSTOMENC.FindControls(FRMCUSTOMENC, Data)
+
+            End If
+            '==
+
+            '===Save ListView items to xml 
+            items = New List(Of ListViewItems)
+
+            For Each lvi As ListViewItem In LISTVFILTER.Items
+
+                Dim lv As New ListViewItems
+
+                lv.column1 = lvi.SubItems(0).Text
+
+                lv.column2 = lvi.SubItems(1).Text
+
+                items.Add(lv)
+
+            Next
+
+            '===Save ListView items to xml 
+            itemsA = New List(Of ListViewItems)
+
+            For Each lvi As ListViewItem In LISTAFILTER.Items
+
+                Dim lv As New ListViewItems
+
+                lv.column1 = lvi.SubItems(0).Text
+
+                lv.column2 = lvi.SubItems(1).Text
+
+                itemsA.Add(lv)
+
+            Next
+
+
+
+            Dim serializer As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItems)), New XmlRootAttribute("ListViewItemsV"))
+            Dim serializerA As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItems)), New XmlRootAttribute("ListViewItemsA"))
+
             Dim xml As New XmlSerializer(Data.GetType)
-            Using reader As New FileStream(".\Preset\" + PRESETFILENAME + ".xml", FileMode.Open)
-                Data = CType(xml.Deserialize(reader), List(Of ControlData))
+
+            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + ".xml", FileMode.Create)
+                xml.Serialize(writer, Data, nsBlank)
+                'serializer.Serialize(writer, items, nsBlank)
+            End Using
+
+            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + "-LV.xml", FileMode.Create)
+
+                serializer.Serialize(writer, items, nsBlank)
 
             End Using
 
-            Dim matches() As Control
-            For Each cd As ControlData In Data
-                matches = Me.Controls.Find(cd.ControlName, True)
 
-                If matches.Length > 0 Then
-                    CallByName(matches(0), cd.ControlProperty, CallType.Let, cd.ControlData)
-                End If
+            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + "-LA.xml", FileMode.Create)
+
+                serializerA.Serialize(writer, itemsA, nsBlank)
+
+            End Using
+
+
+            Dim xml1 = XDocument.Load(".\Preset\" + PRESETFILENAME + ".xml")
+            Dim xml2 = XDocument.Load(".\Preset\" + PRESETFILENAME + "-LV.xml")
+
+
+            xml1.Descendants("ArrayOfControlData").FirstOrDefault().Add(xml2.Descendants("ListViewItemsV").FirstOrDefault())
+
+            xml1.Save(".\Preset\" + PRESETFILENAME + ".xml")
+            DeleteFile(".\Preset\" + PRESETFILENAME + "-LV.xml", 10)
+
+
+
+            Dim xml3 = XDocument.Load(".\Preset\" + PRESETFILENAME + ".xml")
+            Dim xml4 = XDocument.Load(".\Preset\" + PRESETFILENAME + "-LA.xml")
+
+            xml3.Descendants("ArrayOfControlData").FirstOrDefault().Add(xml4.Descendants("ListViewItemsA").FirstOrDefault())
+
+
+            xml3.Save(".\Preset\" + PRESETFILENAME + ".xml")
+            'DeleteFile(".\Preset\" + PRESETFILENAME + "-LA.xml", 10)
+            '===
+
+            BOXPRESETFILENAME.Text = PRESETFILENAME
+            MsgBox("Preset Saved", MsgBoxStyle.Information)
+
+            Dim PRESETFOLDER As String = ".\Preset\"
+
+            BOXPRESETFILENAME.Items.Clear()
+            For Each PRESETFILE As String In My.Computer.FileSystem.GetFiles _
+                                                        (PRESETFOLDER, FileIO.SearchOption.SearchTopLevelOnly, "*.xml")
+
+                BOXPRESETFILENAME.Items.Add(IO.Path.GetFileNameWithoutExtension(PRESETFILE))
             Next
-        Else
-            MsgBox("Do not exist Preset file " + PRESETFILENAME + ".xml")
         End If
+
+    End Sub
+    Private Function DeleteFile(path As String, Optional maxAttempts As Integer = 0) As Boolean
+
+        Dim fileDeleted = False
+
+        Dim attempts = 0
+
+
+
+        Do
+
+            Try
+
+                File.Delete(path)
+
+                fileDeleted = True
+
+            Catch ex As IOException
+
+                attempts += 1
+
+
+
+                If attempts = maxAttempts Then
+
+                    Exit Do
+                End If
+
+
+
+                'The file is open so pause before trying again.
+
+                Thread.Sleep(1000)
+
+            End Try
+
+        Loop Until fileDeleted
+
+
+
+        Return fileDeleted
+
+    End Function
+
+    Private Sub BTPRLOAD_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTPRLOAD.Click
+        If BOXPRESETFILENAME.Text = "" Then
+            MsgBox("Please select preset", MsgBoxStyle.Information)
+        Else
+
+            PRESETFILENAME = BOXPRESETFILENAME.Text
+            LISTVFILTER.Items.Clear()
+            LISTAFILTER.Items.Clear()
+            BOXVFILTER.Text = ""
+
+            Parsingsettings()
+
+            If CHKALLSET.Checked = True Then
+                FRMCUSTOMENC.ParsingsettingsCustomEncOpt()
+            End If
+            AdvancedFRM.LoadPresetADV()
+            FRMMULTIRTMP.LoadPresetMRTMP()
+
+            ParsingVideoFiltersettings()
+            Try
+
+            Catch
+                'DeserializeToListView(LISTVFILTER, PRESETFILENAME)
+                'DeserializeToListView(LISTAFILTER, PRESETFILENAME)
+            End Try
+
+            ChangeCodecOPT()
+            MsgBox("Preset Loaded", MsgBoxStyle.Information)
+        End If
+    End Sub
+
+    Public Function Parsingsettings() As String()
+
+        Try
+            If System.IO.File.Exists(".\Preset\" + PRESETFILENAME + ".xml") Then
+                Dim Data As New List(Of ControlData)
+                Dim xml As New XmlSerializer(Data.GetType)
+                Using reader As New FileStream(".\Preset\" + PRESETFILENAME + ".xml", FileMode.Open)
+
+                    Data = CType(xml.Deserialize(reader), List(Of ControlData))
+
+
+                End Using
+
+                Dim matches() As Control
+                For Each cd As ControlData In Data
+
+                    matches = Me.Controls.Find(cd.ControlName, True)
+
+                    If matches.Length > 0 Then
+
+                        CallByName(matches(0), cd.ControlProperty, CallType.Let, cd.ControlData)
+
+
+                    End If
+                Next
+            Else
+                MsgBox("Do not exist Preset file " + PRESETFILENAME + ".xml")
+            End If
+        Catch
+
+        End Try
+
+
+
+
+    End Function
+    Public Function ParsingVideoFiltersettings() As String()
+        items = New List(Of ListViewItems)
+        Dim serializer As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItems)))
+
+
+
+        Dim MyDataSet As New DataSet
+        MyDataSet.ReadXml(".\Preset\" + PRESETFILENAME + ".xml")
+        Try
+            For Each dr As DataRow In MyDataSet.Tables("ListViewItemsV").Rows
+                Dim lvi As New ListViewItem
+                lvi.Text = dr.Item(0).ToString()
+                lvi.SubItems.Add(dr.Item(1).ToString())
+                LISTVFILTER.Items.Add(lvi)
+                LISTVFILTER.Update()
+            Next
+        Catch
+
+        End Try
+        Try
+            For Each dr As DataRow In MyDataSet.Tables("ListViewItemsA").Rows
+                Dim lvi As New ListViewItem
+                lvi.Text = dr.Item(0).ToString()
+                lvi.SubItems.Add(dr.Item(1).ToString())
+                LISTAFILTER.Items.Add(lvi)
+                LISTAFILTER.Update()
+            Next
+        Catch
+
+        End Try
+
 
 
     End Function
@@ -1617,7 +1900,7 @@ INITIAL:
         ElseIf Environment.Is64BitOperatingSystem = False Then
             BOXFFMPEGEXE.Text = "32bit FFmpeg"
         End If
-        FFPLAYEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffplay.exe" + """"
+        FFPLAYEXE = """" + STARTUPPATH + "\Tools\ffmpeg64\ffplay.exe" + """"
         YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\youtube-dl.exe" + """"
         LIVESTREAMEREXE = """" + STARTUPPATH + "\Tools\livestreamer\livestreamer.exe" + """"
 
@@ -1670,6 +1953,19 @@ INITIAL:
 
     End Sub
 
+    Public Function getFFmpegPath()
+        If CHKAVISYNTH.Checked = True Then
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe" + """"
+            'ElseIf INPUTVIDNAME.Contains("-f dshow") Then
+            'FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe " + """"
+        ElseIf BOXFFMPEGEXE.Text = "64bit FFmpeg" Then
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg64\ffmpeg.exe" + """"
+        ElseIf BOXFFMPEGEXE.Text = "32bit FFmpeg" Then
+            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe " + """"
+        Else
+            FFMPEGEXE = """" + BOXFFMPEGEXE.Text + """"
+        End If
+    End Function
     Public Function prepareEncoding() As String()
         FRMProgress.FFPARAM = ""
         'If BOXCODECINFO.Text = "" Then
@@ -1703,7 +1999,7 @@ INITIAL:
 
 
         If Not BOXFPS.Text = "" And Not BOXCODEC.Text = "copy" And Not BOXFPS.Text = "Original" Then
-            FPSVAL = ",fps=fps=" + targetfps
+            FPSVAL = " -framerate " + targetfps + " "
         End If
 
         If BOXCODEC.Text = "libx264" Then
@@ -1742,10 +2038,10 @@ INITIAL:
 
         End If
 
-        If BOXCODEC.Text = "copy" Or BOXDEINT.Text = "Disabled" Then
+        If BOXCODEC.Text = "copy" Or LBDEINTMODE.Text = "Disabled" Then
             DEINTVAL = ""
         Else
-            DEINTVAL = ",yadif=" + BOXDEINT.Text
+            DEINTVAL = "," + LBDEINTMODE.Text + "=" + BOXDEINT.Text + ":-1:0"
         End If
 
 
@@ -1760,11 +2056,11 @@ INITIAL:
 
         If CHKDISCORRUPT.Checked = True Then
             DISCORRUPT = "+discardcorrupt"
-            FFLAGS = "-fflags " + GPTSIDTS + DISCORRUPT + " "
+            FFLAGS = " -fflags " + GPTSIDTS + DISCORRUPT + " "
         End If
         If CHKPTSDTS.Checked = True Then
             GPTSIDTS = "+genpts+igndts"
-            FFLAGS = "-fflags " + GPTSIDTS + DISCORRUPT + " "
+            FFLAGS = " -fflags " + GPTSIDTS + DISCORRUPT + " "
         End If
 
         If CHKTRIM.Checked Then
@@ -1796,17 +2092,17 @@ INITIAL:
         End If
 
         If BOXCODEC.Text = "libx264" Then
-            X264OPTVAL = " -x264opts fullrange=off:colorprim=bt709"
+
             If CHKFAST1ST.Checked = True Then
                 X264FAST1STFLAG = " -fastfirstpass 1 "
             End If
         End If
 
-        If BOXCODEC.Text = "libx264" And CHECKADV.Checked Then
-            X264OPT = ":weightp=2:weightb=1:b-adapt=2:rc-lookahead=40:b-pyramid=2:b-bias=3"
+        If BOXCODEC.Text = "libx264" And AdvancedFRM.CHECKADV.Checked Then
+
 
         ElseIf BOXCODEC.Text = "libx265" Then
-            X264OPT = " -x265-params colorprim=bt709:open-gop=0"
+
             If CHKFAST1ST.Checked = False Then
                 FAST1STFLAG = ":slow-firstpass=1"
             End If
@@ -1817,14 +2113,31 @@ INITIAL:
             CQMVAL = ":cqmfile=KGP-X264-Custom-Quantization-Matrix.cfg"
         End If
 
-        If BOXCODEC.Text = "libx264" And CHECKADV.Checked Then
+        If BOXCODEC.Text = "libx264" And AdvancedFRM.CHECKADV.Checked Then
             ADVOPT = AdvancedFRM.LBMERANGE + AdvancedFRM.LBMEALGORITHM + AdvancedFRM.LBSR + AdvancedFRM.LBTR + AdvancedFRM.LBNOPSKIP + AdvancedFRM.LBNODCT +
                 AdvancedFRM.LBBFRAMES + AdvancedFRM.LBAQMODE + AdvancedFRM.LBAQSTR + AdvancedFRM.LBSCENE
+
         End If
 
-        VCODECOPT = X264OPTVAL + X264OPT + REFVAL + ADVOPT + CUSTOMCODECOPT + CQMVAL
+        VCODECOPT = REFVAL + ADVOPT + CUSTOMCODECOPT + CQMVAL
 
+        If BOXCODEC.Text = "libx264" Then
+            If Not VCODECOPT = "" Then
+                X264OPT = " -x264opts "
+                'X264OPTVAL = ":"
+            End If
+        ElseIf BOXCODEC.Text = "libx265" Then
+            If Not VCODECOPT = "" Then
+                X264OPT = " -x265-params "
+                'X264OPTVAL = ":"
+            End If
 
+        End If
+        If Not VCODECOPT = "" Then
+            VCODECOPT = VCODECOPT.Remove(0, 1)
+        End If
+
+        VCODECOPT = X264OPT + X264OPTVAL + VCODECOPT
 
         If BOXDELAYINFO.Text = "" And Not BOXDELAY.Text = "Auto" Then
 
@@ -1843,7 +2156,7 @@ INITIAL:
         End If
 
         If BOXACODEC.Text = "aac" Then
-            AUDIOCODECVAL = BOXACODEC.Text + " -strict -2 -aac_tns 0 -aac_is 0 -aac_ms 0 -aac_pns 0 "
+            AUDIOCODECVAL = BOXACODEC.Text + " -strict -2 -aac_tns 0 -aac_is 0 -aac_ms 1 -aac_pns 0 "
         End If
 
 
@@ -1932,7 +2245,15 @@ INITIAL:
 
         If InputCBOX.Text.Contains("-f dshow") Then
         ElseIf OutputCBox.Text.Contains("//") Then
-            FORCEEXTENSION = " -f flv "
+            If BOXCONTAINER.Text = "=== RTMP Streaming Mode ===" Then
+
+                If Not BOXFLVFLAG.Text = "" Then
+                    FLVOPT = "-flvflags " + BOXFLVFLAG.Text + " "
+                End If
+
+            End If
+            FORCEEXTENSION = " -f flv " + FLVOPT
+
         Else
             Try
                 Dim testFile As System.IO.FileInfo
@@ -1976,16 +2297,20 @@ INITIAL:
         ElseIf CUSTOMAUDIOFILTER = "" Then
             AUDIOFILTER = ""
         Else
-            AUDIOFILTER = " -filter_complex anull" + CUSTOMAUDIOFILTER
+            AUDIOFILTER = " -af anull" + CUSTOMAUDIOFILTER
         End If
 
 
         If BOXCODEC.Text = "copy" Then
             VIDEOFILTER = ""
-        ElseIf CUSTOMVIDEOFILTER = "" And RSVAL = "" And FPSVAL = "" And DEINTVAL = "" And SPPVAL = "" Then
+        ElseIf CUSTOMVIDEOFILTER = "" And RSVAL = "" And DEINTVAL = "" And SPPVAL = "" Then
             VIDEOFILTER = ""
+            VIDFILTERFLAG = ""
+
         Else
-            VIDEOFILTER = " -filter_complex null" + DEINTVAL + RSVAL + FPSVAL + SPPVAL + USHARPFILTER + CUSTOMVIDEOFILTER
+            VIDFILTERFLAG = DEINTVAL + RSVAL + SPPVAL + USHARPFILTER + CUSTOMVIDEOFILTER
+            VIDFILTERFLAG = Replace(VIDFILTERFLAG, ",", "",, 1)
+            VIDEOFILTER = " -vf " + VIDFILTERFLAG
 
         End If
 
@@ -2128,6 +2453,7 @@ INITIAL:
         End If
 
         If BOXCONTAINER.Text = "=== HLS Encoding Mode ===" Then
+
             Dim calckeyint As Double
             Dim calcforcekeyint As Double
             'calckeyint = 1 / (BOXFPSINFO.Text * 2)
@@ -2143,9 +2469,9 @@ INITIAL:
             If BOXCODEC.Text = "libx265" Then
                 VCODECOPT = VCODECOPT + ":keyint=" + calckeyint.ToString + ":min-keyint=" + calckeyint.ToString + ":pass=1" + ":scenecut=0"
             End If
-            SHELLCMD = FFMPEGEXE + " " + FFLAGS + FFLAGS + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSOPTIONFLAG + HLSADDRESS + CUSTOMFFMPEGOPT + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + " " + FFLAGS + FFLAGS + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + FPSVAL + HLSOPTIONFLAG + HLSADDRESS + CUSTOMFFMPEGOPT + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
-            'SHELLCMD = FFMPEGEXE + " " + FFLAGS + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL + HLSADDRESS + CUSTOMFFMPEGOPT +VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            'SHELLCMD = FFMPEGEXE + " " + FFLAGS + CUSTOMFFMPEGOPTF + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + BITVAL+ FPSVAL + HLSADDRESS + CUSTOMFFMPEGOPT +VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             'MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + HLSOPTIONFLAG
         ElseIf INPUTVIDNAME.Contains("http://ustream.tv") Or INPUTVIDNAME.Contains("http://www.ustream.tv") Or INPUTVIDNAME.Contains("https://ustream.tv/") Or
             INPUTVIDNAME.Contains("https://www.ustream.tv/") Or INPUTVIDNAME.Contains("http://www.connectcast.tv/") Or INPUTVIDNAME.Contains("http://connectcast.tv/") Or INPUTVIDNAME.Contains("http://www.dailymotion.com") Or INPUTVIDNAME.Contains("http://vaughnlive.tv") Or
@@ -2158,28 +2484,38 @@ INITIAL:
             End If
 
             SHELLCMD = LIVESTREAMEREXE + " " + """" + INPUTVIDNAME + """" + " best -o - | " +
-                  FFMPEGEXE + " -y " + FFLAGS + FFLAGS + " -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + AUDIOFILTER + CODEC + " -vsync 0 -bsf:a aac_adtstoasc " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
+                  FFMPEGEXE + " -y " + FFLAGS + FFLAGS + " -i - " + AUDIODELAYVAL + INPUTAUDFILENAME + VIDEOFILTER + AUDIOFILTER + CODEC + " -vsync 0 -bsf:a aac_adtstoasc " + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + FPSVAL + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
 
         ElseIf BOXBITRATEMODE.Text = "2pass-ABR" Then
 
-            SHELLCMD = FFMPEGEXE + " -y " + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + ":pass=1" + FAST1STFLAG + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + X264FAST1STFLAG +
+            SHELLCMD = FFMPEGEXE + " -y " + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + FPSVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + ":pass=1" + FAST1STFLAG + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG + X264FAST1STFLAG +
                  MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + "-f mp4 NUL " + " & " +
             FFMPEGEXE + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + " -i " + """" + INPUTVIDNAME + """" + AUDIODELAYVAL + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + ":pass=2" + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
             MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + METADATA + " " + """" + OUTPUTFILENAME + """"
         Else
-            If OUTPUTFILENAME.Contains("//") Then
+            If OUTPUTFILENAME.Contains("//") Or CHKINPUTDSHOW.Checked = True Then
                 If Not INPUTVIDNAME.Contains("-f dshow") Then
                     realtimeenc = " -re "
                     FORCEEXTENSION = " -f flv "
                     INPUTVIDNAME = " -i " + """" + INPUTVIDNAME + """"
                 Else
-                    FORCEEXTENSION = " -f flv "
-                End If
+                    If BOXCONTAINER.Text = "=== RTMP Streaming Mode ===" Then
 
+                        If Not BOXFLVFLAG.Text = "" Then
+                            FLVOPT = "-flvflags " + BOXFLVFLAG.Text + " "
+                        End If
+
+
+                    End If
+                    FORCEEXTENSION = " -f flv " + FLVOPT
+                End If
+                If Not OUTPUTFILENAME.Contains("//") Then
+                    FORCEEXTENSION = ""
+                End If
             Else
                 INPUTVIDNAME = " -i " + """" + INPUTVIDNAME + """"
             End If
-            SHELLCMD = FFMPEGEXE + " -y " + realtimeenc + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + AUDIODELAYVAL + INPUTVIDNAME + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + " -y " + realtimeenc + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + AUDIODELAYVAL + INPUTVIDNAME + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + FPSVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
                      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """"
 
         End If
@@ -2190,25 +2526,25 @@ INITIAL:
 
     End Function
     Public Function inputMediainfo() As String()
-        LBINPUTINFO.Text = "Video Codec : " + BOXCODECINFO.Text + "   Format : " + BOXFORMATINFO.Text + "   Resolution : " + BOXRSINFO.Text + "   Framerate : " + BOXFPSINFO.Text + "   Aspect Ratio : " + BOXASPECT.Text & vbCrLf &
-         "Delay : " + BOXDELAYINFO.Text + "   Sec " + "Duration : " + BOXDURATION.Text + "   Profile : " + BOXPFINFO.Text + "   Reference Frames : " + BOXREFINFO.Text + "   Audio Codec : " + BOXACODECINFO.Text
+        LBINPUTINFO.Text = "Video Codec : " + BOXCODECINFO.Text + " | Format : " + BOXFORMATINFO.Text + " | Resolution : " + BOXRSINFO.Text + " | Framerate : " + BOXFPSINFO.Text + " | Aspect Ratio : " + BOXASPECT.Text + " | " + BOXINTERLACE.Text & vbCrLf &
+         "Delay : " + BOXDELAYINFO.Text + "Sec " + "| Duration : " + BOXDURATION.Text + " | Profile : " + BOXPFINFO.Text + " | Reference Frames : " + BOXREFINFO.Text + " | Audio Codec : " + BOXACODECINFO.Text
     End Function
     Public Function getMediainfo() As String()
 
-
+        BOXINTERLACE.Text = ""
         BOXASPECT.Text = ""
         BOXDURATION.Text = ""
         BOXCODECINFO.Text = ""
         BOXDELAYINFO.Text = ""
         BOXFPSINFO.Text = ""
         MI.Open(InputCBOX.Text)
-        BOXCODECINFO.Text = MI.Get_(StreamKind.Visual, 0, "Codec")
-        'BOXFPSINFO.Text = MI.Get_(StreamKind.Visual, 0, "FrameRate")
+        BOXCODECINFO.Text = MI.Get_(StreamKind.Video, 0, "Codec")
+        'BOXFPSINFO.Text = MI.Get_(StreamKind.Video, 0, "FrameRate")
         BOXDELAYINFO.Text = MI.Get_(StreamKind.Audio, 0, "Video_Delay")
         If BOXDELAYINFO.Text = "" Then
             BOXDELAYINFO.Text = "0"
         End If
-        INFOFRAMEMODE = MI.Get_(StreamKind.Visual, 0, "FrameRate_Mode")
+        INFOFRAMEMODE = MI.Get_(StreamKind.Video, 0, "FrameRate_Mode")
         If Not BOXDELAYINFO.Text = "" Then
             Dim VDELAYINFO1 As String = (BOXDELAYINFO.Text * (1 / 1000)).ToString
             VDELAYINFO = VDELAYINFO1
@@ -2216,19 +2552,20 @@ INITIAL:
             BOXDELAYINFO.Text = VDELAYINFO
         End If
         Try
-            BOXASPECT.Text = MI.Get_(StreamKind.Visual, 0, "DisplayAspectRatio/String")
-            BOXDURATION.Text = MI.Get_(StreamKind.Visual, 0, "Duration/String3")
-            BOXDURATION2.Text = MI.Get_(StreamKind.Visual, 0, "Duration")
-            BOXPFINFO.Text = MI.Get_(StreamKind.Visual, 0, "Format_Profile")
+            BOXASPECT.Text = MI.Get_(StreamKind.Video, 0, "DisplayAspectRatio/String")
+            BOXDURATION.Text = MI.Get_(StreamKind.Video, 0, "Duration/String3")
+            BOXDURATION2.Text = MI.Get_(StreamKind.Video, 0, "Duration")
+            BOXPFINFO.Text = MI.Get_(StreamKind.Video, 0, "Format_Profile")
             BOXFORMATINFO.Text = MI.Get_(StreamKind.General, 0, "Format")
 
-            BOXRSINFO.Text = MI.Get_(StreamKind.Visual, 0, "Width") + "x" + MI.Get_(StreamKind.Visual, 0, "Height")
+            BOXRSINFO.Text = MI.Get_(StreamKind.Video, 0, "Width") + "x" + MI.Get_(StreamKind.Video, 0, "Height")
             BOXACODECINFO.Text = MI.Get_(StreamKind.Audio, 0, "Codec")
-            BOXREFINFO.Text = MI.Get_(StreamKind.Visual, 0, "Format_Settings_RefFrames")
+            BOXREFINFO.Text = MI.Get_(StreamKind.Video, 0, "Format_Settings_RefFrames")
             BOXSAMPLERINFO.Text = MI.Get_(StreamKind.Audio, 0, "SamplingRate/String")
             BOXAUDCHINFO.Text = MI.Get_(StreamKind.Audio, 0, "Channel(s)")
             BOXAUDBITINFO.Text = MI.Get_(StreamKind.Audio, 0, "BitDepth/String")
             BOXAUDBITRATEINFO.Text = Fix(MI.Get_(StreamKind.Audio, 0, "BitRate") / 1000)
+            BOXINTERLACE.Text = MI.Get_(StreamKind.Video, 0, "ScanType")
         Catch
 
         End Try
@@ -2491,6 +2828,12 @@ initvalue:
         RMMETADATAVAL = ""
         YOUTUBEAUDQ = ""
         AUDIOBITVAL = ""
+        VIDFILTERFLAG = ""
+        CUSTOMVIDEOFILTER = ""
+        CUSTOMAUDIOFILTER = ""
+        YTVP9ONLY = False
+        FLVOPT = ""
+
 
     End Function
 
@@ -2601,10 +2944,12 @@ noencoding:
             add.SubItems.Add(BOXTRIMSS.Text)
             add.SubItems.Add(BOXTRIMTO.Text)
             add.SubItems.Add(BOXDURATION.Text)
+            add.SubItems.Add(OutputCBox.Text)
         Else
             add.SubItems.Add("0")
             add.SubItems.Add("0")
             add.SubItems.Add(BOXDURATION.Text)
+            add.SubItems.Add(OutputCBox.Text)
         End If
 
         FRMProgress.ENCODINGLISTVIEW.Items.Add(add)
@@ -2815,17 +3160,20 @@ noencoding:
     End Sub
 
     Private Sub BOXCONTAINER_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles BOXCONTAINER.TextChanged
-
+        ChangeItems()
+        SwitchContainer()
 
     End Sub
 
     Private Sub OutputCBox_TextUpdate(ByVal sender As Object, ByVal e As System.EventArgs) Handles OutputCBox.TextUpdate
         If Not OutputCBox.Text = "" And Not BOXCONTAINER.Text.Contains("===") Then
             'Dim ext As String = System.IO.Path.GetExtension(OutputCBox.Text)
-            Dim ext3 As String = System.IO.Path.ChangeExtension(OutputCBox.Text, BOXCONTAINER.Text)
+            'Dim ext3 As String = System.IO.Path.ChangeExtension(OutputCBox.Text, BOXCONTAINER.Text)
+
             ' Dim ext2 As String = ext.Replace(".", "")
             'BOXCONTAINER.Text = ext3
-            OutputCBox.Text = ext3
+
+            'OutputCBox.Text = ext3
 
         Else
 
@@ -2851,11 +3199,26 @@ noencoding:
                 BITSTREAMFILTER = " -bsf:v h264_mp4toannexb "
             End If
 
-            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + AUDIODELAYVAL + INPUTVIDNAME.ToString + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
+            SHELLCMD = FFMPEGEXE + CUSTOMFFMPEGOPTF + FFLAGS + TRIMSSVAL + AUDIODELAYVAL + INPUTVIDNAME.ToString + INPUTAUDFILENAME + SUBTITLEPATH + TRIMTOVAL + VIDEOFILTER + AUDIOFILTER + CODEC + CODECPRESET + PFVAL + LVVAL + KEYINTVAL + BITVAL + FPSVAL + CUSTOMFFMPEGOPT + EXTRAFFPRAM + VCODECOPT + CFRVAL + DEBLOCKVAL + VIDEOVAL + ASPECTRATIOVAL + CBRVAL + ENABLELOG +
      MULTITRACK + AUDIOMAPVAL + AUDIOCHKVAL + AUDIOCODECVAL + AUDIOPFVAL + AUDIOBITRATEVAL + AUDIOSAMPLEVAL + AUDIOCHANNELVAL + AUDIOVAL + SUBTITLECHKVAL + BITSTREAMFILTER + METADATA + FORCEEXTENSION + " " + """" + OUTPUTFILENAME + """" + " | " + FFPLAYEXE + " -x 800 -y 450 -i - " + " &  comp.bat"
 
-            Shell("cmd /c title Infinity Media Encoder & " + SHELLCMD, vbNormalFocus)
+            'Shell("cmd cmd /c title Infinity Media Encoder & " + SHELLCMD, vbNormalFocus)
 
+            Dim p As New Process
+
+            With p.StartInfo
+                .WindowStyle = ProcessWindowStyle.Normal
+                .Arguments = " /c title Infinity Media Encoder & " + SHELLCMD
+                .FileName = "cmd"
+
+                .UseShellExecute = False
+                .RedirectStandardOutput = False
+                .CreateNoWindow = False
+
+
+            End With
+
+            p.Start()
 
             If CHKDEBUG.Checked Then
                 BOXDEBUG.Text = SHELLCMD
@@ -3097,7 +3460,7 @@ noencoding:
                     Dim DURSECRESULT3 As Integer
                     'DURSECRESULT3 = Microsoft.VisualBasic.Left(BOXDURATION2.Text, BOXDURATION2.Text.Length - 3)
                     DURSECRESULT3 = BOXDURATION2.Text
-                    VIDEOBITRATESIZE = BITBOX.Text /DURSECRESULT3 * 8192*1024
+                    VIDEOBITRATESIZE = BITBOX.Text / DURSECRESULT3 * 8192 * 1024
 
                     BITVAL = " -b:v " + VIDEOBITRATESIZE.ToString + "k" + " -bufsize:v " + VIDEOBITRATESIZE.ToString + "k"
                 End If
@@ -3166,67 +3529,121 @@ noencoding:
         YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\youtube-dl.exe" + """"
 
         If RB4K.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
-                YOUTUBEQ = "266 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
+                If YTVP9ONLY = True Then
+                    YOUTUBEQ = "313 "
+                    Dim originalFile As String = BOXYTFILENAME.Text
+                    Dim newName As String = Path.ChangeExtension(originalFile, "mkv")
+                    BOXYTFILENAME.Text = newName
+                Else
+                    YOUTUBEQ = "266 "
+                End If
+
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "313 "
             End If
+
+        ElseIf RB4K60F.Checked Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
+                If YTVP9ONLY = True Then
+                    YOUTUBEQ = "315/272 "
+                    Dim originalFile As String = BOXYTFILENAME.Text
+                    Dim newName As String = Path.ChangeExtension(originalFile, "mkv")
+                    BOXYTFILENAME.Text = newName
+                Else
+                    YOUTUBEQ = "315/272 "
+                End If
+
+            ElseIf YTDNFORMAT.Text = "mkv" Then
+                YOUTUBEQ = "315/272 "
+            End If
+
+
+
         ElseIf RB8K.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
-                YOUTUBEQ = "138 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
+                If YTVP9ONLY = True Then
+                    YOUTUBEQ = "272 "
+                    Dim originalFile As String = BOXYTFILENAME.Text
+                    Dim newName As String = Path.ChangeExtension(originalFile, "mkv")
+                    BOXYTFILENAME.Text = newName
+                Else
+                    YOUTUBEQ = "138 "
+                End If
+
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "272 "
             End If
         ElseIf RB2K.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
-                YOUTUBEQ = "264 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
+                If YTVP9ONLY = True Then
+                    YOUTUBEQ = "271 "
+                    Dim originalFile As String = BOXYTFILENAME.Text
+                    Dim newName As String = Path.ChangeExtension(originalFile, "mkv")
+                    BOXYTFILENAME.Text = newName
+                Else
+                    YOUTUBEQ = "264 "
+                End If
+
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "271 "
             End If
+        ElseIf RB2K60F.Checked Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
+                If YTVP9ONLY = True Then
+                    YOUTUBEQ = "308 "
+                    Dim originalFile As String = BOXYTFILENAME.Text
+                    Dim newName As String = Path.ChangeExtension(originalFile, "mkv")
+                    BOXYTFILENAME.Text = newName
+                Else
+                    YOUTUBEQ = "308 "
+                End If
+
+            ElseIf YTDNFORMAT.Text = "mkv" Then
+                YOUTUBEQ = "308 "
+            End If
+
         ElseIf RB1080P.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
                 YOUTUBEQ = "96/137 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "248 "
             End If
         ElseIf RB1080P60F.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
                 YOUTUBEQ = "299 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "303 "
             End If
         ElseIf RB720P.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
                 YOUTUBEQ = "95/136 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "247 "
             End If
         ElseIf RB720P60F.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
                 YOUTUBEQ = "298 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "302 "
             End If
         ElseIf RB480P.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
                 YOUTUBEQ = "94/135 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "244 "
             End If
         ElseIf RB360P.Checked Then
-            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "mkv" Or YTDNFORMAT.Text = "flv" Then
+            If YTDNFORMAT.Text = "mp4" Or YTDNFORMAT.Text = "flv" Then
                 YOUTUBEQ = "93/134 "
-            ElseIf YTDNFORMAT.Text = "webm" Then
+            ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "243 "
             End If
         End If
 
 
-        If YTDNFORMAT.Text = "webm" Then
-            YOUTUBEAUDQ = "171 "
-        Else
-            YOUTUBEAUDQ = "141/140 "
-        End If
+        YOUTUBEAUDQ = "141/140 "
+
 
         YTMAP = " -map 0:v:0 -map 1:a:0 "
 
@@ -3244,7 +3661,7 @@ noencoding:
         If YTDNFORMAT.Text = "m4a" Or YTDNFORMAT.Text = "aac" Then
             SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEAUDQ + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i - " + TRIMTOVAL + " -acodec copy -vn " + "-metadata description=" + """" + "Youtube Processing - Infinity Media Encoder by KGP-Louis" + """" + " " + """" + BOXYTFILENAME.Text + """"
         ElseIf LBYTSTREAM.Text = "Youtube HLS Live Stream" Then
-            SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE
+            SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --output " + """" + BOXYTFILENAME.Text + """"
 
         Else
             SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + "-i - " + TRIMTOVAL + " -vcodec copy" + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
@@ -3275,9 +3692,13 @@ noencoding:
         If CHKTRIM.Checked = True Then
             add.SubItems.Add(BOXTRIMSS.Text)
             add.SubItems.Add(BOXTRIMTO.Text)
+            add.SubItems.Add("")
+            add.SubItems.Add(BOXYTFILENAME.Text)
         Else
             add.SubItems.Add("0")
             add.SubItems.Add("0")
+            add.SubItems.Add("")
+            add.SubItems.Add(BOXYTFILENAME.Text)
         End If
 
         FRMProgress.ENCODINGLISTVIEW.Items.Add(add)
@@ -3285,156 +3706,162 @@ noencoding:
         Windows.Forms.Application.DoEvents()
     End Function
     Public Function GETYTQUALITY() As String()
-        Dim qualityinfo As String
-        BOXDEBUG.Text = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " -F " + LBYTADDRESS.Text
-        Dim p As New Process
-        Dim outputReader2 As StreamReader
-        With p.StartInfo
-            .WindowStyle = ProcessWindowStyle.Minimized
-            .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " -F " + LBYTADDRESS.Text
-            .FileName = "cmd"
+        Invoke(DirectCast(Sub()
 
-            .UseShellExecute = False
-            .RedirectStandardOutput = True
-            .RedirectStandardError = True
-            .CreateNoWindow = False
+                              Dim qualityinfo As String
+                              BOXDEBUG.Text = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " -F " + LBYTADDRESS.Text
+                              Dim p As New Process
+                              Dim outputReader2 As StreamReader
+                              With p.StartInfo
+                                  .WindowStyle = ProcessWindowStyle.Minimized
+                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " -F " + LBYTADDRESS.Text
+                                  .FileName = "cmd"
 
-
-        End With
-
-        p.Start()
-        outputReader2 = p.StandardOutput
-        Dim output2 As String
+                                  .UseShellExecute = False
+                                  .RedirectStandardOutput = True
+                                  .RedirectStandardError = True
+                                  .CreateNoWindow = True
 
 
-        While outputReader2.EndOfStream = False
-            output2 = outputReader2.ReadToEnd()
-            qualityinfo = output2
-            YTPARSINGINFO.Text = output2
-        End While
+                              End With
 
-        outputReader2.Close()
-        If qualityinfo.Contains("266          mp4") Then
-            RB4K.Enabled = True
-        Else
-            RB4K.Enabled = False
-        End If
-
-        If qualityinfo.Contains("138          mp4") Then
-            RB8K.Enabled = True
-        Else
-            RB8K.Enabled = False
-        End If
-
-        If qualityinfo.Contains("264          mp4") Then
-            RB2K.Enabled = True
-        Else
-            RB2K.Enabled = False
-        End If
-
-        If qualityinfo.Contains("137          mp4") Or qualityinfo.Contains("96           mp4") Then
-            RB1080P.Enabled = True
-        Else
-            RB1080P.Enabled = False
-        End If
-        If qualityinfo.Contains("299          mp4") Then
-            RB1080P60F.Enabled = True
-        Else
-            RB1080P60F.Enabled = False
-        End If
-
-        If qualityinfo.Contains("136          mp4") Or qualityinfo.Contains("95           mp4") Then
-            RB720P.Enabled = True
-        Else
-            RB720P.Enabled = False
-        End If
-        If qualityinfo.Contains("298          mp4") Then
-            RB720P60F.Enabled = True
-        Else
-            RB720P60F.Enabled = False
-        End If
-
-        If qualityinfo.Contains("135          mp4") Or qualityinfo.Contains("94           mp4") Then
-            RB480P.Enabled = True
-        Else
-            RB480P.Enabled = False
-        End If
-        If qualityinfo.Contains("134          mp4") Or qualityinfo.Contains("93           mp4") Then
-            RB360P.Enabled = True
-        Else
-            RB360P.Enabled = False
-        End If
-
-        If qualityinfo.Contains("HLS , h264, aac") Then
-            LBYTSTREAM.Text = "Youtube HLS Live Stream"
-        End If
-
-        If RB4K.Enabled = True Then
-            RB1080P.Checked = True
-        ElseIf RB8K.Enabled = True Then
-            RB1080P.Checked = True
-        ElseIf RB2K.Enabled = True Then
-            RB1080P.Checked = True
-        ElseIf RB1080P.Enabled = True Then
-            RB1080P.Checked = True
-        ElseIf RB720P.Enabled = True Then
-            RB720P.Checked = True
-        ElseIf RB480P.Enabled = True Then
-            RB480P.Checked = True
-        ElseIf RB360P.Enabled = True Then
-            RB360P.Checked = True
+                              p.Start()
+                              outputReader2 = p.StandardOutput
+                              Dim output2 As String
 
 
-        End If
+                              While outputReader2.EndOfStream = False
+                                  output2 = outputReader2.ReadToEnd()
+                                  qualityinfo = output2
+                                  YTPARSINGINFO.Text = output2
+                                  Application.DoEvents()
+                              End While
 
+                              outputReader2.Close()
+
+                              If qualityinfo.Contains("315          webm") Or qualityinfo.Contains("272          webm") Then
+                                  RB4K60F.Enabled = True
+                                  RB4K60F.Text = "4K 60fps (vp9-mkv only)"
+                              Else
+                                  RB4K60F.Enabled = False
+                              End If
+
+
+
+
+                              If qualityinfo.Contains("266          mp4") Then
+                                  RB4K.Enabled = True
+                                  RB4K.Text = "4K"
+                              ElseIf qualityinfo.Contains("313          webm") Then
+                                  If Not qualityinfo.Contains("266          mp4") Then
+
+                                      YTVP9ONLY = True
+                                      RB4K.Text = "4K (vp9-mkv only)"
+                                  End If
+                                  RB4K.Enabled = True
+
+                              Else
+                                  RB4K.Enabled = False
+                                  RB4K.Text = "4K"
+                              End If
+
+                              If qualityinfo.Contains("138          mp4") Or qualityinfo.Contains("272          webm") Then
+                                  RB8K.Enabled = True
+                              Else
+                                  RB8K.Enabled = False
+                              End If
+
+                              If qualityinfo.Contains("308          webm") Then
+                                  RB2K60F.Enabled = True
+                                  RB2K60F.Text = "2K 60fps (vp9-mkv only)"
+                              Else
+                                  RB2K60F.Enabled = False
+                              End If
+
+                              If qualityinfo.Contains("264          mp4") Then
+                                  RB2K.Enabled = True
+                                  RB2K.Text = "2K"
+                              ElseIf qualityinfo.Contains("271          webm") Then
+                                  If Not qualityinfo.Contains("264          mp4") Then
+
+                                      YTVP9ONLY = True
+                                      RB2K.Text = "2K (vp9-mkv only)"
+                                  End If
+                                  RB2K.Enabled = True
+
+                              Else
+                                  RB2K.Enabled = False
+                                  RB2K.Text = "2K"
+                              End If
+
+                              If qualityinfo.Contains("137          mp4") Or qualityinfo.Contains("96           mp4") Then
+                                  RB1080P.Enabled = True
+                              Else
+                                  RB1080P.Enabled = False
+                              End If
+                              If qualityinfo.Contains("299          mp4") Then
+                                  RB1080P60F.Enabled = True
+                              Else
+                                  RB1080P60F.Enabled = False
+                              End If
+
+                              If qualityinfo.Contains("136          mp4") Or qualityinfo.Contains("95           mp4") Then
+                                  RB720P.Enabled = True
+                              Else
+                                  RB720P.Enabled = False
+                              End If
+                              If qualityinfo.Contains("298          mp4") Then
+                                  RB720P60F.Enabled = True
+                              Else
+                                  RB720P60F.Enabled = False
+                              End If
+
+                              If qualityinfo.Contains("135          mp4") Or qualityinfo.Contains("94           mp4") Then
+                                  RB480P.Enabled = True
+                              Else
+                                  RB480P.Enabled = False
+                              End If
+                              If qualityinfo.Contains("134          mp4") Or qualityinfo.Contains("93           mp4") Then
+                                  RB360P.Enabled = True
+                              Else
+                                  RB360P.Enabled = False
+                              End If
+
+                              If qualityinfo.Contains("    HLS ") Then
+                                  LBYTSTREAM.Text = "Youtube HLS Live Stream"
+                              End If
+
+                              If RB4K.Enabled = True Then
+                                  RB1080P.Checked = True
+                              ElseIf RB8K.Enabled = True Then
+                                  RB1080P.Checked = True
+                              ElseIf RB2K.Enabled = True Then
+                                  RB1080P.Checked = True
+                              ElseIf RB1080P.Enabled = True Then
+                                  RB1080P.Checked = True
+                              ElseIf RB720P.Enabled = True Then
+                                  RB720P.Checked = True
+                              ElseIf RB480P.Enabled = True Then
+                                  RB480P.Checked = True
+                              ElseIf RB360P.Enabled = True Then
+                                  RB360P.Checked = True
+
+
+                              End If
+                          End Sub, MethodInvoker))
     End Function
     Private Sub BTPASTEYTADDRESS_Click(sender As Object, e As EventArgs) Handles BTPASTEYTADDRESS.Click
-        LBYTSTREAM.Text = ""
-        STARTUPPATH = Application.StartupPath()
-        YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\youtube-dl.exe" + """"
-        LBYTADDRESS.Text = Clipboard.GetText()
-        If LBYTADDRESS.Text.Contains("http://youtube.com") Or LBYTADDRESS.Text.Contains("https://youtu.be") Or LBYTADDRESS.Text.Contains("http://www.youtube.com") Or LBYTADDRESS.Text.Contains("https://youtube.com/") Or LBYTADDRESS.Text.Contains("https://www.youtube.com/") Then
-            'OutputCBox.Text = ""
-            'OUTPUTFILENAME = ""
-            Dim p As New Process
-            Dim outputReader As StreamReader
-            With p.StartInfo
-                .WindowStyle = ProcessWindowStyle.Minimized
-                .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --get-filename " + LBYTADDRESS.Text
-                .FileName = "cmd"
+        'Dim _thread1 As Thread
+        'Invoke(DirectCast(Sub()
+        ' End Sub, MethodInvoker))
+        BackgroundWorker3.WorkerSupportsCancellation = True
+        BackgroundWorker3.WorkerReportsProgress = True
+        BackgroundWorker3.RunWorkerAsync()
+        'YTGETINFO()
+        '_thread1 = New Thread(AddressOf YTGETINFO)
+        '_thread1.IsBackground = True
+        '_thread1.Start()
 
-                .UseShellExecute = False
-                .RedirectStandardOutput = True
-                .CreateNoWindow = False
-
-
-            End With
-
-            p.Start()
-            outputReader = p.StandardOutput
-            Dim output As String
-            output = outputReader.ReadLine()
-            BOXYTFILENAME.Text = STARTUPPATH + "\My_Youtube_Files\" + output
-
-            outputReader.Close()
-
-            Threading.Thread.Sleep(500)
-
-            If BOXYTFILENAME.Text = "" Then
-                MsgBox("Failed to get Youtube video title", MsgBoxStyle.Critical)
-                If osver.ToString.Contains("5.1") Or osver.ToString.Contains("5.0") Then
-                    MsgBox("Do not support Youtube Download on Windows XP/2000/NT", MsgBoxStyle.Critical)
-                End If
-            End If
-            Try
-                Invoke(New Action(Function() GETYTQUALITY()))
-            Catch
-
-            End Try
-
-        Else
-            MsgBox("Please copy Youtube link", MsgBoxStyle.Critical)
-        End If
 
 
 
@@ -3479,6 +3906,8 @@ noencoding:
                 FRMProgress.Timer1.Start()
             End If
             initialValue()
+
+
         Else
 
         End If
@@ -3498,15 +3927,21 @@ noencoding:
 
     Private Sub BYOPENYTFOLDER_Click(sender As Object, e As EventArgs) Handles BYOPENYTFOLDER.Click
         Try
-            Dim testFile As System.IO.FileInfo
-            testFile = My.Computer.FileSystem.GetFileInfo(BOXYTFILENAME.Text)
-            Dim folderPath As String = testFile.DirectoryName
+            If Not BOXYTFILENAME.Text = "" Then
+                Dim testFile As System.IO.FileInfo
+                testFile = My.Computer.FileSystem.GetFileInfo(BOXYTFILENAME.Text)
+                Dim folderPath As String = testFile.DirectoryName
 
-            If My.Computer.FileSystem.FileExists(BOXYTFILENAME.Text) Then
-                Shell("explorer /select, " & Chr(34) & BOXYTFILENAME.Text & Chr(34), vbNormalFocus)
+                If My.Computer.FileSystem.FileExists(BOXYTFILENAME.Text) Then
+                    Shell("explorer /select, " & Chr(34) & BOXYTFILENAME.Text & Chr(34), vbNormalFocus)
+                Else
+                    Process.Start(folderPath)
+                End If
             Else
-                Process.Start(folderPath)
+                Shell("explorer " + STARTUPPATH + "\My_Youtube_Files", vbNormalFocus)
+
             End If
+
         Catch
 
         End Try
@@ -3619,7 +4054,7 @@ noencoding:
 
             hash = SHA256.Create()
         Else
-            MsgBox("Type de hash inconnu : " & hash_type, MsgBoxStyle.Critical)
+            MsgBox("Unknown hash type : " & hash_type, MsgBoxStyle.Critical)
             Return False
         End If
 
@@ -3695,10 +4130,15 @@ noencoding:
             BTNSTREAMING.Visible = False
         ElseIf BOXCONTAINER.Text = "=== HLS Encoding Mode ===" Then
             BTNSTREAMING.Visible = True
+            BOXKEYINTMAX.Text = "60"
+            BOXKEYINTMIN.Text = "60"
         ElseIf BOXCONTAINER.Text = "=== Smooth Encoding Mode ===" Then
             BTNSTREAMING.Visible = True
         ElseIf BOXCONTAINER.Text = "=== RTMP Streaming Mode ===" Then
             BTNSTREAMING.Visible = True
+            BOXKEYINTMAX.Text = "60"
+            BOXKEYINTMIN.Text = "60"
+
         ElseIf BOXCONTAINER.Text = "=== DASH Encoding Mode ===" Then
             MsgBox("Not yet avaliable", MsgBoxStyle.Information)
             BTNSTREAMING.Visible = True
@@ -3743,9 +4183,16 @@ noencoding:
         VFILTERCOMP = VFILTER & VFILTERPARAM
 
         Do Until FTINDEX = ItemsCount
-            VFILTER = "," + LISTVFILTER.Items(FTINDEX).Text + "="
-            VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
-            VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+            If FTINDEX = 0 Then
+                VFILTER = LISTVFILTER.Items(FTINDEX).Text + "="
+                VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
+                VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+            Else
+                VFILTER = "," + LISTVFILTER.Items(FTINDEX).Text + "="
+                VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
+                VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+            End If
+
 
             FTINDEX = FTINDEX + 1
         Loop
@@ -3787,14 +4234,21 @@ noencoding:
             End If
             ItemsCount = LISTVFILTER.Items.Count
             VFILTERCOMP = VFILTER & VFILTERPARAM
-
             Do Until FTINDEX = ItemsCount
-                VFILTER = "," + LISTVFILTER.Items(FTINDEX).Text + "="
-                VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
-                VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+                If FTINDEX = 0 Then
+                    VFILTER = LISTVFILTER.Items(FTINDEX).Text + "="
+                    VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
+                    VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+                Else
+                    VFILTER = "," + LISTVFILTER.Items(FTINDEX).Text + "="
+                    VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
+                    VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+                End If
+
 
                 FTINDEX = FTINDEX + 1
             Loop
+
             BOXVFILTER.Text = VFILTERCOMP
         Catch
 
@@ -3822,9 +4276,16 @@ noencoding:
         VFILTERCOMP = VFILTER & VFILTERPARAM
 
         Do Until FTINDEX = ItemsCount
-            VFILTER = "," + LISTVFILTER.Items(FTINDEX).Text + "="
-            VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
-            VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+            If FTINDEX = 0 Then
+                VFILTER = LISTVFILTER.Items(FTINDEX).Text + "="
+                VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
+                VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+            Else
+                VFILTER = "," + LISTVFILTER.Items(FTINDEX).Text + "="
+                VFILTERPARAM = LISTVFILTER.Items(FTINDEX).SubItems(1).Text
+                VFILTERCOMP = VFILTERCOMP & VFILTER & VFILTERPARAM
+            End If
+
 
             FTINDEX = FTINDEX + 1
         Loop
@@ -3850,9 +4311,16 @@ noencoding:
         AFILTERCOMP = AFILTER & AFILTERPARAM
 
         Do Until FTINDEX = ItemsCount
-            AFILTER = "," + LISTAFILTER.Items(FTINDEX).Text + "="
-            AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
-            AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+            If FTINDEX = 0 Then
+                AFILTER = LISTAFILTER.Items(FTINDEX).Text + "="
+                AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
+                AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+            Else
+                AFILTER = "," + LISTAFILTER.Items(FTINDEX).Text + "="
+                AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
+                AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+            End If
+
 
             FTINDEX = FTINDEX + 1
         Loop
@@ -3883,9 +4351,16 @@ noencoding:
         AFILTERCOMP = AFILTER & AFILTERPARAM
 
         Do Until FTINDEX = ItemsCount
-            AFILTER = "," + LISTAFILTER.Items(FTINDEX).Text + "="
-            AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
-            AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+            If FTINDEX = 0 Then
+                AFILTER = LISTAFILTER.Items(FTINDEX).Text + "="
+                AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
+                AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+            Else
+                AFILTER = "," + LISTAFILTER.Items(FTINDEX).Text + "="
+                AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
+                AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+            End If
+
 
             FTINDEX = FTINDEX + 1
         Loop
@@ -3912,12 +4387,20 @@ noencoding:
             AFILTERCOMP = AFILTER & AFILTERPARAM
 
             Do Until FTINDEX = ItemsCount
-                AFILTER = "," + LISTAFILTER.Items(FTINDEX).Text + "="
-                AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
-                AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+                If FTINDEX = 0 Then
+                    AFILTER = LISTAFILTER.Items(FTINDEX).Text + "="
+                    AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
+                    AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+                Else
+                    AFILTER = "," + LISTAFILTER.Items(FTINDEX).Text + "="
+                    AFILTERPARAM = LISTAFILTER.Items(FTINDEX).SubItems(1).Text
+                    AFILTERCOMP = AFILTERCOMP & AFILTER & AFILTERPARAM
+                End If
+
 
                 FTINDEX = FTINDEX + 1
             Loop
+
             BOXAFILTER.Text = AFILTERCOMP
         Catch
 
@@ -4070,8 +4553,113 @@ noencoding:
 
     End Sub
 
-    Private Sub BTRTMPMULTI_Click(sender As Object, e As EventArgs) Handles BTRTMPMULTI.Click
-        FRMMULTIRTMP.ShowDialog()
+    Private Sub BackgroundWorker3_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker3.DoWork
+        YTWaitScreen.Show()
+        Application.DoEvents()
+        YTGETINFO()
+        YTWaitScreen.Close()
+
 
     End Sub
+    Private Sub backgroundWorker3_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
+
+    End Sub
+
+
+
+    Private Sub BTRTMPMULTI_Click(sender As Object, e As EventArgs) Handles BTRTMPMULTI.Click
+        FRMMULTIRTMP.Show()
+
+    End Sub
+
+    Private Sub BackgroundWorker4_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker4.DoWork
+
+
+    End Sub
+
+    Public Function YTGETINFO()
+        Invoke(DirectCast(Sub()
+
+                              LBYTSTREAM.Text = ""
+                              STARTUPPATH = Application.StartupPath()
+                              YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\youtube-dl.exe" + """"
+
+                              LBYTADDRESS.Text = Clipboard.GetText()
+                              Application.DoEvents()
+                              If LBYTADDRESS.Text.Contains("http://youtube.com") Or LBYTADDRESS.Text.Contains("https://youtu.be") Or LBYTADDRESS.Text.Contains("http://www.youtube.com") Or LBYTADDRESS.Text.Contains("https://youtube.com/") Or LBYTADDRESS.Text.Contains("https://www.youtube.com/") Then
+                                  'OutputCBox.Text = ""
+                                  'OUTPUTFILENAME = ""
+                                  Dim p As New Process
+                                  Dim outputReader As StreamReader
+                                  With p.StartInfo
+                                      .WindowStyle = ProcessWindowStyle.Minimized
+                                      .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --get-filename " + LBYTADDRESS.Text
+                                      .FileName = "cmd"
+
+                                      .UseShellExecute = False
+                                      .RedirectStandardOutput = True
+                                      .CreateNoWindow = True
+
+
+                                  End With
+
+                                  p.Start()
+                                  outputReader = p.StandardOutput
+                                  Dim output As String
+                                  output = outputReader.ReadLine()
+
+                                  Dim originalFile As String = output
+                                  Dim newName As String = Path.ChangeExtension(originalFile, YTDNFORMAT.Text)
+                                  BOXYTFILENAME.Text = STARTUPPATH + "\My_Youtube_Files\" + newName
+                                  Application.DoEvents()
+                                  outputReader.Close()
+
+                                  'Threading.Thread.Sleep(300)
+
+                                  If BOXYTFILENAME.Text = "" Then
+                                      MsgBox("Failed to get Youtube video title", MsgBoxStyle.Critical)
+                                      If osver.ToString.Contains("5.1") Or osver.ToString.Contains("5.0") Then
+                                          MsgBox("Do not support Youtube Download on Windows XP/2000/NT", MsgBoxStyle.Critical)
+                                      End If
+                                  End If
+                                  Try
+                                      GETYTQUALITY()
+
+                                  Catch
+
+                                  End Try
+
+                              Else
+                                  MsgBox("Please copy Youtube link", MsgBoxStyle.Critical)
+                              End If
+                          End Sub, MethodInvoker))
+    End Function
+
+    Public Function getFFPath(e)
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        For Each path In files
+            BOXFFMPEGEXE.Text = path
+        Next
+
+    End Function
+
+    Private Sub BOXFFMPEGEXE_DragDrop(sender As Object, e As DragEventArgs) Handles BOXFFMPEGEXE.DragDrop
+        getFFPath(e)
+    End Sub
+
+    Private Sub BOXPRESETFILENAME_SelectedIndexChanged(sender As Object, e As EventArgs) Handles BOXPRESETFILENAME.SelectedIndexChanged
+
+    End Sub
+
+
+    Private Sub BOXFFMPEGEXE_DragEnter(sender As Object, e As DragEventArgs) Handles BOXFFMPEGEXE.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+End Class
+<Serializable()>
+Public Class ListViewTextCollection
+    Inherits System.Collections.ObjectModel.Collection(Of String())
 End Class
