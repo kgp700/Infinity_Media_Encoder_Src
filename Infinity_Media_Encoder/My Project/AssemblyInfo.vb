@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Infinity Media Encoder Alpha")>
-<Assembly: AssemblyCopyright("Copyright © 2020 K.G.P (Louis)")>
+<Assembly: AssemblyCopyright("Copyright © 2021 K.G.P (Louis)")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

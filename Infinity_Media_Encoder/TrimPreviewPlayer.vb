@@ -77,12 +77,12 @@ Public Class TrimPreviewPlayer
             deInterlace = " -vf kerndeint=1 "
         End If
         If Main.BOXCODECINFO.Text = "WMV3" Then
-            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 8192 -volume 100 -demuxer asf -nosub -noass -noautosub -vo gl -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 65535 -volume 100 -demuxer asf -nosub -noass -noautosub -vo gl -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
         ElseIf Main.BOXFORMATINFO.Text = "MPEG-TS" Then
-            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 8192 -volume 100 -demuxer lavf -nosub -noass -noautosub -vo gl " + deInterlace + "-speed 1 -ao dsound -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 65535  -volume 100 -demuxer lavf -autosync 30 -framedrop -nosub -noass -noautosub -vo gl_tiled " + deInterlace + "-speed 1 -ao dsound -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
         Else
 
-            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 8192 -volume 100 -demuxer lavf -nosub -noass -noautosub -vo gl -speed 1 -ao dsound -delay 0 -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
+            args = "-lavdopts threads=16 -slave -noquiet -identify -cache 65535 -volume 100 -demuxer lavf -autosync 30 -framedrop -nosub -noass -noautosub -vo gl_tiled -speed 1 -ao dsound -osdlevel 0 -wid " & CInt(VideoScreen.Handle)
         End If
 
         With p.StartInfo
@@ -96,7 +96,7 @@ Public Class TrimPreviewPlayer
         p.Start()
 
         Timer1.Start()
-        SendCommand("frame_drop 0")
+        'SendCommand("frame_drop 0")
     End Sub
     Public Function StopVideo() As String()
         Try

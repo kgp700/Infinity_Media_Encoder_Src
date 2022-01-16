@@ -75,19 +75,19 @@ Partial Class FRMProgress
         Me.BTNSTOP.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.BTNSTOP.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTNSTOP.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.BTNSTOP.Location = New System.Drawing.Point(14, 521)
+        Me.BTNSTOP.Location = New System.Drawing.Point(12, 481)
         Me.BTNSTOP.Name = "BTNSTOP"
-        Me.BTNSTOP.Size = New System.Drawing.Size(154, 25)
+        Me.BTNSTOP.Size = New System.Drawing.Size(135, 23)
         Me.BTNSTOP.TabIndex = 1
-        Me.BTNSTOP.Text = "Stop Processing"
+        Me.BTNSTOP.Text = "Stop"
         Me.BTNSTOP.UseVisualStyleBackColor = False
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(2, 468)
+        Me.ProgressBar1.Location = New System.Drawing.Point(2, 432)
         Me.ProgressBar1.MarqueeAnimationSpeed = 0
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(842, 25)
+        Me.ProgressBar1.Size = New System.Drawing.Size(737, 23)
         Me.ProgressBar1.Step = 1
         Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
         Me.ProgressBar1.TabIndex = 2
@@ -96,18 +96,18 @@ Partial Class FRMProgress
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label1.Location = New System.Drawing.Point(9, 498)
+        Me.Label1.Location = New System.Drawing.Point(8, 460)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(0, 15)
+        Me.Label1.Size = New System.Drawing.Size(0, 13)
         Me.Label1.TabIndex = 3
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label2.Location = New System.Drawing.Point(93, 498)
+        Me.Label2.Location = New System.Drawing.Point(81, 460)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(0, 15)
+        Me.Label2.Size = New System.Drawing.Size(0, 13)
         Me.Label2.TabIndex = 4
         '
         'BTNPAUSE
@@ -116,60 +116,60 @@ Partial Class FRMProgress
         Me.BTNPAUSE.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.BTNPAUSE.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTNPAUSE.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.BTNPAUSE.Location = New System.Drawing.Point(177, 521)
+        Me.BTNPAUSE.Location = New System.Drawing.Point(155, 481)
         Me.BTNPAUSE.Name = "BTNPAUSE"
-        Me.BTNPAUSE.Size = New System.Drawing.Size(154, 25)
+        Me.BTNPAUSE.Size = New System.Drawing.Size(135, 23)
         Me.BTNPAUSE.TabIndex = 6
-        Me.BTNPAUSE.Text = "Pause Processing"
+        Me.BTNPAUSE.Text = "Pause"
         Me.BTNPAUSE.UseVisualStyleBackColor = False
         '
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label3.Location = New System.Drawing.Point(99, 6)
+        Me.Label3.Location = New System.Drawing.Point(87, 6)
         Me.Label3.Margin = New System.Windows.Forms.Padding(0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(48, 20)
+        Me.Label3.Size = New System.Drawing.Size(42, 18)
         Me.Label3.TabIndex = 7
         Me.Label3.Text = "-"
         '
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label4.Location = New System.Drawing.Point(179, 6)
+        Me.Label4.Location = New System.Drawing.Point(157, 6)
         Me.Label4.Margin = New System.Windows.Forms.Padding(0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(59, 20)
+        Me.Label4.Size = New System.Drawing.Size(52, 18)
         Me.Label4.TabIndex = 8
         Me.Label4.Text = "Bitrate : "
         '
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label5.Location = New System.Drawing.Point(8, 6)
+        Me.Label5.Location = New System.Drawing.Point(7, 6)
         Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(89, 20)
+        Me.Label5.Size = New System.Drawing.Size(78, 18)
         Me.Label5.TabIndex = 9
         Me.Label5.Text = "CPU Usage :"
         '
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label6.Location = New System.Drawing.Point(357, 6)
+        Me.Label6.Location = New System.Drawing.Point(312, 6)
         Me.Label6.Margin = New System.Windows.Forms.Padding(0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(39, 20)
+        Me.Label6.Size = New System.Drawing.Size(34, 18)
         Me.Label6.TabIndex = 10
         Me.Label6.Text = "fps : "
         '
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label7.Location = New System.Drawing.Point(477, 6)
+        Me.Label7.Location = New System.Drawing.Point(417, 6)
         Me.Label7.Margin = New System.Windows.Forms.Padding(0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(118, 20)
+        Me.Label7.Size = New System.Drawing.Size(103, 18)
         Me.Label7.TabIndex = 11
         Me.Label7.Text = " "
         Me.Label7.Visible = False
@@ -182,30 +182,30 @@ Partial Class FRMProgress
         'LBBITRATE
         '
         Me.LBBITRATE.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LBBITRATE.Location = New System.Drawing.Point(237, 6)
+        Me.LBBITRATE.Location = New System.Drawing.Point(207, 6)
         Me.LBBITRATE.Margin = New System.Windows.Forms.Padding(0)
         Me.LBBITRATE.Name = "LBBITRATE"
-        Me.LBBITRATE.Size = New System.Drawing.Size(109, 20)
+        Me.LBBITRATE.Size = New System.Drawing.Size(95, 18)
         Me.LBBITRATE.TabIndex = 12
         Me.LBBITRATE.Text = "-"
         '
         'LBFPS
         '
         Me.LBFPS.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LBFPS.Location = New System.Drawing.Point(393, 6)
+        Me.LBFPS.Location = New System.Drawing.Point(344, 6)
         Me.LBFPS.Margin = New System.Windows.Forms.Padding(0)
         Me.LBFPS.Name = "LBFPS"
-        Me.LBFPS.Size = New System.Drawing.Size(83, 20)
+        Me.LBFPS.Size = New System.Drawing.Size(73, 18)
         Me.LBFPS.TabIndex = 13
         Me.LBFPS.Text = "-"
         '
         'LBNETWORK
         '
         Me.LBNETWORK.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LBNETWORK.Location = New System.Drawing.Point(589, 6)
+        Me.LBNETWORK.Location = New System.Drawing.Point(515, 6)
         Me.LBNETWORK.Margin = New System.Windows.Forms.Padding(0)
         Me.LBNETWORK.Name = "LBNETWORK"
-        Me.LBNETWORK.Size = New System.Drawing.Size(134, 20)
+        Me.LBNETWORK.Size = New System.Drawing.Size(117, 18)
         Me.LBNETWORK.TabIndex = 14
         Me.LBNETWORK.Text = " "
         Me.LBNETWORK.Visible = False
@@ -215,9 +215,9 @@ Partial Class FRMProgress
         Me.LBWARN.AutoSize = True
         Me.LBWARN.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.LBWARN.ForeColor = System.Drawing.Color.Red
-        Me.LBWARN.Location = New System.Drawing.Point(730, 5)
+        Me.LBWARN.Location = New System.Drawing.Point(639, 5)
         Me.LBWARN.Name = "LBWARN"
-        Me.LBWARN.Size = New System.Drawing.Size(0, 17)
+        Me.LBWARN.Size = New System.Drawing.Size(0, 15)
         Me.LBWARN.TabIndex = 15
         '
         'BackgroundWorker_1
@@ -232,11 +232,11 @@ Partial Class FRMProgress
         Me.BTNFORCESTOP.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.BTNFORCESTOP.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTNFORCESTOP.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.BTNFORCESTOP.Location = New System.Drawing.Point(338, 521)
+        Me.BTNFORCESTOP.Location = New System.Drawing.Point(296, 481)
         Me.BTNFORCESTOP.Name = "BTNFORCESTOP"
-        Me.BTNFORCESTOP.Size = New System.Drawing.Size(154, 25)
+        Me.BTNFORCESTOP.Size = New System.Drawing.Size(135, 23)
         Me.BTNFORCESTOP.TabIndex = 16
-        Me.BTNFORCESTOP.Text = "Force Stop all processes"
+        Me.BTNFORCESTOP.Text = "Force Stop for All Jobs"
         Me.BTNFORCESTOP.UseVisualStyleBackColor = False
         '
         'CHKVIEWLOG
@@ -245,9 +245,9 @@ Partial Class FRMProgress
         Me.CHKVIEWLOG.Checked = True
         Me.CHKVIEWLOG.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CHKVIEWLOG.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CHKVIEWLOG.Location = New System.Drawing.Point(735, 498)
+        Me.CHKVIEWLOG.Location = New System.Drawing.Point(643, 460)
         Me.CHKVIEWLOG.Name = "CHKVIEWLOG"
-        Me.CHKVIEWLOG.Size = New System.Drawing.Size(80, 19)
+        Me.CHKVIEWLOG.Size = New System.Drawing.Size(76, 17)
         Me.CHKVIEWLOG.TabIndex = 17
         Me.CHKVIEWLOG.Text = "Show Log"
         Me.CHKVIEWLOG.UseVisualStyleBackColor = True
@@ -265,9 +265,9 @@ Partial Class FRMProgress
         Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Button3.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button3.Location = New System.Drawing.Point(681, 494)
+        Me.Button3.Location = New System.Drawing.Point(596, 456)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(47, 25)
+        Me.Button3.Size = New System.Drawing.Size(41, 23)
         Me.Button3.TabIndex = 18
         Me.Button3.Text = "TEST"
         Me.Button3.UseVisualStyleBackColor = False
@@ -278,30 +278,29 @@ Partial Class FRMProgress
         Me.ListBox1.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.HorizontalScrollbar = True
-        Me.ListBox1.ItemHeight = 15
-        Me.ListBox1.Location = New System.Drawing.Point(2, 224)
+        Me.ListBox1.Location = New System.Drawing.Point(2, 207)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(842, 214)
+        Me.ListBox1.Size = New System.Drawing.Size(737, 186)
         Me.ListBox1.TabIndex = 19
         '
         'Percentage
         '
         Me.Percentage.BackColor = System.Drawing.Color.Transparent
         Me.Percentage.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Percentage.Location = New System.Drawing.Point(387, 441)
+        Me.Percentage.Location = New System.Drawing.Point(339, 407)
         Me.Percentage.Margin = New System.Windows.Forms.Padding(0)
         Me.Percentage.Name = "Percentage"
-        Me.Percentage.Size = New System.Drawing.Size(94, 23)
+        Me.Percentage.Size = New System.Drawing.Size(82, 21)
         Me.Percentage.TabIndex = 20
         '
         'Label8
         '
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label8.Location = New System.Drawing.Point(693, 441)
+        Me.Label8.Location = New System.Drawing.Point(606, 407)
         Me.Label8.Margin = New System.Windows.Forms.Padding(0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(144, 20)
+        Me.Label8.Size = New System.Drawing.Size(126, 18)
         Me.Label8.TabIndex = 22
         '
         'BackgroundWorker2
@@ -314,12 +313,12 @@ Partial Class FRMProgress
         Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(17, 17)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MENUSTOPENC})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(236, 28)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(212, 26)
         '
         'MENUSTOPENC
         '
         Me.MENUSTOPENC.Name = "MENUSTOPENC"
-        Me.MENUSTOPENC.Size = New System.Drawing.Size(235, 24)
+        Me.MENUSTOPENC.Size = New System.Drawing.Size(211, 22)
         Me.MENUSTOPENC.Text = "Delete from encoding list"
         '
         'ENCODINGLIST
@@ -328,11 +327,10 @@ Partial Class FRMProgress
         Me.ENCODINGLIST.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ENCODINGLIST.FormattingEnabled = True
         Me.ENCODINGLIST.HorizontalScrollbar = True
-        Me.ENCODINGLIST.ItemHeight = 15
-        Me.ENCODINGLIST.Location = New System.Drawing.Point(2, 31)
+        Me.ENCODINGLIST.Location = New System.Drawing.Point(2, 29)
         Me.ENCODINGLIST.Name = "ENCODINGLIST"
         Me.ENCODINGLIST.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.ENCODINGLIST.Size = New System.Drawing.Size(842, 49)
+        Me.ENCODINGLIST.Size = New System.Drawing.Size(737, 43)
         Me.ENCODINGLIST.TabIndex = 25
         Me.ENCODINGLIST.Visible = False
         '
@@ -343,17 +341,17 @@ Partial Class FRMProgress
         Me.ENCODINGLISTVIEW.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ENCODINGLISTVIEW.FullRowSelect = True
         Me.ENCODINGLISTVIEW.HideSelection = False
-        Me.ENCODINGLISTVIEW.Location = New System.Drawing.Point(2, 31)
+        Me.ENCODINGLISTVIEW.Location = New System.Drawing.Point(2, 29)
         Me.ENCODINGLISTVIEW.Name = "ENCODINGLISTVIEW"
         Me.ENCODINGLISTVIEW.ShowItemToolTips = True
-        Me.ENCODINGLISTVIEW.Size = New System.Drawing.Size(842, 191)
+        Me.ENCODINGLISTVIEW.Size = New System.Drawing.Size(737, 177)
         Me.ENCODINGLISTVIEW.TabIndex = 79
         Me.ENCODINGLISTVIEW.UseCompatibleStateImageBehavior = False
         Me.ENCODINGLISTVIEW.View = System.Windows.Forms.View.Details
         '
         'ColumnHeader3
         '
-        Me.ColumnHeader3.Text = "Output"
+        Me.ColumnHeader3.Text = "Output File Name"
         Me.ColumnHeader3.Width = 441
         '
         'ColumnHeader4
@@ -390,9 +388,9 @@ Partial Class FRMProgress
         Me.BTOPENOUTFOLDER.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.BTOPENOUTFOLDER.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTOPENOUTFOLDER.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.BTOPENOUTFOLDER.Location = New System.Drawing.Point(499, 521)
+        Me.BTOPENOUTFOLDER.Location = New System.Drawing.Point(437, 481)
         Me.BTOPENOUTFOLDER.Name = "BTOPENOUTFOLDER"
-        Me.BTOPENOUTFOLDER.Size = New System.Drawing.Size(154, 25)
+        Me.BTOPENOUTFOLDER.Size = New System.Drawing.Size(135, 23)
         Me.BTOPENOUTFOLDER.TabIndex = 80
         Me.BTOPENOUTFOLDER.Text = "Open Output Folder"
         Me.BTOPENOUTFOLDER.UseVisualStyleBackColor = False
@@ -404,11 +402,11 @@ Partial Class FRMProgress
         Me.BTNSTREAMINFOPOP.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.BTNSTREAMINFOPOP.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTNSTREAMINFOPOP.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.BTNSTREAMINFOPOP.Location = New System.Drawing.Point(661, 521)
+        Me.BTNSTREAMINFOPOP.Location = New System.Drawing.Point(578, 481)
         Me.BTNSTREAMINFOPOP.Name = "BTNSTREAMINFOPOP"
-        Me.BTNSTREAMINFOPOP.Size = New System.Drawing.Size(154, 25)
+        Me.BTNSTREAMINFOPOP.Size = New System.Drawing.Size(135, 23)
         Me.BTNSTREAMINFOPOP.TabIndex = 81
-        Me.BTNSTREAMINFOPOP.Text = "Stream Info"
+        Me.BTNSTREAMINFOPOP.Text = "Popout Encoding Info"
         Me.BTNSTREAMINFOPOP.UseVisualStyleBackColor = False
         '
         'Timer2
@@ -419,18 +417,18 @@ Partial Class FRMProgress
         '
         Me.LBELAPSEDTIME.AutoSize = True
         Me.LBELAPSEDTIME.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LBELAPSEDTIME.Location = New System.Drawing.Point(9, 445)
+        Me.LBELAPSEDTIME.Location = New System.Drawing.Point(8, 411)
         Me.LBELAPSEDTIME.Name = "LBELAPSEDTIME"
-        Me.LBELAPSEDTIME.Size = New System.Drawing.Size(0, 15)
+        Me.LBELAPSEDTIME.Size = New System.Drawing.Size(0, 13)
         Me.LBELAPSEDTIME.TabIndex = 82
         '
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label9.Location = New System.Drawing.Point(671, 6)
+        Me.Label9.Location = New System.Drawing.Point(587, 6)
         Me.Label9.Margin = New System.Windows.Forms.Padding(0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(66, 20)
+        Me.Label9.Size = New System.Drawing.Size(58, 18)
         Me.Label9.TabIndex = 88
         Me.Label9.Text = "Priority"
         '
@@ -439,18 +437,18 @@ Partial Class FRMProgress
         Me.CBPRI.Font = New System.Drawing.Font("맑은 고딕", 9.176471!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.CBPRI.FormattingEnabled = True
         Me.CBPRI.Items.AddRange(New Object() {"High", "AboveNormal", "Normal", "BelowNormal"})
-        Me.CBPRI.Location = New System.Drawing.Point(737, 3)
+        Me.CBPRI.Location = New System.Drawing.Point(645, 3)
         Me.CBPRI.Name = "CBPRI"
         Me.CBPRI.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CBPRI.Size = New System.Drawing.Size(107, 25)
+        Me.CBPRI.Size = New System.Drawing.Size(94, 23)
         Me.CBPRI.TabIndex = 87
         Me.CBPRI.Text = "Normal"
         '
         'FRMProgress
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(847, 553)
+        Me.ClientSize = New System.Drawing.Size(741, 510)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.CBPRI)
         Me.Controls.Add(Me.LBELAPSEDTIME)

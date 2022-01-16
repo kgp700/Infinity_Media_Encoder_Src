@@ -28,12 +28,12 @@ Partial Class StreamInfopopup
         'LBSTREAMINFOP
         '
         Me.LBSTREAMINFOP.AutoSize = True
-        Me.LBSTREAMINFOP.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.LBSTREAMINFOP.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.LBSTREAMINFOP.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.LBSTREAMINFOP.Location = New System.Drawing.Point(3, 5)
         Me.LBSTREAMINFOP.Margin = New System.Windows.Forms.Padding(0)
         Me.LBSTREAMINFOP.Name = "LBSTREAMINFOP"
-        Me.LBSTREAMINFOP.Size = New System.Drawing.Size(91, 13)
+        Me.LBSTREAMINFOP.Size = New System.Drawing.Size(125, 20)
         Me.LBSTREAMINFOP.TabIndex = 0
         Me.LBSTREAMINFOP.Text = "LBSTREAMINFOP"
         '
@@ -43,9 +43,9 @@ Partial Class StreamInfopopup
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.ClientSize = New System.Drawing.Size(681, 35)
+        Me.ClientSize = New System.Drawing.Size(899, 35)
         Me.Controls.Add(Me.LBSTREAMINFOP)
-        Me.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Name = "StreamInfopopup"

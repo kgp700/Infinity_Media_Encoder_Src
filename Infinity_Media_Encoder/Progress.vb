@@ -20,7 +20,9 @@ Public Class FRMProgress
     Public outputReader As StreamReader
     Public TRIMTO As String
     Public outdata As String
+    Public outdata2 As String
     Public logdata As String
+    Public logdata2 As String
     Public VALTRIMTO As Double
     Public VALTRIMSS As Double
     Public LISTINDEX As Integer = 0
@@ -374,6 +376,7 @@ Public Class FRMProgress
 
             Try
                 BackgroundWorker_1.ReportProgress(0, outdata)
+
 
             Catch
 

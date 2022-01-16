@@ -23,6 +23,8 @@ Partial Class FRMDSHOW
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.BTSHOWFILTER = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -31,8 +33,6 @@ Partial Class FRMDSHOW
         Me.BTNDSHOWOK = New System.Windows.Forms.Button()
         Me.BOXPIXELFORMAT = New System.Windows.Forms.ComboBox()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.BTSHOWFILTER = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -45,13 +45,31 @@ Partial Class FRMDSHOW
         Me.GroupBox4.Controls.Add(Me.Button2)
         Me.GroupBox4.Controls.Add(Me.BOXDSHOWAUD)
         Me.GroupBox4.Controls.Add(Me.BOXDSHOWVID)
-        Me.GroupBox4.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.GroupBox4.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(3, 4)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(455, 92)
         Me.GroupBox4.TabIndex = 80
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "DirectShow Filter Input"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(9, 18)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(304, 13)
+        Me.Label3.TabIndex = 86
+        Me.Label3.Text = "Please input DirectShow Device name or Alternative name"
+        '
+        'BTSHOWFILTER
+        '
+        Me.BTSHOWFILTER.Location = New System.Drawing.Point(326, 64)
+        Me.BTSHOWFILTER.Name = "BTSHOWFILTER"
+        Me.BTSHOWFILTER.Size = New System.Drawing.Size(118, 23)
+        Me.BTSHOWFILTER.TabIndex = 85
+        Me.BTSHOWFILTER.Text = "Show Filter List"
+        Me.BTSHOWFILTER.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -90,7 +108,7 @@ Partial Class FRMDSHOW
         Me.BOXDSHOWAUD.Name = "BOXDSHOWAUD"
         Me.BOXDSHOWAUD.Size = New System.Drawing.Size(266, 21)
         Me.BOXDSHOWAUD.TabIndex = 36
-        Me.BOXDSHOWAUD.Text = "FFsplit Playback Mixer"
+        Me.BOXDSHOWAUD.Text = "OBS-Audio"
         '
         'BOXDSHOWVID
         '
@@ -101,11 +119,11 @@ Partial Class FRMDSHOW
         Me.BOXDSHOWVID.Name = "BOXDSHOWVID"
         Me.BOXDSHOWVID.Size = New System.Drawing.Size(266, 21)
         Me.BOXDSHOWVID.TabIndex = 34
-        Me.BOXDSHOWVID.Text = "FFsource"
+        Me.BOXDSHOWVID.Text = "OBS-Camera"
         '
         'BTNDSHOWOK
         '
-        Me.BTNDSHOWOK.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTNDSHOWOK.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTNDSHOWOK.Location = New System.Drawing.Point(193, 131)
         Me.BTNDSHOWOK.Name = "BTNDSHOWOK"
         Me.BTNDSHOWOK.Size = New System.Drawing.Size(75, 23)
@@ -116,7 +134,7 @@ Partial Class FRMDSHOW
         'BOXPIXELFORMAT
         '
         Me.BOXPIXELFORMAT.AllowDrop = True
-        Me.BOXPIXELFORMAT.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BOXPIXELFORMAT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXPIXELFORMAT.FormattingEnabled = True
         Me.BOXPIXELFORMAT.Items.AddRange(New Object() {"yuv420p"})
         Me.BOXPIXELFORMAT.Location = New System.Drawing.Point(88, 104)
@@ -128,30 +146,12 @@ Partial Class FRMDSHOW
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label14.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label14.Location = New System.Drawing.Point(8, 107)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(70, 13)
         Me.Label14.TabIndex = 83
         Me.Label14.Text = "Pixel Format"
-        '
-        'BTSHOWFILTER
-        '
-        Me.BTSHOWFILTER.Location = New System.Drawing.Point(326, 64)
-        Me.BTSHOWFILTER.Name = "BTSHOWFILTER"
-        Me.BTSHOWFILTER.Size = New System.Drawing.Size(118, 23)
-        Me.BTSHOWFILTER.TabIndex = 85
-        Me.BTSHOWFILTER.Text = "Show Filter List"
-        Me.BTSHOWFILTER.UseVisualStyleBackColor = True
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(9, 18)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(304, 13)
-        Me.Label3.TabIndex = 86
-        Me.Label3.Text = "Please input DirectShow Device name or Alternative name"
         '
         'FRMDSHOW
         '
