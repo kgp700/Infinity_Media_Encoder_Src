@@ -883,6 +883,7 @@ Handles BackgroundWorker_1.RunWorkerCompleted
                 ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Done"
                 Label2.Text = ""
                 Label1.Text = "Done"
+                Percentage.Text = "100%"
             End If
 
             CURRENTENCODINGCMD = ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(2).Text

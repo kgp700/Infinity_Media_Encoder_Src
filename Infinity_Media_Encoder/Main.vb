@@ -30,6 +30,7 @@ Public Class Main
     Public INPUTVIDNAME As String
     Public INPUTAUDFILENAME As String
     Public OUTPUTFILENAME As String
+    Public OUTPUTFILENAMEONLY As String
     Public FPSVAL As String
     Public LVVAL As String
     Public PFVAL As String
@@ -961,8 +962,8 @@ Public Class Main
 
         ElseIf BOXCODEC.Text = "libsvtav1" Then
             BOXBITRATEMODE.Items.Clear()
-            'BOXBITRATEMODE.Items.Add("CVBR")
-            'BOXBITRATEMODE.Items.Add("VBR")
+            BOXBITRATEMODE.Items.Add("CVBR")
+            BOXBITRATEMODE.Items.Add("VBR")
             BOXBITRATEMODE.Items.Add("CRF(CQP)")
 
         Else
@@ -1163,6 +1164,17 @@ Public Class Main
 
         End If
     End Sub
+    Public Function RandomString()
+        Dim s As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        Dim r As New Random
+        Dim sb As New StringBuilder
+        For i As Integer = 1 To 5
+            Dim idx As Integer = r.Next(0, 35)
+            sb.Append(s.Substring(idx, 1))
+        Next
+        Return sb.ToString()
+    End Function
+
     Private Sub ENCLISTVIEWMAIN_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles ENCLISTVIEWMAIN.DragDrop
         LBENCLISTHELP.Text = ""
         WaitScreen.Show()
@@ -1317,7 +1329,10 @@ Public Class Main
                 testFile = My.Computer.FileSystem.GetFileInfo(INPUTVIDNAME)
                 Dim folderPath As String = testFile.DirectoryName
                 Dim infileName As String = testFile.Name
-                OUTPUTFILENAME = folderPath + "\[InfinityEncoder]" + infileName
+                IO.Path.GetFileNameWithoutExtension(infileName)
+                OUTPUTFILENAMEONLY = "[InfinityEncoder]" + IO.Path.GetFileNameWithoutExtension(infileName) + "-" + RandomString() + "." + BOXCONTAINER.Text
+                OUTPUTFILENAME = folderPath + "\" + OUTPUTFILENAMEONLY
+
             End If
 
             prepareEncoding2()
@@ -1326,14 +1341,15 @@ Public Class Main
             Dim ENCLISTCOUNT As Integer = ENCLISTVIEWMAIN.Items.Count
             'LISTCHKENC2.Items.Add(ACMD)
             If OutputCBox.Text.Contains("//") Then
-                OUTPUTFILENAME = "Live Streaming"
+                OUTPUTFILENAME = "OutputCBox.Text"
+                OUTPUTFILENAMEONLY = "Live Streaming"
             End If
 
             If CHKDEBUG.Checked Then
                 BOXDEBUG.Text = ACMD
             End If
 
-            Dim add As New ListViewItem(OUTPUTFILENAME)
+            Dim add As New ListViewItem(OUTPUTFILENAMEONLY)
 
             add.SubItems.Add("")
             add.SubItems.Add(ACMD)
@@ -1342,16 +1358,18 @@ Public Class Main
                 add.SubItems.Add(BOXTRIMSS.Text)
                 add.SubItems.Add(BOXTRIMTO.Text)
                 add.SubItems.Add(BOXDURATION.Text)
+                add.SubItems.Add(OUTPUTFILENAME)
             Else
                 add.SubItems.Add("0")
                 add.SubItems.Add("0")
                 add.SubItems.Add(BOXDURATION.Text)
+                add.SubItems.Add(OUTPUTFILENAME)
             End If
 
             ENCLISTVIEWMAIN.Items.Add(add)
 
 
-            'MsgBox("Added to list - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
+            'MsgBox("Added to Encoding List - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
 
             initialValue()
             BOXFPSINFO.Text = ""
@@ -1378,9 +1396,6 @@ Public Class Main
             prepareEncoding()
             prepareEncoding2()
             Dim ACMD As String = SHELLCMD
-            'If LISTCHKENC2.Items.Count = 11 Then
-            'MsgBox("Encoding list limited to 12")
-            'Else
 
 
             Dim filenameinfo As String
@@ -1390,13 +1405,24 @@ Public Class Main
             Else
                 filenameinfo = System.IO.Path.GetFileName(OutputCBox.Text)
                 Dim testFile As System.IO.FileInfo
-                testFile = My.Computer.FileSystem.GetFileInfo(filenameinfo)
+                testFile = My.Computer.FileSystem.GetFileInfo(OutputCBox.Text)
                 outfileName = testFile.Name
+                Dim folderPath As String = testFile.DirectoryName
+                IO.Path.GetFileNameWithoutExtension(outfileName)
+                OUTPUTFILENAMEONLY = IO.Path.GetFileNameWithoutExtension(outfileName) + "." + BOXCONTAINER.Text
+                OUTPUTFILENAME = folderPath + "\" + OUTPUTFILENAMEONLY
+
             End If
 
-            Dim ENCLISTCOUNT As Integer = ENCLISTVIEWMAIN.Items.Count
 
-            Dim add As New ListViewItem(outfileName)
+
+            Dim ENCLISTCOUNT As Integer = ENCLISTVIEWMAIN.Items.Count
+            If OutputCBox.Text.Contains("//") Then
+                OUTPUTFILENAME = "OutputCBox.Text"
+                OUTPUTFILENAMEONLY = "Live Streaming"
+            End If
+
+            Dim add As New ListViewItem(OUTPUTFILENAMEONLY)
 
             add.SubItems.Add("")
             add.SubItems.Add(ACMD)
@@ -1405,10 +1431,12 @@ Public Class Main
                 add.SubItems.Add(BOXTRIMSS.Text)
                 add.SubItems.Add(BOXTRIMTO.Text)
                 add.SubItems.Add(BOXDURATION.Text)
+                add.SubItems.Add(OUTPUTFILENAME)
             Else
                 add.SubItems.Add("0")
                 add.SubItems.Add("0")
                 add.SubItems.Add(BOXDURATION.Text)
+                add.SubItems.Add(OUTPUTFILENAME)
             End If
 
             ENCLISTVIEWMAIN.Items.Add(add)
@@ -1419,12 +1447,12 @@ Public Class Main
             'Dim lvi As New ListViewItem(filenameinfo)
             'lvi.SubItems.Add(ACMD)
             'ENCLISTVIEWMAIN.Items.Add(lvi)
-            CreateObject("WScript.Shell").Popup("Added to list - List Item count is " + ENCLISTVIEWMAIN.Items.Count.ToString, 1, "Infinity Media Encoder")
+            CreateObject("WScript.Shell").Popup("Added to Encoding List - List Item count is " + ENCLISTVIEWMAIN.Items.Count.ToString, 1, "Infinity Media Encoder")
             'End If
 
 
 
-            'MsgBox("Added to list - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
+            'MsgBox("Added to Encoding List - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
             initialValue()
         Else
             MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical, "Infinity Media Encoder")
@@ -1435,6 +1463,8 @@ Public Class Main
         End If
 INITIAL:
         initialValue()
+        BOXFPSINFO.Text = ""
+        BOXDURATION.Text = ""
     End Sub
 
     Private Sub InputCBOX_Leave(sender As Object, e As EventArgs) Handles InputCBOX.Leave
@@ -2956,7 +2986,8 @@ initvalue:
         dblStringToDblSS = Nothing
 
         SHELLCMD = ""
-
+        OUTPUTFILENAME = ""
+        OUTPUTFILENAMEONLY = ""
 
         HLSOPTIONFLAG = ""
         YTMAP = ""
@@ -3002,19 +3033,34 @@ initvalue:
 
 
     Private Sub BTNSTARTPRC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNSTARTPRC.Click
-        If BOXINTERLACE.Text = "" Then
-            If LBDEINTMODE.Text = "Disabled" Or LBDEINTMODE.Text = "" Then
-            Else
+        If CHKINTELLIDEINT.Checked = True Then
+            If BOXINTERLACE.Text = "" Or BOXINTERLACE.Text = "Progressive" Then
+                If LBDEINTMODE.Text = "Disabled" Or LBDEINTMODE.Text = "" Then
+                Else
 
-                Dim answer As Integer = MsgBox("Input video is not interlaced video but enabled deinterlace." + vbCrLf + "Do you wish continue?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
-                If answer = DialogResult.Yes Then
-                    GoTo continueencoding1
-                ElseIf answer = DialogResult.No Then
-                    initialValue()
-                    GoTo noencoding
+                    Dim answer As Integer = MsgBox("Input video is not interlaced video but enabled deinterlace." + vbCrLf + "Do you wish continue?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
+                    If answer = DialogResult.Yes Then
+                        GoTo continueencoding1
+                    ElseIf answer = DialogResult.No Then
+                        initialValue()
+                        GoTo noencoding
+                    End If
+                End If
+            ElseIf BOXINTERLACE.Text = "Interlaced" Then
+                If Not LBDEINTMODE.Text = "Disabled" Or LBDEINTMODE.Text = "" Then
+                Else
+
+                    Dim answer As Integer = MsgBox("Input video is interlaced video but disabled deinterlace." + vbCrLf + "Do you wish continue?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
+                    If answer = DialogResult.Yes Then
+                        GoTo continueencoding1
+                    ElseIf answer = DialogResult.No Then
+                        initialValue()
+                        GoTo noencoding
+                    End If
                 End If
             End If
         End If
+
 continueencoding1:
         If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
             Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
@@ -3115,15 +3161,15 @@ noencoding:
     End Function
     Private Sub BTBATCHENC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTBATCHENC.Click
         FRMProgress.Close()
-        If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
-            Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
-            If answer = DialogResult.Yes Then
-                GoTo continueencoding
-            ElseIf answer = DialogResult.No Then
-                initialValue()
-                GoTo noencoding
-            End If
-
+        If ENCLISTVIEWMAIN.Items.Count = 0 Then
+            GoTo noencoding
+        End If
+        Dim answer As Integer = MsgBox("If file exists, will be overwrite." + vbCrLf + "Do you wish continue?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
+        If answer = DialogResult.Yes Then
+            GoTo continueencoding
+        ElseIf answer = DialogResult.No Then
+            initialValue()
+            GoTo noencoding
         End If
 continueencoding:
         prepareEncoding()
@@ -3179,17 +3225,19 @@ noencoding:
     End Function
 
     Private Sub BTENCSELECTED_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTENCSELECTED.Click
-        FRMProgress.Close()
-        If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
-            Dim answer As Integer = MsgBox("File already exists. Do you want to overwrite?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
-            If answer = DialogResult.Yes Then
-                GoTo continueencoding
-            ElseIf answer = DialogResult.No Then
-                initialValue()
-                GoTo noencoding
-            End If
-
+        If ENCLISTVIEWMAIN.Items.Count = 0 Or ENCLISTVIEWMAIN.SelectedItems.Count = 0 Then
+            GoTo noencoding
         End If
+        FRMProgress.Close()
+        Dim answer1 As Integer = MsgBox("If file exists, will be overwrite." + vbCrLf + "Do you wish continue?", MsgBoxStyle.YesNo, "Infinity Media Encoder")
+        If answer1 = DialogResult.Yes Then
+            GoTo continueencoding
+        ElseIf answer1 = DialogResult.No Then
+            initialValue()
+            GoTo noencoding
+        End If
+
+
 continueencoding:
 
         'If BOXCODECINFO.Text = "" Then
@@ -3861,6 +3909,7 @@ noencoding:
 
         If Not qualityinfo = "" Then
             Invoke(DirectCast(Sub()
+                                  YTDNFORMAT.Enabled = True
                                   RB8K.Checked = False
                                   RB8KHDR.Checked = False
                                   RB8K60F.Checked = False
@@ -3904,6 +3953,12 @@ noencoding:
                                   RB480P.Enabled = False
                                   RB360P.Enabled = False
                                   RBAUDONLY.Enabled = False
+                                  If YTPARSINGINFO.Text.Contains("m3u8 information") Then
+                                      YTDNFORMAT.Enabled = False
+                                      Dim newName As String = Path.ChangeExtension(BOXYTFILENAME.Text, "ts")
+                                      BOXYTFILENAME.Text = newName
+
+                                  End If
 
                                   If qualityinfo.Contains("4320p") Then
                                       If qualityinfo.Contains("4320p60, mp4_dash") AndAlso qualityinfo.Contains("571 mp4") Then
@@ -4243,8 +4298,21 @@ noencoding:
                                   End If
 
 
-                                  If qualityinfo.Contains("    HLS ") Then
-                                      LBYTSTREAM.Text = "Youtube HLS Live Stream"
+                                  If YTPARSINGINFO.Text.Contains("m3u8 information") Then
+                                      If qualityinfo.Contains("94 mp4") Then
+                                          RB480P.Enabled = True
+                                          RB480P.Text = "480p | H.264"
+                                      End If
+
+                                      If qualityinfo.Contains("95 mp4") Then
+                                          RB720P.Enabled = True
+                                          RB720P.Text = "720p | H.264"
+                                      End If
+
+                                      If qualityinfo.Contains("96 mp4") Then
+                                          RB1080P.Enabled = True
+                                          RB1080P.Text = "1080p | H.264"
+                                      End If
                                   End If
 
 
@@ -4366,7 +4434,7 @@ noencoding:
 
         ElseIf RB1080P.Checked Then
             If YTDNFORMAT.Text = "mp4" Then
-                YOUTUBEQ = "137"
+                YOUTUBEQ = "137/96"
                 YOUTUBEAUDQ = "258/140"
             ElseIf YTDNFORMAT.Text = "mkv" Then
                 YOUTUBEQ = "248/313"
@@ -4430,6 +4498,18 @@ noencoding:
             End If
         End If
 
+        If YTPARSINGINFO.Text.Contains("m3u8 information") Then
+            If RB1080P.Checked = True Then
+                YOUTUBEQ = "96"
+            ElseIf RB720P.Checked = True Then
+                YOUTUBEQ = "95"
+            ElseIf RB480P.Checked = True Then
+                YOUTUBEQ = "94"
+            ElseIf RB360P.Checked = True Then
+                YOUTUBEQ = "93"
+            End If
+        End If
+
         If YTDNFORMAT.Text = "m4a" Or YTDNFORMAT.Text = "aac" Then
             YOUTUBEAUDQ = "258/140"
         ElseIf YTDNFORMAT.Text = "opus" Then
@@ -4463,13 +4543,34 @@ noencoding:
 
         If YTDNFORMAT.Text = "m4a" Or YTDNFORMAT.Text = "aac" Or YTDNFORMAT.Text = "opus" Then
             SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEAUDQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i - -acodec copy -vn " + "-metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + BOXYTFILENAME.Text + """"
-        ElseIf LBYTSTREAM.Text = "Youtube HLS Live Stream" Then
-            SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --output " + """" + BOXYTFILENAME.Text + """"
+        ElseIf YTPARSINGINFO.Text.Contains("m3u8 information") Then
 
-        Else
+
+            If My.Computer.FileSystem.FileExists(BOXYTFILENAME.Text) Then
+                Dim OUTPUTFILENAMEONLYHLS As String
+                Dim OUTPUTFILENAMEHLS As String
+
+                Dim testFile As System.IO.FileInfo
+                testFile = My.Computer.FileSystem.GetFileInfo(BOXYTFILENAME.Text)
+                Dim folderPath As String = testFile.DirectoryName
+                Dim infileName As String = testFile.Name
+                IO.Path.GetFileNameWithoutExtension(infileName)
+                OUTPUTFILENAMEONLYHLS = IO.Path.GetFileNameWithoutExtension(BOXYTFILENAME.Text) + "-" + RandomString() + ".ts"
+                OUTPUTFILENAMEHLS = folderPath + "\" + OUTPUTFILENAMEONLYHLS
+                BOXYTFILENAME.Text = OUTPUTFILENAMEHLS
+                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+            Else
+                Dim OUTPUTFILENAMEHLS As String = Path.ChangeExtension(BOXYTFILENAME.Text, "ts")
+                BOXYTFILENAME.Text = OUTPUTFILENAMEHLS
+                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+            End If
+
+        ElseIf LBYTADDRESS.Text.Contains("youtube") Or LBYTADDRESS.Text.Contains("youtu.be") Then
             SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + "-i - -vcodec copy" + " -metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + "temp_" + TEMPYTFILENAME + """" +
         "& " + YOUTUBEDLPATH + " -f " + YOUTUBEAUDQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i " + """" + "temp_" + TEMPYTFILENAME + """" + " -i - -vcodec copy -acodec copy " + YTMAP + "-metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + BOXYTFILENAME.Text + """" +
         "& del " + """" + "temp_" + TEMPYTFILENAME + """"
+        Else
+            SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i - -vcodec copy -acodec copy " + "-metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + BOXYTFILENAME.Text + """"
         End If
 
 
@@ -4564,12 +4665,13 @@ noencoding:
 
                 If RB8K.Checked = False And RB8KHDR.Checked = False And RB8K60F.Checked = False And RB8K60FHDR.Checked = False And RB5K.Checked = False And RB5KHDR.Checked = False And RB5K60F.Checked = False And RB5K60FHDR.Checked = False And RB4K60FHDR.Checked = False And RB4K60F.Checked = False And RB4KHDR.Checked = False And RB4K.Checked = False And RB2K.Enabled = False And RB2K60F.Checked = False And RB1080P60F.Checked = False And RB1080P.Checked = False And RB720P.Checked = False And RB720P60F.Checked = False And RB480P.Checked = False And RB360P.Checked = False And RBAUDONLY.Checked = False Then
                     If BOXCSTVIDQ.Text = "" Or BOXCSTAUDQ.Text = "" Then
-                        MsgBox("Please Select Youtube Quality.", MsgBoxStyle.Critical, "Infinity Media Encoder")
-                        GoTo noencoding
+                        If LBYTADDRESS.Text.Contains("youtube") Or LBYTADDRESS.Text.Contains("youtu.be") Then
+                            MsgBox("Please Select Youtube Quality.", MsgBoxStyle.Critical, "Infinity Media Encoder")
+                            GoTo noencoding
+                        End If
+
+
                     End If
-
-                Else
-
                     Invoke(New Action(Function() COPYONEYTITEM()))
 
                 End If
@@ -5254,63 +5356,66 @@ noencoding:
                               Dim ytaddress As String
                               LBYTSTREAM.Text = ""
                               ytaddress = ""
+                              BOXCSTVIDQ.Text = ""
+                              BOXCSTAUDQ.Text = ""
                               STARTUPPATH = Application.StartupPath()
                               YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\yt-dlp.exe" + """"
                               ytaddress = Clipboard.GetText()
                               If ytaddress.Contains("youtube.com") Or ytaddress.Contains("youtu.be") Then
                                   LBYTADDRESS.Text = ytaddress
                               Else
-                                  ytaddress = ""
-                                  LBYTADDRESS.Text = ""
-                              End If
-
-                              Application.DoEvents()
-                              If LBYTADDRESS.Text.Contains("http://youtube.com") Or LBYTADDRESS.Text.Contains("https://youtu.be") Or LBYTADDRESS.Text.Contains("http://www.youtube.com") Or LBYTADDRESS.Text.Contains("https://youtube.com/") Or LBYTADDRESS.Text.Contains("https://www.youtube.com/") Then
-                                  'OutputCBox.Text = ""
-                                  'OUTPUTFILENAME = ""
-                                  Dim p As New Process
-                                  Dim outputReader As StreamReader
-                                  With p.StartInfo
-                                      .WindowStyle = ProcessWindowStyle.Minimized
-                                      .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --get-filename " + LBYTADDRESS.Text
-                                      .FileName = "cmd"
-
-                                      .UseShellExecute = False
-                                      .RedirectStandardOutput = True
-                                      .CreateNoWindow = True
-
-
-                                  End With
-
-                                  p.Start()
-                                  outputReader = p.StandardOutput
-                                  Dim output As String
-                                  output = outputReader.ReadLine()
-
-                                  Dim originalFile As String = output
-                                  Dim newName As String = Path.ChangeExtension(originalFile, YTDNFORMAT.Text)
-                                  BOXYTFILENAME.Text = STARTUPPATH + "\My_Youtube_Files\" + newName
-                                  Application.DoEvents()
-                                  outputReader.Close()
-
-                                  'Threading.Thread.Sleep(300)
-
-                                  If BOXYTFILENAME.Text = "" Then
-                                      MsgBox("Failed to get Youtube video title", MsgBoxStyle.Critical, "Infinity Media Encoder")
-                                      If osver.ToString.Contains("5.1") Or osver.ToString.Contains("5.0") Then
-                                          MsgBox("Do not support Youtube Download on Windows XP/2000/NT", MsgBoxStyle.Critical)
-                                      End If
+                                  If ytaddress.Contains("http://") Or ytaddress.Contains("https://") Then
+                                      LBYTADDRESS.Text = ytaddress
+                                  Else
+                                      ytaddress = ""
+                                      LBYTADDRESS.Text = ""
                                   End If
-                                  Try
-                                      GETYTQUALITY()
 
-                                  Catch
-
-                                  End Try
-
-                              Else
-                                  MsgBox("Please copy Youtube link", MsgBoxStyle.Critical, "Infinity Media Encoder")
                               End If
+                              Application.DoEvents()
+
+                              'OutputCBox.Text = ""
+                              'OUTPUTFILENAME = ""
+                              Dim p As New Process
+                              Dim outputReader As StreamReader
+                              With p.StartInfo
+                                  .WindowStyle = ProcessWindowStyle.Minimized
+                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --get-filename " + LBYTADDRESS.Text
+                                  .FileName = "cmd"
+
+                                  .UseShellExecute = False
+                                  .RedirectStandardOutput = True
+                                  .CreateNoWindow = True
+
+
+                              End With
+
+                              p.Start()
+                              outputReader = p.StandardOutput
+                              Dim output As String
+                              output = outputReader.ReadLine()
+
+                              Dim originalFile As String = output
+                              Dim newName As String = Path.ChangeExtension(originalFile, YTDNFORMAT.Text)
+                              BOXYTFILENAME.Text = STARTUPPATH + "\My_Youtube_Files\" + newName
+                              Application.DoEvents()
+                              outputReader.Close()
+
+                              'Threading.Thread.Sleep(300)
+
+                              If BOXYTFILENAME.Text = "" Then
+                                  MsgBox("Failed to get Youtube video title", MsgBoxStyle.Critical, "Infinity Media Encoder")
+                                  If osver.ToString.Contains("5.1") Or osver.ToString.Contains("5.0") Then
+                                      MsgBox("Do not support Youtube Download on Windows XP/2000/NT", MsgBoxStyle.Critical)
+                                  End If
+                              End If
+                              Try
+                                  GETYTQUALITY()
+
+                              Catch
+
+                              End Try
+
                           End Sub, MethodInvoker))
     End Function
 
@@ -5396,10 +5501,16 @@ noencoding:
     Private Sub Label36_Click(sender As Object, e As EventArgs) Handles Label36.Click
 
     End Sub
-
-
     Private Sub YTDNFORMAT_TextChanged(sender As Object, e As EventArgs) Handles YTDNFORMAT.TextChanged
 
+    End Sub
+
+    Private Sub YTPARSINGINFO_MouseDown(sender As Object, e As MouseEventArgs) Handles YTPARSINGINFO.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            Clipboard.SetText(YTPARSINGINFO.SelectedText)
+
+        End If
     End Sub
 End Class
 <Serializable()>

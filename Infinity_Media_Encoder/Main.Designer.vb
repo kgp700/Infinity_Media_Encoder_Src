@@ -176,6 +176,7 @@ Partial Class Main
         Me.COLSTARTTIME = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.COLENDTIME = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.COLDURATION = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.COLPATH = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.BTENCSELECTED = New System.Windows.Forms.Button()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
@@ -205,12 +206,12 @@ Partial Class Main
         Me.TABDASH = New System.Windows.Forms.TabPage()
         Me.TABETC = New System.Windows.Forms.TabPage()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.YTPARSINGINFO = New System.Windows.Forms.RichTextBox()
         Me.BTNUPDATEYTDL = New System.Windows.Forms.Button()
         Me.LBYTSTREAM = New System.Windows.Forms.Label()
         Me.BTNINPUTPATHYTVID = New System.Windows.Forms.Button()
         Me.BYOPENYTFOLDER = New System.Windows.Forms.Button()
         Me.BOXYTFILENAME = New System.Windows.Forms.TextBox()
-        Me.YTPARSINGINFO = New System.Windows.Forms.TextBox()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.BTDNYOUTUBE = New System.Windows.Forms.Button()
@@ -245,6 +246,7 @@ Partial Class Main
         Me.RB2K = New System.Windows.Forms.RadioButton()
         Me.RB4K = New System.Windows.Forms.RadioButton()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.CHKINTELLIDEINT = New System.Windows.Forms.CheckBox()
         Me.BTDEFAULTFFMP = New System.Windows.Forms.Button()
         Me.CHKRMMETADATA = New System.Windows.Forms.CheckBox()
         Me.CHKATRACKAVISYNTH = New System.Windows.Forms.CheckBox()
@@ -276,7 +278,7 @@ Partial Class Main
         Me.BackgroundWorker3 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker4 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker5 = New System.ComponentModel.BackgroundWorker()
-        Me.COLPATH = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -651,9 +653,9 @@ Partial Class Main
         Me.BOXCODECPRESET.Font = New System.Drawing.Font("맑은 고딕", 8.6!)
         Me.BOXCODECPRESET.FormattingEnabled = True
         Me.BOXCODECPRESET.Items.AddRange(New Object() {"ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow", "placebo"})
-        Me.BOXCODECPRESET.Location = New System.Drawing.Point(234, 45)
+        Me.BOXCODECPRESET.Location = New System.Drawing.Point(233, 45)
         Me.BOXCODECPRESET.Name = "BOXCODECPRESET"
-        Me.BOXCODECPRESET.Size = New System.Drawing.Size(69, 21)
+        Me.BOXCODECPRESET.Size = New System.Drawing.Size(70, 21)
         Me.BOXCODECPRESET.TabIndex = 7
         Me.BOXCODECPRESET.Text = "faster"
         '
@@ -1699,6 +1701,7 @@ Partial Class Main
         '
         'BTMERGEMEDIA
         '
+        Me.BTMERGEMEDIA.Enabled = False
         Me.BTMERGEMEDIA.Location = New System.Drawing.Point(337, 120)
         Me.BTMERGEMEDIA.Name = "BTMERGEMEDIA"
         Me.BTMERGEMEDIA.Size = New System.Drawing.Size(151, 23)
@@ -1766,6 +1769,7 @@ Partial Class Main
         '
         'BTNSELECTSTREAM
         '
+        Me.BTNSELECTSTREAM.Enabled = False
         Me.BTNSELECTSTREAM.Location = New System.Drawing.Point(154, 120)
         Me.BTNSELECTSTREAM.Name = "BTNSELECTSTREAM"
         Me.BTNSELECTSTREAM.Size = New System.Drawing.Size(177, 23)
@@ -1788,7 +1792,7 @@ Partial Class Main
         Me.BTNENCVIDPREVIEWER.Name = "BTNENCVIDPREVIEWER"
         Me.BTNENCVIDPREVIEWER.Size = New System.Drawing.Size(151, 23)
         Me.BTNENCVIDPREVIEWER.TabIndex = 69
-        Me.BTNENCVIDPREVIEWER.Text = "Encoding Video Previewer"
+        Me.BTNENCVIDPREVIEWER.Text = "Encoding Previewer"
         Me.BTNENCVIDPREVIEWER.UseVisualStyleBackColor = True
         '
         'BOXDEBUG
@@ -1868,7 +1872,7 @@ Partial Class Main
         Me.LBENCLISTHELP.AllowDrop = True
         Me.LBENCLISTHELP.AutoSize = True
         Me.LBENCLISTHELP.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LBENCLISTHELP.Location = New System.Drawing.Point(333, 253)
+        Me.LBENCLISTHELP.Location = New System.Drawing.Point(333, 293)
         Me.LBENCLISTHELP.Name = "LBENCLISTHELP"
         Me.LBENCLISTHELP.Size = New System.Drawing.Size(305, 21)
         Me.LBENCLISTHELP.TabIndex = 80
@@ -1876,12 +1880,12 @@ Partial Class Main
         '
         'BOXCMDINFO
         '
-        Me.BOXCMDINFO.Location = New System.Drawing.Point(0, 307)
+        Me.BOXCMDINFO.Location = New System.Drawing.Point(0, 353)
         Me.BOXCMDINFO.Multiline = True
         Me.BOXCMDINFO.Name = "BOXCMDINFO"
         Me.BOXCMDINFO.ReadOnly = True
         Me.BOXCMDINFO.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.BOXCMDINFO.Size = New System.Drawing.Size(646, 53)
+        Me.BOXCMDINFO.Size = New System.Drawing.Size(646, 81)
         Me.BOXCMDINFO.TabIndex = 79
         '
         'ENCLISTVIEWMAIN
@@ -1894,7 +1898,7 @@ Partial Class Main
         Me.ENCLISTVIEWMAIN.Location = New System.Drawing.Point(2, 4)
         Me.ENCLISTVIEWMAIN.Name = "ENCLISTVIEWMAIN"
         Me.ENCLISTVIEWMAIN.ShowItemToolTips = True
-        Me.ENCLISTVIEWMAIN.Size = New System.Drawing.Size(643, 297)
+        Me.ENCLISTVIEWMAIN.Size = New System.Drawing.Size(643, 340)
         Me.ENCLISTVIEWMAIN.TabIndex = 78
         Me.ENCLISTVIEWMAIN.UseCompatibleStateImageBehavior = False
         Me.ENCLISTVIEWMAIN.View = System.Windows.Forms.View.Details
@@ -1927,10 +1931,14 @@ Partial Class Main
         Me.COLDURATION.Text = "Original Duration"
         Me.COLDURATION.Width = 108
         '
+        'COLPATH
+        '
+        Me.COLPATH.Text = "Output Path"
+        '
         'BTENCSELECTED
         '
         Me.BTENCSELECTED.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTENCSELECTED.Location = New System.Drawing.Point(161, 366)
+        Me.BTENCSELECTED.Location = New System.Drawing.Point(161, 448)
         Me.BTENCSELECTED.Name = "BTENCSELECTED"
         Me.BTENCSELECTED.Size = New System.Drawing.Size(187, 26)
         Me.BTENCSELECTED.TabIndex = 76
@@ -1940,7 +1948,7 @@ Partial Class Main
         'Button9
         '
         Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button9.Location = New System.Drawing.Point(501, 366)
+        Me.Button9.Location = New System.Drawing.Point(501, 448)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(140, 26)
         Me.Button9.TabIndex = 74
@@ -1950,7 +1958,7 @@ Partial Class Main
         'Button5
         '
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button5.Location = New System.Drawing.Point(355, 366)
+        Me.Button5.Location = New System.Drawing.Point(355, 448)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(140, 26)
         Me.Button5.TabIndex = 73
@@ -1960,7 +1968,7 @@ Partial Class Main
         'BTBATCHENC
         '
         Me.BTBATCHENC.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BTBATCHENC.Location = New System.Drawing.Point(6, 366)
+        Me.BTBATCHENC.Location = New System.Drawing.Point(6, 448)
         Me.BTBATCHENC.Name = "BTBATCHENC"
         Me.BTBATCHENC.Size = New System.Drawing.Size(149, 26)
         Me.BTBATCHENC.TabIndex = 72
@@ -2211,19 +2219,19 @@ Partial Class Main
         '
         'TabPage8
         '
+        Me.TabPage8.Controls.Add(Me.YTPARSINGINFO)
         Me.TabPage8.Controls.Add(Me.BTNUPDATEYTDL)
         Me.TabPage8.Controls.Add(Me.LBYTSTREAM)
         Me.TabPage8.Controls.Add(Me.BTNINPUTPATHYTVID)
         Me.TabPage8.Controls.Add(Me.BYOPENYTFOLDER)
         Me.TabPage8.Controls.Add(Me.BOXYTFILENAME)
-        Me.TabPage8.Controls.Add(Me.YTPARSINGINFO)
         Me.TabPage8.Controls.Add(Me.Label35)
-        Me.TabPage8.Controls.Add(Me.Label34)
         Me.TabPage8.Controls.Add(Me.BTDNYOUTUBE)
         Me.TabPage8.Controls.Add(Me.BTPASTEYTADDRESS)
-        Me.TabPage8.Controls.Add(Me.LBYTADDRESS)
         Me.TabPage8.Controls.Add(Me.YTDNFORMAT)
         Me.TabPage8.Controls.Add(Me.GBYTQ)
+        Me.TabPage8.Controls.Add(Me.Label34)
+        Me.TabPage8.Controls.Add(Me.LBYTADDRESS)
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Size = New System.Drawing.Size(649, 488)
@@ -2231,13 +2239,22 @@ Partial Class Main
         Me.TabPage8.Text = "Youtube"
         Me.TabPage8.UseVisualStyleBackColor = True
         '
+        'YTPARSINGINFO
+        '
+        Me.YTPARSINGINFO.Location = New System.Drawing.Point(4, 419)
+        Me.YTPARSINGINFO.Name = "YTPARSINGINFO"
+        Me.YTPARSINGINFO.ReadOnly = True
+        Me.YTPARSINGINFO.Size = New System.Drawing.Size(638, 64)
+        Me.YTPARSINGINFO.TabIndex = 115
+        Me.YTPARSINGINFO.Text = ""
+        '
         'BTNUPDATEYTDL
         '
         Me.BTNUPDATEYTDL.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BTNUPDATEYTDL.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTNUPDATEYTDL.Location = New System.Drawing.Point(446, 34)
         Me.BTNUPDATEYTDL.Name = "BTNUPDATEYTDL"
-        Me.BTNUPDATEYTDL.Size = New System.Drawing.Size(157, 26)
+        Me.BTNUPDATEYTDL.Size = New System.Drawing.Size(182, 26)
         Me.BTNUPDATEYTDL.TabIndex = 106
         Me.BTNUPDATEYTDL.Text = "Update yt-dlp"
         Me.BTNUPDATEYTDL.UseVisualStyleBackColor = True
@@ -2255,7 +2272,7 @@ Partial Class Main
         '
         Me.BTNINPUTPATHYTVID.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BTNINPUTPATHYTVID.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTNINPUTPATHYTVID.Location = New System.Drawing.Point(385, 366)
+        Me.BTNINPUTPATHYTVID.Location = New System.Drawing.Point(410, 357)
         Me.BTNINPUTPATHYTVID.Name = "BTNINPUTPATHYTVID"
         Me.BTNINPUTPATHYTVID.Size = New System.Drawing.Size(218, 26)
         Me.BTNINPUTPATHYTVID.TabIndex = 104
@@ -2266,7 +2283,7 @@ Partial Class Main
         '
         Me.BYOPENYTFOLDER.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BYOPENYTFOLDER.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BYOPENYTFOLDER.Location = New System.Drawing.Point(181, 366)
+        Me.BYOPENYTFOLDER.Location = New System.Drawing.Point(205, 357)
         Me.BYOPENYTFOLDER.Name = "BYOPENYTFOLDER"
         Me.BYOPENYTFOLDER.Size = New System.Drawing.Size(198, 26)
         Me.BYOPENYTFOLDER.TabIndex = 100
@@ -2275,20 +2292,10 @@ Partial Class Main
         '
         'BOXYTFILENAME
         '
-        Me.BOXYTFILENAME.Location = New System.Drawing.Point(5, 401)
+        Me.BOXYTFILENAME.Location = New System.Drawing.Point(5, 392)
         Me.BOXYTFILENAME.Name = "BOXYTFILENAME"
-        Me.BOXYTFILENAME.Size = New System.Drawing.Size(632, 22)
+        Me.BOXYTFILENAME.Size = New System.Drawing.Size(637, 22)
         Me.BOXYTFILENAME.TabIndex = 99
-        '
-        'YTPARSINGINFO
-        '
-        Me.YTPARSINGINFO.Location = New System.Drawing.Point(6, 433)
-        Me.YTPARSINGINFO.Multiline = True
-        Me.YTPARSINGINFO.Name = "YTPARSINGINFO"
-        Me.YTPARSINGINFO.ReadOnly = True
-        Me.YTPARSINGINFO.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.YTPARSINGINFO.Size = New System.Drawing.Size(636, 42)
-        Me.YTPARSINGINFO.TabIndex = 98
         '
         'Label35
         '
@@ -2304,21 +2311,21 @@ Partial Class Main
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label34.Location = New System.Drawing.Point(15, 12)
+        Me.Label34.Location = New System.Drawing.Point(15, 10)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(100, 13)
+        Me.Label34.Size = New System.Drawing.Size(54, 13)
         Me.Label34.TabIndex = 95
-        Me.Label34.Text = "Youtube Address :"
+        Me.Label34.Text = "Address :"
         '
         'BTDNYOUTUBE
         '
         Me.BTDNYOUTUBE.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BTDNYOUTUBE.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTDNYOUTUBE.Location = New System.Drawing.Point(18, 366)
+        Me.BTDNYOUTUBE.Location = New System.Drawing.Point(22, 357)
         Me.BTDNYOUTUBE.Name = "BTDNYOUTUBE"
-        Me.BTDNYOUTUBE.Size = New System.Drawing.Size(157, 26)
+        Me.BTDNYOUTUBE.Size = New System.Drawing.Size(176, 26)
         Me.BTDNYOUTUBE.TabIndex = 93
-        Me.BTDNYOUTUBE.Text = "Download Youtube"
+        Me.BTDNYOUTUBE.Text = "Download Youtube Video"
         Me.BTDNYOUTUBE.UseVisualStyleBackColor = True
         '
         'BTPASTEYTADDRESS
@@ -2329,16 +2336,15 @@ Partial Class Main
         Me.BTPASTEYTADDRESS.Name = "BTPASTEYTADDRESS"
         Me.BTPASTEYTADDRESS.Size = New System.Drawing.Size(231, 26)
         Me.BTPASTEYTADDRESS.TabIndex = 86
-        Me.BTPASTEYTADDRESS.Text = "Paste Youtube Link"
+        Me.BTPASTEYTADDRESS.Text = "Paste Youtube or Video Link"
         Me.BTPASTEYTADDRESS.UseVisualStyleBackColor = True
         '
         'LBYTADDRESS
         '
-        Me.LBYTADDRESS.AutoSize = True
         Me.LBYTADDRESS.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LBYTADDRESS.Location = New System.Drawing.Point(120, 12)
+        Me.LBYTADDRESS.Location = New System.Drawing.Point(73, 10)
         Me.LBYTADDRESS.Name = "LBYTADDRESS"
-        Me.LBYTADDRESS.Size = New System.Drawing.Size(0, 13)
+        Me.LBYTADDRESS.Size = New System.Drawing.Size(555, 19)
         Me.LBYTADDRESS.TabIndex = 86
         '
         'YTDNFORMAT
@@ -2360,7 +2366,7 @@ Partial Class Main
         Me.GBYTQ.Size = New System.Drawing.Size(636, 257)
         Me.GBYTQ.TabIndex = 114
         Me.GBYTQ.TabStop = False
-        Me.GBYTQ.Text = "Quality"
+        Me.GBYTQ.Text = "Youtube Video Quality"
         '
         'Panel1
         '
@@ -2398,7 +2404,7 @@ Partial Class Main
         '
         Me.Label36.AutoSize = True
         Me.Label36.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label36.Location = New System.Drawing.Point(228, 206)
+        Me.Label36.Location = New System.Drawing.Point(244, 205)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(135, 13)
         Me.Label36.TabIndex = 124
@@ -2408,9 +2414,9 @@ Partial Class Main
         '
         Me.BOXCSTAUDQ.AllowDrop = True
         Me.BOXCSTAUDQ.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BOXCSTAUDQ.Location = New System.Drawing.Point(369, 201)
+        Me.BOXCSTAUDQ.Location = New System.Drawing.Point(385, 200)
         Me.BOXCSTAUDQ.Name = "BOXCSTAUDQ"
-        Me.BOXCSTAUDQ.Size = New System.Drawing.Size(65, 21)
+        Me.BOXCSTAUDQ.Size = New System.Drawing.Size(87, 21)
         Me.BOXCSTAUDQ.TabIndex = 123
         '
         'Label16
@@ -2429,47 +2435,47 @@ Partial Class Main
         Me.BOXCSTVIDQ.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXCSTVIDQ.Location = New System.Drawing.Point(148, 201)
         Me.BOXCSTVIDQ.Name = "BOXCSTVIDQ"
-        Me.BOXCSTVIDQ.Size = New System.Drawing.Size(65, 21)
+        Me.BOXCSTVIDQ.Size = New System.Drawing.Size(89, 21)
         Me.BOXCSTVIDQ.TabIndex = 113
         '
         'RB4KHDR
         '
         Me.RB4KHDR.AutoSize = True
         Me.RB4KHDR.Enabled = False
-        Me.RB4KHDR.Location = New System.Drawing.Point(293, 61)
+        Me.RB4KHDR.Location = New System.Drawing.Point(293, 58)
         Me.RB4KHDR.Name = "RB4KHDR"
-        Me.RB4KHDR.Size = New System.Drawing.Size(101, 17)
+        Me.RB4KHDR.Size = New System.Drawing.Size(64, 17)
         Me.RB4KHDR.TabIndex = 121
-        Me.RB4KHDR.Text = "4K HDR | AV01"
+        Me.RB4KHDR.Text = "4K HDR"
         Me.RB4KHDR.UseVisualStyleBackColor = True
         '
         'RB5KHDR
         '
         Me.RB5KHDR.AutoSize = True
         Me.RB5KHDR.Enabled = False
-        Me.RB5KHDR.Location = New System.Drawing.Point(293, 38)
+        Me.RB5KHDR.Location = New System.Drawing.Point(293, 35)
         Me.RB5KHDR.Name = "RB5KHDR"
-        Me.RB5KHDR.Size = New System.Drawing.Size(101, 17)
+        Me.RB5KHDR.Size = New System.Drawing.Size(64, 17)
         Me.RB5KHDR.TabIndex = 120
-        Me.RB5KHDR.Text = "5K HDR | AV01"
+        Me.RB5KHDR.Text = "5K HDR"
         Me.RB5KHDR.UseVisualStyleBackColor = True
         '
         'RB8KHDR
         '
         Me.RB8KHDR.AutoSize = True
         Me.RB8KHDR.Enabled = False
-        Me.RB8KHDR.Location = New System.Drawing.Point(293, 15)
+        Me.RB8KHDR.Location = New System.Drawing.Point(293, 12)
         Me.RB8KHDR.Name = "RB8KHDR"
-        Me.RB8KHDR.Size = New System.Drawing.Size(142, 17)
+        Me.RB8KHDR.Size = New System.Drawing.Size(105, 17)
         Me.RB8KHDR.TabIndex = 119
-        Me.RB8KHDR.Text = "8K (4320p) HDR | AV01"
+        Me.RB8KHDR.Text = "8K (4320p) HDR"
         Me.RB8KHDR.UseVisualStyleBackColor = True
         '
         'RBAUDONLY
         '
         Me.RBAUDONLY.AutoSize = True
         Me.RBAUDONLY.Enabled = False
-        Me.RBAUDONLY.Location = New System.Drawing.Point(137, 151)
+        Me.RBAUDONLY.Location = New System.Drawing.Point(137, 148)
         Me.RBAUDONLY.Name = "RBAUDONLY"
         Me.RBAUDONLY.Size = New System.Drawing.Size(82, 17)
         Me.RBAUDONLY.TabIndex = 112
@@ -2480,7 +2486,7 @@ Partial Class Main
         '
         Me.RB720P60F.AutoSize = True
         Me.RB720P60F.Enabled = False
-        Me.RB720P60F.Location = New System.Drawing.Point(137, 128)
+        Me.RB720P60F.Location = New System.Drawing.Point(137, 125)
         Me.RB720P60F.Name = "RB720P60F"
         Me.RB720P60F.Size = New System.Drawing.Size(81, 17)
         Me.RB720P60F.TabIndex = 103
@@ -2491,7 +2497,7 @@ Partial Class Main
         '
         Me.RB2K60F.AutoSize = True
         Me.RB2K60F.Enabled = False
-        Me.RB2K60F.Location = New System.Drawing.Point(137, 82)
+        Me.RB2K60F.Location = New System.Drawing.Point(137, 79)
         Me.RB2K60F.Name = "RB2K60F"
         Me.RB2K60F.Size = New System.Drawing.Size(68, 17)
         Me.RB2K60F.TabIndex = 108
@@ -2502,7 +2508,7 @@ Partial Class Main
         '
         Me.RB1080P60F.AutoSize = True
         Me.RB1080P60F.Enabled = False
-        Me.RB1080P60F.Location = New System.Drawing.Point(137, 105)
+        Me.RB1080P60F.Location = New System.Drawing.Point(137, 102)
         Me.RB1080P60F.Name = "RB1080P60F"
         Me.RB1080P60F.Size = New System.Drawing.Size(87, 17)
         Me.RB1080P60F.TabIndex = 102
@@ -2513,51 +2519,51 @@ Partial Class Main
         '
         Me.RB8K60F.AutoSize = True
         Me.RB8K60F.Enabled = False
-        Me.RB8K60F.Location = New System.Drawing.Point(137, 15)
+        Me.RB8K60F.Location = New System.Drawing.Point(137, 12)
         Me.RB8K60F.Name = "RB8K60F"
-        Me.RB8K60F.Size = New System.Drawing.Size(146, 17)
+        Me.RB8K60F.Size = New System.Drawing.Size(109, 17)
         Me.RB8K60F.TabIndex = 110
-        Me.RB8K60F.Text = "8K (4320p) 60fps | AV01"
+        Me.RB8K60F.Text = "8K (4320p) 60fps"
         Me.RB8K60F.UseVisualStyleBackColor = True
         '
         'RB5K60FHDR
         '
         Me.RB5K60FHDR.AutoSize = True
         Me.RB5K60FHDR.Enabled = False
-        Me.RB5K60FHDR.Location = New System.Drawing.Point(443, 37)
+        Me.RB5K60FHDR.Location = New System.Drawing.Point(443, 34)
         Me.RB5K60FHDR.Name = "RB5K60FHDR"
-        Me.RB5K60FHDR.Size = New System.Drawing.Size(132, 17)
+        Me.RB5K60FHDR.Size = New System.Drawing.Size(95, 17)
         Me.RB5K60FHDR.TabIndex = 116
-        Me.RB5K60FHDR.Text = "5K 60fps HDR | AV01"
+        Me.RB5K60FHDR.Text = "5K 60fps HDR"
         Me.RB5K60FHDR.UseVisualStyleBackColor = True
         '
         'RB4K60FHDR
         '
         Me.RB4K60FHDR.AutoSize = True
         Me.RB4K60FHDR.Enabled = False
-        Me.RB4K60FHDR.Location = New System.Drawing.Point(443, 59)
+        Me.RB4K60FHDR.Location = New System.Drawing.Point(443, 56)
         Me.RB4K60FHDR.Name = "RB4K60FHDR"
-        Me.RB4K60FHDR.Size = New System.Drawing.Size(173, 17)
+        Me.RB4K60FHDR.Size = New System.Drawing.Size(136, 17)
         Me.RB4K60FHDR.TabIndex = 115
-        Me.RB4K60FHDR.Text = "4K (2160p) 60fps HDR | AV01"
+        Me.RB4K60FHDR.Text = "4K (2160p) 60fps HDR"
         Me.RB4K60FHDR.UseVisualStyleBackColor = True
         '
         'RB8K
         '
         Me.RB8K.AutoSize = True
         Me.RB8K.Enabled = False
-        Me.RB8K.Location = New System.Drawing.Point(10, 16)
+        Me.RB8K.Location = New System.Drawing.Point(10, 13)
         Me.RB8K.Name = "RB8K"
-        Me.RB8K.Size = New System.Drawing.Size(115, 17)
+        Me.RB8K.Size = New System.Drawing.Size(78, 17)
         Me.RB8K.TabIndex = 88
-        Me.RB8K.Text = "8K (4320p) | AV01"
+        Me.RB8K.Text = "8K (4320p)"
         Me.RB8K.UseVisualStyleBackColor = True
         '
         'RB360P
         '
         Me.RB360P.AutoSize = True
         Me.RB360P.Enabled = False
-        Me.RB360P.Location = New System.Drawing.Point(10, 174)
+        Me.RB360P.Location = New System.Drawing.Point(10, 171)
         Me.RB360P.Name = "RB360P"
         Me.RB360P.Size = New System.Drawing.Size(50, 17)
         Me.RB360P.TabIndex = 91
@@ -2568,7 +2574,7 @@ Partial Class Main
         '
         Me.RB480P.AutoSize = True
         Me.RB480P.Enabled = False
-        Me.RB480P.Location = New System.Drawing.Point(10, 151)
+        Me.RB480P.Location = New System.Drawing.Point(10, 148)
         Me.RB480P.Name = "RB480P"
         Me.RB480P.Size = New System.Drawing.Size(50, 17)
         Me.RB480P.TabIndex = 92
@@ -2579,18 +2585,18 @@ Partial Class Main
         '
         Me.RB8K60FHDR.AutoSize = True
         Me.RB8K60FHDR.Enabled = False
-        Me.RB8K60FHDR.Location = New System.Drawing.Point(443, 15)
+        Me.RB8K60FHDR.Location = New System.Drawing.Point(443, 12)
         Me.RB8K60FHDR.Name = "RB8K60FHDR"
-        Me.RB8K60FHDR.Size = New System.Drawing.Size(173, 17)
+        Me.RB8K60FHDR.Size = New System.Drawing.Size(136, 17)
         Me.RB8K60FHDR.TabIndex = 111
-        Me.RB8K60FHDR.Text = "8K (4320p) 60fps HDR | AV01"
+        Me.RB8K60FHDR.Text = "8K (4320p) 60fps HDR"
         Me.RB8K60FHDR.UseVisualStyleBackColor = True
         '
         'RB5K
         '
         Me.RB5K.AutoSize = True
         Me.RB5K.Enabled = False
-        Me.RB5K.Location = New System.Drawing.Point(10, 38)
+        Me.RB5K.Location = New System.Drawing.Point(10, 35)
         Me.RB5K.Name = "RB5K"
         Me.RB5K.Size = New System.Drawing.Size(37, 17)
         Me.RB5K.TabIndex = 111
@@ -2601,7 +2607,7 @@ Partial Class Main
         '
         Me.RB720P.AutoSize = True
         Me.RB720P.Enabled = False
-        Me.RB720P.Location = New System.Drawing.Point(10, 128)
+        Me.RB720P.Location = New System.Drawing.Point(10, 125)
         Me.RB720P.Name = "RB720P"
         Me.RB720P.Size = New System.Drawing.Size(50, 17)
         Me.RB720P.TabIndex = 90
@@ -2612,7 +2618,7 @@ Partial Class Main
         '
         Me.RB5K60F.AutoSize = True
         Me.RB5K60F.Enabled = False
-        Me.RB5K60F.Location = New System.Drawing.Point(137, 37)
+        Me.RB5K60F.Location = New System.Drawing.Point(137, 34)
         Me.RB5K60F.Name = "RB5K60F"
         Me.RB5K60F.Size = New System.Drawing.Size(68, 17)
         Me.RB5K60F.TabIndex = 109
@@ -2623,7 +2629,7 @@ Partial Class Main
         '
         Me.RB1080P.AutoSize = True
         Me.RB1080P.Enabled = False
-        Me.RB1080P.Location = New System.Drawing.Point(10, 105)
+        Me.RB1080P.Location = New System.Drawing.Point(10, 102)
         Me.RB1080P.Name = "RB1080P"
         Me.RB1080P.Size = New System.Drawing.Size(56, 17)
         Me.RB1080P.TabIndex = 89
@@ -2634,7 +2640,7 @@ Partial Class Main
         '
         Me.RB4K60F.AutoSize = True
         Me.RB4K60F.Enabled = False
-        Me.RB4K60F.Location = New System.Drawing.Point(137, 59)
+        Me.RB4K60F.Location = New System.Drawing.Point(137, 56)
         Me.RB4K60F.Name = "RB4K60F"
         Me.RB4K60F.Size = New System.Drawing.Size(68, 17)
         Me.RB4K60F.TabIndex = 107
@@ -2645,7 +2651,7 @@ Partial Class Main
         '
         Me.RB2K.AutoSize = True
         Me.RB2K.Enabled = False
-        Me.RB2K.Location = New System.Drawing.Point(10, 82)
+        Me.RB2K.Location = New System.Drawing.Point(10, 79)
         Me.RB2K.Name = "RB2K"
         Me.RB2K.Size = New System.Drawing.Size(37, 17)
         Me.RB2K.TabIndex = 88
@@ -2656,7 +2662,7 @@ Partial Class Main
         '
         Me.RB4K.AutoSize = True
         Me.RB4K.Enabled = False
-        Me.RB4K.Location = New System.Drawing.Point(10, 59)
+        Me.RB4K.Location = New System.Drawing.Point(10, 56)
         Me.RB4K.Name = "RB4K"
         Me.RB4K.Size = New System.Drawing.Size(37, 17)
         Me.RB4K.TabIndex = 87
@@ -2666,6 +2672,7 @@ Partial Class Main
         'TabPage6
         '
         Me.TabPage6.AllowDrop = True
+        Me.TabPage6.Controls.Add(Me.CHKINTELLIDEINT)
         Me.TabPage6.Controls.Add(Me.BTDEFAULTFFMP)
         Me.TabPage6.Controls.Add(Me.CHKRMMETADATA)
         Me.TabPage6.Controls.Add(Me.CHKATRACKAVISYNTH)
@@ -2682,6 +2689,18 @@ Partial Class Main
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Settings"
         Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'CHKINTELLIDEINT
+        '
+        Me.CHKINTELLIDEINT.AutoSize = True
+        Me.CHKINTELLIDEINT.Checked = True
+        Me.CHKINTELLIDEINT.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CHKINTELLIDEINT.Location = New System.Drawing.Point(11, 171)
+        Me.CHKINTELLIDEINT.Name = "CHKINTELLIDEINT"
+        Me.CHKINTELLIDEINT.Size = New System.Drawing.Size(237, 17)
+        Me.CHKINTELLIDEINT.TabIndex = 82
+        Me.CHKINTELLIDEINT.Text = "Enabled warn about Interlace/Deinterlace"
+        Me.CHKINTELLIDEINT.UseVisualStyleBackColor = True
         '
         'BTDEFAULTFFMP
         '
@@ -2944,9 +2963,10 @@ Partial Class Main
         'BackgroundWorker4
         '
         '
-        'COLPATH
+        'ContextMenuStrip1
         '
-        Me.COLPATH.Text = "Output Path"
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
         'Main
         '
@@ -3166,7 +3186,6 @@ Partial Class Main
     Friend WithEvents BTDNYOUTUBE As System.Windows.Forms.Button
     Friend WithEvents Label34 As System.Windows.Forms.Label
     Friend WithEvents Label35 As System.Windows.Forms.Label
-    Friend WithEvents YTPARSINGINFO As System.Windows.Forms.TextBox
     Friend WithEvents BOXYTFILENAME As System.Windows.Forms.TextBox
     Friend WithEvents BYOPENYTFOLDER As System.Windows.Forms.Button
     Friend WithEvents RB720P60F As System.Windows.Forms.RadioButton
@@ -3275,4 +3294,7 @@ Partial Class Main
     Friend WithEvents BOXCSTAUDQ As ComboBox
     Friend WithEvents Label16 As Label
     Friend WithEvents COLPATH As ColumnHeader
+    Friend WithEvents CHKINTELLIDEINT As CheckBox
+    Friend WithEvents YTPARSINGINFO As RichTextBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
 End Class

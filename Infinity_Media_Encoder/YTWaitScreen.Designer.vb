@@ -28,11 +28,11 @@ Partial Class YTWaitScreen
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(51, 12)
+        Me.Label1.Location = New System.Drawing.Point(70, 22)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(212, 12)
+        Me.Label1.Size = New System.Drawing.Size(181, 12)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Parsing Youtube data. Please wait..."
+        Me.Label1.Text = "Analyzing video. Please wait..."
         Me.Label1.UseWaitCursor = True
         '
         'YTWaitScreen

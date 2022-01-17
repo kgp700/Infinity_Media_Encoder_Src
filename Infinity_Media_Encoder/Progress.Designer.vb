@@ -404,9 +404,9 @@ Partial Class FRMProgress
         Me.BTNSTREAMINFOPOP.ForeColor = System.Drawing.SystemColors.ControlText
         Me.BTNSTREAMINFOPOP.Location = New System.Drawing.Point(578, 481)
         Me.BTNSTREAMINFOPOP.Name = "BTNSTREAMINFOPOP"
-        Me.BTNSTREAMINFOPOP.Size = New System.Drawing.Size(135, 23)
+        Me.BTNSTREAMINFOPOP.Size = New System.Drawing.Size(151, 23)
         Me.BTNSTREAMINFOPOP.TabIndex = 81
-        Me.BTNSTREAMINFOPOP.Text = "Popout Encoding Info"
+        Me.BTNSTREAMINFOPOP.Text = "Popout Encoding Status"
         Me.BTNSTREAMINFOPOP.UseVisualStyleBackColor = False
         '
         'Timer2
