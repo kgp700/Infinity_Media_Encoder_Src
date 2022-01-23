@@ -2457,11 +2457,25 @@ INITIAL:
 
         End If
 
-        If Not BOXVFILTER.Text = "" Then
-            CUSTOMVIDEOFILTER = "," + BOXVFILTER.Text + "," + BOXVFILTERCST.Text
+        If Not BOXVFILTER.Text = "" Or Not BOXVFILTERCST.Text = "" Then
+            If BOXVFILTER.Text = "" Then
+                CUSTOMVIDEOFILTER = "," + BOXVFILTERCST.Text
+            ElseIf BOXVFILTERCST.Text = "" Then
+                CUSTOMVIDEOFILTER = "," + BOXVFILTER.Text
+            Else
+                CUSTOMVIDEOFILTER = "," + BOXVFILTER.Text + "," + BOXVFILTERCST.Text
+            End If
+
         End If
-        If Not BOXAFILTER.Text = "" Then
-            CUSTOMAUDIOFILTER = "," + BOXAFILTER.Text + "," + BOXAFILTERCST.Text
+        If Not BOXAFILTER.Text = "" Or Not BOXAFILTERCST.Text = "" Then
+            If BOXAFILTER.Text = "" Then
+                CUSTOMAUDIOFILTER = "," + BOXAFILTERCST.Text
+            ElseIf BOXAFILTERCST.Text = "" Then
+                CUSTOMAUDIOFILTER = "," + BOXAFILTER.Text
+            Else
+                CUSTOMAUDIOFILTER = "," + BOXAFILTER.Text + "," + BOXAFILTERCST.Text
+            End If
+
         End If
 
 
@@ -4989,7 +5003,10 @@ noencoding:
 
         BOXVFILTER.Text = VFILTERCOMP
 
+        If Not LISTVFILTER.Items.Count = 0 Then
+            LISTVFILTER.Items(LISTVFILTER.Items.Count - 1).Selected = True
 
+        End If
 
     End Sub
 
@@ -5078,6 +5095,10 @@ noencoding:
 
 
         BOXVFILTER.Text = VFILTERCOMP
+        If Not LISTVFILTER.Items.Count = 0 Then
+            LISTVFILTER.Items(0).Selected = True
+
+        End If
 
     End Sub
 
@@ -5112,10 +5133,12 @@ noencoding:
         Loop
 
 
-
-
-
         BOXAFILTER.Text = AFILTERCOMP
+        If Not LISTAFILTER.Items.Count = 0 Then
+            LISTAFILTER.Items(LISTAFILTER.Items.Count - 1).Selected = True
+
+        End If
+
     End Sub
 
     Private Sub BTNRMAFILTER_Click(sender As Object, e As EventArgs) Handles BTNRMAFILTER.Click
@@ -5151,8 +5174,11 @@ noencoding:
             FTINDEX = FTINDEX + 1
         Loop
 
-
         BOXAFILTER.Text = AFILTERCOMP
+        If Not LISTAFILTER.Items.Count = 0 Then
+            LISTAFILTER.Items(0).Selected = True
+
+        End If
     End Sub
 
     Private Sub BTNEDITAFILTER_Click(sender As Object, e As EventArgs) Handles BTNEDITAFILTER.Click
