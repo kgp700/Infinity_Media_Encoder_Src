@@ -1504,7 +1504,14 @@ INITIAL:
 
         End If
     End Sub
-    Public Structure ListViewItems
+    Public Structure ListViewItemsVID
+
+        Public column1 As String
+
+        Public column2 As String
+
+    End Structure
+    Public Structure ListViewItemsAUD
 
         Public column1 As String
 
@@ -1512,8 +1519,8 @@ INITIAL:
 
     End Structure
 
-    Private items As New List(Of ListViewItems)
-    Private itemsA As New List(Of ListViewItems)
+    Private items As New List(Of ListViewItemsVID)
+    Private itemsA As New List(Of ListViewItemsAUD)
 
 
     Public Sub FindControls(ByVal cont As Control, ByVal Data As List(Of ControlData))
@@ -1545,7 +1552,7 @@ INITIAL:
 
                 If TypeOf ctl Is TextBox Then
                     Dim CB As TextBox = DirectCast(ctl, TextBox)
-                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXCHLSADDRESS" Or CB.Name = "BOXFLVFLAG" Then
+                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXVFILTERCST" Or CB.Name = "BOXAFILTERCST" Or CB.Name = "BOXCHLSADDRESS" Or CB.Name = "BOXFLVFLAG" Then
                         Dim cd As New ControlData
                         cd.ControlName = ctl.Name
                         cd.ControlProperty = "Text"
@@ -1611,7 +1618,7 @@ INITIAL:
 
                 If TypeOf ctl Is TextBox Then
                     Dim CB As TextBox = DirectCast(ctl, TextBox)
-                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXCHLSADDRESS" Or CB.Name = "BOXFLVFLAG" Then
+                    If CB.Name = "BOXVFILTER" Or CB.Name = "BOXAFILTER" Or CB.Name = "BOXVFILTERCST" Or CB.Name = "BOXAFILTERCST" Or CB.Name = "BOXCHLSADDRESS" Or CB.Name = "BOXFLVFLAG" Then
                         Dim cd As New ControlData
                         cd.ControlName = ctl.Name
                         cd.ControlProperty = "Text"
@@ -1783,11 +1790,11 @@ INITIAL:
             '==
 
             '===Save ListView items to xml 
-            items = New List(Of ListViewItems)
+            items = New List(Of ListViewItemsVID)
 
             For Each lvi As ListViewItem In LISTVFILTER.Items
 
-                Dim lv As New ListViewItems
+                Dim lv As New ListViewItemsVID
 
                 lv.column1 = lvi.SubItems(0).Text
 
@@ -1798,11 +1805,11 @@ INITIAL:
             Next
 
             '===Save ListView items to xml 
-            itemsA = New List(Of ListViewItems)
+            itemsA = New List(Of ListViewItemsAUD)
 
             For Each lvi As ListViewItem In LISTAFILTER.Items
 
-                Dim lv As New ListViewItems
+                Dim lv As New ListViewItemsAUD
 
                 lv.column1 = lvi.SubItems(0).Text
 
@@ -1814,8 +1821,8 @@ INITIAL:
 
 
 
-            Dim serializer As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItems)), New XmlRootAttribute("ListViewItemsV"))
-            Dim serializerA As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItems)), New XmlRootAttribute("ListViewItemsA"))
+            Dim serializer As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItemsVID)), New XmlRootAttribute("ListViewItemsV"))
+            Dim serializerA As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItemsAUD)), New XmlRootAttribute("ListViewItemsA"))
 
             Dim xml As New XmlSerializer(Data.GetType)
 
@@ -1824,14 +1831,14 @@ INITIAL:
                 'serializer.Serialize(writer, items, nsBlank)
             End Using
 
-            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + "-LV.xmllv", FileMode.Create)
+            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + "-LV.vset", FileMode.Create)
 
                 serializer.Serialize(writer, items, nsBlank)
 
             End Using
 
 
-            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + "-LA.xmlla", FileMode.Create)
+            Using writer As New FileStream(".\Preset\" + PRESETFILENAME + "-LA.aset", FileMode.Create)
 
                 serializerA.Serialize(writer, itemsA, nsBlank)
 
@@ -1839,24 +1846,24 @@ INITIAL:
 
 
             Dim xml1 = XDocument.Load(".\Preset\" + PRESETFILENAME + ".xml")
-            Dim xml2 = XDocument.Load(".\Preset\" + PRESETFILENAME + "-LV.xmllv")
+            Dim xml2 = XDocument.Load(".\Preset\" + PRESETFILENAME + "-LV.vset")
 
 
             xml1.Descendants("ArrayOfControlData").FirstOrDefault().Add(xml2.Descendants("ListViewItemsV").FirstOrDefault())
 
             xml1.Save(".\Preset\" + PRESETFILENAME + ".xml")
-            DeleteFile(".\Preset\" + PRESETFILENAME + "-LV.xmllv", 10)
+            DeleteFile(".\Preset\" + PRESETFILENAME + "-LV.vset", 10)
 
 
 
             Dim xml3 = XDocument.Load(".\Preset\" + PRESETFILENAME + ".xml")
-            Dim xml4 = XDocument.Load(".\Preset\" + PRESETFILENAME + "-LA.xmlla")
+            Dim xml4 = XDocument.Load(".\Preset\" + PRESETFILENAME + "-LA.aset")
 
             xml3.Descendants("ArrayOfControlData").FirstOrDefault().Add(xml4.Descendants("ListViewItemsA").FirstOrDefault())
 
 
             xml3.Save(".\Preset\" + PRESETFILENAME + ".xml")
-            'DeleteFile(".\Preset\" + PRESETFILENAME + "-LA.xml", 10)
+            DeleteFile(".\Preset\" + PRESETFILENAME + "-LA.aset", 10)
             '===
 
             BOXPRESETFILENAME.Text = PRESETFILENAME
@@ -1926,6 +1933,9 @@ INITIAL:
             LISTVFILTER.Items.Clear()
             LISTAFILTER.Items.Clear()
             BOXVFILTER.Text = ""
+            BOXVFILTERCST.Text = ""
+            BOXAFILTER.Text = ""
+            BOXAFILTERCST.Text = ""
 
             Parsingsettings()
 
@@ -1935,7 +1945,7 @@ INITIAL:
             AdvancedFRM.LoadPresetADV()
             FRMMULTIRTMP.LoadPresetMRTMP()
 
-            ParsingVideoFiltersettings()
+            ParsingFiltersettings()
             Try
 
             Catch
@@ -1986,16 +1996,15 @@ INITIAL:
 
 
     End Function
-    Public Function ParsingVideoFiltersettings() As String()
-        items = New List(Of ListViewItems)
-        Dim serializer As New Xml.Serialization.XmlSerializer(GetType(List(Of ListViewItems)))
+    Public Function ParsingFiltersettings() As String()
 
+        Dim MyDataSet As DataSet = New DataSet
+        MyDataSet.ReadXml(".\Preset\" + PRESETFILENAME + ".xml", XmlReadMode.Auto)
 
-
-        Dim MyDataSet As New DataSet
-        MyDataSet.ReadXml(".\Preset\" + PRESETFILENAME + ".xml")
         Try
-            For Each dr As DataRow In MyDataSet.Tables("ListViewItemsV").Rows
+
+            For Each dr As DataRow In MyDataSet.Tables("ListViewItemsVID").Rows
+
                 Dim lvi As New ListViewItem
                 lvi.Text = dr.Item(0).ToString()
                 lvi.SubItems.Add(dr.Item(1).ToString())
@@ -2006,7 +2015,7 @@ INITIAL:
 
         End Try
         Try
-            For Each dr As DataRow In MyDataSet.Tables("ListViewItemsA").Rows
+            For Each dr As DataRow In MyDataSet.Tables("ListViewItemsAUD").Rows
                 Dim lvi As New ListViewItem
                 lvi.Text = dr.Item(0).ToString()
                 lvi.SubItems.Add(dr.Item(1).ToString())
@@ -2449,10 +2458,10 @@ INITIAL:
         End If
 
         If Not BOXVFILTER.Text = "" Then
-            CUSTOMVIDEOFILTER = "," + BOXVFILTER.Text
+            CUSTOMVIDEOFILTER = "," + BOXVFILTER.Text + "," + BOXVFILTERCST.Text
         End If
         If Not BOXAFILTER.Text = "" Then
-            CUSTOMAUDIOFILTER = "," + BOXAFILTER.Text
+            CUSTOMAUDIOFILTER = "," + BOXAFILTER.Text + "," + BOXAFILTERCST.Text
         End If
 
 
@@ -3870,12 +3879,12 @@ noencoding:
         Invoke(DirectCast(Sub()
 
                               'Dim qualityinfo As String
-                              BOXDEBUG.Text = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats " + LBYTADDRESS.Text
+                              BOXDEBUG.Text = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats --extractor-args youtube:include_live_dash " + LBYTADDRESS.Text
                               Dim p As New Process
                               Dim outputReader2 As StreamReader
                               With p.StartInfo
                                   .WindowStyle = ProcessWindowStyle.Minimized
-                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats " + LBYTADDRESS.Text
+                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats --extractor-args youtube:include_live_dash " + LBYTADDRESS.Text
                                   .FileName = "cmd"
 
                                   .UseShellExecute = False
@@ -3953,6 +3962,8 @@ noencoding:
                                   RB480P.Enabled = False
                                   RB360P.Enabled = False
                                   RBAUDONLY.Enabled = False
+
+
                                   If YTPARSINGINFO.Text.Contains("m3u8 information") Then
                                       YTDNFORMAT.Enabled = False
                                       Dim newName As String = Path.ChangeExtension(BOXYTFILENAME.Text, "ts")
@@ -4299,20 +4310,21 @@ noencoding:
 
 
                                   If YTPARSINGINFO.Text.Contains("m3u8 information") Then
-                                      If qualityinfo.Contains("94 mp4") Then
+                                      If qualityinfo.Contains("94  mp4") Then
                                           RB480P.Enabled = True
                                           RB480P.Text = "480p | H.264"
                                       End If
 
-                                      If qualityinfo.Contains("95 mp4") Then
+                                      If qualityinfo.Contains("95  mp4") Then
                                           RB720P.Enabled = True
                                           RB720P.Text = "720p | H.264"
                                       End If
 
-                                      If qualityinfo.Contains("96 mp4") Then
+                                      If qualityinfo.Contains("96  mp4") Then
                                           RB1080P.Enabled = True
                                           RB1080P.Text = "1080p | H.264"
                                       End If
+
                                   End If
 
 
@@ -4501,6 +4513,8 @@ noencoding:
         If YTPARSINGINFO.Text.Contains("m3u8 information") Then
             If RB1080P.Checked = True Then
                 YOUTUBEQ = "96"
+            ElseIf RB4K.Checked = True Then
+                YOUTUBEQ = "313"
             ElseIf RB720P.Checked = True Then
                 YOUTUBEQ = "95"
             ElseIf RB480P.Checked = True Then
@@ -4558,11 +4572,11 @@ noencoding:
                 OUTPUTFILENAMEONLYHLS = IO.Path.GetFileNameWithoutExtension(BOXYTFILENAME.Text) + "-" + RandomString() + ".ts"
                 OUTPUTFILENAMEHLS = folderPath + "\" + OUTPUTFILENAMEONLYHLS
                 BOXYTFILENAME.Text = OUTPUTFILENAMEHLS
-                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --extractor-args youtube:include_live_dash --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
             Else
                 Dim OUTPUTFILENAMEHLS As String = Path.ChangeExtension(BOXYTFILENAME.Text, "ts")
                 BOXYTFILENAME.Text = OUTPUTFILENAMEHLS
-                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --extractor-args youtube:include_live_dash --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
             End If
 
         ElseIf LBYTADDRESS.Text.Contains("youtube") Or LBYTADDRESS.Text.Contains("youtu.be") Then
@@ -4570,7 +4584,7 @@ noencoding:
         "& " + YOUTUBEDLPATH + " -f " + YOUTUBEAUDQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i " + """" + "temp_" + TEMPYTFILENAME + """" + " -i - -vcodec copy -acodec copy " + YTMAP + "-metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + BOXYTFILENAME.Text + """" +
         "& del " + """" + "temp_" + TEMPYTFILENAME + """"
         Else
-            SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i - -vcodec copy -acodec copy " + "-metadata description=" + """" + "Infinity Media Encoder by KGP-Louis" + """" + " " + """" + BOXYTFILENAME.Text + """"
+            SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " -o - --verbose --prefer-insecure --no-playlist | " + FFMPEGEXE + " -y " + FFLAGS + " -i - -vcodec copy -acodec copy " + """" + BOXYTFILENAME.Text + """"
         End If
 
 
@@ -5380,7 +5394,7 @@ noencoding:
                               Dim outputReader As StreamReader
                               With p.StartInfo
                                   .WindowStyle = ProcessWindowStyle.Minimized
-                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --get-filename " + LBYTADDRESS.Text
+                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --extractor-args youtube:include_live_dash --get-filename " + LBYTADDRESS.Text
                                   .FileName = "cmd"
 
                                   .UseShellExecute = False

@@ -34,11 +34,13 @@ Partial Class FRMCUSTOMENC
         Me.BOXCUSTOMAUDFILTEROPT = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.BOXCUSTOMVFILTEROPT = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'BOXCUSTOMCODECOPT
         '
-        Me.BOXCUSTOMCODECOPT.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BOXCUSTOMCODECOPT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXCUSTOMCODECOPT.Location = New System.Drawing.Point(10, 30)
         Me.BOXCUSTOMCODECOPT.Name = "BOXCUSTOMCODECOPT"
         Me.BOXCUSTOMCODECOPT.Size = New System.Drawing.Size(465, 22)
@@ -47,7 +49,7 @@ Partial Class FRMCUSTOMENC
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label1.Location = New System.Drawing.Point(11, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(323, 13)
@@ -56,7 +58,7 @@ Partial Class FRMCUSTOMENC
         '
         'BTCUSTOMOK
         '
-        Me.BTCUSTOMOK.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTCUSTOMOK.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTCUSTOMOK.Location = New System.Drawing.Point(162, 261)
         Me.BTCUSTOMOK.Name = "BTCUSTOMOK"
         Me.BTCUSTOMOK.Size = New System.Drawing.Size(64, 25)
@@ -67,7 +69,7 @@ Partial Class FRMCUSTOMENC
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label3.Location = New System.Drawing.Point(10, 164)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(242, 13)
@@ -76,7 +78,7 @@ Partial Class FRMCUSTOMENC
         '
         'BOXCUSTOMFFMPEGOPT
         '
-        Me.BOXCUSTOMFFMPEGOPT.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BOXCUSTOMFFMPEGOPT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXCUSTOMFFMPEGOPT.Location = New System.Drawing.Point(9, 180)
         Me.BOXCUSTOMFFMPEGOPT.Name = "BOXCUSTOMFFMPEGOPT"
         Me.BOXCUSTOMFFMPEGOPT.Size = New System.Drawing.Size(465, 22)
@@ -84,7 +86,7 @@ Partial Class FRMCUSTOMENC
         '
         'BTCUSTOMCANCEL
         '
-        Me.BTCUSTOMCANCEL.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BTCUSTOMCANCEL.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BTCUSTOMCANCEL.Location = New System.Drawing.Point(247, 261)
         Me.BTCUSTOMCANCEL.Name = "BTCUSTOMCANCEL"
         Me.BTCUSTOMCANCEL.Size = New System.Drawing.Size(64, 25)
@@ -95,7 +97,7 @@ Partial Class FRMCUSTOMENC
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label4.Location = New System.Drawing.Point(11, 216)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(329, 13)
@@ -104,7 +106,7 @@ Partial Class FRMCUSTOMENC
         '
         'BOXCUSTOMFFMPEGOPTF
         '
-        Me.BOXCUSTOMFFMPEGOPTF.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BOXCUSTOMFFMPEGOPTF.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXCUSTOMFFMPEGOPTF.Location = New System.Drawing.Point(10, 232)
         Me.BOXCUSTOMFFMPEGOPTF.Name = "BOXCUSTOMFFMPEGOPTF"
         Me.BOXCUSTOMFFMPEGOPTF.Size = New System.Drawing.Size(465, 22)
@@ -113,7 +115,7 @@ Partial Class FRMCUSTOMENC
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label5.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label5.Location = New System.Drawing.Point(12, 113)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(279, 13)
@@ -122,7 +124,8 @@ Partial Class FRMCUSTOMENC
         '
         'BOXCUSTOMAUDFILTEROPT
         '
-        Me.BOXCUSTOMAUDFILTEROPT.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BOXCUSTOMAUDFILTEROPT.Enabled = False
+        Me.BOXCUSTOMAUDFILTEROPT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXCUSTOMAUDFILTEROPT.Location = New System.Drawing.Point(11, 130)
         Me.BOXCUSTOMAUDFILTEROPT.Name = "BOXCUSTOMAUDFILTEROPT"
         Me.BOXCUSTOMAUDFILTEROPT.Size = New System.Drawing.Size(465, 22)
@@ -131,7 +134,7 @@ Partial Class FRMCUSTOMENC
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label2.Location = New System.Drawing.Point(11, 62)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(279, 13)
@@ -140,17 +143,40 @@ Partial Class FRMCUSTOMENC
         '
         'BOXCUSTOMVFILTEROPT
         '
-        Me.BOXCUSTOMVFILTEROPT.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BOXCUSTOMVFILTEROPT.Enabled = False
+        Me.BOXCUSTOMVFILTEROPT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BOXCUSTOMVFILTEROPT.Location = New System.Drawing.Point(10, 79)
         Me.BOXCUSTOMVFILTEROPT.Name = "BOXCUSTOMVFILTEROPT"
         Me.BOXCUSTOMVFILTEROPT.Size = New System.Drawing.Size(465, 22)
         Me.BOXCUSTOMVFILTEROPT.TabIndex = 1
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label6.Location = New System.Drawing.Point(12, 82)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(138, 13)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "Please set on ""Filters"" tab"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label7.Location = New System.Drawing.Point(12, 133)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(138, 13)
+        Me.Label7.TabIndex = 13
+        Me.Label7.Text = "Please set on ""Filters"" tab"
         '
         'FRMCUSTOMENC
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(489, 298)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.BOXCUSTOMAUDFILTEROPT)
         Me.Controls.Add(Me.Label4)
@@ -163,7 +189,7 @@ Partial Class FRMCUSTOMENC
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.BOXCUSTOMVFILTEROPT)
         Me.Controls.Add(Me.BOXCUSTOMCODECOPT)
-        Me.Font = New System.Drawing.Font("Malgun Gothic", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -185,4 +211,6 @@ Partial Class FRMCUSTOMENC
     Friend WithEvents BOXCUSTOMAUDFILTEROPT As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents BOXCUSTOMVFILTEROPT As System.Windows.Forms.TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label7 As Label
 End Class

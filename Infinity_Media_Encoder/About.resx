@@ -124,7 +124,7 @@
     <value>Infinity Media Encoder
 
  This program is possible to install in Individual / Company / School / Government anywhere and use freely.
- Copyright © 2014-2021 K.G.P (Louis)
+ Copyright © 2014-2022 K.G.P (Louis)
  License: Freeware
 
  ----------------------------------------------
@@ -132,8 +132,7 @@
  FFmpeg for Infinity Media Encoder
 
  Source: http://sourceforge.net/projects/infinity-media-encoder/files/FFmpeg/Source/
- Copyright (c) 2000-2021 the FFmpeg developers
- License: GPL v2.0
+ Copyright (c) 2000-2022 the FFmpeg developers
 
  ----------------------------------------------
 
@@ -143,14 +142,15 @@
  Homepage: http://mediainfo.sourceforge.net
 
  FFmpeg
- Licensed under the GPL v3
+ FFmpeg is licensed under the GNU Lesser General Public License (LGPL) version 2.1 or later. 
+ However, FFmpeg incorporates several optional parts and optimizations that are covered by the GNU General Public License (GPL) version 2 or later. 
+ If those parts get used the GPL applies to all of FFmpeg.
  Download source code: http://www.ffmpeg.org
  Homepage: http://www.ffmpeg.org
 
- youtube-dl
+ yt-dlp
  Licensed under the unlicense
- Download source code: https://github.com/rg3/youtube-dl
- Homepage: http://youtube-dl.org/
+ Download source code: https://github.com/yt-dlp/yt-dlp
 
  MPlayer
  Licensed under the GPL v2
@@ -329,6 +329,29 @@
  X265
  Licensed under the GPL
  Download source code: http://hg.videolan.org/x265
- Homepage: http://www.videolan.org/developers/x265.html</value>
+ Homepage: http://www.videolan.org/developers/x265.html
+
+ NVENC
+ Licensed under the GPL v2
+ 
+
+ Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)
+ Up to v0.8.7, SVT-AV1 is licensed under the BSD-2-clause license and the Alliance for Open Media Patent License 1.0. 
+ Starting from v0.8.8, SVT-AV1 is licensed under the BSD-3-clause clear license and the Alliance for Open Media Patent License 1.0.
+ Download source code: https://gitlab.com/AOMediaCodec/SVT-AV1
+
+ libvpx-vp9
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ Download source code: https://chromium.googlesource.com/webm/libvpx</value>
   </data>
 </root>

@@ -4,4 +4,6 @@
         TextBox1.SelectionStart = TextBox1.Text.Length
         TextBox1.DeselectAll()
     End Sub
+
+
 End Class
