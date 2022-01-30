@@ -1909,7 +1909,7 @@ Partial Class Main
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Size = New System.Drawing.Size(649, 492)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Encoding List"
+        Me.TabPage3.Text = "Encoding Job List"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'LBENCLISTHELP
@@ -2852,11 +2852,11 @@ Partial Class Main
         '
         Me.BTADDENCLIST.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BTADDENCLIST.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BTADDENCLIST.Location = New System.Drawing.Point(259, 728)
+        Me.BTADDENCLIST.Location = New System.Drawing.Point(249, 728)
         Me.BTADDENCLIST.Name = "BTADDENCLIST"
-        Me.BTADDENCLIST.Size = New System.Drawing.Size(126, 26)
+        Me.BTADDENCLIST.Size = New System.Drawing.Size(150, 26)
         Me.BTADDENCLIST.TabIndex = 40
-        Me.BTADDENCLIST.Text = "Add to Encoding List"
+        Me.BTADDENCLIST.Text = "Add to Encoding Job List"
         Me.BTADDENCLIST.UseVisualStyleBackColor = True
         '
         'Label13

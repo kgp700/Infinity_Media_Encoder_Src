@@ -1369,7 +1369,7 @@ Public Class Main
             ENCLISTVIEWMAIN.Items.Add(add)
 
 
-            'MsgBox("Added to Encoding List - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
+            'MsgBox("Added to Encoding Job List - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
 
             initialValue()
             BOXFPSINFO.Text = ""
@@ -1447,12 +1447,12 @@ Public Class Main
             'Dim lvi As New ListViewItem(filenameinfo)
             'lvi.SubItems.Add(ACMD)
             'ENCLISTVIEWMAIN.Items.Add(lvi)
-            CreateObject("WScript.Shell").Popup("Added to Encoding List - List Item count is " + ENCLISTVIEWMAIN.Items.Count.ToString, 1, "Infinity Media Encoder")
+            CreateObject("WScript.Shell").Popup("Added to Encoding Job List - List Item count is " + ENCLISTVIEWMAIN.Items.Count.ToString, 1, "Infinity Media Encoder")
             'End If
 
 
 
-            'MsgBox("Added to Encoding List - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
+            'MsgBox("Added to Encoding Job List - List Item count is " + LISTCHKENC2.Items.Count.ToString, MsgBoxStyle.Information)
             initialValue()
         Else
             MsgBox("Please specific Input Path / Output Path", MsgBoxStyle.Critical, "Infinity Media Encoder")
@@ -4702,7 +4702,7 @@ noencoding:
                     MsgBox("Added to Encoding List", MsgBoxStyle.Information, "Infinity Media Encoder")
                     GoTo noencoding
                 Else
-
+                    FRMProgress.Close()
                     Invoke(New Action(Function() COPYONEYTITEM()))
 
                 End If

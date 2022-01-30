@@ -113,7 +113,7 @@ Public Class FRMProgress
             'outputReader.DiscardBufferedData()
             'outputReader.Close()
         Else
-            If BTNPAUSE.Text = "Resume Processing" Then
+            If BTNPAUSE.Text = "Resume" Then
                 Try
                     ResumeProcess(p.Id)
                 Catch
@@ -339,7 +339,8 @@ Public Class FRMProgress
     End Function
 
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker_1.DoWork
-
+        Stopped = False
+        ForceStopped = False
         Invoke(New Action(Function() GetCMD()))
 
 
@@ -695,14 +696,14 @@ Public Class FRMProgress
 
     Private Sub BTNPAUSE_Click(sender As Object, e As EventArgs) Handles BTNPAUSE.Click
 
-        If BTNPAUSE.Text = "Pause Processing" Then
+        If BTNPAUSE.Text = "Pause" Then
             PauseProcess(p.Id)
             'SuspendProcess(p)
-            BTNPAUSE.Text = "Resume Processing"
+            BTNPAUSE.Text = "Resume"
             ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Pause"
-        ElseIf BTNPAUSE.Text = "Resume Processing" Then
+        ElseIf BTNPAUSE.Text = "Resume" Then
             ResumeProcess(p.Id)
-            BTNPAUSE.Text = "Pause Processing"
+            BTNPAUSE.Text = "Pause"
             ENCODINGLISTVIEW.Items(LISTINDEX).SubItems(1).Text = "Resumed"
         End If
 
