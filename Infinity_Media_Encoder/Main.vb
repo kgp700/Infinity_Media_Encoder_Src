@@ -4006,363 +4006,362 @@ noencoding:
 
                                   End If
 
-                                  If qualityinfo.Contains("4320p") Then
-                                      If qualityinfo.Contains("4320p60, mp4_dash") AndAlso qualityinfo.Contains("571 mp4") Then
+                                  If LBYTADDRESS.Text.Contains("youtube") Or LBYTADDRESS.Text.Contains("youtu.be") Then
+                                      If qualityinfo.Contains("4320p") Then
+                                          If qualityinfo.Contains("4320p60, mp4_dash") AndAlso qualityinfo.Contains("571 mp4") Then
 
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB8K60F.Enabled = True
-                                              RB8K60F.Text = "8K (2160p) 60fps | AV01"
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB8K60F.Enabled = True
+                                                  RB8K60F.Text = "8K (2160p) 60fps | AV01"
+                                              End If
                                           End If
-                                      End If
-                                      If qualityinfo.Contains("4320p60 HDR, mp4_dash") AndAlso qualityinfo.Contains("702 mp4") Then
+                                          If qualityinfo.Contains("4320p60 HDR, mp4_dash") AndAlso qualityinfo.Contains("702 mp4") Then
 
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB8K60FHDR.Enabled = True
-                                              RB8K60FHDR.Text = "8K (2160p) 60fps HDR | AV01"
-                                          End If
-                                      End If
-
-
-                                      If qualityinfo.Contains("4320p, mp4_dash") AndAlso qualityinfo.Contains("571 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB8K.Enabled = True
-                                              RB8K.Text = "8K (2160p) | AV01"
-                                          End If
-                                      End If
-                                      If qualityinfo.Contains("4320p HDR, mp4_dash") AndAlso qualityinfo.Contains("702 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB8KHDR.Enabled = True
-                                              RB8KHDR.Text = "8K (2160p) HDR | AV01"
-                                          End If
-                                      End If
-
-
-
-                                      If qualityinfo.Contains("4320p60, webm_dash") AndAlso qualityinfo.Contains("272 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB8K60F.Enabled = True
-                                              RB8K60F.Text = "8K (2160p) 60fps | VP9"
-                                          End If
-                                      End If
-
-
-                                      If qualityinfo.Contains("4320p, webm_dash") AndAlso qualityinfo.Contains("272 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB8K.Enabled = True
-                                              RB8K.Text = "8K (2160p) | VP9"
-                                          End If
-                                      End If
-
-                                  Else
-
-                                      RB8K.Enabled = False
-                                      RB8K60F.Enabled = False
-                                      RB8K60FHDR.Enabled = False
-                                  End If
-
-                                  If qualityinfo.Contains("2160p") Then
-                                      If qualityinfo.Contains("2160p60, mp4_dash") AndAlso qualityinfo.Contains("401 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB4K60F.Enabled = True
-                                              RB4K60F.Text = "4K (2160p) 60fps | AV01"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("2160p60 HDR, mp4_dash") AndAlso qualityinfo.Contains("701 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB4K60FHDR.Enabled = True
-                                              RB4K60FHDR.Text = "4K (2160p) 60fps HDR | AV01"
-                                          End If
-                                      End If
-
-
-                                      If qualityinfo.Contains("2160p, mp4_dash") AndAlso qualityinfo.Contains("401 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB4K.Enabled = True
-                                              RB4K.Text = "4K (2160p) | AV01"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("2160p HDR, mp4_dash") AndAlso qualityinfo.Contains("701 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB4KHDR.Enabled = True
-                                              RB4KHDR.Text = "4K (2160p) HDR | AV01"
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB8K60FHDR.Enabled = True
+                                                  RB8K60FHDR.Text = "8K (2160p) 60fps HDR | AV01"
+                                              End If
                                           End If
 
-                                      End If
 
+                                          If qualityinfo.Contains("4320p, mp4_dash") AndAlso qualityinfo.Contains("571 mp4") Then
 
-
-                                      If qualityinfo.Contains("2160p60, webm_dash") AndAlso qualityinfo.Contains("315 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB4K60F.Enabled = True
-                                              RB4K60F.Text = "4K (2160p) 60fps | VP9"
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB8K.Enabled = True
+                                                  RB8K.Text = "8K (2160p) | AV01"
+                                              End If
                                           End If
-                                      End If
+                                          If qualityinfo.Contains("4320p HDR, mp4_dash") AndAlso qualityinfo.Contains("702 mp4") Then
 
-                                      If qualityinfo.Contains("2160p60 HDR, webm_dash") AndAlso qualityinfo.Contains("337 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB4K60FHDR.Enabled = True
-                                              RB4K60FHDR.Text = "4K (2160p) 60fps HDR | VP9"
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB8KHDR.Enabled = True
+                                                  RB8KHDR.Text = "8K (2160p) HDR | AV01"
+                                              End If
                                           End If
-                                      End If
 
-                                      If qualityinfo.Contains("2160p, webm_dash") AndAlso qualityinfo.Contains("313 webm") Then
 
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB4K.Enabled = True
-                                              RB4K.Text = "4K (2160p) | VP9"
+
+                                          If qualityinfo.Contains("4320p60, webm_dash") AndAlso qualityinfo.Contains("272 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB8K60F.Enabled = True
+                                                  RB8K60F.Text = "8K (2160p) 60fps | VP9"
+                                              End If
                                           End If
-                                      End If
 
-                                      If qualityinfo.Contains("2160p HDR, webm_dash") AndAlso qualityinfo.Contains("337 webm") Then
 
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB4KHDR.Enabled = True
-                                              RB4KHDR.Text = "4K (2160p) HDR | VP9"
+                                          If qualityinfo.Contains("4320p, webm_dash") AndAlso qualityinfo.Contains("272 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB8K.Enabled = True
+                                                  RB8K.Text = "8K (2160p) | VP9"
+                                              End If
                                           End If
+
+                                      Else
+
+                                          RB8K.Enabled = False
+                                          RB8K60F.Enabled = False
+                                          RB8K60FHDR.Enabled = False
                                       End If
 
-                                  Else
+                                      If qualityinfo.Contains("2160p") Then
+                                          If qualityinfo.Contains("2160p60, mp4_dash") AndAlso qualityinfo.Contains("401 mp4") Then
 
-                                      RB4K.Enabled = False
-                                      RB4K60F.Enabled = False
-                                      RB4K60FHDR.Enabled = False
-
-                                  End If
-
-                                  If qualityinfo.Contains("1080p") Or qualityinfo.Contains("1920x1080") Then
-                                      If qualityinfo.Contains("1080p60, mp4_dash") AndAlso qualityinfo.Contains("299 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB1080P60F.Enabled = True
-                                              RB1080P60F.Text = "1080p 60fps | H.264"
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB4K60F.Enabled = True
+                                                  RB4K60F.Text = "4K (2160p) 60fps | AV01"
+                                              End If
                                           End If
-                                      End If
 
+                                          If qualityinfo.Contains("2160p60 HDR, mp4_dash") AndAlso qualityinfo.Contains("701 mp4") Then
 
-                                      If qualityinfo.Contains("1080p, mp4_dash") AndAlso qualityinfo.Contains("137 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB1080P.Enabled = True
-                                              RB1080P.Text = "1080p | H.264"
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB4K60FHDR.Enabled = True
+                                                  RB4K60FHDR.Text = "4K (2160p) 60fps HDR | AV01"
+                                              End If
                                           End If
-                                      End If
 
-                                      If qualityinfo.Contains("137      mp4   1") Then
 
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB1080P.Enabled = True
-                                              RB1080P.Text = "1080p | H.264"
+                                          If qualityinfo.Contains("2160p, mp4_dash") AndAlso qualityinfo.Contains("401 mp4") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB4K.Enabled = True
+                                                  RB4K.Text = "4K (2160p) | AV01"
+                                              End If
                                           End If
-                                      End If
 
+                                          If qualityinfo.Contains("2160p HDR, mp4_dash") AndAlso qualityinfo.Contains("701 mp4") Then
 
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB4KHDR.Enabled = True
+                                                  RB4KHDR.Text = "4K (2160p) HDR | AV01"
+                                              End If
 
-                                      If qualityinfo.Contains("1080p60, webm_dash") AndAlso qualityinfo.Contains("303 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB1080P60F.Enabled = True
-                                              RB1080P60F.Text = "1080p 60fps | VP9"
                                           End If
-                                      End If
 
-                                      If qualityinfo.Contains("1080p, webm_dash") AndAlso qualityinfo.Contains("248 webm") Then
 
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB1080P.Enabled = True
-                                              RB1080P.Text = "1080p | VP9"
+
+                                          If qualityinfo.Contains("2160p60, webm_dash") AndAlso qualityinfo.Contains("315 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB4K60F.Enabled = True
+                                                  RB4K60F.Text = "4K (2160p) 60fps | VP9"
+                                              End If
                                           End If
-                                      End If
 
-                                      If qualityinfo.Contains("1080p, webm_dash") AndAlso qualityinfo.Contains("313 webm  1") Then
+                                          If qualityinfo.Contains("2160p60 HDR, webm_dash") AndAlso qualityinfo.Contains("337 webm") Then
 
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB1080P.Enabled = True
-                                              RB1080P.Text = "1080p | VP9"
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB4K60FHDR.Enabled = True
+                                                  RB4K60FHDR.Text = "4K (2160p) 60fps HDR | VP9"
+                                              End If
                                           End If
-                                      End If
 
-                                      If qualityinfo.Contains("248      webm") Then
+                                          If qualityinfo.Contains("2160p, webm_dash") AndAlso qualityinfo.Contains("313 webm") Then
 
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB1080P.Enabled = True
-                                              RB1080P.Text = "1080p | VP9"
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB4K.Enabled = True
+                                                  RB4K.Text = "4K (2160p) | VP9"
+                                              End If
                                           End If
-                                      End If
 
+                                          If qualityinfo.Contains("2160p HDR, webm_dash") AndAlso qualityinfo.Contains("337 webm") Then
 
-                                  Else
-
-                                      RB1080P.Enabled = False
-                                      RB1080P60F.Enabled = False
-
-
-                                  End If
-
-                                  If qualityinfo.Contains("720p") Or qualityinfo.Contains("1280x720") Then
-                                      If qualityinfo.Contains("720p60, mp4_dash") AndAlso qualityinfo.Contains("298 mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB720P60F.Enabled = True
-                                              RB720P60F.Text = "720p 60fps | H.264"
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB4KHDR.Enabled = True
+                                                  RB4KHDR.Text = "4K (2160p) HDR | VP9"
+                                              End If
                                           End If
+
+                                      Else
+
+                                          RB4K.Enabled = False
+                                          RB4K60F.Enabled = False
+                                          RB4K60FHDR.Enabled = False
+
                                       End If
 
+                                      If qualityinfo.Contains("1080p") Or qualityinfo.Contains("1920x1080") Then
+                                          If qualityinfo.Contains("1080p60, mp4_dash") AndAlso qualityinfo.Contains("299 mp4") Then
 
-                                      If qualityinfo.Contains("720p, mp4_dash") AndAlso qualityinfo.Contains("22  mp4") Then
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB1080P60F.Enabled = True
+                                                  RB1080P60F.Text = "1080p 60fps | H.264"
+                                              End If
+                                          End If
 
-                                          If YTDNFORMAT.Text = "mp4" Then
+
+                                          If qualityinfo.Contains("1080p, mp4_dash") AndAlso qualityinfo.Contains("137 mp4") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB1080P.Enabled = True
+                                                  RB1080P.Text = "1080p | H.264"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("137      mp4   1") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB1080P.Enabled = True
+                                                  RB1080P.Text = "1080p | H.264"
+                                              End If
+                                          End If
+
+
+
+                                          If qualityinfo.Contains("1080p60, webm_dash") AndAlso qualityinfo.Contains("303 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB1080P60F.Enabled = True
+                                                  RB1080P60F.Text = "1080p 60fps | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("1080p, webm_dash") AndAlso qualityinfo.Contains("248 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB1080P.Enabled = True
+                                                  RB1080P.Text = "1080p | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("1080p, webm_dash") AndAlso qualityinfo.Contains("313 webm  1") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB1080P.Enabled = True
+                                                  RB1080P.Text = "1080p | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("248      webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB1080P.Enabled = True
+                                                  RB1080P.Text = "1080p | VP9"
+                                              End If
+                                          End If
+
+
+                                      Else
+
+                                          RB1080P.Enabled = False
+                                          RB1080P60F.Enabled = False
+
+
+                                      End If
+
+                                      If qualityinfo.Contains("720p") Or qualityinfo.Contains("1280x720") Then
+                                          If qualityinfo.Contains("720p60, mp4_dash") AndAlso qualityinfo.Contains("298 mp4") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB720P60F.Enabled = True
+                                                  RB720P60F.Text = "720p 60fps | H.264"
+                                              End If
+                                          End If
+
+
+                                          If qualityinfo.Contains("720p, mp4_dash") AndAlso qualityinfo.Contains("22  mp4") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB720P.Enabled = True
+                                                  RB720P.Text = "720p | H.264"
+                                              End If
+                                          End If
+                                          If qualityinfo.Contains("22       mp4") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB720P.Enabled = True
+                                                  RB720P.Text = "720p | H.264"
+                                              End If
+                                          End If
+
+
+
+                                          If qualityinfo.Contains("720p60, webm_dash") AndAlso qualityinfo.Contains("302 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB720P60F.Enabled = True
+                                                  RB720P60F.Text = "720p 60fps | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("720p, webm_dash") AndAlso qualityinfo.Contains("247 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB720P.Enabled = True
+                                                  RB720P.Text = "720p | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("720p, webm_dash") AndAlso qualityinfo.Contains("271 webm  8") Or qualityinfo.Contains("271 webm  7") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB720P.Enabled = True
+                                                  RB720P.Text = "720p | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("247      webm  1") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB720P.Enabled = True
+                                                  RB720P.Text = "720p | VP9"
+                                              End If
+                                          End If
+
+
+                                      Else
+
+                                          RB720P.Enabled = False
+                                          RB720P60F.Enabled = False
+
+
+                                      End If
+
+                                      If qualityinfo.Contains("480p") Or qualityinfo.Contains("854x480") Then
+
+
+                                          If qualityinfo.Contains("480p, mp4_dash") AndAlso qualityinfo.Contains("135 mp4   8") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB480P.Enabled = True
+                                                  RB480P.Text = "480p | H.264"
+                                              End If
+                                          End If
+                                          If qualityinfo.Contains("135      mp4") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB480P.Enabled = True
+                                                  RB480P.Text = "480p | H.264"
+                                              End If
+                                          End If
+                                          If qualityinfo.Contains("137 mp4   6") Or qualityinfo.Contains("137 mp4   5") Then
+
+                                              If YTDNFORMAT.Text = "mp4" Then
+                                                  RB480P.Enabled = True
+                                                  RB480P.Text = "480p | H.264"
+                                              End If
+                                          End If
+
+
+                                          If qualityinfo.Contains("480p, webm_dash") AndAlso qualityinfo.Contains("244 webm") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB480P.Enabled = True
+                                                  RB480P.Text = "480p | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("480p, webm_dash") AndAlso qualityinfo.Contains("248 webm  5") Or qualityinfo.Contains("248 webm  6") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB480P.Enabled = True
+                                                  RB480P.Text = "480p | VP9"
+                                              End If
+                                          End If
+
+                                          If qualityinfo.Contains("244      webm  8") Then
+
+                                              If YTDNFORMAT.Text = "mkv" Then
+                                                  RB480P.Enabled = True
+                                                  RB480P.Text = "480p | VP9"
+                                              End If
+                                          End If
+
+
+                                      Else
+
+                                          RB480P.Enabled = False
+
+
+                                      End If
+
+                                      If YTDNFORMAT.Text = "m4a" Or YTDNFORMAT.Text = "aac" Or YTDNFORMAT.Text = "opus" Then
+                                          RBAUDONLY.Enabled = True
+                                          RBAUDONLY.Checked = True
+                                      Else
+                                          RBAUDONLY.Enabled = False
+                                      End If
+
+                                      If YTPARSINGINFO.Text.Contains("m3u8 information") Then
+                                          If qualityinfo.Contains("94  mp4") Or qualityinfo.Contains("94 mp4") Then
+                                              RB480P.Enabled = True
+                                              RB480P.Text = "480p | H.264"
+                                          End If
+
+                                          If qualityinfo.Contains("95  mp4") Or qualityinfo.Contains("95 mp4") Then
                                               RB720P.Enabled = True
                                               RB720P.Text = "720p | H.264"
                                           End If
-                                      End If
-                                      If qualityinfo.Contains("22       mp4") Then
 
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB720P.Enabled = True
-                                              RB720P.Text = "720p | H.264"
+                                          If qualityinfo.Contains("96  mp4") Or qualityinfo.Contains("96 mp4") Then
+                                              RB1080P.Enabled = True
+                                              RB1080P.Text = "1080p | H.264"
                                           End If
+
                                       End If
-
-
-
-                                      If qualityinfo.Contains("720p60, webm_dash") AndAlso qualityinfo.Contains("302 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB720P60F.Enabled = True
-                                              RB720P60F.Text = "720p 60fps | VP9"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("720p, webm_dash") AndAlso qualityinfo.Contains("247 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB720P.Enabled = True
-                                              RB720P.Text = "720p | VP9"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("720p, webm_dash") AndAlso qualityinfo.Contains("271 webm  8") Or qualityinfo.Contains("271 webm  7") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB720P.Enabled = True
-                                              RB720P.Text = "720p | VP9"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("247      webm  1") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB720P.Enabled = True
-                                              RB720P.Text = "720p | VP9"
-                                          End If
-                                      End If
-
-
-                                  Else
-
-                                      RB720P.Enabled = False
-                                      RB720P60F.Enabled = False
-
-
                                   End If
-
-                                  If qualityinfo.Contains("480p") Or qualityinfo.Contains("854x480") Then
-
-
-                                      If qualityinfo.Contains("480p, mp4_dash") AndAlso qualityinfo.Contains("135 mp4   8") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB480P.Enabled = True
-                                              RB480P.Text = "480p | H.264"
-                                          End If
-                                      End If
-                                      If qualityinfo.Contains("135      mp4") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB480P.Enabled = True
-                                              RB480P.Text = "480p | H.264"
-                                          End If
-                                      End If
-                                      If qualityinfo.Contains("137 mp4   6") Or qualityinfo.Contains("137 mp4   5") Then
-
-                                          If YTDNFORMAT.Text = "mp4" Then
-                                              RB480P.Enabled = True
-                                              RB480P.Text = "480p | H.264"
-                                          End If
-                                      End If
-
-
-                                      If qualityinfo.Contains("480p, webm_dash") AndAlso qualityinfo.Contains("244 webm") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB480P.Enabled = True
-                                              RB480P.Text = "480p | VP9"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("480p, webm_dash") AndAlso qualityinfo.Contains("248 webm  5") Or qualityinfo.Contains("248 webm  6") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB480P.Enabled = True
-                                              RB480P.Text = "480p | VP9"
-                                          End If
-                                      End If
-
-                                      If qualityinfo.Contains("244      webm  8") Then
-
-                                          If YTDNFORMAT.Text = "mkv" Then
-                                              RB480P.Enabled = True
-                                              RB480P.Text = "480p | VP9"
-                                          End If
-                                      End If
-
-
-                                  Else
-
-                                      RB480P.Enabled = False
-
-
-                                  End If
-
-                                  If YTDNFORMAT.Text = "m4a" Or YTDNFORMAT.Text = "aac" Or YTDNFORMAT.Text = "opus" Then
-                                      RBAUDONLY.Enabled = True
-                                      RBAUDONLY.Checked = True
-                                  Else
-                                      RBAUDONLY.Enabled = False
-                                  End If
-
-
-                                  If YTPARSINGINFO.Text.Contains("m3u8 information") Then
-                                      If qualityinfo.Contains("94  mp4") Then
-                                          RB480P.Enabled = True
-                                          RB480P.Text = "480p | H.264"
-                                      End If
-
-                                      If qualityinfo.Contains("95  mp4") Then
-                                          RB720P.Enabled = True
-                                          RB720P.Text = "720p | H.264"
-                                      End If
-
-                                      If qualityinfo.Contains("96  mp4") Then
-                                          RB1080P.Enabled = True
-                                          RB1080P.Text = "1080p | H.264"
-                                      End If
-
-                                  End If
-
-
                               End Sub, MethodInvoker))
         End If
 
