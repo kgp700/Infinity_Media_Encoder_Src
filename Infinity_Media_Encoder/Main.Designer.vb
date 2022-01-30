@@ -23,6 +23,7 @@ Partial Class Main
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.BTNOUTPUT = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -120,7 +121,9 @@ Partial Class Main
         Me.BOXCODECINFO = New System.Windows.Forms.TextBox()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.Label40 = New System.Windows.Forms.Label()
         Me.BTNEDITAFILTER = New System.Windows.Forms.Button()
+        Me.BOXAFILTERCST = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.BOXAFILTER = New System.Windows.Forms.TextBox()
         Me.Label48 = New System.Windows.Forms.Label()
@@ -135,6 +138,8 @@ Partial Class Main
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.BOXAFILTERNAME = New System.Windows.Forms.ComboBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.BOXVFILTERCST = New System.Windows.Forms.TextBox()
         Me.BTNEDITVFILTER = New System.Windows.Forms.Button()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.BOXVFILTER = New System.Windows.Forms.TextBox()
@@ -279,10 +284,6 @@ Partial Class Main
         Me.BackgroundWorker4 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker5 = New System.ComponentModel.BackgroundWorker()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.Label39 = New System.Windows.Forms.Label()
-        Me.BOXVFILTERCST = New System.Windows.Forms.TextBox()
-        Me.Label40 = New System.Windows.Forms.Label()
-        Me.BOXAFILTERCST = New System.Windows.Forms.TextBox()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -1393,6 +1394,16 @@ Partial Class Main
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Audio"
         '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label40.Location = New System.Drawing.Point(7, 209)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(136, 13)
+        Me.Label40.TabIndex = 110
+        Me.Label40.Text = "Custom Filter Parameters"
+        '
         'BTNEDITAFILTER
         '
         Me.BTNEDITAFILTER.FlatStyle = System.Windows.Forms.FlatStyle.Popup
@@ -1403,6 +1414,13 @@ Partial Class Main
         Me.BTNEDITAFILTER.TabIndex = 108
         Me.BTNEDITAFILTER.Text = "Edit Selected"
         Me.BTNEDITAFILTER.UseVisualStyleBackColor = True
+        '
+        'BOXAFILTERCST
+        '
+        Me.BOXAFILTERCST.Location = New System.Drawing.Point(149, 206)
+        Me.BOXAFILTERCST.Name = "BOXAFILTERCST"
+        Me.BOXAFILTERCST.Size = New System.Drawing.Size(487, 22)
+        Me.BOXAFILTERCST.TabIndex = 109
         '
         'Label22
         '
@@ -1520,7 +1538,7 @@ Partial Class Main
         'BOXAFILTERNAME
         '
         Me.BOXAFILTERNAME.FormattingEnabled = True
-        Me.BOXAFILTERNAME.Items.AddRange(New Object() {"spp", "unsharp", "pp", "hqdn3d", "deshake"})
+        Me.BOXAFILTERNAME.Items.AddRange(New Object() {"afade", "crystalizer", "deesser", "equalizer", "extrastereo", "resample", "volume"})
         Me.BOXAFILTERNAME.Location = New System.Drawing.Point(45, 15)
         Me.BOXAFILTERNAME.Name = "BOXAFILTERNAME"
         Me.BOXAFILTERNAME.Size = New System.Drawing.Size(188, 21)
@@ -1548,6 +1566,23 @@ Partial Class Main
         Me.GroupBox6.TabIndex = 90
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Video"
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label39.Location = New System.Drawing.Point(7, 215)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(136, 13)
+        Me.Label39.TabIndex = 108
+        Me.Label39.Text = "Custom Filter Parameters"
+        '
+        'BOXVFILTERCST
+        '
+        Me.BOXVFILTERCST.Location = New System.Drawing.Point(149, 212)
+        Me.BOXVFILTERCST.Name = "BOXVFILTERCST"
+        Me.BOXVFILTERCST.Size = New System.Drawing.Size(487, 22)
+        Me.BOXVFILTERCST.TabIndex = 107
         '
         'BTNEDITVFILTER
         '
@@ -1676,7 +1711,7 @@ Partial Class Main
         'BOXVFILTERNAME
         '
         Me.BOXVFILTERNAME.FormattingEnabled = True
-        Me.BOXVFILTERNAME.Items.AddRange(New Object() {"spp", "unsharp", "pp", "hqdn3d", "deshake"})
+        Me.BOXVFILTERNAME.Items.AddRange(New Object() {"bm3d", "deshake", "spp", "pp", "hqdn3d", "unsharp"})
         Me.BOXVFILTERNAME.Location = New System.Drawing.Point(45, 19)
         Me.BOXVFILTERNAME.Name = "BOXVFILTERNAME"
         Me.BOXVFILTERNAME.Size = New System.Drawing.Size(188, 21)
@@ -2807,7 +2842,6 @@ Partial Class Main
         '
         Me.BOXFFMPEGEXE.AllowDrop = True
         Me.BOXFFMPEGEXE.FormattingEnabled = True
-        Me.BOXFFMPEGEXE.Items.AddRange(New Object() {"64bit FFmpeg", "32bit FFmpeg"})
         Me.BOXFFMPEGEXE.Location = New System.Drawing.Point(89, 14)
         Me.BOXFFMPEGEXE.Name = "BOXFFMPEGEXE"
         Me.BOXFFMPEGEXE.Size = New System.Drawing.Size(462, 21)
@@ -2978,40 +3012,6 @@ Partial Class Main
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
-        'Label39
-        '
-        Me.Label39.AutoSize = True
-        Me.Label39.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label39.Location = New System.Drawing.Point(7, 215)
-        Me.Label39.Name = "Label39"
-        Me.Label39.Size = New System.Drawing.Size(136, 13)
-        Me.Label39.TabIndex = 108
-        Me.Label39.Text = "Custom Filter Parameters"
-        '
-        'BOXVFILTERCST
-        '
-        Me.BOXVFILTERCST.Location = New System.Drawing.Point(149, 212)
-        Me.BOXVFILTERCST.Name = "BOXVFILTERCST"
-        Me.BOXVFILTERCST.Size = New System.Drawing.Size(487, 22)
-        Me.BOXVFILTERCST.TabIndex = 107
-        '
-        'Label40
-        '
-        Me.Label40.AutoSize = True
-        Me.Label40.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label40.Location = New System.Drawing.Point(7, 209)
-        Me.Label40.Name = "Label40"
-        Me.Label40.Size = New System.Drawing.Size(136, 13)
-        Me.Label40.TabIndex = 110
-        Me.Label40.Text = "Custom Filter Parameters"
-        '
-        'BOXAFILTERCST
-        '
-        Me.BOXAFILTERCST.Location = New System.Drawing.Point(149, 206)
-        Me.BOXAFILTERCST.Name = "BOXAFILTERCST"
-        Me.BOXAFILTERCST.Size = New System.Drawing.Size(487, 22)
-        Me.BOXAFILTERCST.TabIndex = 109
-        '
         'Main
         '
         Me.AllowDrop = True
@@ -3043,9 +3043,10 @@ Partial Class Main
         Me.Controls.Add(Me.BTNOUTPUT)
         Me.Controls.Add(Me.BTNINPUT)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Main"
-        Me.Text = "Infinity Media Encoder Alpha 6.7"
+        Me.Text = "Infinity Media Encoder Alpha 0.1.1"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)

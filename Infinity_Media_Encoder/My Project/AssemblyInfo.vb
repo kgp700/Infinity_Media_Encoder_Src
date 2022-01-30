@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Infinity Media Encoder Alpha")>
-<Assembly: AssemblyCopyright("Copyright © 2021 K.G.P (Louis)")>
+<Assembly: AssemblyCopyright("Copyright © 2022 K.G.P (Louis)")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 지정되도록 할 수 있습니다.
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("6.6.0.0")>
-<Assembly: AssemblyFileVersion("6.6.0.0")>
+<Assembly: AssemblyVersion("0.1.1.0")>
+<Assembly: AssemblyFileVersion("0.1.1.0")>

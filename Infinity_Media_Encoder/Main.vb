@@ -1535,7 +1535,7 @@ INITIAL:
                     Dim CB As ComboBox = DirectCast(ctl, ComboBox)
                     If Not CB.Text = "" And Not CB.Name = "BOXYTFILENAME" And Not CB.Name = "YTPARSINGINFO" And
                         Not CB.Name = "BOXVFILTERNAME" And Not CB.Name = "BOXAFILTERNAME" And Not CB.Name = "InputCBOX" And Not CB.Name = "BOXAUDIOPATH" And Not CB.Name = "OutputCBox" And
-                        Not CB.Name = "BOXSUBPATH" And Not CB.Name = "BOXTRIMSS" And Not CB.Name = "BOXTRIMTO" And Not CB.Name = "BOXVFILTERPARAM" Then
+                        Not CB.Name = "BOXSUBPATH" And Not CB.Name = "BOXTRIMSS" And Not CB.Name = "BOXTRIMTO" And Not CB.Name = "BOXVFILTERPARAM" And Not CB.Name = "BOXFFMPEGEXE" Then
 
                         Dim cd As New ControlData
                         cd.ControlName = ctl.Name
@@ -1592,7 +1592,7 @@ INITIAL:
 
                 If TypeOf ctl Is ComboBox Then
                     Dim CB As ComboBox = DirectCast(ctl, ComboBox)
-                    If Not CB.Name = "YTPARSINGINFO" Then
+                    If Not CB.Name = "YTPARSINGINFO" And Not CB.Name = "BOXFFMPEGEXE" Then
                         Dim cd As New ControlData
                         cd.ControlName = ctl.Name
                         cd.ControlProperty = "Text"
@@ -1605,12 +1605,15 @@ INITIAL:
 
                 If TypeOf ctl Is CheckBox Then
                     Dim CB As CheckBox = DirectCast(ctl, CheckBox)
+                    If Not CB.Name = "CHKINTELLIDEINT" And Not CB.Name = "CHKRMMETADATA" And Not CB.Name = "CHKATRACKAVISYNTH" And Not CB.Name = "CHKCMDWINDOW" And
+                         Not CB.Name = "CHKMULTIENC" And Not CB.Name = "CHKPTSDTS" And Not CB.Name = "CHKVSYNC0" And Not CB.Name = "CHKASYNC" Then
+                        Dim cd As New ControlData
+                        cd.ControlName = ctl.Name
+                        cd.ControlProperty = "Checked"
+                        cd.ControlData = CB.Checked.ToString
+                        Data.Add(cd)
+                    End If
 
-                    Dim cd As New ControlData
-                    cd.ControlName = ctl.Name
-                    cd.ControlProperty = "Checked"
-                    cd.ControlData = CB.Checked.ToString
-                    Data.Add(cd)
 
 
                 End If
@@ -2058,12 +2061,13 @@ INITIAL:
         osver = System.Environment.OSVersion
         STARTUPPATH = Application.StartupPath()
         If Environment.Is64BitOperatingSystem = True Then
-            BOXFFMPEGEXE.Text = "64bit FFmpeg"
+            BOXFFMPEGEXE.Text = STARTUPPATH + "\Tools\ffmpeg64\ffmpeg.exe"
         ElseIf Environment.Is64BitOperatingSystem = False Then
-            BOXFFMPEGEXE.Text = "32bit FFmpeg"
+            BOXFFMPEGEXE.Text = STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe"
         End If
+
         FFPLAYEXE = """" + STARTUPPATH + "\Tools\ffmpeg64\ffplay.exe" + """"
-        YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\yt-dlp.exe" + """"
+        YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\yt-dlp\yt-dlp.exe" + """"
         LIVESTREAMEREXE = """" + STARTUPPATH + "\Tools\livestreamer\livestreamer.exe" + """"
 
         Dim PRESETFOLDER As String = ".\Preset\"
@@ -2485,7 +2489,8 @@ INITIAL:
         ElseIf CUSTOMAUDIOFILTER = "" Then
             AUDIOFILTER = ""
         Else
-            AUDIOFILTER = " -af anull" + CUSTOMAUDIOFILTER
+            CUSTOMAUDIOFILTER = Replace(CUSTOMAUDIOFILTER, ",", "",, 1)
+            AUDIOFILTER = " -af " + """" + CUSTOMAUDIOFILTER + """"
         End If
 
 
@@ -2498,7 +2503,7 @@ INITIAL:
         Else
             VIDFILTERFLAG = DEINTVAL + RSVAL + SPPVAL + USHARPFILTER + CUSTOMVIDEOFILTER
             VIDFILTERFLAG = Replace(VIDFILTERFLAG, ",", "",, 1)
-            VIDEOFILTER = " -vf " + VIDFILTERFLAG
+            VIDEOFILTER = " -filter_complex " + """" + VIDFILTERFLAG + """"
 
         End If
 
@@ -3056,6 +3061,19 @@ initvalue:
 
 
     Private Sub BTNSTARTPRC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNSTARTPRC.Click
+        If BOXACODEC.Text = "libfdk_aac" Then
+            Dim testFile As System.IO.FileInfo
+            testFile = My.Computer.FileSystem.GetFileInfo(BOXFFMPEGEXE.Text)
+            Dim folderPath As String = testFile.DirectoryName
+            If Not System.IO.File.Exists(folderPath + "\libfdk-aac-0.dll") Then
+                initialValue()
+                MsgBox("Does not exist libfdk-aac-0.dll. change to another audio codec or" + vbCrLf + "Please put libfdk-aac-0.dll to " + folderPath, MsgBoxStyle.Critical, "Infinity Media Encoder")
+                GoTo noencoding
+
+            End If
+
+        End If
+
         If CHKINTELLIDEINT.Checked = True Then
             If BOXINTERLACE.Text = "" Or BOXINTERLACE.Text = "Progressive" Then
                 If LBDEINTMODE.Text = "Disabled" Or LBDEINTMODE.Text = "" Then
@@ -3083,6 +3101,9 @@ initvalue:
                 End If
             End If
         End If
+
+
+
 
 continueencoding1:
         If My.Computer.FileSystem.FileExists(OutputCBox.Text) Then
@@ -3893,12 +3914,12 @@ noencoding:
         Invoke(DirectCast(Sub()
 
                               'Dim qualityinfo As String
-                              BOXDEBUG.Text = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats --extractor-args youtube:include_live_dash " + LBYTADDRESS.Text
+                              BOXDEBUG.Text = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats " + LBYTADDRESS.Text
                               Dim p As New Process
                               Dim outputReader2 As StreamReader
                               With p.StartInfo
                                   .WindowStyle = ProcessWindowStyle.Minimized
-                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats --extractor-args youtube:include_live_dash " + LBYTADDRESS.Text
+                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --list-formats " + LBYTADDRESS.Text
                                   .FileName = "cmd"
 
                                   .UseShellExecute = False
@@ -4349,16 +4370,10 @@ noencoding:
     End Function
     Public Function DownloadYT() As String()
         STARTUPPATH = Application.StartupPath()
-        If Environment.Is64BitOperatingSystem = True Then
-            BOXFFMPEGEXE.Text = "64bit FFmpeg"
-            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg64\ffmpeg.exe" + """"
-        ElseIf Environment.Is64BitOperatingSystem = False Then
-            BOXFFMPEGEXE.Text = "32bit FFmpeg"
-            FFMPEGEXE = """" + STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe " + """"
-        End If
+        FFMPEGEXE = """" + BOXFFMPEGEXE.Text + """"
 
 
-        YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\yt-dlp.exe" + """"
+        YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\yt-dlp\yt-dlp.exe" + """"
 
         If RB4K.Checked Then
             If YTDNFORMAT.Text = "mp4" Then
@@ -4586,11 +4601,13 @@ noencoding:
                 OUTPUTFILENAMEONLYHLS = IO.Path.GetFileNameWithoutExtension(BOXYTFILENAME.Text) + "-" + RandomString() + ".ts"
                 OUTPUTFILENAMEHLS = folderPath + "\" + OUTPUTFILENAMEONLYHLS
                 BOXYTFILENAME.Text = OUTPUTFILENAMEHLS
-                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --extractor-args youtube:include_live_dash --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+                'SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+                SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " -o - --verbose --prefer-insecure --no-playlist --force-overwrites | " + FFMPEGEXE + " -y " + FFLAGS + " -i - -vcodec copy -acodec copy " + """" + OUTPUTFILENAMEHLS + """"
             Else
                 Dim OUTPUTFILENAMEHLS As String = Path.ChangeExtension(BOXYTFILENAME.Text, "ts")
                 BOXYTFILENAME.Text = OUTPUTFILENAMEHLS
-                SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --extractor-args youtube:include_live_dash --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+                'SHELLCMD = YOUTUBEDLPATH + " -v -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " --force-overwrites --output " + """" + OUTPUTFILENAMEHLS + """"
+                SHELLCMD = YOUTUBEDLPATH + " -f " + YOUTUBEQ + " " + """" + YTADDRESS + """" + " --ffmpeg-location " + FFMPEGEXE + " -o - --verbose --prefer-insecure --no-playlist --force-overwrites | " + FFMPEGEXE + " -y " + FFLAGS + " -i - -vcodec copy -acodec copy " + """" + OUTPUTFILENAMEHLS + """"
             End If
 
         ElseIf LBYTADDRESS.Text.Contains("youtube") Or LBYTADDRESS.Text.Contains("youtu.be") Then
@@ -5357,7 +5374,7 @@ noencoding:
     End Function
 
     Private Sub BTNUPDATEYTDL_Click(sender As Object, e As EventArgs) Handles BTNUPDATEYTDL.Click
-        Shell("cmd /c title Infinity Media Encoder & " + """" + STARTUPPATH + "\Tools\youtube-dl\yt-dlp.exe" + """" + " -U & pause", vbNormalFocus)
+        Shell("cmd /c title Infinity Media Encoder & " + """" + STARTUPPATH + "\Tools\yt-dlp\yt-dlp.exe" + """" + " -U & pause", vbNormalFocus)
     End Sub
 
     Private Sub BTMERGEMEDIA_Click(sender As Object, e As EventArgs) Handles BTMERGEMEDIA.Click
@@ -5399,7 +5416,7 @@ noencoding:
                               BOXCSTVIDQ.Text = ""
                               BOXCSTAUDQ.Text = ""
                               STARTUPPATH = Application.StartupPath()
-                              YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\youtube-dl\yt-dlp.exe" + """"
+                              YOUTUBEDLPATH = """" + STARTUPPATH + "\Tools\yt-dlp\yt-dlp.exe" + """"
                               ytaddress = Clipboard.GetText()
                               If ytaddress.Contains("youtube.com") Or ytaddress.Contains("youtu.be") Then
                                   LBYTADDRESS.Text = ytaddress
@@ -5420,7 +5437,7 @@ noencoding:
                               Dim outputReader As StreamReader
                               With p.StartInfo
                                   .WindowStyle = ProcessWindowStyle.Minimized
-                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --extractor-args youtube:include_live_dash --get-filename " + LBYTADDRESS.Text
+                                  .Arguments = " /c title Infinity Media Encoder & " + "" + YOUTUBEDLPATH + "" + " --get-filename " + LBYTADDRESS.Text
                                   .FileName = "cmd"
 
                                   .UseShellExecute = False
@@ -5476,7 +5493,16 @@ noencoding:
     End Sub
 
     Private Sub BTDEFAULTFFMP_Click(sender As Object, e As EventArgs) Handles BTDEFAULTFFMP.Click
-        BOXFFMPEGEXE.Text = "64bit FFmpeg"
+        STARTUPPATH = Application.StartupPath()
+        If Environment.Is64BitOperatingSystem = True Then
+            'BOXFFMPEGEXE.Text = "64bit FFmpeg"
+            BOXFFMPEGEXE.Text = STARTUPPATH + "\Tools\ffmpeg64\ffmpeg.exe"
+
+        ElseIf Environment.Is64BitOperatingSystem = False Then
+            'BOXFFMPEGEXE.Text = "32bit FFmpeg"
+            BOXFFMPEGEXE.Text = STARTUPPATH + "\Tools\ffmpeg32\ffmpeg.exe "
+
+        End If
     End Sub
 
 
