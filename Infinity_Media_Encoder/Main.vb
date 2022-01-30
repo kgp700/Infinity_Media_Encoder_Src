@@ -1388,6 +1388,13 @@ Public Class Main
 
 
     Private Sub BTADDENCLIST_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTADDENCLIST.Click
+        If OutputCBox.Text.Length > 259 Then
+            MsgBox("Path+Filename length limited to 259 (Windows policy)" + vbCrLf + "Please decrease file name length." + vbCrLf + "Current Path+Filename length is " + OutputCBox.Text.Length.ToString, MsgBoxStyle.Critical, "Infinity Media Encoder")
+            GoTo INITIAL
+        Else
+
+        End If
+
         LBENCLISTHELP.Text = ""
         INPUTVIDNAME = InputCBOX.Text
         OUTPUTFILENAME = OutputCBox.Text
@@ -3061,6 +3068,13 @@ initvalue:
 
 
     Private Sub BTNSTARTPRC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTNSTARTPRC.Click
+        If OutputCBox.Text.Length > 259 Then
+            MsgBox("Path+Filename length limited to 259 (Windows policy)" + vbCrLf + "Please decrease file name length." + vbCrLf + "Current Path+Filename length is " + OutputCBox.Text.Length.ToString, MsgBoxStyle.Critical, "Infinity Media Encoder")
+            GoTo noencoding
+        Else
+
+        End If
+
         If BOXACODEC.Text = "libfdk_aac" Then
             Dim testFile As System.IO.FileInfo
             testFile = My.Computer.FileSystem.GetFileInfo(BOXFFMPEGEXE.Text)
@@ -3944,6 +3958,8 @@ noencoding:
 
                               outputReader2.Close()
 
+                              YTPARSINGINFO.Select(YTPARSINGINFO.Text.Length - 1, 0)
+                              YTPARSINGINFO.ScrollToCaret()
 
                           End Sub, MethodInvoker))
     End Function
@@ -4631,6 +4647,7 @@ noencoding:
         filenameinfo = BOXYTFILENAME.Text
         Dim testFile As System.IO.FileInfo
         testFile = My.Computer.FileSystem.GetFileInfo(filenameinfo)
+
         Dim ytoutfileName As String = testFile.Name
 
         Dim add As New ListViewItem(ytoutfileName)
@@ -4675,6 +4692,12 @@ noencoding:
     End Sub
 
     Private Sub BTDNYOUTUBE_Click(sender As Object, e As EventArgs) Handles BTDNYOUTUBE.Click
+        If BOXYTFILENAME.Text.Length > 259 Then
+            MsgBox("Path+Filename length limited to 259 (Windows policy)" + vbCrLf + "Please decrease file name length." + vbCrLf + "Current Path+Filename length is " + BOXYTFILENAME.Text.Length.ToString, MsgBoxStyle.Critical, "Infinity Media Encoder")
+            GoTo noencoding
+        Else
+
+        End If
         Try
             Dim testFile As System.IO.FileInfo
             testFile = My.Computer.FileSystem.GetFileInfo(BOXYTFILENAME.Text)
@@ -4951,13 +4974,16 @@ noencoding:
         ElseIf BOXCONTAINER.Text = "=== HLS Encoding Mode ===" Then
             BTNSTREAMING.Visible = True
         ElseIf BOXCONTAINER.Text = "=== Smooth Encoding Mode ===" Then
+            MsgBox("Not yet avaliable", MsgBoxStyle.Information, "Infinity Media Encoder")
             BTNSTREAMING.Visible = True
+            BOXCONTAINER.Text = "mp4"
         ElseIf BOXCONTAINER.Text = "=== RTMP Streaming Mode ===" Then
             BTNSTREAMING.Visible = True
 
         ElseIf BOXCONTAINER.Text = "=== DASH Encoding Mode ===" Then
             MsgBox("Not yet avaliable", MsgBoxStyle.Information, "Infinity Media Encoder")
             BTNSTREAMING.Visible = True
+            BOXCONTAINER.Text = "mp4"
         Else
             BTNSTREAMING.Visible = False
 
@@ -4970,6 +4996,7 @@ noencoding:
             TAB.SelectTab(5)
             TABSTREAMSET.SelectTab(0)
         ElseIf BOXCONTAINER.Text = "=== Smooth Encoding Mode ===" Then
+            MsgBox("Not yet avaliable", MsgBoxStyle.Information, "Infinity Media Encoder")
             TAB.SelectTab(5)
             TABSTREAMSET.SelectTab(2)
         ElseIf BOXCONTAINER.Text = "=== RTMP Streaming Mode ===" Then
